@@ -2,6 +2,12 @@
 
 Javascript port of the beautiful hex system from [Battle for Wesnoth](wesnoth.org)
 
+# techology
+
+Component will be written using Typescript, drawn on the Canvas. Gulp will take care of building.
+Tiles will be uploaded as a sprite atlas, in default png format. 
+WML files with terrain definitions will be converted using short GO program.
+
 # plans
 1. Terrains (grass, hills mountains);
 2. Overlay objects (huts, windmills, flowers trees etc.);
