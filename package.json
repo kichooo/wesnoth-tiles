@@ -1,0 +1,13 @@
+{
+  "name": "wesnoth-tiles",
+  "version": "0.0.1",
+  "devDependencies": {
+    "gulp": "^3.8.9",
+    "gulp-concat": "^2.4.1",
+    "gulp-notify": "^2.0.1",
+    "gulp-serve": "^0.3.0",
+    "gulp-typescript": "^2.2.1",
+    "install": "^0.1.7",
+    "npm": "^2.1.7"
+  }
+}

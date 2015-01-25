@@ -22,3 +22,8 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+bin/*.js
+bin_temp/*.js
+
+node_modules
