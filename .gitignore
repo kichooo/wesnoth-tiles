@@ -27,3 +27,7 @@ bin/*.js
 bin_temp/*.js
 
 node_modules
+
+# SublimeText user files.
+
+*.sublime-workspace
