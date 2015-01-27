@@ -14,9 +14,10 @@ module WesnothTiles {
     this.ctx.rect(10, 10, 700, 400);
     this.ctx.fillStyle = 'yellow';
     this.ctx.fill();
-    this.ctx.lineWidth = 7;
+    this.ctx.lineWidth = 4;
     this.ctx.strokeStyle = 'gray';
     this.ctx.stroke();
+    
   }
 
   Resize(width: number, height: number): void {    
