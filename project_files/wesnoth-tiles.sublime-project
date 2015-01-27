@@ -8,7 +8,7 @@
   "settings": {
     "typescript": {
       "roots": [
-        "src/Renderer.ts"
+        "src/references.ts"
       ],
       "settings": {
         "build_parameters": {
@@ -26,7 +26,7 @@
           "skip_resolution_and_preprocessing": false,
           "remove_comments_from_output": false,
           "generate_source_map": false,
-          "ecmascript_target": "ES3"
+          "ecmascript_target": "ES5"
         }
       }
 
