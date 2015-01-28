@@ -14,8 +14,6 @@ module WesnothTiles {
     //  (for example using promising API).
     provideAtlas(name: string, atlas: HTMLElement, definitions: Map<string, SpriteDefinition>) {
       this.atlases[name] = atlas;
-      
-
     }
 
 

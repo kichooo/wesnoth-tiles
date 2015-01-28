@@ -4,6 +4,7 @@ module WesnothTiles {
   export class Renderer<HexType extends Hex> {
     private ctx: CanvasRenderingContext2D;
     private hexMap = new HexMap();
+    private resources = new Resources();
 
     constructor(private canvas: HTMLCanvasElement) {
       this.ctx = this.canvas.getContext('2d');
@@ -11,6 +12,10 @@ module WesnothTiles {
 
     getHex(pos: HexPos): HexType {
       return <HexType>this.hexMap.getHex(pos);
+    }
+
+    provideAtlas(name: string, atlas: HTMLElement, definitions: Map<string, SpriteDefinition>) {
+      this.resources.provideAtlas(name, atlas, definitions);
     }
 
     Redraw(): void {
@@ -29,6 +34,7 @@ module WesnothTiles {
       this.canvas.width = width;
       this.canvas.height = height;
     }
+
 
 
 

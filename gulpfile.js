@@ -40,6 +40,6 @@ gulp.task('watch', ['concat'], function() {
 });
 
 gulp.task('serve', serve({
-  root: ['test', 'bin'],
+  root: ['test', 'bin', 'tiles'],
   port: 8001,
 }));
