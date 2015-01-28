@@ -18,7 +18,7 @@ module WesnothTiles {
       this.resources.provideAtlas(name, atlas, definitions);
     }
 
-    Redraw(): void {
+    redraw(): void {
       console.log("Redraw.");
       this.ctx.beginPath();
       this.ctx.rect(10, 10, 700, 400);
@@ -27,6 +27,8 @@ module WesnothTiles {
       this.ctx.lineWidth = 4;
       this.ctx.strokeStyle = 'gray';
       this.ctx.stroke();
+
+      this.resources.drawSprite("hills/regular.png", {x: 300, y: 300}, this.ctx);
 
     }
 

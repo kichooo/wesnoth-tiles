@@ -13,7 +13,7 @@ module WesnothTiles {
   // This class is responsible for storing sprite data.
   export class SpriteDefinition {
 
-    constructor(private frame: IFrame, private spriteSource: IFrame, private sourceSize: IVector) {
+    constructor(public frame: IFrame, public spriteSource: IFrame, public sourceSize: IVector, public atlas: HTMLElement) {
     }
   }
 } 
