@@ -9,7 +9,7 @@ module WesnothTiles {
       this.ctx = this.canvas.getContext('2d');
     }
 
-    getHex(pos: Pos): HexType {
+    getHex(pos: HexPos): HexType {
       return <HexType>this.hexMap.getHex(pos);
     }
 

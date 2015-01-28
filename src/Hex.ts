@@ -3,7 +3,7 @@ module WesnothTiles {
 
   export class Hex {
 
-    constructor(private terrain: Terrain) {
+    constructor() {
     }
 
   }

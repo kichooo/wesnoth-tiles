@@ -3,13 +3,13 @@ module WesnothTiles {
 
   export class HexMap {
 
-    private Hexes: Map<string, Hex> = new Map<string, Hex>();
+    private Hexes = new Map<string, Hex>();
     
     constructor() {
       
     }
 
-    public getHex(pos: Pos): Hex {
+    public getHex(pos: HexPos): Hex {
       return this.Hexes[pos.toString()];
     }
 
