@@ -5,8 +5,6 @@ module WesnothTiles {
   export class Resources {
     private atlases = new Map<string, HTMLElement>();
     private definitions = new Map<string, SpriteDefinition>();
-
-
     constructor() {
     }
 
@@ -33,6 +31,14 @@ module WesnothTiles {
         pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
         def.sourceSize.x, def.sourceSize.y
         );
+
+      // var p = new Promise<string>((resolve, reject) => { 
+      //   resolve('a string'); 
+      // });
+    }
+
+    loadResources() {
+      
     }
 
 
