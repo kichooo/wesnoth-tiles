@@ -1,3 +1,7 @@
+declare class Promise {
+  
+}
+
 module WesnothTiles {
   'use strict';
 
@@ -37,9 +41,14 @@ module WesnothTiles {
       // });
     }
 
-    loadResources() {
-      
+    // Will return promise when they are supported;)
+    loadResources(): Promise {
+      for (var i = 0; i < 3; i++) {
+        var p1 = new Promise();
+      }
+      return new Object();
     }
+
 
 
 // var imageObj = new Image();

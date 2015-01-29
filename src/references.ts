@@ -1,5 +1,3 @@
-/// <reference path="definitions/es6-promise.d.ts"/>
-
 /// <reference path="Hex.ts"/>
 /// <reference path="HexMap.ts"/>
 /// <reference path="HexPos.ts"/>
