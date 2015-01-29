@@ -28,9 +28,9 @@ module WesnothTiles {
         return;
       }
 
-      ctx.drawImage(def.atlas, def.spriteSource.point.x , def.spriteSource.point.y, 
-        def.spriteSource.size.x, def.spriteSource.size.y, 
-        pos.x, pos.y,
+      ctx.drawImage(def.atlas, def.frame.point.x , def.frame.point.y,
+        def.frame.size.x, def.frame.size.y,
+        pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
         def.sourceSize.x, def.sourceSize.y
         );
     }

@@ -21,7 +21,7 @@ module WesnothTiles {
     redraw(): void {
       console.log("Redraw.");
       this.ctx.beginPath();
-      this.ctx.rect(10, 10, 700, 400);
+      this.ctx.rect(10, 10, 72, 72);
       this.ctx.fillStyle = 'yellow';
       this.ctx.fill();
       this.ctx.lineWidth = 4;
@@ -29,6 +29,9 @@ module WesnothTiles {
       this.ctx.stroke();
 
       this.resources.drawSprite("hills/regular.png", {x: 300, y: 300}, this.ctx);
+      this.resources.drawSprite("hills/regular.png", {x: 300, y: 372}, this.ctx);
+      this.resources.drawSprite("hills/regular.png", {x: 300, y: 444}, this.ctx);
+      // this.resources.drawSprite("hills/regular.png", {x: 300, y: 336}, this.ctx);
 
     }
 
