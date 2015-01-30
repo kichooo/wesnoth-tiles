@@ -1,40 +1,45 @@
 function start() {
-  var img = new Image();
-  img.src = "hexes_1.png"
-  img.onload = function() {
-    var canvas = document.getElementById("map-canvas");
-    var renderer = new WesnothTiles.Renderer(canvas);
+  var canvas = document.getElementById("map-canvas");
+  var renderer = new WesnothTiles.Renderer(canvas);
 
-    var def = new WesnothTiles.SpriteDefinition({
-      point: {
-        x: 1342,
-        y: 660
-      },
-      size: {
-        x: 72,
-        y: 72
-      }
-    }, {
-      point: {
-        x: 0,
-        y: 0
-      },
-      size: {
-        x: 72,
-        y: 72
-      }
-    }, {
-      x: 72,
-      y: 72
-    }, img);
-
-    mapa = new Map();
-    mapa.set("hills/regular.png", def);
-
-    renderer.provideAtlas("hexes_1", img, mapa);
+  renderer.load().then(function() {
     renderer.Resize(window.innerWidth, window.innerHeight);
     renderer.redraw();
-  }
+  });
+  // var img = new Image();
+  // img.src = "hexes_1.png"
+  // img.onload = function() {
+    
+
+  //   var def = new WesnothTiles.SpriteDefinition({
+  //     point: {
+  //       x: 1342,
+  //       y: 660
+  //     },
+  //     size: {
+  //       x: 72,
+  //       y: 72
+  //     }
+  //   }, {
+  //     point: {
+  //       x: 0,
+  //       y: 0
+  //     },
+  //     size: {
+  //       x: 72,
+  //       y: 72
+  //     }
+  //   }, {
+  //     x: 72,
+  //     y: 72
+  //   }, img);
+
+  //   mapa = new Map();
+  //   mapa.set("hills/regular.png", def);
+
+  //   renderer.provideAtlas("hexes_1", img, mapa);
+
+  // }
 
 }
 

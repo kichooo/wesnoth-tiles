@@ -14,10 +14,6 @@ module WesnothTiles {
       return <HexType>this.hexMap.getHex(pos);
     }
 
-    provideAtlas(name: string, atlas: HTMLElement, definitions: Map<string, SpriteDefinition>) {
-      this.resources.provideAtlas(name, atlas, definitions);
-    }
-
     redraw(): void {
       console.log("Redraw.");
       this.ctx.beginPath();
@@ -41,7 +37,9 @@ module WesnothTiles {
     }
 
 
-
+    load(): Promise {
+      return this.resources.loadResources();
+    }
 
 
   }
