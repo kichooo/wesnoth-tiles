@@ -24,9 +24,9 @@ module WesnothTiles {
       this.ctx.strokeStyle = 'gray';
       this.ctx.stroke();
 
-      this.resources.drawSprite("hills/regular.png", {x: 300, y: 300}, this.ctx);
-      this.resources.drawSprite("hills/regular.png", {x: 300, y: 372}, this.ctx);
-      this.resources.drawSprite("hills/regular.png", {x: 300, y: 444}, this.ctx);
+      this.hexMap.iterate((hex: Hex) => {
+        this.resources.drawSprite("hills/regular.png", {x: 300 + (36 * 1.5) * hex.q, y: 300 + 36 * (2 * hex.r + hex.q)}, this.ctx);        
+      });
       // this.resources.drawSprite("hills/regular.png", {x: 300, y: 336}, this.ctx);
 
     }
@@ -39,6 +39,10 @@ module WesnothTiles {
 
     load(): Promise {
       return this.resources.loadResources();
+    }
+
+    addHex(hex: Hex) {
+      this.hexMap.addHex(hex)
     }
 
 

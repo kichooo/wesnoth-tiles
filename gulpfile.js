@@ -6,16 +6,17 @@ var gulp = require('gulp'),
 
 var tsProject = ts.createProject({
   declarationFiles: true,
-  noExternalResolve: true,
-  module: "amd"
+  noExternalResolve: false,
+  sortOutput: true,
+  target: "ES5"
 });
-
 
 gulp.task('scripts', function() {
   return gulp.src('src/**/*.ts')
     .pipe(ts(tsProject)).js
+    // .pipe(ts.filter(tsProject, { referencedFrom: ['references.ts'] }))
     .pipe(concat('wesnoth-tiles.js'))
-    .pipe(gulp.dest("."))
+    .pipe(gulp.dest("bin"))
     .pipe(notify({
       "message": "Typescript built succesfully.",
       "onLast": true,
@@ -26,17 +27,8 @@ gulp.task('scripts', function() {
     }));
 });
 
-gulp.task('concat', function() {
-  return gulp.src('bin_temp/**/*.js')
-    .pipe(concat('wesnoth-tiles.js'))
-    .pipe(gulp.dest("bin/"))
-    .on("error", notify.onError(function(error) {
-      return "Failed to concat: " + error.message;
-    }));
-});
-
-gulp.task('watch', ['concat'], function() {
-  gulp.watch('bin_temp/**/*.js', ['concat']);
+gulp.task('watch', ['scripts'], function() {
+  gulp.watch('src/**/*.ts', ['scripts']);
 });
 
 gulp.task('serve', serve({

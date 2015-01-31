@@ -3,16 +3,26 @@ module WesnothTiles {
 
   export class HexMap {
 
-    private Hexes = new Map<string, Hex>();
+    private hexes = new Map<string, Hex>();
     
     constructor() {
-      
+
+
+
+      this.hexes
     }
 
-    public getHex(pos: HexPos): Hex {
-      return this.Hexes[pos.toString()];
+    getHex(pos: HexPos): Hex {
+      return this.hexes[pos.toString()];
     }
 
+    addHex(hex: Hex) {
+      this.hexes.set(hex.toString(), hex);
+    }
+
+    iterate(func: (hex: Hex) => void) {
+      this.hexes.forEach(func);
+    }
 
   }
 } 

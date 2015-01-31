@@ -3,6 +3,21 @@ function start() {
   var renderer = new WesnothTiles.Renderer(canvas);
 
   renderer.load().then(function() {
+    renderer.addHex(new WesnothTiles.Hex(0, 0, 1));
+    renderer.addHex(new WesnothTiles.Hex(1, 0, 1));
+    renderer.addHex(new WesnothTiles.Hex(2, 0, 1));
+    renderer.addHex(new WesnothTiles.Hex(3, 0, 1));
+
+    renderer.addHex(new WesnothTiles.Hex(0, 1, 1));
+    renderer.addHex(new WesnothTiles.Hex(1, 1, 1));
+    renderer.addHex(new WesnothTiles.Hex(2, 1, 1));
+    renderer.addHex(new WesnothTiles.Hex(3, 1, 1));
+
+    renderer.addHex(new WesnothTiles.Hex(0, 2, 1));
+    renderer.addHex(new WesnothTiles.Hex(1, 2, 1));
+    renderer.addHex(new WesnothTiles.Hex(2, 2, 1));
+    renderer.addHex(new WesnothTiles.Hex(3, 2, 1));
+
     renderer.Resize(window.innerWidth, window.innerHeight);
     renderer.redraw();
   });

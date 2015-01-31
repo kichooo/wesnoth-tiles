@@ -14,7 +14,7 @@
         "build_parameters": {
           "pre_processing_commands": [],
           "post_processing_commands": [],
-          "output_dir_path": "./../bin_temp/",
+          "output_dir_path": "none",
           "concatenate_and_emit_output_file_path": "none",
           "source_files_root_path": "none",
           "map_files_root_path": "none",

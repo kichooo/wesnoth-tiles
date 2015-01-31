@@ -1,9 +1,18 @@
+/// <reference path="HexPos.ts"/>
+
 module WesnothTiles {
   'use strict';
 
-  export class Hex {
+  export interface ETerrain {
+    HILLS_DRY; // 0
+    HILLS_GREEN; // 1
+    HILLS_DESERT; // 2
+  }
 
-    constructor() {
+  export class Hex extends HexPos {
+
+    constructor(q: number, r: number, private terrain: ETerrain) {
+      super(q, r);
     }
 
   }
