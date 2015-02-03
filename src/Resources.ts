@@ -93,7 +93,7 @@ module WesnothTiles {
         def.frame.size.x, def.frame.size.y,
         pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
         def.sourceSize.x, def.sourceSize.y
-        );
+      );
 
       // var p = new Promise<string>((resolve, reject) => { 
       //   resolve('a string'); 
@@ -133,7 +133,7 @@ module WesnothTiles {
     h: number;
   }
 
-  interface IXY {
+  export interface IXY {
     x: number;
     y: number;
   }

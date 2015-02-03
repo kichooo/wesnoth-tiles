@@ -3,20 +3,20 @@ function start() {
   var renderer = new WesnothTiles.Renderer(canvas);
 
   renderer.load().then(function() {
-    renderer.addHex(new WesnothTiles.Hex(0, 0, 1));
-    renderer.addHex(new WesnothTiles.Hex(1, 0, 1));
-    renderer.addHex(new WesnothTiles.Hex(2, 0, 1));
-    renderer.addHex(new WesnothTiles.Hex(3, 0, 1));
+    renderer.addHex(new WesnothTiles.Hex(0, 0, 0));
+    renderer.addHex(new WesnothTiles.Hex(1, 0, 0));
+    renderer.addHex(new WesnothTiles.Hex(2, 0, 0));
+    renderer.addHex(new WesnothTiles.Hex(3, 0, 0));
 
-    renderer.addHex(new WesnothTiles.Hex(0, 1, 1));
-    renderer.addHex(new WesnothTiles.Hex(1, 1, 1));
-    renderer.addHex(new WesnothTiles.Hex(2, 1, 1));
-    renderer.addHex(new WesnothTiles.Hex(3, 1, 1));
+    renderer.addHex(new WesnothTiles.Hex(0, 1, 0));
+    renderer.addHex(new WesnothTiles.Hex(1, 1, 0));
+    renderer.addHex(new WesnothTiles.Hex(2, 1, 0));
+    renderer.addHex(new WesnothTiles.Hex(3, 1, 0));
 
-    renderer.addHex(new WesnothTiles.Hex(0, 2, 1));
-    renderer.addHex(new WesnothTiles.Hex(1, 2, 1));
-    renderer.addHex(new WesnothTiles.Hex(2, 2, 1));
-    renderer.addHex(new WesnothTiles.Hex(3, 2, 1));
+    renderer.addHex(new WesnothTiles.Hex(0, 2, 0));
+    renderer.addHex(new WesnothTiles.Hex(1, 2, 0));
+    renderer.addHex(new WesnothTiles.Hex(2, 2, 0));
+    renderer.addHex(new WesnothTiles.Hex(3, 2, 0));
 
     renderer.Resize(window.innerWidth, window.innerHeight);
     renderer.redraw();
@@ -24,7 +24,7 @@ function start() {
   // var img = new Image();
   // img.src = "hexes_1.png"
   // img.onload = function() {
-    
+
 
   //   var def = new WesnothTiles.SpriteDefinition({
   //     point: {
