@@ -57,7 +57,19 @@ module WesnothTiles {
       }, 500));
       }
 
+      if (hex.terrain === ETerrain.HILLS_DRY) {
+        this.imagesToDraw.push(new ImageToDraw("hills/dry.png", {
+        x: this.canvas.width / 2 + (36 * 1.5) * hex.q - 36, 
+        y: this.canvas.height / 2 + 35 * (2 * hex.r + hex.q) - 36
+      }, 500));
+      }
 
+      if (hex.terrain === ETerrain.HILLS_DESERT) {
+        this.imagesToDraw.push(new ImageToDraw("hills/desert.png", {
+        x: this.canvas.width / 2 + (36 * 1.5) * hex.q - 36, 
+        y: this.canvas.height / 2 + 35 * (2 * hex.r + hex.q) - 36
+      }, 500));
+      }
 
 
       // this.resources.drawSprite("hills/regular.png", , this.ctx);        
