@@ -7,13 +7,10 @@ module WesnothTiles {
     
     constructor() {
 
-
-
-      this.hexes
     }
 
     getHex(pos: HexPos): Hex {
-      return this.hexes[pos.toString()];
+      return this.hexes.get(pos.toString());
     }
 
     addHex(hex: Hex) {

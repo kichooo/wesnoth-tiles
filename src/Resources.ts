@@ -88,11 +88,15 @@ module WesnothTiles {
         console.error("Invalid sprite name!");
         return;
       }
+      console.log("drawing...", def.atlas, def.frame.point.x , def.frame.point.y,
+        def.frame.size.x, def.frame.size.y,
+        pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
+        def.sourceSize.x, def.sourceSize.y);
 
       ctx.drawImage(def.atlas, def.frame.point.x , def.frame.point.y,
         def.frame.size.x, def.frame.size.y,
-        pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
-        def.sourceSize.x, def.sourceSize.y
+        pos.x + def.spriteSource.point.x, pos.y + def.spriteSource.point.y,
+        def.frame.size.x, def.frame.size.y
       );
 
       // var p = new Promise<string>((resolve, reject) => { 
@@ -103,7 +107,7 @@ module WesnothTiles {
     // Will return promise when they are supported;) (by ArcticTypescript)
     loadResources(): Promise {
       var promises: Promise[] = [];
-      for (var i = 1; i < 2; i++) {
+      for (var i = 0; i < 3; i++) {
         promises.push(this.provideAtlas("hexes_" + i));
       }
       return Promise.all(promises);
