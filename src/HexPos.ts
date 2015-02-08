@@ -14,5 +14,9 @@ module WesnothTiles {
       return this.q + "," + this.r;
     }
 
+    static toString(q: number, r: number) {
+      return q + "," + r;
+    }
+
   }
 } 

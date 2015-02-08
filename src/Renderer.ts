@@ -1,6 +1,8 @@
 module WesnothTiles {
   'use strict';
 
+
+
   export class Renderer<HexType extends Hex> {
     private ctx: CanvasRenderingContext2D;
     private resources = new Resources();
@@ -20,19 +22,37 @@ module WesnothTiles {
       this.ctx.strokeStyle = 'gray';
       this.ctx.stroke();
 
-      var imagesToDraw: ImageToDraw[] = [];
+      var drawMap = drawTiles(hexMap);
 
-      hexMap.iterate((hex: Hex) => {
-        this.pushTileImages(imagesToDraw, hexMap, hex);
+      drawMap.forEach(hex => {
+        hex.tiles.sort((a: ImageToDraw, b: ImageToDraw) => {
+          return a.layer - b.layer;
+        });
+        for (var i = 0; i < hex.tiles.length; i++) {
+          this.resources.drawSprite(hex.tiles[i].name, {
+            x: hex.tiles[i].point.x + this.canvas.width / 2 + (36 * 1.5) * hex.q - 36,
+            y: hex.tiles[i].point.y + this.canvas.height / 2 + 35 * (2 * hex.r + hex.q) - 36
+          }, this.ctx);
+        }
       });
 
-      imagesToDraw.sort((a: ImageToDraw, b: ImageToDraw) => {
-        return a.layer - b.layer;
-      });
-      // this.resources.drawSprite("hills/regular.png", {x: 300, y: 336}, this.ctx);
-      for (var i = 0; i < imagesToDraw.length; i++) {
-        this.resources.drawSprite(imagesToDraw[i].name, imagesToDraw[i].point, this.ctx);
-      }
+      // hexMap.iterate((hex: Hex) => {
+      //   this.pushTileImages(imagesToDraw, hexMap, hex);
+      // });
+
+      // var imagesToDraw: ImageToDraw[] = [];
+
+      // hexMap.iterate((hex: Hex) => {
+      //   this.pushTileImages(imagesToDraw, hexMap, hex);
+      // });
+
+      // imagesToDraw.sort((a: ImageToDraw, b: ImageToDraw) => {
+      //   return a.layer - b.layer;
+      // });
+      // // this.resources.drawSprite("hills/regular.png", {x: 300, y: 336}, this.ctx);
+      // for (var i = 0; i < imagesToDraw.length; i++) {
+      //   this.resources.drawSprite(imagesToDraw[i].name, imagesToDraw[i].point, this.ctx);
+      // }
     }
 
     private pushTileImages(images: ImageToDraw[], hexMap: HexMap, hex: Hex) {
