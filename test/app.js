@@ -5,36 +5,50 @@ function start() {
   renderer.load().then(function() {
 
     var map = new WesnothTiles.HexMap();
+
+    map.addHex(new WesnothTiles.Hex(-1, -4, 0));
+    map.addHex(new WesnothTiles.Hex(0, -4, 3));
+    map.addHex(new WesnothTiles.Hex(1, -4, 3));
+    map.addHex(new WesnothTiles.Hex(2, -4, 3));
+    map.addHex(new WesnothTiles.Hex(3, -4, 3));
+
+    map.addHex(new WesnothTiles.Hex(-1, -3, 1));
     map.addHex(new WesnothTiles.Hex(0, -3, 2));
     map.addHex(new WesnothTiles.Hex(1, -3, 2));
     map.addHex(new WesnothTiles.Hex(2, -3, 2));
     map.addHex(new WesnothTiles.Hex(3, -3, 2));
 
+    map.addHex(new WesnothTiles.Hex(-1, -2, 2));
     map.addHex(new WesnothTiles.Hex(0, -2, 0));
     map.addHex(new WesnothTiles.Hex(1, -2, 0));
     map.addHex(new WesnothTiles.Hex(2, -2, 0));
     map.addHex(new WesnothTiles.Hex(3, -2, 0));
 
+    map.addHex(new WesnothTiles.Hex(-1, -1, 3));
     map.addHex(new WesnothTiles.Hex(0, -1, 0));
     map.addHex(new WesnothTiles.Hex(1, -1, 0));
     map.addHex(new WesnothTiles.Hex(2, -1, 0));
     map.addHex(new WesnothTiles.Hex(3, -1, 0));
 
+    map.addHex(new WesnothTiles.Hex(-1, 0, 2));
     map.addHex(new WesnothTiles.Hex(0, 0, 1));
     map.addHex(new WesnothTiles.Hex(1, 0, 1));
     map.addHex(new WesnothTiles.Hex(2, 0, 1));
     map.addHex(new WesnothTiles.Hex(3, 0, 1));
 
+    map.addHex(new WesnothTiles.Hex(-1, 1, 1));
     map.addHex(new WesnothTiles.Hex(0, 1, 1));
     map.addHex(new WesnothTiles.Hex(1, 1, 1));
     map.addHex(new WesnothTiles.Hex(2, 1, 1));
     map.addHex(new WesnothTiles.Hex(3, 1, 1));
 
+    map.addHex(new WesnothTiles.Hex(-1, 2, 0));
     map.addHex(new WesnothTiles.Hex(0, 2, 2));
     map.addHex(new WesnothTiles.Hex(1, 2, 2));
     map.addHex(new WesnothTiles.Hex(2, 2, 2));
     map.addHex(new WesnothTiles.Hex(3, 2, 2));
 
+    map.addHex(new WesnothTiles.Hex(-1, 3, 1));
     map.addHex(new WesnothTiles.Hex(0, 3, 2));
     map.addHex(new WesnothTiles.Hex(1, 3, 2));
     map.addHex(new WesnothTiles.Hex(2, 3, 2));

@@ -41,10 +41,53 @@ module WesnothTiles {
     }
   }
 
+  export class TransitionMacro implements Macro {
+    constructor(private terrain: ETerrain, private appendix: string, private versions: number, private layer: number) {
+
+    }
+    execute (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number): void {
+      if (this.terrain === hexMap.getHexP(q, r).terrain)
+        return;
+      var hexFrom = ensureGet(imagesMap, q, r);
+      iterateRotations((rotation, qDiff, rDiff) => {
+        var hex = hexMap.getHexP(q + qDiff, r + rDiff);
+        if (!hex || hex.terrain !== this.terrain)
+          return;
+        if (hexFrom.flags.has(rotationToString(rotation)))
+          return;
+        var htd = ensureGet(imagesMap, q + qDiff, r + rDiff);        
+        if (htd.flags.has(rotationToString((rotation + 3)%6)))
+          return;
+        hexFrom.flags.set(rotationToString(rotation), true);
+        htd.flags.set(rotationToString((rotation + 3)%6), true);
+        hexFrom.tiles.push({
+          name: this.appendix + "-" + rotationToString(rotation) +".png", 
+          point: { x: 0, y: 0},
+          layer: this.layer
+        })
+      });
+
+      
+      // var version = (q + r) * (q + r) % this.versions;
+      // var name = version === 0 ? this.appendix + ".png" : this.appendix + (version + 1) + ".png"
+      // htd.tiles.push({
+      //   name: name, 
+      //   point: { x: 0, y: 0},
+      //   layer: -500
+      // });
+    }
+  }
+
   var macros: Macro[] = [];
+  macros.push(new TerrainMacro(ETerrain.HILLS_SNOW, "hills/snow", 3));
   macros.push(new TerrainMacro(ETerrain.HILLS_REGULAR, "hills/regular", 3));
   macros.push(new TerrainMacro(ETerrain.HILLS_DRY, "hills/dry", 3));
   macros.push(new TerrainMacro(ETerrain.HILLS_DESERT, "hills/desert", 3));
+
+  macros.push(new TransitionMacro(ETerrain.HILLS_SNOW, "hills/snow", 3, -172));
+  macros.push(new TransitionMacro(ETerrain.HILLS_REGULAR, "hills/regular", 3, -180));
+  macros.push(new TransitionMacro(ETerrain.HILLS_DRY, "hills/dry", 3, -183));
+  macros.push(new TransitionMacro(ETerrain.HILLS_DESERT, "hills/desert", 3, -184));
 
   export var rebuild = (hexMap: HexMap) => {
     var drawMap = new Map<string,  HexToDraw>();
@@ -57,27 +100,6 @@ module WesnothTiles {
 
     return drawMap;
   }
-
-  // export var drawTiles = (hexMap: HexMap) => {
-    
-  //   hexMap.iterate(hex => {
-  //     switch (hex.terrain) {
-  //       case ETerrain.HILLS_DESERT:
-  //         drawHills("hills/desert", hex, hexMap, drawMap);
-  //         break;
-  //       case ETerrain.HILLS_DRY:
-  //         drawHills("hills/dry", hex, hexMap, drawMap);
-  //         break;
-  //       case ETerrain.HILLS_REGULAR:
-  //         drawHills("hills/regular", hex, hexMap, drawMap);
-  //         break;        
-  //       default:
-  //         console.debug("Unhandled terain", hex);
-  //         break;
-  //     }
-  //   });
-  //   return drawMap;
-  // }
 
   export var ensureGet = (drawMap: Map<string, HexToDraw>, q: number, r: number) => {
     var key = HexPos.toString(q, r)
@@ -124,27 +146,28 @@ module WesnothTiles {
 
   export var iterateRotations = (callback: (rotation: number, q: number, r: number) => void) => {
     callback(0, 0 , -1);
+    callback(1, 1 , -1);
+    callback(2, 1 , 0);    
     callback(3, 0 , 1);
-    callback(2, -1 , 0);
-    callback(1, -1 , 1);
-    callback(4, 1 , -1);
-    callback(5, 1 , 0);
+    callback(4, -1 , 1);
+    callback(5, -1 , 0);
   }
 
   export var rotationToString = (rotation: number): string => {
     switch (rotation) {
       case 0:
-        return "s";
-      case 3:
         return "n";
-      case 2:
-        return "se";                
       case 1:
-        return "ne";        
-      case 5:
-        return "nw";
+        return "ne";                
+      case 2:
+        return "se";
+      case 3:
+        return "s";
       case 4:
         return "sw";        
+      case 5:
+        return "nw";
+
       default:
         console.error("Invalid rotation",rotation);
         break;

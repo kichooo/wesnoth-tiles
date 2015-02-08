@@ -7,6 +7,7 @@ module WesnothTiles {
     HILLS_REGULAR, // 0
     HILLS_DRY, // 1    
     HILLS_DESERT, // 2
+    HILLS_SNOW, // 3
   }
 
   export class Hex extends HexPos {

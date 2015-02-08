@@ -1,7 +1,7 @@
 {"frames": [
 
 {
-	"filename": "alpha.png",
+	"filename": "alpha",
 	"frame": {"x":1574,"y":944,"w":72,"h":72},
 	"rotated": false,
 	"trimmed": false,
@@ -10,7 +10,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "alphamask.png",
+	"filename": "alphamask",
 	"frame": {"x":1740,"y":1181,"w":72,"h":72},
 	"rotated": false,
 	"trimmed": false,
@@ -19,7 +19,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-l-ne.png",
+	"filename": "bridge/chasm-dock-l-ne",
 	"frame": {"x":555,"y":1147,"w":86,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -28,7 +28,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-l-nw.png",
+	"filename": "bridge/chasm-dock-l-nw",
 	"frame": {"x":1885,"y":117,"w":86,"h":106},
 	"rotated": false,
 	"trimmed": true,
@@ -37,7 +37,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-ll-ne.png",
+	"filename": "bridge/chasm-dock-ll-ne",
 	"frame": {"x":643,"y":1243,"w":86,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -46,7 +46,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-ll-nw.png",
+	"filename": "bridge/chasm-dock-ll-nw",
 	"frame": {"x":445,"y":1039,"w":86,"h":106},
 	"rotated": false,
 	"trimmed": true,
@@ -55,7 +55,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-ll-se.png",
+	"filename": "bridge/chasm-dock-ll-se",
 	"frame": {"x":1764,"y":754,"w":87,"h":77},
 	"rotated": false,
 	"trimmed": true,
@@ -64,7 +64,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-ll-sw.png",
+	"filename": "bridge/chasm-dock-ll-sw",
 	"frame": {"x":383,"y":835,"w":92,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -73,7 +73,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-lx-ne.png",
+	"filename": "bridge/chasm-dock-lx-ne",
 	"frame": {"x":882,"y":339,"w":72,"h":121},
 	"rotated": false,
 	"trimmed": true,
@@ -82,7 +82,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-lx-nw.png",
+	"filename": "bridge/chasm-dock-lx-nw",
 	"frame": {"x":533,"y":1036,"w":86,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -91,7 +91,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-lx-se.png",
+	"filename": "bridge/chasm-dock-lx-se",
 	"frame": {"x":353,"y":1039,"w":90,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -100,7 +100,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-lx-sw.png",
+	"filename": "bridge/chasm-dock-lx-sw",
 	"frame": {"x":1248,"y":338,"w":92,"h":117},
 	"rotated": false,
 	"trimmed": true,
@@ -109,7 +109,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-ne.png",
+	"filename": "bridge/chasm-dock-ne",
 	"frame": {"x":1154,"y":1683,"w":72,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -118,7 +118,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-nw.png",
+	"filename": "bridge/chasm-dock-nw",
 	"frame": {"x":1728,"y":1618,"w":66,"h":79},
 	"rotated": false,
 	"trimmed": true,
@@ -127,7 +127,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-se.png",
+	"filename": "bridge/chasm-dock-se",
 	"frame": {"x":1875,"y":653,"w":76,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -136,7 +136,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-sw.png",
+	"filename": "bridge/chasm-dock-sw",
 	"frame": {"x":825,"y":862,"w":83,"h":77},
 	"rotated": false,
 	"trimmed": true,
@@ -145,7 +145,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-xl-ne.png",
+	"filename": "bridge/chasm-dock-xl-ne",
 	"frame": {"x":731,"y":1343,"w":84,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -154,7 +154,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-xl-nw.png",
+	"filename": "bridge/chasm-dock-xl-nw",
 	"frame": {"x":1469,"y":1776,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": true,
@@ -163,7 +163,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-xl-se.png",
+	"filename": "bridge/chasm-dock-xl-se",
 	"frame": {"x":1149,"y":1844,"w":87,"h":74},
 	"rotated": false,
 	"trimmed": true,
@@ -172,7 +172,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-xl-sw.png",
+	"filename": "bridge/chasm-dock-xl-sw",
 	"frame": {"x":731,"y":1443,"w":92,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -181,7 +181,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-xx-ne.png",
+	"filename": "bridge/chasm-dock-xx-ne",
 	"frame": {"x":1179,"y":1047,"w":72,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -190,7 +190,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-xx-nw.png",
+	"filename": "bridge/chasm-dock-xx-nw",
 	"frame": {"x":1368,"y":777,"w":66,"h":80},
 	"rotated": false,
 	"trimmed": true,
@@ -199,7 +199,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-xx-se.png",
+	"filename": "bridge/chasm-dock-xx-se",
 	"frame": {"x":825,"y":792,"w":82,"h":68},
 	"rotated": false,
 	"trimmed": true,
@@ -208,7 +208,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-dock-xx-sw.png",
+	"filename": "bridge/chasm-dock-xx-sw",
 	"frame": {"x":1774,"y":922,"w":83,"h":81},
 	"rotated": false,
 	"trimmed": true,
@@ -217,7 +217,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-l-ne.png",
+	"filename": "bridge/chasm-l-ne",
 	"frame": {"x":1796,"y":1417,"w":72,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -226,7 +226,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-l-se.png",
+	"filename": "bridge/chasm-l-se",
 	"frame": {"x":913,"y":1702,"w":86,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -235,7 +235,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-l-sw.png",
+	"filename": "bridge/chasm-l-sw",
 	"frame": {"x":1478,"y":1952,"w":81,"h":74},
 	"rotated": false,
 	"trimmed": true,
@@ -244,7 +244,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-ll-se-nw.png",
+	"filename": "bridge/chasm-ll-se-nw",
 	"frame": {"x":731,"y":1543,"w":92,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -253,7 +253,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-ll-sw-ne.png",
+	"filename": "bridge/chasm-ll-sw-ne",
 	"frame": {"x":731,"y":1630,"w":92,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -262,7 +262,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-lx-se-nw.png",
+	"filename": "bridge/chasm-lx-se-nw",
 	"frame": {"x":383,"y":724,"w":92,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -271,7 +271,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-lx-sw-ne.png",
+	"filename": "bridge/chasm-lx-sw-ne",
 	"frame": {"x":956,"y":332,"w":92,"h":121},
 	"rotated": false,
 	"trimmed": true,
@@ -280,7 +280,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-nw.png",
+	"filename": "bridge/chasm-nw",
 	"frame": {"x":712,"y":510,"w":70,"h":47},
 	"rotated": false,
 	"trimmed": true,
@@ -289,7 +289,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-s-n.png",
+	"filename": "bridge/chasm-s-n",
 	"frame": {"x":1508,"y":1226,"w":42,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -298,7 +298,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-se-nw.png",
+	"filename": "bridge/chasm-se-nw",
 	"frame": {"x":1953,"y":625,"w":92,"h":79},
 	"rotated": false,
 	"trimmed": true,
@@ -307,7 +307,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-se.png",
+	"filename": "bridge/chasm-se",
 	"frame": {"x":1180,"y":1226,"w":86,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -316,7 +316,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-sw-ne.png",
+	"filename": "bridge/chasm-sw-ne",
 	"frame": {"x":1953,"y":706,"w":92,"h":81},
 	"rotated": false,
 	"trimmed": true,
@@ -325,7 +325,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-sw.png",
+	"filename": "bridge/chasm-sw",
 	"frame": {"x":801,"y":1815,"w":81,"h":74},
 	"rotated": false,
 	"trimmed": true,
@@ -334,7 +334,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-x-se.png",
+	"filename": "bridge/chasm-x-se",
 	"frame": {"x":1202,"y":781,"w":86,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -343,7 +343,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-x-sw.png",
+	"filename": "bridge/chasm-x-sw",
 	"frame": {"x":1648,"y":1021,"w":81,"h":74},
 	"rotated": false,
 	"trimmed": true,
@@ -352,7 +352,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-xl-se-nw.png",
+	"filename": "bridge/chasm-xl-se-nw",
 	"frame": {"x":298,"y":1423,"w":92,"h":82},
 	"rotated": false,
 	"trimmed": true,
@@ -361,7 +361,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-xl-sw-ne.png",
+	"filename": "bridge/chasm-xl-sw-ne",
 	"frame": {"x":637,"y":1626,"w":92,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -370,7 +370,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-xx-se-nw.png",
+	"filename": "bridge/chasm-xx-se-nw",
 	"frame": {"x":996,"y":1041,"w":92,"h":80},
 	"rotated": false,
 	"trimmed": true,
@@ -379,7 +379,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/chasm-xx-sw-ne.png",
+	"filename": "bridge/chasm-xx-sw-ne",
 	"frame": {"x":1006,"y":859,"w":92,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -388,7 +388,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-c-nw.png",
+	"filename": "bridge/hanging-c-nw",
 	"frame": {"x":1875,"y":800,"w":76,"h":61},
 	"rotated": false,
 	"trimmed": true,
@@ -397,7 +397,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-c-se.png",
+	"filename": "bridge/hanging-c-se",
 	"frame": {"x":1909,"y":1934,"w":66,"h":77},
 	"rotated": false,
 	"trimmed": true,
@@ -406,7 +406,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-c-sw.png",
+	"filename": "bridge/hanging-c-sw",
 	"frame": {"x":1268,"y":1226,"w":70,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -415,7 +415,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-cx-sw.png",
+	"filename": "bridge/hanging-cx-sw",
 	"frame": {"x":1796,"y":1486,"w":73,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -424,7 +424,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-n.png",
+	"filename": "bridge/hanging-n",
 	"frame": {"x":1803,"y":1268,"w":57,"h":61},
 	"rotated": false,
 	"trimmed": true,
@@ -433,7 +433,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-ne.png",
+	"filename": "bridge/hanging-ne",
 	"frame": {"x":1857,"y":863,"w":86,"h":55},
 	"rotated": false,
 	"trimmed": true,
@@ -442,7 +442,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-nw.png",
+	"filename": "bridge/hanging-nw",
 	"frame": {"x":1058,"y":1911,"w":87,"h":61},
 	"rotated": false,
 	"trimmed": true,
@@ -451,7 +451,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-se-nw.png",
+	"filename": "bridge/hanging-se-nw",
 	"frame": {"x":1953,"y":846,"w":86,"h":70},
 	"rotated": false,
 	"trimmed": true,
@@ -460,7 +460,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-se.png",
+	"filename": "bridge/hanging-se",
 	"frame": {"x":1871,"y":1485,"w":78,"h":77},
 	"rotated": false,
 	"trimmed": true,
@@ -469,7 +469,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-short-s.png",
+	"filename": "bridge/hanging-short-s",
 	"frame": {"x":1814,"y":1219,"w":46,"h":47},
 	"rotated": false,
 	"trimmed": true,
@@ -478,7 +478,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-sw-ne.png",
+	"filename": "bridge/hanging-sw-ne",
 	"frame": {"x":251,"y":1125,"w":86,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -487,7 +487,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-sw.png",
+	"filename": "bridge/hanging-sw",
 	"frame": {"x":406,"y":1919,"w":76,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -496,7 +496,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-w-ne.png",
+	"filename": "bridge/hanging-w-ne",
 	"frame": {"x":1953,"y":789,"w":87,"h":55},
 	"rotated": false,
 	"trimmed": true,
@@ -505,7 +505,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-w-nw.png",
+	"filename": "bridge/hanging-w-nw",
 	"frame": {"x":1390,"y":1952,"w":86,"h":61},
 	"rotated": false,
 	"trimmed": true,
@@ -514,7 +514,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-w-se.png",
+	"filename": "bridge/hanging-w-se",
 	"frame": {"x":1309,"y":1771,"w":79,"h":77},
 	"rotated": false,
 	"trimmed": true,
@@ -523,7 +523,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-w-sw.png",
+	"filename": "bridge/hanging-w-sw",
 	"frame": {"x":1875,"y":722,"w":76,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -532,7 +532,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-water-ne.png",
+	"filename": "bridge/hanging-water-ne",
 	"frame": {"x":249,"y":1996,"w":74,"h":50},
 	"rotated": false,
 	"trimmed": true,
@@ -541,7 +541,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-wx-se.png",
+	"filename": "bridge/hanging-wx-se",
 	"frame": {"x":1309,"y":1936,"w":79,"h":70},
 	"rotated": false,
 	"trimmed": true,
@@ -550,7 +550,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-wx-sw.png",
+	"filename": "bridge/hanging-wx-sw",
 	"frame": {"x":1796,"y":1717,"w":76,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -559,7 +559,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-x-ne.png",
+	"filename": "bridge/hanging-x-ne",
 	"frame": {"x":1652,"y":1181,"w":86,"h":55},
 	"rotated": false,
 	"trimmed": true,
@@ -568,7 +568,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-x-se-nw.png",
+	"filename": "bridge/hanging-x-se-nw",
 	"frame": {"x":484,"y":1930,"w":77,"h":70},
 	"rotated": false,
 	"trimmed": true,
@@ -577,7 +577,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-x-se.png",
+	"filename": "bridge/hanging-x-se",
 	"frame": {"x":1871,"y":1564,"w":78,"h":69},
 	"rotated": false,
 	"trimmed": true,
@@ -586,7 +586,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/hanging-x-sw-ne.png",
+	"filename": "bridge/hanging-x-sw-ne",
 	"frame": {"x":1874,"y":1796,"w":77,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -595,7 +595,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-dock-nw.png",
+	"filename": "bridge/planks-dock-nw",
 	"frame": {"x":1333,"y":1047,"w":53,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -604,7 +604,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-dock-se.png",
+	"filename": "bridge/planks-dock-se",
 	"frame": {"x":951,"y":1862,"w":48,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -613,7 +613,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-n-nw.png",
+	"filename": "bridge/planks-n-nw",
 	"frame": {"x":126,"y":730,"w":78,"h":144},
 	"rotated": false,
 	"trimmed": true,
@@ -622,7 +622,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-n-se-sw.png",
+	"filename": "bridge/planks-n-se-sw",
 	"frame": {"x":2,"y":730,"w":122,"h":144},
 	"rotated": false,
 	"trimmed": true,
@@ -631,7 +631,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-n-se.png",
+	"filename": "bridge/planks-n-se",
 	"frame": {"x":126,"y":730,"w":78,"h":144},
 	"rotated": false,
 	"trimmed": true,
@@ -640,7 +640,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-nw-c.png",
+	"filename": "bridge/planks-ne-nw-c",
 	"frame": {"x":577,"y":147,"w":141,"h":113},
 	"rotated": false,
 	"trimmed": true,
@@ -649,7 +649,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-nw-cr.png",
+	"filename": "bridge/planks-ne-nw-cr",
 	"frame": {"x":1641,"y":2,"w":141,"h":113},
 	"rotated": false,
 	"trimmed": true,
@@ -658,7 +658,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-nw-l.png",
+	"filename": "bridge/planks-ne-nw-l",
 	"frame": {"x":577,"y":262,"w":148,"h":90},
 	"rotated": false,
 	"trimmed": true,
@@ -667,7 +667,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-nw-lc.png",
+	"filename": "bridge/planks-ne-nw-lc",
 	"frame": {"x":1341,"y":2,"w":148,"h":113},
 	"rotated": false,
 	"trimmed": true,
@@ -676,7 +676,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-nw-lr.png",
+	"filename": "bridge/planks-ne-nw-lr",
 	"frame": {"x":562,"y":354,"w":148,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -685,7 +685,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-nw-r.png",
+	"filename": "bridge/planks-ne-nw-r",
 	"frame": {"x":562,"y":455,"w":148,"h":102},
 	"rotated": false,
 	"trimmed": true,
@@ -694,7 +694,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-nw.png",
+	"filename": "bridge/planks-ne-nw",
 	"frame": {"x":1491,"y":2,"w":148,"h":113},
 	"rotated": false,
 	"trimmed": true,
@@ -703,7 +703,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-s-nw-l.png",
+	"filename": "bridge/planks-ne-s-nw-l",
 	"frame": {"x":721,"y":2,"w":153,"h":122},
 	"rotated": false,
 	"trimmed": true,
@@ -712,7 +712,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-s-nw-r.png",
+	"filename": "bridge/planks-ne-s-nw-r",
 	"frame": {"x":876,"y":2,"w":153,"h":122},
 	"rotated": false,
 	"trimmed": true,
@@ -721,7 +721,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-s-nw.png",
+	"filename": "bridge/planks-ne-s-nw",
 	"frame": {"x":1031,"y":2,"w":153,"h":122},
 	"rotated": false,
 	"trimmed": true,
@@ -730,7 +730,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-ne-s.png",
+	"filename": "bridge/planks-ne-s",
 	"frame": {"x":1590,"y":117,"w":93,"h":117},
 	"rotated": false,
 	"trimmed": true,
@@ -739,7 +739,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-s-n.png",
+	"filename": "bridge/planks-s-n",
 	"frame": {"x":1731,"y":1021,"w":41,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -748,7 +748,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-s-nw.png",
+	"filename": "bridge/planks-s-nw",
 	"frame": {"x":553,"y":559,"w":102,"h":123},
 	"rotated": false,
 	"trimmed": true,
@@ -757,7 +757,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-se-nw.png",
+	"filename": "bridge/planks-se-nw",
 	"frame": {"x":1228,"y":1683,"w":79,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -766,7 +766,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-se.png",
+	"filename": "bridge/planks-se",
 	"frame": {"x":1814,"y":1149,"w":46,"h":68},
 	"rotated": false,
 	"trimmed": true,
@@ -775,7 +775,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-n-se-sw.png",
+	"filename": "bridge/planks-short-n-se-sw",
 	"frame": {"x":294,"y":432,"w":122,"h":144},
 	"rotated": false,
 	"trimmed": true,
@@ -784,7 +784,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-n-se.png",
+	"filename": "bridge/planks-short-n-se",
 	"frame": {"x":397,"y":578,"w":78,"h":144},
 	"rotated": false,
 	"trimmed": true,
@@ -793,7 +793,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-ne-nw.png",
+	"filename": "bridge/planks-short-ne-nw",
 	"frame": {"x":1784,"y":2,"w":141,"h":113},
 	"rotated": false,
 	"trimmed": true,
@@ -802,7 +802,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-ne-s-nw.png",
+	"filename": "bridge/planks-short-ne-s-nw",
 	"frame": {"x":1186,"y":2,"w":153,"h":122},
 	"rotated": false,
 	"trimmed": true,
@@ -811,7 +811,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-ne-s.png",
+	"filename": "bridge/planks-short-ne-s",
 	"frame": {"x":1685,"y":117,"w":93,"h":117},
 	"rotated": false,
 	"trimmed": true,
@@ -820,7 +820,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-s-nw.png",
+	"filename": "bridge/planks-short-s-nw",
 	"frame": {"x":657,"y":559,"w":102,"h":123},
 	"rotated": false,
 	"trimmed": true,
@@ -829,7 +829,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-se-nw.png",
+	"filename": "bridge/planks-short-se-nw",
 	"frame": {"x":1874,"y":1865,"w":79,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -838,7 +838,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-sw-n.png",
+	"filename": "bridge/planks-short-sw-n",
 	"frame": {"x":221,"y":578,"w":86,"h":144},
 	"rotated": false,
 	"trimmed": true,
@@ -847,7 +847,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-sw-ne.png",
+	"filename": "bridge/planks-short-sw-ne",
 	"frame": {"x":800,"y":1891,"w":75,"h":59},
 	"rotated": false,
 	"trimmed": true,
@@ -856,7 +856,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-short-sw-se.png",
+	"filename": "bridge/planks-short-sw-se",
 	"frame": {"x":440,"y":293,"w":120,"h":121},
 	"rotated": false,
 	"trimmed": true,
@@ -865,7 +865,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-sw-n.png",
+	"filename": "bridge/planks-sw-n",
 	"frame": {"x":309,"y":578,"w":86,"h":144},
 	"rotated": false,
 	"trimmed": true,
@@ -874,7 +874,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-sw-ne.png",
+	"filename": "bridge/planks-sw-ne",
 	"frame": {"x":1290,"y":779,"w":76,"h":78},
 	"rotated": false,
 	"trimmed": true,
@@ -883,7 +883,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-sw-nw.png",
+	"filename": "bridge/planks-sw-nw",
 	"frame": {"x":440,"y":416,"w":120,"h":121},
 	"rotated": false,
 	"trimmed": true,
@@ -892,7 +892,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/planks-sw-se.png",
+	"filename": "bridge/planks-sw-se",
 	"frame": {"x":440,"y":416,"w":120,"h":121},
 	"rotated": false,
 	"trimmed": true,
@@ -901,7 +901,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/stonebridge-castle-se.png",
+	"filename": "bridge/stonebridge-castle-se",
 	"frame": {"x":1663,"y":1481,"w":54,"h":71},
 	"rotated": false,
 	"trimmed": true,
@@ -910,7 +910,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/stonebridge-nw.png",
+	"filename": "bridge/stonebridge-nw",
 	"frame": {"x":1340,"y":1226,"w":70,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -919,7 +919,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/stonebridge-se-nw.png",
+	"filename": "bridge/stonebridge-se-nw",
 	"frame": {"x":484,"y":1829,"w":77,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -928,7 +928,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/stonebridge-se.png",
+	"filename": "bridge/stonebridge-se",
 	"frame": {"x":1735,"y":1095,"w":71,"h":84},
 	"rotated": false,
 	"trimmed": true,
@@ -937,7 +937,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/stonebridge-sw-ne.png",
+	"filename": "bridge/stonebridge-sw-ne",
 	"frame": {"x":1118,"y":1304,"w":77,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -946,7 +946,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/stonebridge-water-s.png",
+	"filename": "bridge/stonebridge-water-s",
 	"frame": {"x":1617,"y":2023,"w":62,"h":23},
 	"rotated": false,
 	"trimmed": true,
@@ -955,7 +955,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "bridge/wood-dock-s.png",
+	"filename": "bridge/wood-dock-s",
 	"frame": {"x":1604,"y":1556,"w":46,"h":25},
 	"rotated": false,
 	"trimmed": true,
@@ -964,7 +964,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "castle/encampment/tent-snow.png",
+	"filename": "castle/encampment/tent-snow",
 	"frame": {"x":877,"y":1891,"w":72,"h":59},
 	"rotated": false,
 	"trimmed": true,
@@ -973,7 +973,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/bank-ne-se.png",
+	"filename": "cave/bank-ne-se",
 	"frame": {"x":418,"y":432,"w":20,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -982,7 +982,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/bank-se.png",
+	"filename": "cave/bank-se",
 	"frame": {"x":272,"y":1312,"w":24,"h":37},
 	"rotated": false,
 	"trimmed": true,
@@ -991,7 +991,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/beam.png",
+	"filename": "cave/beam",
 	"frame": {"x":2,"y":1037,"w":99,"h":156},
 	"rotated": false,
 	"trimmed": true,
@@ -1000,7 +1000,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/beam2.png",
+	"filename": "cave/beam2",
 	"frame": {"x":2,"y":1195,"w":99,"h":154},
 	"rotated": false,
 	"trimmed": true,
@@ -1009,7 +1009,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/beam3.png",
+	"filename": "cave/beam3",
 	"frame": {"x":2,"y":876,"w":99,"h":159},
 	"rotated": false,
 	"trimmed": true,
@@ -1018,7 +1018,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/chasm-lava-stone-bridge-s-n.png",
+	"filename": "cave/chasm-lava-stone-bridge-s-n",
 	"frame": {"x":1179,"y":948,"w":43,"h":97},
 	"rotated": false,
 	"trimmed": true,
@@ -1027,7 +1027,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/chasm-lava-stone-bridge-se-nw.png",
+	"filename": "cave/chasm-lava-stone-bridge-se-nw",
 	"frame": {"x":1010,"y":781,"w":94,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -1036,7 +1036,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/chasm-lava-stone-bridge-sw-ne.png",
+	"filename": "cave/chasm-lava-stone-bridge-sw-ne",
 	"frame": {"x":1106,"y":781,"w":94,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -1045,7 +1045,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/chasm-stone-bridge-s-n.png",
+	"filename": "cave/chasm-stone-bridge-s-n",
 	"frame": {"x":1179,"y":948,"w":43,"h":97},
 	"rotated": false,
 	"trimmed": true,
@@ -1054,7 +1054,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/chasm-stone-bridge-se-nw.png",
+	"filename": "cave/chasm-stone-bridge-se-nw",
 	"frame": {"x":1084,"y":1226,"w":94,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -1063,7 +1063,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/chasm-stone-bridge-sw-ne.png",
+	"filename": "cave/chasm-stone-bridge-sw-ne",
 	"frame": {"x":1058,"y":1683,"w":94,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -1072,7 +1072,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/chasm-water-stone-bridge-se-nw.png",
+	"filename": "cave/chasm-water-stone-bridge-se-nw",
 	"frame": {"x":1412,"y":1226,"w":94,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -1081,7 +1081,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/chasm-water-stone-bridge-sw-ne.png",
+	"filename": "cave/chasm-water-stone-bridge-sw-ne",
 	"frame": {"x":1058,"y":1761,"w":94,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -1090,7 +1090,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/earthy-floor-n.png",
+	"filename": "cave/earthy-floor-n",
 	"frame": {"x":206,"y":850,"w":43,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -1099,7 +1099,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/earthy-wall-rough-chasm-concave-tr.png",
+	"filename": "cave/earthy-wall-rough-chasm-concave-tr",
 	"frame": {"x":1605,"y":1482,"w":56,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -1108,7 +1108,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/earthy-wall-rough-concave-tr.png",
+	"filename": "cave/earthy-wall-rough-concave-tr",
 	"frame": {"x":1001,"y":1701,"w":55,"h":59},
 	"rotated": false,
 	"trimmed": true,
@@ -1117,7 +1117,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/flagstones-dark-ne.png",
+	"filename": "cave/flagstones-dark-ne",
 	"frame": {"x":150,"y":1849,"w":23,"h":42},
 	"rotated": false,
 	"trimmed": true,
@@ -1126,7 +1126,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/floor-n.png",
+	"filename": "cave/floor-n",
 	"frame": {"x":1550,"y":2028,"w":43,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -1135,7 +1135,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/hills-s.png",
+	"filename": "cave/hills-s",
 	"frame": {"x":1384,"y":759,"w":41,"h":16},
 	"rotated": false,
 	"trimmed": true,
@@ -1144,7 +1144,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "cave/wall-rough.png",
+	"filename": "cave/wall-rough",
 	"frame": {"x":1740,"y":1181,"w":72,"h":72},
 	"rotated": false,
 	"trimmed": false,
@@ -1153,7 +1153,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-castle-ne.png",
+	"filename": "chasm/earthy-castle-ne",
 	"frame": {"x":1388,"y":1047,"w":56,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1162,7 +1162,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-castle-nw.png",
+	"filename": "chasm/earthy-castle-nw",
 	"frame": {"x":1193,"y":859,"w":56,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -1171,7 +1171,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-castle2-ne.png",
+	"filename": "chasm/earthy-castle2-ne",
 	"frame": {"x":1446,"y":1047,"w":56,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1180,7 +1180,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-concave-bl.png",
+	"filename": "chasm/earthy-concave-bl",
 	"frame": {"x":1561,"y":1941,"w":54,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -1189,7 +1189,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-concave-br.png",
+	"filename": "chasm/earthy-concave-br",
 	"frame": {"x":1554,"y":1765,"w":54,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1198,7 +1198,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-concave-l.png",
+	"filename": "chasm/earthy-concave-l",
 	"frame": {"x":1251,"y":859,"w":59,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -1207,7 +1207,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-concave-r.png",
+	"filename": "chasm/earthy-concave-r",
 	"frame": {"x":1282,"y":1304,"w":58,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -1216,7 +1216,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-convex-tl.png",
+	"filename": "chasm/earthy-convex-tl",
 	"frame": {"x":1305,"y":231,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1225,7 +1225,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/earthy-convex-tr.png",
+	"filename": "chasm/earthy-convex-tr",
 	"frame": {"x":731,"y":1236,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1234,7 +1234,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-castle-ne.png",
+	"filename": "chasm/regular-castle-ne",
 	"frame": {"x":1554,"y":1853,"w":56,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1243,7 +1243,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-castle-nw.png",
+	"filename": "chasm/regular-castle-nw",
 	"frame": {"x":1550,"y":1135,"w":56,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -1252,7 +1252,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-castle2-ne.png",
+	"filename": "chasm/regular-castle2-ne",
 	"frame": {"x":1596,"y":1583,"w":56,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1261,7 +1261,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-concave-bl.png",
+	"filename": "chasm/regular-concave-bl",
 	"frame": {"x":1740,"y":1699,"w":54,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -1270,7 +1270,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-concave-br.png",
+	"filename": "chasm/regular-concave-br",
 	"frame": {"x":1610,"y":1759,"w":54,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1279,7 +1279,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-concave-l.png",
+	"filename": "chasm/regular-concave-l",
 	"frame": {"x":1310,"y":953,"w":59,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -1288,7 +1288,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-concave-r.png",
+	"filename": "chasm/regular-concave-r",
 	"frame": {"x":1312,"y":859,"w":58,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -1297,7 +1297,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-convex-tl.png",
+	"filename": "chasm/regular-convex-tl",
 	"frame": {"x":1751,"y":345,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1306,7 +1306,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-convex-tr.png",
+	"filename": "chasm/regular-convex-tr",
 	"frame": {"x":1811,"y":345,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1315,7 +1315,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-convex2-tl.png",
+	"filename": "chasm/regular-convex2-tl",
 	"frame": {"x":486,"y":1522,"w":54,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -1324,7 +1324,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-convex2-tr.png",
+	"filename": "chasm/regular-convex2-tr",
 	"frame": {"x":486,"y":1620,"w":54,"h":100},
 	"rotated": false,
 	"trimmed": true,
@@ -1333,7 +1333,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-snow-castle-ne.png",
+	"filename": "chasm/regular-snow-castle-ne",
 	"frame": {"x":1596,"y":1671,"w":56,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1342,7 +1342,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-snow-castle2-ne.png",
+	"filename": "chasm/regular-snow-castle2-ne",
 	"frame": {"x":1612,"y":1847,"w":56,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1351,7 +1351,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-snow-convex-tl.png",
+	"filename": "chasm/regular-snow-convex-tl",
 	"frame": {"x":849,"y":685,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1360,7 +1360,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/regular-snow-convex-tr.png",
+	"filename": "chasm/regular-snow-convex-tr",
 	"frame": {"x":1294,"y":457,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1369,7 +1369,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/water-concave-bl.png",
+	"filename": "chasm/water-concave-bl",
 	"frame": {"x":1001,"y":1762,"w":55,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -1378,7 +1378,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/water-concave-br.png",
+	"filename": "chasm/water-concave-br",
 	"frame": {"x":1001,"y":1851,"w":55,"h":88},
 	"rotated": false,
 	"trimmed": true,
@@ -1387,7 +1387,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/water-concave-l.png",
+	"filename": "chasm/water-concave-l",
 	"frame": {"x":1544,"y":1491,"w":58,"h":90},
 	"rotated": false,
 	"trimmed": true,
@@ -1396,7 +1396,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/water-concave-r.png",
+	"filename": "chasm/water-concave-r",
 	"frame": {"x":1371,"y":953,"w":58,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -1405,7 +1405,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/water-convex-tl.png",
+	"filename": "chasm/water-convex-tl",
 	"frame": {"x":484,"y":1722,"w":56,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1414,7 +1414,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "chasm/water-convex-tr.png",
+	"filename": "chasm/water-convex-tr",
 	"frame": {"x":1815,"y":549,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1423,7 +1423,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "dawn.png",
+	"filename": "dawn",
 	"frame": {"x":389,"y":1818,"w":1,"h":1},
 	"rotated": false,
 	"trimmed": true,
@@ -1432,7 +1432,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/desert-plant3.png",
+	"filename": "embellishments/desert-plant3",
 	"frame": {"x":1283,"y":1937,"w":24,"h":29},
 	"rotated": false,
 	"trimmed": true,
@@ -1441,7 +1441,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/desert-plant9.png",
+	"filename": "embellishments/desert-plant9",
 	"frame": {"x":1977,"y":1746,"w":69,"h":66},
 	"rotated": false,
 	"trimmed": true,
@@ -1450,7 +1450,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/farm-veg-spring-n.png",
+	"filename": "embellishments/farm-veg-spring-n",
 	"frame": {"x":746,"y":997,"w":16,"h":11},
 	"rotated": false,
 	"trimmed": true,
@@ -1459,7 +1459,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/farm-veg-spring-nw.png",
+	"filename": "embellishments/farm-veg-spring-nw",
 	"frame": {"x":1955,"y":1915,"w":20,"h":17},
 	"rotated": false,
 	"trimmed": true,
@@ -1468,7 +1468,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/farm-veg-spring-s.png",
+	"filename": "embellishments/farm-veg-spring-s",
 	"frame": {"x":1341,"y":117,"w":11,"h":7},
 	"rotated": false,
 	"trimmed": true,
@@ -1477,7 +1477,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/flowers-mixed3.png",
+	"filename": "embellishments/flowers-mixed3",
 	"frame": {"x":1977,"y":1228,"w":69,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -1486,7 +1486,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/mushroom-farm-ne.png",
+	"filename": "embellishments/mushroom-farm-ne",
 	"frame": {"x":1728,"y":1699,"w":10,"h":11},
 	"rotated": false,
 	"trimmed": true,
@@ -1495,7 +1495,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/mushroom-farm-nw.png",
+	"filename": "embellishments/mushroom-farm-nw",
 	"frame": {"x":1951,"y":1526,"w":24,"h":40},
 	"rotated": false,
 	"trimmed": true,
@@ -1504,7 +1504,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/mushroom-farm-s.png",
+	"filename": "embellishments/mushroom-farm-s",
 	"frame": {"x":1048,"y":1941,"w":8,"h":8},
 	"rotated": false,
 	"trimmed": true,
@@ -1513,7 +1513,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/mushroom-farm2.png",
+	"filename": "embellishments/mushroom-farm2",
 	"frame": {"x":1574,"y":1018,"w":72,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -1522,7 +1522,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/mushroom-farm3.png",
+	"filename": "embellishments/mushroom-farm3",
 	"frame": {"x":1504,"y":1011,"w":68,"h":83},
 	"rotated": false,
 	"trimmed": true,
@@ -1531,7 +1531,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/mushroom5.png",
+	"filename": "embellishments/mushroom5",
 	"frame": {"x":1774,"y":1067,"w":31,"h":26},
 	"rotated": false,
 	"trimmed": true,
@@ -1540,7 +1540,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies-flower.png",
+	"filename": "embellishments/water-lilies-flower",
 	"frame": {"x":563,"y":1931,"w":84,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -1549,7 +1549,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies-flower2.png",
+	"filename": "embellishments/water-lilies-flower2",
 	"frame": {"x":1652,"y":1097,"w":81,"h":82},
 	"rotated": false,
 	"trimmed": true,
@@ -1558,7 +1558,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies-flower3.png",
+	"filename": "embellishments/water-lilies-flower3",
 	"frame": {"x":342,"y":1243,"w":99,"h":71},
 	"rotated": false,
 	"trimmed": true,
@@ -1567,7 +1567,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies-flower4.png",
+	"filename": "embellishments/water-lilies-flower4",
 	"frame": {"x":1605,"y":765,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": true,
@@ -1576,7 +1576,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies-flower5.png",
+	"filename": "embellishments/water-lilies-flower5",
 	"frame": {"x":1441,"y":660,"w":81,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -1585,7 +1585,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies.png",
+	"filename": "embellishments/water-lilies",
 	"frame": {"x":1058,"y":1589,"w":84,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -1594,7 +1594,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies2.png",
+	"filename": "embellishments/water-lilies2",
 	"frame": {"x":1862,"y":1005,"w":81,"h":82},
 	"rotated": false,
 	"trimmed": true,
@@ -1603,7 +1603,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies3.png",
+	"filename": "embellishments/water-lilies3",
 	"frame": {"x":909,"y":781,"w":99,"h":71},
 	"rotated": false,
 	"trimmed": true,
@@ -1612,7 +1612,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies4.png",
+	"filename": "embellishments/water-lilies4",
 	"frame": {"x":1859,"y":920,"w":83,"h":83},
 	"rotated": false,
 	"trimmed": true,
@@ -1621,7 +1621,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "embellishments/water-lilies5.png",
+	"filename": "embellishments/water-lilies5",
 	"frame": {"x":1524,"y":660,"w":81,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -1630,7 +1630,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/bank-s.png",
+	"filename": "flat/bank-s",
 	"frame": {"x":537,"y":2025,"w":49,"h":21},
 	"rotated": false,
 	"trimmed": true,
@@ -1639,7 +1639,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/bank-to-ice-ne-se.png",
+	"filename": "flat/bank-to-ice-ne-se",
 	"frame": {"x":1853,"y":656,"w":20,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -1648,7 +1648,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/desert-road-n.png",
+	"filename": "flat/desert-road-n",
 	"frame": {"x":1879,"y":2013,"w":58,"h":33},
 	"rotated": false,
 	"trimmed": true,
@@ -1657,7 +1657,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/desert-road-short-n.png",
+	"filename": "flat/desert-road-short-n",
 	"frame": {"x":392,"y":1495,"w":49,"h":25},
 	"rotated": false,
 	"trimmed": true,
@@ -1666,7 +1666,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/desert-road-short-s.png",
+	"filename": "flat/desert-road-short-s",
 	"frame": {"x":963,"y":2032,"w":43,"h":14},
 	"rotated": false,
 	"trimmed": true,
@@ -1675,7 +1675,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/desert-road2-s.png",
+	"filename": "flat/desert-road2-s",
 	"frame": {"x":1221,"y":1937,"w":60,"h":35},
 	"rotated": false,
 	"trimmed": true,
@@ -1684,7 +1684,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/road-clean-ne-se.png",
+	"filename": "flat/road-clean-ne-se",
 	"frame": {"x":1977,"y":1302,"w":69,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -1693,7 +1693,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/road-ne-se.png",
+	"filename": "flat/road-ne-se",
 	"frame": {"x":1977,"y":1376,"w":69,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -1702,7 +1702,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "flat/stone-path-ne-se.png",
+	"filename": "flat/stone-path-ne-se",
 	"frame": {"x":1977,"y":1450,"w":69,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -1711,7 +1711,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "fog/fog-n.png",
+	"filename": "fog/fog-n",
 	"frame": {"x":1294,"y":2008,"w":69,"h":38},
 	"rotated": false,
 	"trimmed": true,
@@ -1720,7 +1720,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "fog/fog-s.png",
+	"filename": "fog/fog-s",
 	"frame": {"x":1670,"y":1895,"w":68,"h":38},
 	"rotated": false,
 	"trimmed": true,
@@ -1729,7 +1729,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "fog/fog-se-s.png",
+	"filename": "fog/fog-se-s",
 	"frame": {"x":1977,"y":1814,"w":69,"h":66},
 	"rotated": false,
 	"trimmed": true,
@@ -1738,7 +1738,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-fall-small.png",
+	"filename": "forest/deciduous-fall-small",
 	"frame": {"x":1719,"y":1389,"w":75,"h":81},
 	"rotated": false,
 	"trimmed": true,
@@ -1747,7 +1747,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-fall-sparse-small.png",
+	"filename": "forest/deciduous-fall-sparse-small",
 	"frame": {"x":1390,"y":1685,"w":77,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1756,7 +1756,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-fall-sparse.png",
+	"filename": "forest/deciduous-fall-sparse",
 	"frame": {"x":1144,"y":1589,"w":76,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -1765,7 +1765,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-fall-sparse2.png",
+	"filename": "forest/deciduous-fall-sparse2",
 	"frame": {"x":1309,"y":1683,"w":79,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1774,7 +1774,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-fall-sparse3.png",
+	"filename": "forest/deciduous-fall-sparse3",
 	"frame": {"x":1390,"y":1773,"w":77,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1783,7 +1783,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-fall.png",
+	"filename": "forest/deciduous-fall",
 	"frame": {"x":298,"y":1316,"w":92,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -1792,7 +1792,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-fall2.png",
+	"filename": "forest/deciduous-fall2",
 	"frame": {"x":1960,"y":337,"w":86,"h":102},
 	"rotated": false,
 	"trimmed": true,
@@ -1801,7 +1801,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-fall3.png",
+	"filename": "forest/deciduous-fall3",
 	"frame": {"x":103,"y":1234,"w":91,"h":115},
 	"rotated": false,
 	"trimmed": true,
@@ -1810,7 +1810,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer-small.png",
+	"filename": "forest/deciduous-summer-small",
 	"frame": {"x":1796,"y":1331,"w":70,"h":84},
 	"rotated": false,
 	"trimmed": true,
@@ -1819,7 +1819,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer-sparse-small.png",
+	"filename": "forest/deciduous-summer-sparse-small",
 	"frame": {"x":1253,"y":1047,"w":78,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -1828,7 +1828,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer-sparse.png",
+	"filename": "forest/deciduous-summer-sparse",
 	"frame": {"x":745,"y":791,"w":78,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -1837,7 +1837,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer-sparse2.png",
+	"filename": "forest/deciduous-summer-sparse2",
 	"frame": {"x":801,"y":1727,"w":81,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1846,7 +1846,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer-sparse3.png",
+	"filename": "forest/deciduous-summer-sparse3",
 	"frame": {"x":1469,"y":1683,"w":70,"h":91},
 	"rotated": false,
 	"trimmed": true,
@@ -1855,7 +1855,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer.png",
+	"filename": "forest/deciduous-summer",
 	"frame": {"x":825,"y":1528,"w":81,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -1864,7 +1864,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer2.png",
+	"filename": "forest/deciduous-summer2",
 	"frame": {"x":1960,"y":441,"w":86,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -1873,7 +1873,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer3.png",
+	"filename": "forest/deciduous-summer3",
 	"frame": {"x":353,"y":926,"w":87,"h":111},
 	"rotated": false,
 	"trimmed": true,
@@ -1882,7 +1882,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-summer4.png",
+	"filename": "forest/deciduous-summer4",
 	"frame": {"x":389,"y":1715,"w":93,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -1891,7 +1891,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter-small.png",
+	"filename": "forest/deciduous-winter-small",
 	"frame": {"x":1134,"y":1398,"w":74,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -1900,7 +1900,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter-snow-small.png",
+	"filename": "forest/deciduous-winter-snow-small",
 	"frame": {"x":1642,"y":1304,"w":71,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -1909,7 +1909,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter-snow-sparse-small.png",
+	"filename": "forest/deciduous-winter-snow-sparse-small",
 	"frame": {"x":1552,"y":1224,"w":78,"h":78},
 	"rotated": false,
 	"trimmed": true,
@@ -1918,7 +1918,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter-snow-sparse.png",
+	"filename": "forest/deciduous-winter-snow-sparse",
 	"frame": {"x":1675,"y":1935,"w":70,"h":82},
 	"rotated": false,
 	"trimmed": true,
@@ -1927,7 +1927,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter-snow-sparse2.png",
+	"filename": "forest/deciduous-winter-snow-sparse2",
 	"frame": {"x":1552,"y":1224,"w":78,"h":78},
 	"rotated": false,
 	"trimmed": true,
@@ -1936,7 +1936,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter-snow.png",
+	"filename": "forest/deciduous-winter-snow",
 	"frame": {"x":1210,"y":1494,"w":82,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -1945,7 +1945,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter-snow2.png",
+	"filename": "forest/deciduous-winter-snow2",
 	"frame": {"x":1325,"y":1135,"w":71,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -1954,7 +1954,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter-sparse2.png",
+	"filename": "forest/deciduous-winter-sparse2",
 	"frame": {"x":1871,"y":1635,"w":78,"h":78},
 	"rotated": false,
 	"trimmed": true,
@@ -1963,7 +1963,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter.png",
+	"filename": "forest/deciduous-winter",
 	"frame": {"x":1294,"y":1494,"w":82,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -1972,7 +1972,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/deciduous-winter2.png",
+	"filename": "forest/deciduous-winter2",
 	"frame": {"x":1398,"y":1135,"w":71,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -1981,7 +1981,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/great-tree-dead.png",
+	"filename": "forest/great-tree-dead",
 	"frame": {"x":521,"y":921,"w":64,"h":113},
 	"rotated": false,
 	"trimmed": true,
@@ -1990,7 +1990,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/great-tree.png",
+	"filename": "forest/great-tree",
 	"frame": {"x":272,"y":1194,"w":68,"h":116},
 	"rotated": false,
 	"trimmed": true,
@@ -1999,7 +1999,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/great-tree2.png",
+	"filename": "forest/great-tree2",
 	"frame": {"x":587,"y":901,"w":66,"h":113},
 	"rotated": false,
 	"trimmed": true,
@@ -2008,7 +2008,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/great-tree3.png",
+	"filename": "forest/great-tree3",
 	"frame": {"x":323,"y":1821,"w":67,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -2017,7 +2017,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-fall-small.png",
+	"filename": "forest/mixed-fall-small",
 	"frame": {"x":563,"y":1828,"w":84,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -2026,7 +2026,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-fall-sparse-small.png",
+	"filename": "forest/mixed-fall-sparse-small",
 	"frame": {"x":1175,"y":1134,"w":80,"h":90},
 	"rotated": false,
 	"trimmed": true,
@@ -2035,7 +2035,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-fall-sparse.png",
+	"filename": "forest/mixed-fall-sparse",
 	"frame": {"x":1119,"y":457,"w":80,"h":100},
 	"rotated": false,
 	"trimmed": true,
@@ -2044,7 +2044,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-fall-sparse2.png",
+	"filename": "forest/mixed-fall-sparse2",
 	"frame": {"x":1544,"y":343,"w":101,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -2053,7 +2053,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-fall.png",
+	"filename": "forest/mixed-fall",
 	"frame": {"x":1308,"y":126,"w":84,"h":103},
 	"rotated": false,
 	"trimmed": true,
@@ -2062,7 +2062,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-fall2.png",
+	"filename": "forest/mixed-fall2",
 	"frame": {"x":1342,"y":342,"w":97,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -2071,7 +2071,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-summer-small.png",
+	"filename": "forest/mixed-summer-small",
 	"frame": {"x":825,"y":1425,"w":77,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -2080,7 +2080,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-summer-sparse-small.png",
+	"filename": "forest/mixed-summer-sparse-small",
 	"frame": {"x":1715,"y":1305,"w":79,"h":82},
 	"rotated": false,
 	"trimmed": true,
@@ -2089,7 +2089,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-summer-sparse.png",
+	"filename": "forest/mixed-summer-sparse",
 	"frame": {"x":873,"y":466,"w":79,"h":91},
 	"rotated": false,
 	"trimmed": true,
@@ -2098,7 +2098,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-summer-sparse2.png",
+	"filename": "forest/mixed-summer-sparse2",
 	"frame": {"x":1441,"y":342,"w":101,"h":102},
 	"rotated": false,
 	"trimmed": true,
@@ -2107,7 +2107,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-summer.png",
+	"filename": "forest/mixed-summer",
 	"frame": {"x":1268,"y":564,"w":84,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -2116,7 +2116,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-summer2.png",
+	"filename": "forest/mixed-summer2",
 	"frame": {"x":1871,"y":332,"w":87,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -2125,7 +2125,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-small.png",
+	"filename": "forest/mixed-winter-small",
 	"frame": {"x":1238,"y":1844,"w":69,"h":91},
 	"rotated": false,
 	"trimmed": true,
@@ -2134,7 +2134,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-snow-small.png",
+	"filename": "forest/mixed-winter-snow-small",
 	"frame": {"x":1868,"y":1320,"w":76,"h":81},
 	"rotated": false,
 	"trimmed": true,
@@ -2143,7 +2143,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-snow-sparse-small.png",
+	"filename": "forest/mixed-winter-snow-sparse-small",
 	"frame": {"x":1874,"y":1715,"w":76,"h":79},
 	"rotated": false,
 	"trimmed": true,
@@ -2152,7 +2152,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-snow-sparse.png",
+	"filename": "forest/mixed-winter-snow-sparse",
 	"frame": {"x":1476,"y":1861,"w":76,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -2161,7 +2161,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-snow-sparse2.png",
+	"filename": "forest/mixed-winter-snow-sparse2",
 	"frame": {"x":963,"y":1941,"w":83,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -2170,7 +2170,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-snow.png",
+	"filename": "forest/mixed-winter-snow",
 	"frame": {"x":829,"y":997,"w":76,"h":100},
 	"rotated": false,
 	"trimmed": true,
@@ -2179,7 +2179,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-snow2.png",
+	"filename": "forest/mixed-winter-snow2",
 	"frame": {"x":1436,"y":760,"w":83,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -2188,7 +2188,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-sparse-small.png",
+	"filename": "forest/mixed-winter-sparse-small",
 	"frame": {"x":884,"y":1780,"w":77,"h":80},
 	"rotated": false,
 	"trimmed": true,
@@ -2197,7 +2197,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-sparse.png",
+	"filename": "forest/mixed-winter-sparse",
 	"frame": {"x":1471,"y":1135,"w":77,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -2206,7 +2206,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter-sparse2.png",
+	"filename": "forest/mixed-winter-sparse2",
 	"frame": {"x":280,"y":724,"w":101,"h":102},
 	"rotated": false,
 	"trimmed": true,
@@ -2215,7 +2215,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter.png",
+	"filename": "forest/mixed-winter",
 	"frame": {"x":1462,"y":1494,"w":80,"h":91},
 	"rotated": false,
 	"trimmed": true,
@@ -2224,7 +2224,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mixed-winter2.png",
+	"filename": "forest/mixed-winter2",
 	"frame": {"x":303,"y":1507,"w":85,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -2233,7 +2233,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms-n.png",
+	"filename": "forest/mushrooms-n",
 	"frame": {"x":323,"y":1932,"w":81,"h":62},
 	"rotated": false,
 	"trimmed": true,
@@ -2242,7 +2242,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms-ne.png",
+	"filename": "forest/mushrooms-ne",
 	"frame": {"x":1536,"y":1398,"w":67,"h":91},
 	"rotated": false,
 	"trimmed": true,
@@ -2251,7 +2251,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms-nw.png",
+	"filename": "forest/mushrooms-nw",
 	"frame": {"x":1257,"y":1134,"w":66,"h":90},
 	"rotated": false,
 	"trimmed": true,
@@ -2260,7 +2260,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms-s.png",
+	"filename": "forest/mushrooms-s",
 	"frame": {"x":1862,"y":1089,"w":81,"h":73},
 	"rotated": false,
 	"trimmed": true,
@@ -2269,7 +2269,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms-se.png",
+	"filename": "forest/mushrooms-se",
 	"frame": {"x":1133,"y":1493,"w":75,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -2278,7 +2278,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms.png",
+	"filename": "forest/mushrooms",
 	"frame": {"x":1747,"y":1930,"w":77,"h":78},
 	"rotated": false,
 	"trimmed": true,
@@ -2287,7 +2287,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms2.png",
+	"filename": "forest/mushrooms2",
 	"frame": {"x":1862,"y":1164,"w":81,"h":78},
 	"rotated": false,
 	"trimmed": true,
@@ -2296,7 +2296,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms3.png",
+	"filename": "forest/mushrooms3",
 	"frame": {"x":1862,"y":1244,"w":81,"h":74},
 	"rotated": false,
 	"trimmed": true,
@@ -2305,7 +2305,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/mushrooms4.png",
+	"filename": "forest/mushrooms4",
 	"frame": {"x":1216,"y":1974,"w":76,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -2314,7 +2314,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine-small.png",
+	"filename": "forest/pine-small",
 	"frame": {"x":1744,"y":1864,"w":81,"h":64},
 	"rotated": false,
 	"trimmed": true,
@@ -2323,7 +2323,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine-small2.png",
+	"filename": "forest/pine-small2",
 	"frame": {"x":1469,"y":235,"w":100,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -2332,7 +2332,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine-sparse-small.png",
+	"filename": "forest/pine-sparse-small",
 	"frame": {"x":1574,"y":851,"w":56,"h":91},
 	"rotated": false,
 	"trimmed": true,
@@ -2341,7 +2341,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine-sparse.png",
+	"filename": "forest/pine-sparse",
 	"frame": {"x":1050,"y":332,"w":93,"h":120},
 	"rotated": false,
 	"trimmed": true,
@@ -2350,7 +2350,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine-sparse2.png",
+	"filename": "forest/pine-sparse2",
 	"frame": {"x":551,"y":684,"w":98,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -2359,7 +2359,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine-sparse3.png",
+	"filename": "forest/pine-sparse3",
 	"frame": {"x":1629,"y":447,"w":89,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -2368,7 +2368,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine-sparse4.png",
+	"filename": "forest/pine-sparse4",
 	"frame": {"x":1648,"y":941,"w":83,"h":78},
 	"rotated": false,
 	"trimmed": true,
@@ -2377,7 +2377,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine.png",
+	"filename": "forest/pine",
 	"frame": {"x":761,"y":559,"w":100,"h":124},
 	"rotated": false,
 	"trimmed": true,
@@ -2386,7 +2386,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine2.png",
+	"filename": "forest/pine2",
 	"frame": {"x":1037,"y":224,"w":99,"h":106},
 	"rotated": false,
 	"trimmed": true,
@@ -2395,7 +2395,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine3.png",
+	"filename": "forest/pine3",
 	"frame": {"x":1774,"y":236,"w":90,"h":107},
 	"rotated": false,
 	"trimmed": true,
@@ -2404,7 +2404,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/pine4.png",
+	"filename": "forest/pine4",
 	"frame": {"x":1087,"y":126,"w":110,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -2413,7 +2413,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/snow-forest-small.png",
+	"filename": "forest/snow-forest-small",
 	"frame": {"x":1961,"y":226,"w":85,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -2422,7 +2422,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/snow-forest-sparse.png",
+	"filename": "forest/snow-forest-sparse",
 	"frame": {"x":833,"y":221,"w":96,"h":116},
 	"rotated": false,
 	"trimmed": true,
@@ -2431,7 +2431,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/snow-forest-sparse2.png",
+	"filename": "forest/snow-forest-sparse2",
 	"frame": {"x":251,"y":923,"w":100,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -2440,7 +2440,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/snow-forest-sparse3.png",
+	"filename": "forest/snow-forest-sparse3",
 	"frame": {"x":1521,"y":760,"w":82,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -2449,7 +2449,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/snow-forest.png",
+	"filename": "forest/snow-forest",
 	"frame": {"x":1394,"y":117,"w":96,"h":116},
 	"rotated": false,
 	"trimmed": true,
@@ -2458,7 +2458,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/snow-forest2.png",
+	"filename": "forest/snow-forest2",
 	"frame": {"x":251,"y":1024,"w":100,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -2467,7 +2467,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/snow-forest3.png",
+	"filename": "forest/snow-forest3",
 	"frame": {"x":1378,"y":1494,"w":82,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -2476,7 +2476,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-small.png",
+	"filename": "forest/tropical/jungle-small",
 	"frame": {"x":1977,"y":997,"w":69,"h":75},
 	"rotated": false,
 	"trimmed": true,
@@ -2485,7 +2485,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-small2.png",
+	"filename": "forest/tropical/jungle-small2",
 	"frame": {"x":1977,"y":918,"w":69,"h":77},
 	"rotated": false,
 	"trimmed": true,
@@ -2494,7 +2494,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-small5.png",
+	"filename": "forest/tropical/jungle-small5",
 	"frame": {"x":1977,"y":1074,"w":69,"h":75},
 	"rotated": false,
 	"trimmed": true,
@@ -2503,7 +2503,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-sparse.png",
+	"filename": "forest/tropical/jungle-sparse",
 	"frame": {"x":1210,"y":1398,"w":79,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -2512,7 +2512,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-sparse2.png",
+	"filename": "forest/tropical/jungle-sparse2",
 	"frame": {"x":1492,"y":942,"w":80,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -2521,7 +2521,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-sparse3.png",
+	"filename": "forest/tropical/jungle-sparse3",
 	"frame": {"x":1154,"y":1770,"w":90,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -2530,7 +2530,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-sparse4.png",
+	"filename": "forest/tropical/jungle-sparse4",
 	"frame": {"x":443,"y":1333,"w":97,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -2539,7 +2539,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-sparse5.png",
+	"filename": "forest/tropical/jungle-sparse5",
 	"frame": {"x":303,"y":1617,"w":85,"h":95},
 	"rotated": false,
 	"trimmed": true,
@@ -2548,7 +2548,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle-sparse6.png",
+	"filename": "forest/tropical/jungle-sparse6",
 	"frame": {"x":1953,"y":544,"w":93,"h":79},
 	"rotated": false,
 	"trimmed": true,
@@ -2557,7 +2557,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle.png",
+	"filename": "forest/tropical/jungle",
 	"frame": {"x":651,"y":684,"w":95,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -2566,7 +2566,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle2.png",
+	"filename": "forest/tropical/jungle2",
 	"frame": {"x":443,"y":1235,"w":98,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -2575,7 +2575,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle3.png",
+	"filename": "forest/tropical/jungle3",
 	"frame": {"x":542,"y":1432,"w":96,"h":97},
 	"rotated": false,
 	"trimmed": true,
@@ -2584,7 +2584,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle4.png",
+	"filename": "forest/tropical/jungle4",
 	"frame": {"x":1199,"y":231,"w":104,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -2593,7 +2593,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle5.png",
+	"filename": "forest/tropical/jungle5",
 	"frame": {"x":748,"y":685,"w":99,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -2602,7 +2602,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle6.png",
+	"filename": "forest/tropical/jungle6",
 	"frame": {"x":931,"y":222,"w":104,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -2611,7 +2611,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle7.png",
+	"filename": "forest/tropical/jungle7",
 	"frame": {"x":1647,"y":345,"w":102,"h":100},
 	"rotated": false,
 	"trimmed": true,
@@ -2620,7 +2620,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle8.png",
+	"filename": "forest/tropical/jungle8",
 	"frame": {"x":1673,"y":236,"w":99,"h":107},
 	"rotated": false,
 	"trimmed": true,
@@ -2629,7 +2629,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/jungle9.png",
+	"filename": "forest/tropical/jungle9",
 	"frame": {"x":1927,"y":2,"w":110,"h":112},
 	"rotated": false,
 	"trimmed": true,
@@ -2638,7 +2638,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palm-desert.png",
+	"filename": "forest/tropical/palm-desert",
 	"frame": {"x":996,"y":946,"w":89,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -2647,7 +2647,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palm-desert2.png",
+	"filename": "forest/tropical/palm-desert2",
 	"frame": {"x":342,"y":1142,"w":99,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -2656,7 +2656,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palm-desert3.png",
+	"filename": "forest/tropical/palm-desert3",
 	"frame": {"x":443,"y":1147,"w":110,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -2665,7 +2665,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palm-desert4.png",
+	"filename": "forest/tropical/palm-desert4",
 	"frame": {"x":825,"y":1629,"w":86,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -2674,7 +2674,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palm-desert5.png",
+	"filename": "forest/tropical/palm-desert5",
 	"frame": {"x":655,"y":899,"w":89,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -2683,7 +2683,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palm-desert6.png",
+	"filename": "forest/tropical/palm-desert6",
 	"frame": {"x":1871,"y":442,"w":87,"h":100},
 	"rotated": false,
 	"trimmed": true,
@@ -2692,7 +2692,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-small4.png",
+	"filename": "forest/tropical/palms-small4",
 	"frame": {"x":1135,"y":1974,"w":79,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -2701,7 +2701,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-small5.png",
+	"filename": "forest/tropical/palms-small5",
 	"frame": {"x":1977,"y":1151,"w":69,"h":75},
 	"rotated": false,
 	"trimmed": true,
@@ -2710,7 +2710,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-small6.png",
+	"filename": "forest/tropical/palms-small6",
 	"frame": {"x":1719,"y":1472,"w":75,"h":74},
 	"rotated": false,
 	"trimmed": true,
@@ -2719,7 +2719,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-sparse.png",
+	"filename": "forest/tropical/palms-sparse",
 	"frame": {"x":913,"y":1604,"w":86,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -2728,7 +2728,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-sparse2.png",
+	"filename": "forest/tropical/palms-sparse2",
 	"frame": {"x":1866,"y":225,"w":93,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -2737,7 +2737,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-sparse3.png",
+	"filename": "forest/tropical/palms-sparse3",
 	"frame": {"x":543,"y":1242,"w":98,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -2746,7 +2746,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-sparse4.png",
+	"filename": "forest/tropical/palms-sparse4",
 	"frame": {"x":910,"y":854,"w":94,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -2755,7 +2755,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-sparse5.png",
+	"filename": "forest/tropical/palms-sparse5",
 	"frame": {"x":1100,"y":859,"w":91,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -2764,7 +2764,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms-sparse6.png",
+	"filename": "forest/tropical/palms-sparse6",
 	"frame": {"x":390,"y":1522,"w":94,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -2773,7 +2773,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms.png",
+	"filename": "forest/tropical/palms",
 	"frame": {"x":650,"y":791,"w":93,"h":106},
 	"rotated": false,
 	"trimmed": true,
@@ -2782,7 +2782,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms2.png",
+	"filename": "forest/tropical/palms2",
 	"frame": {"x":542,"y":1625,"w":93,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -2791,7 +2791,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms3.png",
+	"filename": "forest/tropical/palms3",
 	"frame": {"x":1780,"y":117,"w":103,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -2800,7 +2800,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms4.png",
+	"filename": "forest/tropical/palms4",
 	"frame": {"x":280,"y":828,"w":101,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -2809,7 +2809,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms5.png",
+	"filename": "forest/tropical/palms5",
 	"frame": {"x":1199,"y":126,"w":107,"h":103},
 	"rotated": false,
 	"trimmed": true,
@@ -2818,7 +2818,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/palms6.png",
+	"filename": "forest/tropical/palms6",
 	"frame": {"x":1145,"y":338,"w":101,"h":110},
 	"rotated": false,
 	"trimmed": true,
@@ -2827,7 +2827,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest-small.png",
+	"filename": "forest/tropical/rainforest-small",
 	"frame": {"x":440,"y":147,"w":135,"h":144},
 	"rotated": false,
 	"trimmed": true,
@@ -2836,7 +2836,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest-small2.png",
+	"filename": "forest/tropical/rainforest-small2",
 	"frame": {"x":2,"y":2,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2845,7 +2845,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest-small3.png",
+	"filename": "forest/tropical/rainforest-small3",
 	"frame": {"x":2,"y":148,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2854,7 +2854,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest-small4.png",
+	"filename": "forest/tropical/rainforest-small4",
 	"frame": {"x":148,"y":2,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2863,7 +2863,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest-small5.png",
+	"filename": "forest/tropical/rainforest-small5",
 	"frame": {"x":2,"y":294,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2872,7 +2872,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest-small6.png",
+	"filename": "forest/tropical/rainforest-small6",
 	"frame": {"x":148,"y":148,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2881,7 +2881,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest.png",
+	"filename": "forest/tropical/rainforest",
 	"frame": {"x":584,"y":2,"w":135,"h":143},
 	"rotated": false,
 	"trimmed": true,
@@ -2890,7 +2890,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest2.png",
+	"filename": "forest/tropical/rainforest2",
 	"frame": {"x":440,"y":2,"w":142,"h":143},
 	"rotated": false,
 	"trimmed": true,
@@ -2899,7 +2899,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest3.png",
+	"filename": "forest/tropical/rainforest3",
 	"frame": {"x":294,"y":2,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2908,7 +2908,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest4.png",
+	"filename": "forest/tropical/rainforest4",
 	"frame": {"x":2,"y":586,"w":141,"h":142},
 	"rotated": false,
 	"trimmed": true,
@@ -2917,7 +2917,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest5.png",
+	"filename": "forest/tropical/rainforest5",
 	"frame": {"x":148,"y":440,"w":144,"h":136},
 	"rotated": false,
 	"trimmed": true,
@@ -2926,7 +2926,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest6.png",
+	"filename": "forest/tropical/rainforest6",
 	"frame": {"x":2,"y":440,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2935,7 +2935,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest7.png",
+	"filename": "forest/tropical/rainforest7",
 	"frame": {"x":294,"y":294,"w":144,"h":136},
 	"rotated": false,
 	"trimmed": true,
@@ -2944,7 +2944,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest8.png",
+	"filename": "forest/tropical/rainforest8",
 	"frame": {"x":148,"y":294,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2953,7 +2953,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/rainforest9.png",
+	"filename": "forest/tropical/rainforest9",
 	"frame": {"x":294,"y":148,"w":144,"h":144},
 	"rotated": false,
 	"trimmed": false,
@@ -2962,7 +2962,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna-small.png",
+	"filename": "forest/tropical/savanna-small",
 	"frame": {"x":1870,"y":1403,"w":79,"h":80},
 	"rotated": false,
 	"trimmed": true,
@@ -2971,7 +2971,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna-sparse5.png",
+	"filename": "forest/tropical/savanna-sparse5",
 	"frame": {"x":954,"y":462,"w":80,"h":95},
 	"rotated": false,
 	"trimmed": true,
@@ -2980,7 +2980,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna.png",
+	"filename": "forest/tropical/savanna",
 	"frame": {"x":1571,"y":236,"w":100,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -2989,7 +2989,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna10.png",
+	"filename": "forest/tropical/savanna10",
 	"frame": {"x":1201,"y":457,"w":91,"h":97},
 	"rotated": false,
 	"trimmed": true,
@@ -2998,7 +2998,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna11.png",
+	"filename": "forest/tropical/savanna11",
 	"frame": {"x":1744,"y":1786,"w":81,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -3007,7 +3007,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna2.png",
+	"filename": "forest/tropical/savanna2",
 	"frame": {"x":1047,"y":1398,"w":85,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -3016,7 +3016,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna3.png",
+	"filename": "forest/tropical/savanna3",
 	"frame": {"x":554,"y":791,"w":94,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3025,7 +3025,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna4.png",
+	"filename": "forest/tropical/savanna4",
 	"frame": {"x":786,"y":466,"w":85,"h":91},
 	"rotated": false,
 	"trimmed": true,
@@ -3034,7 +3034,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna5.png",
+	"filename": "forest/tropical/savanna5",
 	"frame": {"x":1774,"y":833,"w":81,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -3043,7 +3043,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna6.png",
+	"filename": "forest/tropical/savanna6",
 	"frame": {"x":640,"y":1432,"w":89,"h":100},
 	"rotated": false,
 	"trimmed": true,
@@ -3052,7 +3052,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna7.png",
+	"filename": "forest/tropical/savanna7",
 	"frame": {"x":725,"y":1726,"w":74,"h":88},
 	"rotated": false,
 	"trimmed": true,
@@ -3061,7 +3061,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna8.png",
+	"filename": "forest/tropical/savanna8",
 	"frame": {"x":1390,"y":1861,"w":84,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -3070,7 +3070,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "forest/tropical/savanna9.png",
+	"filename": "forest/tropical/savanna9",
 	"frame": {"x":1365,"y":235,"w":102,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -3079,7 +3079,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/ice-nw-n-ne.png",
+	"filename": "frozen/ice-nw-n-ne",
 	"frame": {"x":175,"y":2005,"w":72,"h":41},
 	"rotated": false,
 	"trimmed": true,
@@ -3088,7 +3088,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/ice-se-s-sw.png",
+	"filename": "frozen/ice-se-s-sw",
 	"frame": {"x":1747,"y":2010,"w":72,"h":36},
 	"rotated": false,
 	"trimmed": true,
@@ -3097,7 +3097,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/ice-to-water-nw.png",
+	"filename": "frozen/ice-to-water-nw",
 	"frame": {"x":1951,"y":1434,"w":24,"h":46},
 	"rotated": false,
 	"trimmed": true,
@@ -3106,7 +3106,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/ice-to-water-s.png",
+	"filename": "frozen/ice-to-water-s",
 	"frame": {"x":863,"y":670,"w":43,"h":13},
 	"rotated": false,
 	"trimmed": true,
@@ -3115,7 +3115,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/ice-to-water-se-s-sw.png",
+	"filename": "frozen/ice-to-water-se-s-sw",
 	"frame": {"x":1939,"y":2014,"w":48,"h":32},
 	"rotated": false,
 	"trimmed": true,
@@ -3124,7 +3124,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/ice-to-water-sw-nw.png",
+	"filename": "frozen/ice-to-water-sw-nw",
 	"frame": {"x":1951,"y":1362,"w":24,"h":70},
 	"rotated": false,
 	"trimmed": true,
@@ -3133,7 +3133,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/ice-to-water-sw.png",
+	"filename": "frozen/ice-to-water-sw",
 	"frame": {"x":177,"y":1194,"w":17,"h":31},
 	"rotated": false,
 	"trimmed": true,
@@ -3142,7 +3142,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/snow-ne-se.png",
+	"filename": "frozen/snow-ne-se",
 	"frame": {"x":1946,"y":1288,"w":29,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -3151,7 +3151,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/snow-nw-n-ne.png",
+	"filename": "frozen/snow-nw-n-ne",
 	"frame": {"x":325,"y":1996,"w":72,"h":50},
 	"rotated": false,
 	"trimmed": true,
@@ -3160,7 +3160,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/snow-to-water-nw-n-ne.png",
+	"filename": "frozen/snow-to-water-nw-n-ne",
 	"frame": {"x":1504,"y":1096,"w":72,"h":37},
 	"rotated": false,
 	"trimmed": true,
@@ -3169,7 +3169,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/snow-to-water-s.png",
+	"filename": "frozen/snow-to-water-s",
 	"frame": {"x":1008,"y":2032,"w":38,"h":14},
 	"rotated": false,
 	"trimmed": true,
@@ -3178,7 +3178,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "frozen/snow-to-water-se.png",
+	"filename": "frozen/snow-to-water-se",
 	"frame": {"x":1365,"y":2008,"w":23,"h":35},
 	"rotated": false,
 	"trimmed": true,
@@ -3187,7 +3187,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/dry-abrupt-nw.png",
+	"filename": "grass/dry-abrupt-nw",
 	"frame": {"x":1952,"y":1724,"w":23,"h":41},
 	"rotated": false,
 	"trimmed": true,
@@ -3196,7 +3196,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/dry-n.png",
+	"filename": "grass/dry-n",
 	"frame": {"x":1452,"y":2028,"w":47,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -3205,7 +3205,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/dry-sw-nw-n.png",
+	"filename": "grass/dry-sw-nw-n",
 	"frame": {"x":1246,"y":1770,"w":61,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -3214,7 +3214,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/green-ne-se.png",
+	"filename": "grass/green-ne-se",
 	"frame": {"x":1944,"y":920,"w":31,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -3223,7 +3223,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/green-ne.png",
+	"filename": "grass/green-ne",
 	"frame": {"x":1951,"y":1482,"w":24,"h":42},
 	"rotated": false,
 	"trimmed": true,
@@ -3232,7 +3232,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/leaf-litter-long-n.png",
+	"filename": "grass/leaf-litter-long-n",
 	"frame": {"x":1821,"y":2012,"w":56,"h":34},
 	"rotated": false,
 	"trimmed": true,
@@ -3241,7 +3241,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/leaf-litter-n.png",
+	"filename": "grass/leaf-litter-n",
 	"frame": {"x":229,"y":1663,"w":51,"h":25},
 	"rotated": false,
 	"trimmed": true,
@@ -3250,7 +3250,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/leaf-litter-nw-n-ne.png",
+	"filename": "grass/leaf-litter-nw-n-ne",
 	"frame": {"x":399,"y":1997,"w":72,"h":49},
 	"rotated": false,
 	"trimmed": true,
@@ -3259,7 +3259,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grass/semi-dry-n.png",
+	"filename": "grass/semi-dry-n",
 	"frame": {"x":1501,"y":2028,"w":47,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -3268,7 +3268,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grid-n.png",
+	"filename": "grid-n",
 	"frame": {"x":221,"y":724,"w":38,"h":3},
 	"rotated": false,
 	"trimmed": true,
@@ -3277,7 +3277,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "grid-s.png",
+	"filename": "grid-s",
 	"frame": {"x":477,"y":921,"w":38,"h":3},
 	"rotated": false,
 	"trimmed": true,
@@ -3286,7 +3286,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/desert-n.png",
+	"filename": "hills/desert-n",
 	"frame": {"x":1145,"y":324,"w":42,"h":12},
 	"rotated": false,
 	"trimmed": true,
@@ -3295,7 +3295,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/desert-s.png",
+	"filename": "hills/desert-s",
 	"frame": {"x":951,"y":1931,"w":39,"h":8},
 	"rotated": false,
 	"trimmed": true,
@@ -3304,7 +3304,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/dry-n-ne.png",
+	"filename": "hills/dry-n-ne",
 	"frame": {"x":1578,"y":1096,"w":55,"h":37},
 	"rotated": false,
 	"trimmed": true,
@@ -3313,7 +3313,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/dry-to-water-ne-se.png",
+	"filename": "hills/dry-to-water-ne-se",
 	"frame": {"x":1853,"y":730,"w":20,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -3322,7 +3322,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/dry-to-water-se.png",
+	"filename": "hills/dry-to-water-se",
 	"frame": {"x":1951,"y":1568,"w":24,"h":39},
 	"rotated": false,
 	"trimmed": true,
@@ -3331,7 +3331,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/regular-to-water-ne-se.png",
+	"filename": "hills/regular-to-water-ne-se",
 	"frame": {"x":1955,"y":1841,"w":20,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -3340,7 +3340,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/regular-to-water-se.png",
+	"filename": "hills/regular-to-water-se",
 	"frame": {"x":1951,"y":1609,"w":24,"h":39},
 	"rotated": false,
 	"trimmed": true,
@@ -3349,7 +3349,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/snow-to-hills-ne-se.png",
+	"filename": "hills/snow-to-hills-ne-se",
 	"frame": {"x":1952,"y":1650,"w":23,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -3358,7 +3358,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/snow-to-hills-nw-n.png",
+	"filename": "hills/snow-to-hills-nw-n",
 	"frame": {"x":418,"y":539,"w":56,"h":37},
 	"rotated": false,
 	"trimmed": true,
@@ -3367,7 +3367,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/snow-to-hills-sw-nw.png",
+	"filename": "hills/snow-to-hills-sw-nw",
 	"frame": {"x":1953,"y":1767,"w":22,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -3376,7 +3376,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "hills/snow-to-water-s.png",
+	"filename": "hills/snow-to-water-s",
 	"frame": {"x":1826,"y":224,"w":38,"h":9},
 	"rotated": false,
 	"trimmed": true,
@@ -3385,7 +3385,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "light-n.png",
+	"filename": "light-n",
 	"frame": {"x":963,"y":1780,"w":36,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -3394,7 +3394,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "misc/detritus/detritusB-15.png",
+	"filename": "misc/detritus/detritusB-15",
 	"frame": {"x":1147,"y":1920,"w":72,"h":52},
 	"rotated": false,
 	"trimmed": true,
@@ -3403,7 +3403,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic-castle-n.png",
+	"filename": "mountains/basic-castle-n",
 	"frame": {"x":1719,"y":1548,"w":75,"h":68},
 	"rotated": false,
 	"trimmed": true,
@@ -3412,7 +3412,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic-castle-nw.png",
+	"filename": "mountains/basic-castle-nw",
 	"frame": {"x":1690,"y":765,"w":72,"h":83},
 	"rotated": false,
 	"trimmed": true,
@@ -3421,7 +3421,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic-castle-s.png",
+	"filename": "mountains/basic-castle-s",
 	"frame": {"x":1197,"y":1304,"w":83,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -3430,7 +3430,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic-castle-se.png",
+	"filename": "mountains/basic-castle-se",
 	"frame": {"x":390,"y":1620,"w":94,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -3439,7 +3439,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic-castle-sw-nw.png",
+	"filename": "mountains/basic-castle-sw-nw",
 	"frame": {"x":1654,"y":1640,"w":72,"h":83},
 	"rotated": false,
 	"trimmed": true,
@@ -3448,7 +3448,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic-castle-sw.png",
+	"filename": "mountains/basic-castle-sw",
 	"frame": {"x":641,"y":1338,"w":88,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -3457,7 +3457,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic-ne.png",
+	"filename": "mountains/basic-ne",
 	"frame": {"x":884,"y":1727,"w":27,"h":45},
 	"rotated": false,
 	"trimmed": true,
@@ -3466,7 +3466,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic.png",
+	"filename": "mountains/basic",
 	"frame": {"x":1090,"y":1040,"w":87,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -3475,7 +3475,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic2.png",
+	"filename": "mountains/basic2",
 	"frame": {"x":542,"y":1337,"w":97,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -3484,7 +3484,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic3.png",
+	"filename": "mountains/basic3",
 	"frame": {"x":639,"y":1534,"w":90,"h":90},
 	"rotated": false,
 	"trimmed": true,
@@ -3493,7 +3493,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic5_1.png",
+	"filename": "mountains/basic5_1",
 	"frame": {"x":649,"y":1827,"w":75,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -3502,7 +3502,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic5_2.png",
+	"filename": "mountains/basic5_2",
 	"frame": {"x":150,"y":1690,"w":72,"h":157},
 	"rotated": false,
 	"trimmed": true,
@@ -3511,7 +3511,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic5_3.png",
+	"filename": "mountains/basic5_3",
 	"frame": {"x":649,"y":1938,"w":77,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3520,7 +3520,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic6_1.png",
+	"filename": "mountains/basic6_1",
 	"frame": {"x":145,"y":586,"w":74,"h":141},
 	"rotated": false,
 	"trimmed": true,
@@ -3529,7 +3529,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic6_2.png",
+	"filename": "mountains/basic6_2",
 	"frame": {"x":224,"y":1351,"w":72,"h":154},
 	"rotated": false,
 	"trimmed": true,
@@ -3538,7 +3538,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic6_3.png",
+	"filename": "mountains/basic6_3",
 	"frame": {"x":1189,"y":559,"w":77,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3547,7 +3547,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range1_1.png",
+	"filename": "mountains/basic_range1_1",
 	"frame": {"x":1222,"y":1589,"w":81,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -3556,7 +3556,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range1_2.png",
+	"filename": "mountains/basic_range1_2",
 	"frame": {"x":206,"y":729,"w":72,"h":119},
 	"rotated": false,
 	"trimmed": true,
@@ -3565,7 +3565,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range1_3.png",
+	"filename": "mountains/basic_range1_3",
 	"frame": {"x":863,"y":559,"w":83,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -3574,7 +3574,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range2_1.png",
+	"filename": "mountains/basic_range2_1",
 	"frame": {"x":909,"y":670,"w":80,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -3583,7 +3583,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range2_2.png",
+	"filename": "mountains/basic_range2_2",
 	"frame": {"x":621,"y":1016,"w":72,"h":112},
 	"rotated": false,
 	"trimmed": true,
@@ -3592,7 +3592,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range2_3.png",
+	"filename": "mountains/basic_range2_3",
 	"frame": {"x":1492,"y":851,"w":80,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -3601,7 +3601,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range3_1.png",
+	"filename": "mountains/basic_range3_1",
 	"frame": {"x":948,"y":559,"w":76,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -3610,7 +3610,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range3_2.png",
+	"filename": "mountains/basic_range3_2",
 	"frame": {"x":229,"y":1507,"w":72,"h":154},
 	"rotated": false,
 	"trimmed": true,
@@ -3619,7 +3619,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range3_3.png",
+	"filename": "mountains/basic_range3_3",
 	"frame": {"x":2,"y":1351,"w":72,"h":181},
 	"rotated": false,
 	"trimmed": true,
@@ -3628,7 +3628,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range3_4.png",
+	"filename": "mountains/basic_range3_4",
 	"frame": {"x":76,"y":1534,"w":72,"h":180},
 	"rotated": false,
 	"trimmed": true,
@@ -3637,7 +3637,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range3_5.png",
+	"filename": "mountains/basic_range3_5",
 	"frame": {"x":1443,"y":550,"w":77,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3646,7 +3646,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range4_1.png",
+	"filename": "mountains/basic_range4_1",
 	"frame": {"x":1227,"y":669,"w":76,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3655,7 +3655,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range4_2.png",
+	"filename": "mountains/basic_range4_2",
 	"frame": {"x":2,"y":1534,"w":72,"h":181},
 	"rotated": false,
 	"trimmed": true,
@@ -3664,7 +3664,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range4_3.png",
+	"filename": "mountains/basic_range4_3",
 	"frame": {"x":103,"y":876,"w":72,"h":177},
 	"rotated": false,
 	"trimmed": true,
@@ -3673,7 +3673,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range4_4.png",
+	"filename": "mountains/basic_range4_4",
 	"frame": {"x":101,"y":1898,"w":72,"h":148},
 	"rotated": false,
 	"trimmed": true,
@@ -3682,7 +3682,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/basic_range4_5.png",
+	"filename": "mountains/basic_range4_5",
 	"frame": {"x":442,"y":926,"w":77,"h":111},
 	"rotated": false,
 	"trimmed": true,
@@ -3691,7 +3691,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/blend-from-dry-se.png",
+	"filename": "mountains/blend-from-dry-se",
 	"frame": {"x":251,"y":850,"w":27,"h":67},
 	"rotated": false,
 	"trimmed": true,
@@ -3700,7 +3700,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/cloud.png",
+	"filename": "mountains/cloud",
 	"frame": {"x":721,"y":126,"w":120,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -3709,7 +3709,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/cloud2.png",
+	"filename": "mountains/cloud2",
 	"frame": {"x":843,"y":126,"w":120,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -3718,7 +3718,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/cloud3.png",
+	"filename": "mountains/cloud3",
 	"frame": {"x":965,"y":126,"w":120,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -3727,7 +3727,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry-castle-nw.png",
+	"filename": "mountains/dry-castle-nw",
 	"frame": {"x":1666,"y":1725,"w":72,"h":83},
 	"rotated": false,
 	"trimmed": true,
@@ -3736,7 +3736,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry-castle-s.png",
+	"filename": "mountains/dry-castle-s",
 	"frame": {"x":1305,"y":1589,"w":83,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -3745,7 +3745,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry-castle-se.png",
+	"filename": "mountains/dry-castle-se",
 	"frame": {"x":1533,"y":446,"w":94,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -3754,7 +3754,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry-castle-sw-nw.png",
+	"filename": "mountains/dry-castle-sw-nw",
 	"frame": {"x":1670,"y":1810,"w":72,"h":83},
 	"rotated": false,
 	"trimmed": true,
@@ -3763,7 +3763,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry-castle-sw.png",
+	"filename": "mountains/dry-castle-sw",
 	"frame": {"x":994,"y":1123,"w":88,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -3772,7 +3772,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry.png",
+	"filename": "mountains/dry",
 	"frame": {"x":1029,"y":1304,"w":87,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -3781,7 +3781,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry2.png",
+	"filename": "mountains/dry2",
 	"frame": {"x":443,"y":1427,"w":97,"h":93},
 	"rotated": false,
 	"trimmed": true,
@@ -3790,7 +3790,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry3.png",
+	"filename": "mountains/dry3",
 	"frame": {"x":1087,"y":948,"w":90,"h":90},
 	"rotated": false,
 	"trimmed": true,
@@ -3799,7 +3799,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry5_1.png",
+	"filename": "mountains/dry5_1",
 	"frame": {"x":991,"y":670,"w":75,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -3808,7 +3808,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry5_2.png",
+	"filename": "mountains/dry5_2",
 	"frame": {"x":177,"y":876,"w":72,"h":157},
 	"rotated": false,
 	"trimmed": true,
@@ -3817,7 +3817,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry5_3.png",
+	"filename": "mountains/dry5_3",
 	"frame": {"x":1305,"y":667,"w":77,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3826,7 +3826,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry6_1.png",
+	"filename": "mountains/dry6_1",
 	"frame": {"x":477,"y":539,"w":74,"h":141},
 	"rotated": false,
 	"trimmed": true,
@@ -3835,7 +3835,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry6_2.png",
+	"filename": "mountains/dry6_2",
 	"frame": {"x":712,"y":354,"w":72,"h":154},
 	"rotated": false,
 	"trimmed": true,
@@ -3844,7 +3844,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry6_3.png",
+	"filename": "mountains/dry6_3",
 	"frame": {"x":1522,"y":550,"w":77,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3853,7 +3853,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range1_1.png",
+	"filename": "mountains/dry_range1_1",
 	"frame": {"x":1342,"y":1304,"w":81,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -3862,7 +3862,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range1_2.png",
+	"filename": "mountains/dry_range1_2",
 	"frame": {"x":477,"y":682,"w":72,"h":119},
 	"rotated": false,
 	"trimmed": true,
@@ -3871,7 +3871,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range1_3.png",
+	"filename": "mountains/dry_range1_3",
 	"frame": {"x":1026,"y":559,"w":83,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -3880,7 +3880,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range2_1.png",
+	"filename": "mountains/dry_range2_1",
 	"frame": {"x":1068,"y":670,"w":80,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -3889,7 +3889,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range2_2.png",
+	"filename": "mountains/dry_range2_2",
 	"frame": {"x":695,"y":1010,"w":72,"h":112},
 	"rotated": false,
 	"trimmed": true,
@@ -3898,7 +3898,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range2_3.png",
+	"filename": "mountains/dry_range2_3",
 	"frame": {"x":1632,"y":850,"w":80,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -3907,7 +3907,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range3_1.png",
+	"filename": "mountains/dry_range3_1",
 	"frame": {"x":1111,"y":559,"w":76,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -3916,7 +3916,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range3_2.png",
+	"filename": "mountains/dry_range3_2",
 	"frame": {"x":224,"y":1690,"w":72,"h":154},
 	"rotated": false,
 	"trimmed": true,
@@ -3925,7 +3925,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range3_3.png",
+	"filename": "mountains/dry_range3_3",
 	"frame": {"x":2,"y":1717,"w":72,"h":181},
 	"rotated": false,
 	"trimmed": true,
@@ -3934,7 +3934,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range3_4.png",
+	"filename": "mountains/dry_range3_4",
 	"frame": {"x":76,"y":1716,"w":72,"h":180},
 	"rotated": false,
 	"trimmed": true,
@@ -3943,7 +3943,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range3_5.png",
+	"filename": "mountains/dry_range3_5",
 	"frame": {"x":1601,"y":545,"w":77,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3952,7 +3952,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range4_1.png",
+	"filename": "mountains/dry_range4_1",
 	"frame": {"x":1607,"y":655,"w":76,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -3961,7 +3961,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range4_2.png",
+	"filename": "mountains/dry_range4_2",
 	"frame": {"x":76,"y":1351,"w":72,"h":181},
 	"rotated": false,
 	"trimmed": true,
@@ -3970,7 +3970,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range4_3.png",
+	"filename": "mountains/dry_range4_3",
 	"frame": {"x":103,"y":1055,"w":72,"h":177},
 	"rotated": false,
 	"trimmed": true,
@@ -3979,7 +3979,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range4_4.png",
+	"filename": "mountains/dry_range4_4",
 	"frame": {"x":249,"y":1846,"w":72,"h":148},
 	"rotated": false,
 	"trimmed": true,
@@ -3988,7 +3988,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/dry_range4_5.png",
+	"filename": "mountains/dry_range4_5",
 	"frame": {"x":643,"y":1130,"w":77,"h":111},
 	"rotated": false,
 	"trimmed": true,
@@ -3997,7 +3997,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/peak_large1.png",
+	"filename": "mountains/peak_large1",
 	"frame": {"x":1048,"y":1974,"w":85,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -4006,7 +4006,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/peak_large2.png",
+	"filename": "mountains/peak_large2",
 	"frame": {"x":2,"y":1900,"w":97,"h":145},
 	"rotated": false,
 	"trimmed": true,
@@ -4015,7 +4015,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/peak_range1_2.png",
+	"filename": "mountains/peak_range1_2",
 	"frame": {"x":786,"y":339,"w":94,"h":125},
 	"rotated": false,
 	"trimmed": true,
@@ -4024,7 +4024,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow.png",
+	"filename": "mountains/snow",
 	"frame": {"x":1084,"y":1134,"w":89,"h":90},
 	"rotated": false,
 	"trimmed": true,
@@ -4033,7 +4033,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow2.png",
+	"filename": "mountains/snow2",
 	"frame": {"x":542,"y":1531,"w":95,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -4042,7 +4042,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow3.png",
+	"filename": "mountains/snow3",
 	"frame": {"x":1720,"y":452,"w":93,"h":88},
 	"rotated": false,
 	"trimmed": true,
@@ -4051,7 +4051,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow5_1.png",
+	"filename": "mountains/snow5_1",
 	"frame": {"x":1150,"y":670,"w":75,"h":109},
 	"rotated": false,
 	"trimmed": true,
@@ -4060,7 +4060,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow5_2.png",
+	"filename": "mountains/snow5_2",
 	"frame": {"x":177,"y":1035,"w":72,"h":157},
 	"rotated": false,
 	"trimmed": true,
@@ -4069,7 +4069,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow5_3.png",
+	"filename": "mountains/snow5_3",
 	"frame": {"x":1680,"y":545,"w":77,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -4078,7 +4078,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow6_1.png",
+	"filename": "mountains/snow6_1",
 	"frame": {"x":477,"y":803,"w":75,"h":116},
 	"rotated": false,
 	"trimmed": true,
@@ -4087,7 +4087,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow6_2.png",
+	"filename": "mountains/snow6_2",
 	"frame": {"x":175,"y":1849,"w":72,"h":154},
 	"rotated": false,
 	"trimmed": true,
@@ -4096,7 +4096,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/snow6_3.png",
+	"filename": "mountains/snow6_3",
 	"frame": {"x":1685,"y":655,"w":77,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -4105,7 +4105,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/volcano-small.png",
+	"filename": "mountains/volcano-small",
 	"frame": {"x":1875,"y":544,"w":76,"h":107},
 	"rotated": false,
 	"trimmed": true,
@@ -4114,7 +4114,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/volcano.png",
+	"filename": "mountains/volcano",
 	"frame": {"x":727,"y":221,"w":104,"h":116},
 	"rotated": false,
 	"trimmed": true,
@@ -4123,7 +4123,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/volcano6_1.png",
+	"filename": "mountains/volcano6_1",
 	"frame": {"x":196,"y":1194,"w":74,"h":155},
 	"rotated": false,
 	"trimmed": true,
@@ -4132,7 +4132,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/volcano6_2.png",
+	"filename": "mountains/volcano6_2",
 	"frame": {"x":150,"y":1351,"w":72,"h":176},
 	"rotated": false,
 	"trimmed": true,
@@ -4141,7 +4141,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "mountains/volcano6_3.png",
+	"filename": "mountains/volcano6_3",
 	"frame": {"x":150,"y":1529,"w":77,"h":159},
 	"rotated": false,
 	"trimmed": true,
@@ -4150,7 +4150,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "off-map/border-ne-se.png",
+	"filename": "off-map/border-ne-se",
 	"frame": {"x":1827,"y":1786,"w":45,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -4159,7 +4159,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "off-map/border-nw-n-ne.png",
+	"filename": "off-map/border-nw-n-ne",
 	"frame": {"x":884,"y":1862,"w":62,"h":27},
 	"rotated": false,
 	"trimmed": true,
@@ -4168,7 +4168,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "off-map/border-se-s-sw.png",
+	"filename": "off-map/border-se-s-sw",
 	"frame": {"x":1681,"y":2019,"w":62,"h":27},
 	"rotated": false,
 	"trimmed": true,
@@ -4177,7 +4177,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "off-map/border-sw-nw.png",
+	"filename": "off-map/border-sw-nw",
 	"frame": {"x":1827,"y":1860,"w":45,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -4186,7 +4186,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "off-map/symbol.png",
+	"filename": "off-map/symbol",
 	"frame": {"x":389,"y":1818,"w":1,"h":1},
 	"rotated": false,
 	"trimmed": true,
@@ -4195,7 +4195,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "sand/beach2-n-ne.png",
+	"filename": "sand/beach2-n-ne",
 	"frame": {"x":1977,"y":1524,"w":69,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -4204,7 +4204,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "sand/desert2-sw-nw.png",
+	"filename": "sand/desert2-sw-nw",
 	"frame": {"x":1977,"y":1598,"w":69,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -4213,7 +4213,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "sand/shore-concave-r-tr.png",
+	"filename": "sand/shore-concave-r-tr",
 	"frame": {"x":473,"y":2002,"w":62,"h":44},
 	"rotated": false,
 	"trimmed": true,
@@ -4222,7 +4222,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "sand/shore-concave-tl-tr.png",
+	"filename": "sand/shore-concave-tl-tr",
 	"frame": {"x":1733,"y":941,"w":39,"h":70},
 	"rotated": false,
 	"trimmed": true,
@@ -4231,7 +4231,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/mud-long-ne.png",
+	"filename": "swamp/mud-long-ne",
 	"frame": {"x":1945,"y":994,"w":30,"h":47},
 	"rotated": false,
 	"trimmed": true,
@@ -4240,7 +4240,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/mud-long-se.png",
+	"filename": "swamp/mud-long-se",
 	"frame": {"x":1945,"y":1043,"w":30,"h":47},
 	"rotated": false,
 	"trimmed": true,
@@ -4249,7 +4249,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/mud-to-land-ne.png",
+	"filename": "swamp/mud-to-land-ne",
 	"frame": {"x":1945,"y":1092,"w":30,"h":47},
 	"rotated": false,
 	"trimmed": true,
@@ -4258,7 +4258,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/mud-to-land-se.png",
+	"filename": "swamp/mud-to-land-se",
 	"frame": {"x":1945,"y":1141,"w":30,"h":47},
 	"rotated": false,
 	"trimmed": true,
@@ -4267,7 +4267,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small-n.png",
+	"filename": "swamp/reed-small-n",
 	"frame": {"x":1309,"y":1850,"w":79,"h":84},
 	"rotated": false,
 	"trimmed": true,
@@ -4276,7 +4276,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small-ne.png",
+	"filename": "swamp/reed-small-ne",
 	"frame": {"x":1764,"y":656,"w":87,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -4285,7 +4285,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small-nw.png",
+	"filename": "swamp/reed-small-nw",
 	"frame": {"x":1354,"y":558,"w":87,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -4294,7 +4294,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small-s.png",
+	"filename": "swamp/reed-small-s",
 	"frame": {"x":298,"y":1714,"w":89,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -4303,7 +4303,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small-se.png",
+	"filename": "swamp/reed-small-se",
 	"frame": {"x":851,"y":1202,"w":84,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -4312,7 +4312,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small-sw.png",
+	"filename": "swamp/reed-small-sw",
 	"frame": {"x":877,"y":1303,"w":84,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -4321,7 +4321,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small2.png",
+	"filename": "swamp/reed-small2",
 	"frame": {"x":726,"y":1816,"w":72,"h":88},
 	"rotated": false,
 	"trimmed": true,
@@ -4330,7 +4330,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small3.png",
+	"filename": "swamp/reed-small3",
 	"frame": {"x":1036,"y":455,"w":81,"h":102},
 	"rotated": false,
 	"trimmed": true,
@@ -4339,7 +4339,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed-small4.png",
+	"filename": "swamp/reed-small4",
 	"frame": {"x":1568,"y":1304,"w":72,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -4348,7 +4348,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed.png",
+	"filename": "swamp/reed",
 	"frame": {"x":1224,"y":953,"w":84,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -4357,7 +4357,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed2.png",
+	"filename": "swamp/reed2",
 	"frame": {"x":904,"y":1404,"w":80,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -4366,7 +4366,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed3.png",
+	"filename": "swamp/reed3",
 	"frame": {"x":1354,"y":452,"w":87,"h":104},
 	"rotated": false,
 	"trimmed": true,
@@ -4375,7 +4375,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed4.png",
+	"filename": "swamp/reed4",
 	"frame": {"x":633,"y":1726,"w":90,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -4384,7 +4384,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed5.png",
+	"filename": "swamp/reed5",
 	"frame": {"x":907,"y":997,"w":87,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -4393,7 +4393,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "swamp/reed6.png",
+	"filename": "swamp/reed6",
 	"frame": {"x":392,"y":1818,"w":90,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -4402,7 +4402,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_all_30-pressed.png",
+	"filename": "symbols/terrain_group_all_30-pressed",
 	"frame": {"x":877,"y":1404,"w":20,"h":19},
 	"rotated": false,
 	"trimmed": true,
@@ -4411,7 +4411,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_castle_30.png",
+	"filename": "symbols/terrain_group_castle_30",
 	"frame": {"x":1857,"y":830,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": true,
@@ -4420,7 +4420,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_custom3_30-pressed.png",
+	"filename": "symbols/terrain_group_custom3_30-pressed",
 	"frame": {"x":537,"y":2002,"w":20,"h":20},
 	"rotated": false,
 	"trimmed": true,
@@ -4429,7 +4429,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_flat_30-pressed.png",
+	"filename": "symbols/terrain_group_flat_30-pressed",
 	"frame": {"x":963,"y":1294,"w":25,"h":8},
 	"rotated": false,
 	"trimmed": true,
@@ -4438,7 +4438,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_forest_30-pressed.png",
+	"filename": "symbols/terrain_group_forest_30-pressed",
 	"frame": {"x":2028,"y":2014,"w":18,"h":24},
 	"rotated": false,
 	"trimmed": true,
@@ -4447,7 +4447,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_keep_30-pressed.png",
+	"filename": "symbols/terrain_group_keep_30-pressed",
 	"frame": {"x":418,"y":506,"w":20,"h":24},
 	"rotated": false,
 	"trimmed": true,
@@ -4456,7 +4456,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_keep_30.png",
+	"filename": "symbols/terrain_group_keep_30",
 	"frame": {"x":1853,"y":804,"w":20,"h":24},
 	"rotated": false,
 	"trimmed": true,
@@ -4465,7 +4465,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_mainline_30-pressed.png",
+	"filename": "symbols/terrain_group_mainline_30-pressed",
 	"frame": {"x":769,"y":1104,"w":14,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -4474,7 +4474,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_mushrooms_30-pressed.png",
+	"filename": "symbols/terrain_group_mushrooms_30-pressed",
 	"frame": {"x":298,"y":1821,"w":22,"h":22},
 	"rotated": false,
 	"trimmed": true,
@@ -4483,7 +4483,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_reef_30-pressed.png",
+	"filename": "symbols/terrain_group_reef_30-pressed",
 	"frame": {"x":554,"y":901,"w":25,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -4492,7 +4492,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_reef_30.png",
+	"filename": "symbols/terrain_group_reef_30",
 	"frame": {"x":587,"y":1016,"w":25,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -4501,7 +4501,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_spring_30-pressed.png",
+	"filename": "symbols/terrain_group_spring_30-pressed",
 	"frame": {"x":791,"y":1318,"w":24,"h":23},
 	"rotated": false,
 	"trimmed": true,
@@ -4510,7 +4510,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_swamp_30-pressed.png",
+	"filename": "symbols/terrain_group_swamp_30-pressed",
 	"frame": {"x":588,"y":2025,"w":25,"h":21},
 	"rotated": false,
 	"trimmed": true,
@@ -4519,7 +4519,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_swamp_30.png",
+	"filename": "symbols/terrain_group_swamp_30",
 	"frame": {"x":615,"y":2025,"w":25,"h":21},
 	"rotated": false,
 	"trimmed": true,
@@ -4528,7 +4528,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_unwalkable_30.png",
+	"filename": "symbols/terrain_group_unwalkable_30",
 	"frame": {"x":1595,"y":2028,"w":18,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -4537,7 +4537,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_x_30-pressed.png",
+	"filename": "symbols/terrain_group_x_30-pressed",
 	"frame": {"x":851,"y":1303,"w":15,"h":13},
 	"rotated": false,
 	"trimmed": true,
@@ -4546,7 +4546,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_group_x_30.png",
+	"filename": "symbols/terrain_group_x_30",
 	"frame": {"x":1857,"y":848,"w":16,"h":13},
 	"rotated": false,
 	"trimmed": true,
@@ -4555,7 +4555,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_castle.png",
+	"filename": "symbols/terrain_type_castle",
 	"frame": {"x":1764,"y":833,"w":8,"h":8},
 	"rotated": false,
 	"trimmed": true,
@@ -4564,7 +4564,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_castle_30.png",
+	"filename": "symbols/terrain_type_castle_30",
 	"frame": {"x":1857,"y":830,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": true,
@@ -4573,7 +4573,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_deep_water.png",
+	"filename": "symbols/terrain_type_deep_water",
 	"frame": {"x":1632,"y":1224,"w":14,"h":12},
 	"rotated": false,
 	"trimmed": true,
@@ -4582,7 +4582,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_forest.png",
+	"filename": "symbols/terrain_type_forest",
 	"frame": {"x":789,"y":1906,"w":9,"h":13},
 	"rotated": false,
 	"trimmed": true,
@@ -4591,7 +4591,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_frozen.png",
+	"filename": "symbols/terrain_type_frozen",
 	"frame": {"x":339,"y":1125,"w":12,"h":13},
 	"rotated": false,
 	"trimmed": true,
@@ -4600,7 +4600,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_hills.png",
+	"filename": "symbols/terrain_type_hills",
 	"frame": {"x":1488,"y":1038,"w":14,"h":7},
 	"rotated": false,
 	"trimmed": true,
@@ -4609,7 +4609,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_keep.png",
+	"filename": "symbols/terrain_type_keep",
 	"frame": {"x":1654,"y":1725,"w":10,"h":12},
 	"rotated": false,
 	"trimmed": true,
@@ -4618,7 +4618,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_keep_30.png",
+	"filename": "symbols/terrain_type_keep_30",
 	"frame": {"x":1853,"y":804,"w":20,"h":24},
 	"rotated": false,
 	"trimmed": true,
@@ -4627,7 +4627,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_reef_30.png",
+	"filename": "symbols/terrain_type_reef_30",
 	"frame": {"x":587,"y":1016,"w":25,"h":18},
 	"rotated": false,
 	"trimmed": true,
@@ -4636,7 +4636,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_sand.png",
+	"filename": "symbols/terrain_type_sand",
 	"frame": {"x":621,"y":1130,"w":14,"h":12},
 	"rotated": false,
 	"trimmed": true,
@@ -4645,7 +4645,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_shroud_30.png",
+	"filename": "symbols/terrain_type_shroud_30",
 	"frame": {"x":1488,"y":1011,"w":14,"h":25},
 	"rotated": false,
 	"trimmed": true,
@@ -4654,7 +4654,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_swamp_water.png",
+	"filename": "symbols/terrain_type_swamp_water",
 	"frame": {"x":979,"y":942,"w":14,"h":12},
 	"rotated": false,
 	"trimmed": true,
@@ -4663,7 +4663,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_swamp_water_30.png",
+	"filename": "symbols/terrain_type_swamp_water_30",
 	"frame": {"x":615,"y":2025,"w":25,"h":21},
 	"rotated": false,
 	"trimmed": true,
@@ -4672,7 +4672,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "symbols/terrain_type_unwalkable_30.png",
+	"filename": "symbols/terrain_type_unwalkable_30",
 	"frame": {"x":282,"y":1663,"w":19,"h":25},
 	"rotated": false,
 	"trimmed": true,
@@ -4681,7 +4681,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/castle-lava-chasm-nw.png",
+	"filename": "unwalkable/castle-lava-chasm-nw",
 	"frame": {"x":1608,"y":1135,"w":42,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -4690,7 +4690,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/castle-lava-chasm2-ne.png",
+	"filename": "unwalkable/castle-lava-chasm2-ne",
 	"frame": {"x":1617,"y":1935,"w":56,"h":86},
 	"rotated": false,
 	"trimmed": true,
@@ -4699,7 +4699,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/castle-lava-chasm2-nw.png",
+	"filename": "unwalkable/castle-lava-chasm2-nw",
 	"frame": {"x":1605,"y":1393,"w":56,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -4708,7 +4708,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-chasm-ccw-br.png",
+	"filename": "unwalkable/dcastle-chasm-ccw-br",
 	"frame": {"x":392,"y":1316,"w":49,"h":97},
 	"rotated": false,
 	"trimmed": true,
@@ -4717,7 +4717,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-chasm-ccw-r.png",
+	"filename": "unwalkable/dcastle-chasm-ccw-r",
 	"frame": {"x":1815,"y":452,"w":54,"h":95},
 	"rotated": false,
 	"trimmed": true,
@@ -4726,7 +4726,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-chasm-concave-tr.png",
+	"filename": "unwalkable/dcastle-chasm-concave-tr",
 	"frame": {"x":1384,"y":658,"w":55,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -4735,7 +4735,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-chasm-convex-l.png",
+	"filename": "unwalkable/dcastle-chasm-convex-l",
 	"frame": {"x":848,"y":1099,"w":60,"h":101},
 	"rotated": false,
 	"trimmed": true,
@@ -4744,7 +4744,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-chasm-convex-r.png",
+	"filename": "unwalkable/dcastle-chasm-convex-r",
 	"frame": {"x":1663,"y":1392,"w":54,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -4753,7 +4753,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-chasm-cw-bl.png",
+	"filename": "unwalkable/dcastle-chasm-cw-bl",
 	"frame": {"x":1138,"y":224,"w":59,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -4762,7 +4762,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-chasm-cw-br.png",
+	"filename": "unwalkable/dcastle-chasm-cw-br",
 	"frame": {"x":1808,"y":1067,"w":52,"h":80},
 	"rotated": false,
 	"trimmed": true,
@@ -4771,7 +4771,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-chasm-cw-l.png",
+	"filename": "unwalkable/dcastle-chasm-cw-l",
 	"frame": {"x":1973,"y":116,"w":73,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -4780,7 +4780,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-ccw-br.png",
+	"filename": "unwalkable/dcastle-lava-ccw-br",
 	"frame": {"x":1049,"y":1493,"w":82,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4789,7 +4789,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-ccw-l.png",
+	"filename": "unwalkable/dcastle-lava-ccw-l",
 	"frame": {"x":1796,"y":1555,"w":73,"h":77},
 	"rotated": false,
 	"trimmed": true,
@@ -4798,7 +4798,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-ccw-r.png",
+	"filename": "unwalkable/dcastle-lava-ccw-r",
 	"frame": {"x":1291,"y":1398,"w":54,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4807,7 +4807,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-chasm-ccw-bl.png",
+	"filename": "unwalkable/dcastle-lava-chasm-ccw-bl",
 	"frame": {"x":986,"y":1404,"w":59,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -4816,7 +4816,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-chasm-ccw-l.png",
+	"filename": "unwalkable/dcastle-lava-chasm-ccw-l",
 	"frame": {"x":746,"y":887,"w":73,"h":108},
 	"rotated": false,
 	"trimmed": true,
@@ -4825,7 +4825,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-chasm-ccw-r.png",
+	"filename": "unwalkable/dcastle-lava-chasm-ccw-r",
 	"frame": {"x":1422,"y":1398,"w":55,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4834,7 +4834,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-chasm-cw-bl.png",
+	"filename": "unwalkable/dcastle-lava-chasm-cw-bl",
 	"frame": {"x":1347,"y":1398,"w":73,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4843,7 +4843,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-chasm-cw-br.png",
+	"filename": "unwalkable/dcastle-lava-chasm-cw-br",
 	"frame": {"x":963,"y":1304,"w":64,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -4852,7 +4852,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-chasm-cw-l.png",
+	"filename": "unwalkable/dcastle-lava-chasm-cw-l",
 	"frame": {"x":1390,"y":1589,"w":73,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4861,7 +4861,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-chasm-cw-r.png",
+	"filename": "unwalkable/dcastle-lava-chasm-cw-r",
 	"frame": {"x":1479,"y":1398,"w":55,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4870,7 +4870,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-concave-tl.png",
+	"filename": "unwalkable/dcastle-lava-concave-tl",
 	"frame": {"x":906,"y":1952,"w":55,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4879,7 +4879,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-concave-tr.png",
+	"filename": "unwalkable/dcastle-lava-concave-tr",
 	"frame": {"x":848,"y":1952,"w":56,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4888,7 +4888,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-cw-bl.png",
+	"filename": "unwalkable/dcastle-lava-cw-bl",
 	"frame": {"x":728,"y":1952,"w":59,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4897,7 +4897,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/dcastle-lava-cw-l.png",
+	"filename": "unwalkable/dcastle-lava-cw-l",
 	"frame": {"x":1465,"y":1587,"w":73,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4906,7 +4906,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-chasm-ccw-br.png",
+	"filename": "unwalkable/lava-chasm-ccw-br",
 	"frame": {"x":1001,"y":1604,"w":55,"h":95},
 	"rotated": false,
 	"trimmed": true,
@@ -4915,7 +4915,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-chasm-ccw-r.png",
+	"filename": "unwalkable/lava-chasm-ccw-r",
 	"frame": {"x":789,"y":1952,"w":57,"h":94},
 	"rotated": false,
 	"trimmed": true,
@@ -4924,7 +4924,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-chasm-concave-tl.png",
+	"filename": "unwalkable/lava-chasm-concave-tl",
 	"frame": {"x":992,"y":1504,"w":55,"h":98},
 	"rotated": false,
 	"trimmed": true,
@@ -4933,7 +4933,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-chasm-concave-tr.png",
+	"filename": "unwalkable/lava-chasm-concave-tr",
 	"frame": {"x":1759,"y":542,"w":54,"h":100},
 	"rotated": false,
 	"trimmed": true,
@@ -4942,7 +4942,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-chasm-convex-r.png",
+	"filename": "unwalkable/lava-chasm-convex-r",
 	"frame": {"x":722,"y":1124,"w":64,"h":110},
 	"rotated": false,
 	"trimmed": true,
@@ -4951,7 +4951,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-chasm-cw-bl.png",
+	"filename": "unwalkable/lava-chasm-cw-bl",
 	"frame": {"x":937,"y":1193,"w":55,"h":99},
 	"rotated": false,
 	"trimmed": true,
@@ -4960,7 +4960,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-chasm-cw-l.png",
+	"filename": "unwalkable/lava-chasm-cw-l",
 	"frame": {"x":1431,"y":953,"w":55,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -4969,7 +4969,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-chasm-cw-tl.png",
+	"filename": "unwalkable/lava-chasm-cw-tl",
 	"frame": {"x":392,"y":1415,"w":49,"h":78},
 	"rotated": false,
 	"trimmed": true,
@@ -4978,7 +4978,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-concave-l.png",
+	"filename": "unwalkable/lava-concave-l",
 	"frame": {"x":1372,"y":859,"w":58,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -4987,7 +4987,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-concave-r.png",
+	"filename": "unwalkable/lava-concave-r",
 	"frame": {"x":1432,"y":859,"w":58,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -4996,7 +4996,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-convex-tl.png",
+	"filename": "unwalkable/lava-convex-tl",
 	"frame": {"x":769,"y":997,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -5005,7 +5005,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-convex-tr.png",
+	"filename": "unwalkable/lava-convex-tr",
 	"frame": {"x":788,"y":1104,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -5014,7 +5014,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-high-concave-bl.png",
+	"filename": "unwalkable/lava-high-concave-bl",
 	"frame": {"x":1540,"y":1587,"w":54,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -5023,7 +5023,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-high-concave-br.png",
+	"filename": "unwalkable/lava-high-concave-br",
 	"frame": {"x":1541,"y":1676,"w":53,"h":87},
 	"rotated": false,
 	"trimmed": true,
@@ -5032,7 +5032,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-high-concave-l.png",
+	"filename": "unwalkable/lava-high-concave-l",
 	"frame": {"x":1510,"y":1304,"w":56,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -5041,7 +5041,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-high-concave-r.png",
+	"filename": "unwalkable/lava-high-concave-r",
 	"frame": {"x":1714,"y":850,"w":58,"h":89},
 	"rotated": false,
 	"trimmed": true,
@@ -5050,7 +5050,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-high-concave-tl.png",
+	"filename": "unwalkable/lava-high-concave-tl",
 	"frame": {"x":728,"y":1906,"w":59,"h":44},
 	"rotated": false,
 	"trimmed": true,
@@ -5059,7 +5059,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-high-convex-tl.png",
+	"filename": "unwalkable/lava-high-convex-tl",
 	"frame": {"x":791,"y":1211,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -5068,7 +5068,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "unwalkable/lava-high-convex-tr.png",
+	"filename": "unwalkable/lava-high-convex-tr",
 	"frame": {"x":817,"y":1318,"w":58,"h":105},
 	"rotated": false,
 	"trimmed": true,
@@ -5077,7 +5077,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/coast5-A03.png",
+	"filename": "village/coast5-A03",
 	"frame": {"x":1977,"y":1949,"w":69,"h":63},
 	"rotated": false,
 	"trimmed": true,
@@ -5086,7 +5086,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/desert-oasis-3.png",
+	"filename": "village/desert-oasis-3",
 	"frame": {"x":1058,"y":1839,"w":89,"h":70},
 	"rotated": false,
 	"trimmed": true,
@@ -5095,7 +5095,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/desert.png",
+	"filename": "village/desert",
 	"frame": {"x":1774,"y":1005,"w":86,"h":60},
 	"rotated": false,
 	"trimmed": true,
@@ -5104,7 +5104,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/drake1.png",
+	"filename": "village/drake1",
 	"frame": {"x":1796,"y":1634,"w":73,"h":81},
 	"rotated": false,
 	"trimmed": true,
@@ -5113,7 +5113,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/dwarven.png",
+	"filename": "village/dwarven",
 	"frame": {"x":821,"y":941,"w":76,"h":54},
 	"rotated": false,
 	"trimmed": true,
@@ -5122,7 +5122,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/dwarven3.png",
+	"filename": "village/dwarven3",
 	"frame": {"x":899,"y":942,"w":78,"h":53},
 	"rotated": false,
 	"trimmed": true,
@@ -5131,7 +5131,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/elven-snow.png",
+	"filename": "village/elven-snow",
 	"frame": {"x":1443,"y":446,"w":88,"h":102},
 	"rotated": false,
 	"trimmed": true,
@@ -5140,7 +5140,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/elven-snow3.png",
+	"filename": "village/elven-snow3",
 	"frame": {"x":1492,"y":117,"w":96,"h":116},
 	"rotated": false,
 	"trimmed": false,
@@ -5149,7 +5149,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/elven-snow4.png",
+	"filename": "village/elven-snow4",
 	"frame": {"x":908,"y":1505,"w":82,"h":97},
 	"rotated": false,
 	"trimmed": true,
@@ -5158,7 +5158,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/elven.png",
+	"filename": "village/elven",
 	"frame": {"x":542,"y":1723,"w":89,"h":103},
 	"rotated": false,
 	"trimmed": true,
@@ -5167,7 +5167,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/elven3.png",
+	"filename": "village/elven3",
 	"frame": {"x":994,"y":1217,"w":88,"h":85},
 	"rotated": false,
 	"trimmed": true,
@@ -5176,7 +5176,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/elven4.png",
+	"filename": "village/elven4",
 	"frame": {"x":910,"y":1095,"w":82,"h":96},
 	"rotated": false,
 	"trimmed": true,
@@ -5185,7 +5185,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/human-cottage-ruin4.png",
+	"filename": "village/human-cottage-ruin4",
 	"frame": {"x":1632,"y":1238,"w":83,"h":64},
 	"rotated": false,
 	"trimmed": true,
@@ -5194,7 +5194,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/igloo.png",
+	"filename": "village/igloo",
 	"frame": {"x":1717,"y":1255,"w":84,"h":48},
 	"rotated": false,
 	"trimmed": true,
@@ -5203,7 +5203,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/log-cabin-snow.png",
+	"filename": "village/log-cabin-snow",
 	"frame": {"x":1977,"y":1882,"w":69,"h":65},
 	"rotated": false,
 	"trimmed": true,
@@ -5212,7 +5212,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "village/orc3.png",
+	"filename": "village/orc3",
 	"frame": {"x":1826,"y":1934,"w":81,"h":76},
 	"rotated": false,
 	"trimmed": true,
@@ -5221,7 +5221,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "void/void.png",
+	"filename": "void/void",
 	"frame": {"x":1740,"y":1181,"w":72,"h":72},
 	"rotated": false,
 	"trimmed": false,
@@ -5230,7 +5230,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/coast-tropical-A01-n.png",
+	"filename": "water/coast-tropical-A01-n",
 	"frame": {"x":727,"y":339,"w":48,"h":13},
 	"rotated": false,
 	"trimmed": true,
@@ -5239,7 +5239,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/coast-tropical-long-A01-ne.png",
+	"filename": "water/coast-tropical-long-A01-ne",
 	"frame": {"x":1945,"y":1190,"w":30,"h":47},
 	"rotated": false,
 	"trimmed": true,
@@ -5248,7 +5248,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/coast-tropical-long-A01-se.png",
+	"filename": "water/coast-tropical-long-A01-se",
 	"frame": {"x":1945,"y":1239,"w":30,"h":47},
 	"rotated": false,
 	"trimmed": true,
@@ -5257,7 +5257,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/ocean-A01-n.png",
+	"filename": "water/ocean-A01-n",
 	"frame": {"x":1780,"y":224,"w":44,"h":10},
 	"rotated": false,
 	"trimmed": true,
@@ -5266,7 +5266,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/ocean-A01-s.png",
+	"filename": "water/ocean-A01-s",
 	"frame": {"x":1764,"y":644,"w":44,"h":10},
 	"rotated": false,
 	"trimmed": true,
@@ -5275,7 +5275,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/ocean-long-A01-s.png",
+	"filename": "water/ocean-long-A01-s",
 	"frame": {"x":1390,"y":2015,"w":60,"h":29},
 	"rotated": false,
 	"trimmed": true,
@@ -5284,7 +5284,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/reef2.png",
+	"filename": "water/reef2",
 	"frame": {"x":1977,"y":1672,"w":69,"h":72},
 	"rotated": false,
 	"trimmed": true,
@@ -5293,7 +5293,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/waves-concave-A02-br.png",
+	"filename": "water/waves-concave-A02-br",
 	"frame": {"x":1425,"y":1304,"w":83,"h":92},
 	"rotated": false,
 	"trimmed": true,
@@ -5302,7 +5302,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/waves-concave-A02-l.png",
+	"filename": "water/waves-concave-A02-l",
 	"frame": {"x":1654,"y":1556,"w":63,"h":82},
 	"rotated": false,
 	"trimmed": true,
@@ -5311,7 +5311,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "water/waves-concave-A06-tl.png",
+	"filename": "water/waves-concave-A06-tl",
 	"frame": {"x":1989,"y":2014,"w":37,"h":32},
 	"rotated": false,
 	"trimmed": true,
@@ -5326,6 +5326,6 @@
 	"format": "RGBA8888",
 	"size": {"w":2048,"h":2048},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:64ce2a63cbebcdebe1b1b47b3213f668:fd1604e7871cdbb5057e8fef5a869df1:7144d200e5c862d67cd7c739817ee306$"
+	"smartupdate": "$TexturePacker:SmartUpdate:6b42e43d898fcf3021fc3a20e8eb7521:fd1604e7871cdbb5057e8fef5a869df1:7144d200e5c862d67cd7c739817ee306$"
 }
 }
