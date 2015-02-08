@@ -15,6 +15,8 @@ With tooling installed, you can build the application and run the reference webp
     gulp scripts
     gulp serve
 
+Now point your browser to http://127.0.0.1:8001/ 
+
 # techology
 
 Component will be written using Typescript, drawn on the Canvas. Gulp will take care of building.
