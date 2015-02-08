@@ -5,6 +5,11 @@ function start() {
   renderer.load().then(function() {
 
     var map = new WesnothTiles.HexMap();
+    map.addHex(new WesnothTiles.Hex(0, -3, 2));
+    map.addHex(new WesnothTiles.Hex(1, -3, 2));
+    map.addHex(new WesnothTiles.Hex(2, -3, 2));
+    map.addHex(new WesnothTiles.Hex(3, -3, 2));
+
     map.addHex(new WesnothTiles.Hex(0, -2, 0));
     map.addHex(new WesnothTiles.Hex(1, -2, 0));
     map.addHex(new WesnothTiles.Hex(2, -2, 0));

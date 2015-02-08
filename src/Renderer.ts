@@ -22,16 +22,17 @@ module WesnothTiles {
       this.ctx.strokeStyle = 'gray';
       this.ctx.stroke();
 
-      var drawMap = drawTiles(hexMap);
-
+      // var drawMap = drawTiles(hexMap);
+      var drawMap = rebuild(hexMap);
+// console.log(this.canvas.width, this.canvas.height);
       drawMap.forEach(hex => {
         hex.tiles.sort((a: ImageToDraw, b: ImageToDraw) => {
           return a.layer - b.layer;
         });
         for (var i = 0; i < hex.tiles.length; i++) {
-          this.resources.drawSprite(hex.tiles[i].name, {
-            x: hex.tiles[i].point.x + this.canvas.width / 2 + (36 * 1.5) * hex.q - 36,
-            y: hex.tiles[i].point.y + this.canvas.height / 2 + 35 * (2 * hex.r + hex.q) - 36
+          this.resources.drawSprite(hex.tiles[i].name, {                        
+            x: hex.tiles[i].point.x + Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
+            y: hex.tiles[i].point.y + Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
           }, this.ctx);
         }
       });
