@@ -31,7 +31,7 @@ module WesnothTiles {
       if (this.terrain !== hexMap.getHexP(q, r).terrain)
         return;
       var htd = ensureGet(imagesMap, q, r);
-      var version = (q + r) % this.versions;
+      var version = (q + r) * (q + r) % this.versions;
       var name = version === 0 ? this.appendix + ".png" : this.appendix + (version + 1) + ".png"
       htd.tiles.push({
         name: name, 
