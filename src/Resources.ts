@@ -14,9 +14,6 @@ module WesnothTiles {
     constructor() {
     }
 
-    // We do not load images ourselves, this must be done by parent project. 
-    // (for example using promising API). We do not want to implement promising api, loading bar etc ourselves,
-    // nor include a library, which will then be probably doubled by the parent project. 
     provideAtlas(name: string): Promise {
       var img = new Image();
       var promises: Promise[] = [];
@@ -85,13 +82,13 @@ module WesnothTiles {
     drawSprite(name: string, pos: IVector, ctx: CanvasRenderingContext2D) {
       var def = this.definitions.get(name);
       if (def === null || def === undefined) {
-        console.error("Invalid sprite name!");
+        console.error("Invalid sprite name!", name);
         return;
       }
-      console.log("drawing...", def.atlas, def.frame.point.x , def.frame.point.y,
-        def.frame.size.x, def.frame.size.y,
-        pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
-        def.sourceSize.x, def.sourceSize.y);
+      // console.log("drawing...", def.atlas, def.frame.point.x , def.frame.point.y,
+        // def.frame.size.x, def.frame.size.y,
+        // pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
+        // def.sourceSize.x, def.sourceSize.y);
 
       ctx.drawImage(def.atlas, def.frame.point.x , def.frame.point.y,
         def.frame.size.x, def.frame.size.y,
@@ -118,6 +115,10 @@ module WesnothTiles {
 
   interface IFrames {
     frames: IDefinition[];
+  }
+
+  interface ISprite {
+
   }
 
   interface IDefinition {

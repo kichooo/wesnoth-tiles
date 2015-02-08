@@ -32,7 +32,7 @@ module WesnothTiles {
         return;
       var htd = ensureGet(imagesMap, q, r);
       var version = (q + r) * (q + r) % this.versions;
-      var name = version === 0 ? this.appendix + ".png" : this.appendix + (version + 1) + ".png"
+      var name = version === 0 ? this.appendix: this.appendix + (version + 1)
       htd.tiles.push({
         name: name, 
         point: { x: 0, y: 0},
@@ -61,7 +61,7 @@ module WesnothTiles {
         hexFrom.flags.set(rotationToString(rotation), true);
         htd.flags.set(rotationToString((rotation + 3)%6), true);
         hexFrom.tiles.push({
-          name: this.appendix + "-" + rotationToString(rotation) +".png", 
+          name: this.appendix + "-" + rotationToString(rotation), 
           point: { x: 0, y: 0},
           layer: this.layer
         })
