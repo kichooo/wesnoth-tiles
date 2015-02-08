@@ -2,6 +2,19 @@
 
 Javascript port of the beautiful hex system from [Battle for Wesnoth](wesnoth.org)
 
+# try yourself
+
+You need npm and gulp. 
+
+    sudo apt-get install npm
+    sudo npm install -g gulp
+
+With tooling installed, you can build the application and run the reference webpage.
+
+    npm install
+    gulp scripts
+    gulp serve
+
 # techology
 
 Component will be written using Typescript, drawn on the Canvas. Gulp will take care of building.
