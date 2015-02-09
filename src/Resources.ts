@@ -9,14 +9,16 @@ module WesnothTiles {
 
   export interface HexResource {
     bases: SpriteDefinition[];
-    rotations1: SpriteDefinition[][];
   }
+
+  export var hexResources = new Map<string, HexResource>();
+
 
   // This class is responsible for loading of the graphics.
   export class Resources {
     private atlases = new Map<string, HTMLElement>();
     private definitions = new Map<string, SpriteDefinition>();
-    hexResources = new Map<string, HexResource>();
+    
 
     constructor() {
     }
@@ -27,21 +29,33 @@ module WesnothTiles {
       return n.toString();
     }
 
-    group(base: string) {
+    groupTransitions(base: string) {
+      // for each size (1..6), for each rotation (0..5):
+      for (var rot = 0; rot < 6; rot++) {
+        var name = base;
+        for (var size = 0; size < 6; size++) {
+          var hr: HexResource = {
+            bases: [],
+          }
+          name += "-" + rotationToString((rot + size) % 6)              
+          for (var i = 0; this.definitions.has(name + this.toString(i)); i++) {
+            hr.bases.push(this.definitions.get(name + this.toString(i)));
+          }
+          hexResources.set(name, hr);
+        }  
+      }
+
+    }
+
+    groupBase(base: string) {
       var hr: HexResource = {
         bases: [],
-        rotations1: []
       }
       for (var i = 0; this.definitions.has(base + this.toString(i)); i++) {
         hr.bases.push(this.definitions.get(base + this.toString(i)));
       }
 
-      for (var rot = 0; rot < 6; rot++) {
-        for (var i = 0; this.definitions.has(base + '-' + rotationToString(rot) + this.toString(i)); i++) {
-          hr.rotations1.push(this.definitions.get(base + '-' + rotationToString(rot) + this.toString(i)));
-        }
-      }
-      this.hexResources.set(base, hr);
+      hexResources.set(base, hr);
     }
 
     private provideAtlas(name: string): Promise {
@@ -108,8 +122,27 @@ module WesnothTiles {
       // });
     }
 
+    drawSprite(def: SpriteDefinition, pos: IVector, ctx: CanvasRenderingContext2D) {
+      if (def === null || def === undefined) {
+        console.error("Invalid sprite name!", name);
+        return;
+      }
+      // console.log("drawing...", def.atlas, def.frame.point.x , def.frame.point.y,
+        // def.frame.size.x, def.frame.size.y,
+        // pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
+        // def.sourceSize.x, def.sourceSize.y);
+
+      ctx.drawImage(def.atlas, def.frame.point.x , def.frame.point.y,
+        def.frame.size.x, def.frame.size.y,
+        pos.x + def.spriteSource.point.x, pos.y + def.spriteSource.point.y,
+        def.frame.size.x, def.frame.size.y
+      );
+
+
+    }
+
     // pos is meant to be the center left top corner of the sprite.
-    drawSprite(name: string, pos: IVector, ctx: CanvasRenderingContext2D) {
+    drawSprite2(name: string, pos: IVector, ctx: CanvasRenderingContext2D) {
       var def = this.definitions.get(name);
       if (def === null || def === undefined) {
         console.error("Invalid sprite name!", name);
@@ -139,10 +172,15 @@ module WesnothTiles {
       }
 
       return Promise.all(promises).then(() => {
-        this.group("hills/regular");
-        this.group("hills/snow");
-        this.group("hills/dry");
-        this.group("hills/desert");
+        this.groupBase("hills/regular");
+        this.groupBase("hills/snow");
+        this.groupBase("hills/dry");
+        this.groupBase("hills/desert");
+
+        this.groupTransitions("hills/regular");
+        this.groupTransitions("hills/snow");
+        this.groupTransitions("hills/dry");
+        this.groupTransitions("hills/desert");
       });
 
     }
@@ -187,28 +225,4 @@ module WesnothTiles {
 
 
 
-} 
-
-
-              // var def = new WesnothTiles.SpriteDefinition({
-              //   point: {
-              //     x: 1342,
-              //     y: 660
-              //   },
-              //   size: {
-              //     x: 72,
-              //     y: 72
-              //   }
-              // }, {
-              //   point: {
-              //     x: 0,
-              //     y: 0
-              //   },
-              //   size: {
-              //     x: 72,
-              //     y: 72
-              //   }
-              // }, {
-              //   x: 72,
-              //   y: 72
-              // }, img);
+}
