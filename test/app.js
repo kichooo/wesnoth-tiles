@@ -8,8 +8,8 @@ function start() {
 
     for (var i = -20; i < 20; i++)
       for (var j = -20; j < 20; j++) {
-        console.log("fef", i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j  + j))) % 4);
-        map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j + j))) % 4));        
+        // console.log("fef", i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j  + j))) % 4);
+        map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i / 2 + i * 2 * j * j + j))) % 4));
       }
 
     // map.addHex(new WesnothTiles.Hex(-1, -4, 0));

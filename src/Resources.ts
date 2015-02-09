@@ -7,14 +7,44 @@ declare class Promise {
 module WesnothTiles {
   'use strict';
 
+  export interface HexResource {
+    bases: SpriteDefinition[];
+    rotations1: SpriteDefinition[][];
+  }
+
   // This class is responsible for loading of the graphics.
   export class Resources {
     private atlases = new Map<string, HTMLElement>();
     private definitions = new Map<string, SpriteDefinition>();
+    hexResources = new Map<string, HexResource>();
+
     constructor() {
     }
 
-    provideAtlas(name: string): Promise {
+    private toString(n: number): string {
+      if (n === 0)
+        return "";
+      return n.toString();
+    }
+
+    group(base: string) {
+      var hr: HexResource = {
+        bases: [],
+        rotations1: []
+      }
+      for (var i = 0; this.definitions.has(base + this.toString(i)); i++) {
+        hr.bases.push(this.definitions.get(base + this.toString(i)));
+      }
+
+      for (var rot = 0; rot < 6; rot++) {
+        for (var i = 0; this.definitions.has(base + '-' + rotationToString(rot) + this.toString(i)); i++) {
+          hr.rotations1.push(this.definitions.get(base + '-' + rotationToString(rot) + this.toString(i)));
+        }
+      }
+      this.hexResources.set(base, hr);
+    }
+
+    private provideAtlas(name: string): Promise {
       var img = new Image();
       var promises: Promise[] = [];
 
@@ -107,7 +137,13 @@ module WesnothTiles {
       for (var i = 0; i < 3; i++) {
         promises.push(this.provideAtlas("hexes_" + i));
       }
-      return Promise.all(promises);
+
+      return Promise.all(promises).then(() => {
+        this.group("hills/regular");
+        this.group("hills/snow");
+        this.group("hills/dry");
+        this.group("hills/desert");
+      });
 
     }
 
