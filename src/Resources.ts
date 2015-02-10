@@ -157,17 +157,21 @@ module WesnothTiles {
         this.groupBase("hills/snow");
         this.groupBase("hills/dry");
         this.groupBase("hills/desert");
+
         this.groupBase("grass/green");
         this.groupBase("grass/semi-dry");
         this.groupBase("grass/dry");
         this.groupBase("grass/leaf-litter");
 
-
-
         this.groupTransitions("hills/regular");
         this.groupTransitions("hills/snow");
         this.groupTransitions("hills/dry");
         this.groupTransitions("hills/desert");
+
+        this.groupTransitions("grass/green-long");
+        this.groupTransitions("grass/dry-long");
+        this.groupTransitions("grass/leaf-litter-long");
+        this.groupTransitions("grass/semi-dry-long");
       });
 
     }

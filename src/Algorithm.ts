@@ -34,8 +34,7 @@ module WesnothTiles {
       var hr = hexResources.get(this.base);
 
       var sprite = hr.bases[Math.abs((q + r) * (q)) % hr.bases.length];
-
-      console.log("Drawing", Math.abs((q + r) * (q)) % hr.bases.length);
+      // console.log("Drawing", Math.abs((q + r) * (q)) % hr.bases.length);
       htd.tiles.push({
         sprite: sprite, 
         point: { x: 0, y: 0},
@@ -45,12 +44,24 @@ module WesnothTiles {
   }
 
   export class TransitionMacro implements Macro {
-    constructor(private terrain: ETerrain, private base: string, private layer: number) {
+    private toMap: Map<string, boolean> = new Map<string, boolean>();
+    constructor(private terrain: ETerrain, 
+      private base: string, 
+      private layer: number, 
+      private double: boolean, 
+      to: ETerrain[], 
+      private reverse: boolean) {
 
+      to.forEach((t: ETerrain) => {
+        this.toMap.set(t.toString(), true);
+      })
     }
     execute (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number): void {
-      if (this.terrain === hexMap.getHexP(q, r).terrain)
+      var h = hexMap.getHexP(q, r);
+      if ((this.toMap.has(h.terrain.toString()) && this.reverse)
+        || (!this.toMap.has(h.terrain.toString()) && !this.reverse))
         return;
+
       var hexFrom = ensureGet(imagesMap, q, r);
       iterateTransitions((rotations: Rotation[], app: string) => {
         var hr = hexResources.get(this.base + "-" + app);
@@ -59,20 +70,23 @@ module WesnothTiles {
         for (var i = 0; i < rotations.length; i++) {
           var rot = rotations[i];
           var hex = hexMap.getHexP(q + rot.q, r + rot.r);
-          if (!hex || hex.terrain !== this.terrain)
-            return;
-          if (hexFrom.flags.has(rot.app))
+          if (!hex 
+            || hex.terrain !== this.terrain
+            || hexFrom.flags.has(rot.app))
             return;
           var htd = ensureGet(imagesMap, q + rot.q, r + rot.r);
-          if (htd.flags.has(rot.opp))
+          if (htd.flags.has(rot.opp) && !this.double) 
             return;          
         }
 
         for (var i = 0; i < rotations.length; i++) {
           hexFrom.flags.set(rot.app, true);
           var rot = rotations[i];
-          var htd = ensureGet(imagesMap, q + rot.q, r + rot.r);
-          htd.flags.set(rot.opp, true);          
+          if (!this.double) {
+            var htd = ensureGet(imagesMap, q + rot.q, r + rot.r);
+            htd.flags.set(rot.opp, true);
+          }
+
         }
       
         var sprite = hr.bases[Math.abs((q + r) * (q)) % hr.bases.length];
@@ -99,10 +113,15 @@ module WesnothTiles {
   macros.push(new TerrainMacro(ETerrain.GRASS_SEMI_DRY, "grass/semi-dry"));
 
 
-  macros.push(new TransitionMacro(ETerrain.HILLS_SNOW, "hills/snow", -172));
-  macros.push(new TransitionMacro(ETerrain.HILLS_REGULAR, "hills/regular", -180));
-  macros.push(new TransitionMacro(ETerrain.HILLS_DRY, "hills/dry", -183));
-  macros.push(new TransitionMacro(ETerrain.HILLS_DESERT, "hills/desert", -184));
+  macros.push(new TransitionMacro(ETerrain.HILLS_SNOW, "hills/snow", -172, false, [ETerrain.HILLS_SNOW], true));
+  macros.push(new TransitionMacro(ETerrain.HILLS_REGULAR, "hills/regular", -180, false, [ETerrain.HILLS_REGULAR], true));
+  macros.push(new TransitionMacro(ETerrain.HILLS_DRY, "hills/dry", -183, false, [ETerrain.HILLS_DRY], true));
+  macros.push(new TransitionMacro(ETerrain.HILLS_DESERT, "hills/desert", -184, false, [ETerrain.HILLS_DESERT], true));
+
+  macros.push(new TransitionMacro(ETerrain.GRASS_DRY, "grass/dry-long", -250, true, [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER], false));
+  macros.push(new TransitionMacro(ETerrain.GRASS_GREEN, "grass/green-long", -251, true, [ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER], false));
+  macros.push(new TransitionMacro(ETerrain.GRASS_SEMI_DRY, "grass/semi-dry-long", -252, true, [ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER], false));
+  macros.push(new TransitionMacro(ETerrain.GRASS_LEAF_LITTER, "grass/leaf-litter-long", -253, true, [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY], false));
 
   export var rebuild = (hexMap: HexMap) => {
     var drawMap = new Map<string,  HexToDraw>();
