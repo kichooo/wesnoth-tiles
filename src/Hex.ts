@@ -8,6 +8,11 @@ module WesnothTiles {
     HILLS_DRY, // 1    
     HILLS_DESERT, // 2
     HILLS_SNOW, // 3
+
+    GRASS_GREEN, // 4
+    GRASS_DRY, // 5
+    GRASS_LEAF_LITTER, // 6
+    GRASS_SEMI_DRY, // 7
   }
 
   export class Hex extends HexPos {

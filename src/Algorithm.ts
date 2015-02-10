@@ -24,7 +24,7 @@ module WesnothTiles {
   }
 
   export class TerrainMacro implements Macro {
-    constructor(private terrain: ETerrain, private base: string, private versions: number) {
+    constructor(private terrain: ETerrain, private base: string) {
 
     }
     execute (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number): void {
@@ -45,7 +45,7 @@ module WesnothTiles {
   }
 
   export class TransitionMacro implements Macro {
-    constructor(private terrain: ETerrain, private base: string, private versions: number, private layer: number) {
+    constructor(private terrain: ETerrain, private base: string, private layer: number) {
 
     }
     execute (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number): void {
@@ -88,15 +88,21 @@ module WesnothTiles {
   }
 
   var macros: Macro[] = [];
-  macros.push(new TerrainMacro(ETerrain.HILLS_SNOW, "hills/snow", 3));
-  macros.push(new TerrainMacro(ETerrain.HILLS_REGULAR, "hills/regular", 3));
-  macros.push(new TerrainMacro(ETerrain.HILLS_DRY, "hills/dry", 3));
-  macros.push(new TerrainMacro(ETerrain.HILLS_DESERT, "hills/desert", 3));
+  macros.push(new TerrainMacro(ETerrain.HILLS_SNOW, "hills/snow"));
+  macros.push(new TerrainMacro(ETerrain.HILLS_REGULAR, "hills/regular"));
+  macros.push(new TerrainMacro(ETerrain.HILLS_DRY, "hills/dry"));
+  macros.push(new TerrainMacro(ETerrain.HILLS_DESERT, "hills/desert"));
 
-  macros.push(new TransitionMacro(ETerrain.HILLS_SNOW, "hills/snow", 3, -172));
-  macros.push(new TransitionMacro(ETerrain.HILLS_REGULAR, "hills/regular", 3, -180));
-  macros.push(new TransitionMacro(ETerrain.HILLS_DRY, "hills/dry", 3, -183));
-  macros.push(new TransitionMacro(ETerrain.HILLS_DESERT, "hills/desert", 3, -184));
+  macros.push(new TerrainMacro(ETerrain.GRASS_GREEN, "grass/green"));
+  macros.push(new TerrainMacro(ETerrain.GRASS_DRY, "grass/dry"));
+  macros.push(new TerrainMacro(ETerrain.GRASS_LEAF_LITTER, "grass/leaf-litter"));
+  macros.push(new TerrainMacro(ETerrain.GRASS_SEMI_DRY, "grass/semi-dry"));
+
+
+  macros.push(new TransitionMacro(ETerrain.HILLS_SNOW, "hills/snow", -172));
+  macros.push(new TransitionMacro(ETerrain.HILLS_REGULAR, "hills/regular", -180));
+  macros.push(new TransitionMacro(ETerrain.HILLS_DRY, "hills/dry", -183));
+  macros.push(new TransitionMacro(ETerrain.HILLS_DESERT, "hills/desert", -184));
 
   export var rebuild = (hexMap: HexMap) => {
     var drawMap = new Map<string,  HexToDraw>();
