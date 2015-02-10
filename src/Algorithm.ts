@@ -118,7 +118,31 @@ module WesnothTiles {
     callback(3, 0 , -1);
     callback(4, 1 , -1);
     callback(5, 1 , 0);    
+  }
 
+  export interface Rotation {
+    q: number;
+    r: number;
+  }
+
+  var tv: Rotation[] = [
+    new HexPos(0, 1), 
+    new HexPos(-1, 1), 
+    new HexPos(-1, 0),
+    new HexPos(0, -1),
+    new HexPos(1, -1),
+    new HexPos(1, 0),
+  ]
+
+  export var iterateTransitions = (callback: (rotations: Rotation[], appendix: string) => void) => {
+    callback(tv, "s-sw-nw-n-ne-se");
+
+    callback([tv[0], tv[1], tv[2], tv[3], tv[4]], "s-sw-nw-n-ne");
+    callback([tv[1], tv[2], tv[3], tv[4], tv[5]], "sw-nw-n-ne-se");
+    callback([tv[2], tv[3], tv[4], tv[5], tv[0]], "nw-n-ne-se-s");
+    callback([tv[3], tv[4], tv[5], tv[0], tv[1]], "n-ne-se-s-sw");
+    callback([tv[4], tv[5], tv[0], tv[1], tv[2]], "ne-se-s-sw-nw");
+    callback([tv[5], tv[0], tv[1], tv[2], tv[3]], "se-s-sw-nw-n");
   }
 
   export var rotationToString = (rotation: number): string => {
