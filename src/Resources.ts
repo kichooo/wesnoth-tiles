@@ -23,10 +23,10 @@ module WesnothTiles {
     constructor() {
     }
 
-    private toString(n: number): string {
+    private toString2(n: number): string {
       if (n === 0)
         return "";
-      return n.toString();
+      return (n + 1).toString();
     }
 
     groupTransitions(base: string) {
@@ -38,8 +38,10 @@ module WesnothTiles {
             bases: [],
           }
           name += "-" + rotationToString((rot + size) % 6)              
-          for (var i = 0; this.definitions.has(name + this.toString(i)); i++) {
-            hr.bases.push(this.definitions.get(name + this.toString(i)));
+          for (var i = 0; this.definitions.has(name + this.toString2(i)); i++) {
+            if (i > 0)
+              console.log("Jeb z lasera",name, i);
+            hr.bases.push(this.definitions.get(name + this.toString2(i)));
           }
           hexResources.set(name, hr);
         }  
@@ -51,8 +53,10 @@ module WesnothTiles {
       var hr: HexResource = {
         bases: [],
       }
-      for (var i = 0; this.definitions.has(base + this.toString(i)); i++) {
-        hr.bases.push(this.definitions.get(base + this.toString(i)));
+      for (var i = 0; this.definitions.has(base + this.toString2(i)); i++) {
+                    if (i > 0)
+              console.log("Jeb z lasera",name, i);
+        hr.bases.push(this.definitions.get(base + this.toString2(i)));
       }
 
       hexResources.set(base, hr);
@@ -124,7 +128,7 @@ module WesnothTiles {
 
     drawSprite(def: SpriteDefinition, pos: IVector, ctx: CanvasRenderingContext2D) {
       if (def === null || def === undefined) {
-        console.error("Invalid sprite name!", name);
+        console.error("Invalid sprite!", name);
         return;
       }
       // console.log("drawing...", def.atlas, def.frame.point.x , def.frame.point.y,
@@ -139,29 +143,6 @@ module WesnothTiles {
       );
 
 
-    }
-
-    // pos is meant to be the center left top corner of the sprite.
-    drawSprite2(name: string, pos: IVector, ctx: CanvasRenderingContext2D) {
-      var def = this.definitions.get(name);
-      if (def === null || def === undefined) {
-        console.error("Invalid sprite name!", name);
-        return;
-      }
-      // console.log("drawing...", def.atlas, def.frame.point.x , def.frame.point.y,
-        // def.frame.size.x, def.frame.size.y,
-        // pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
-        // def.sourceSize.x, def.sourceSize.y);
-
-      ctx.drawImage(def.atlas, def.frame.point.x , def.frame.point.y,
-        def.frame.size.x, def.frame.size.y,
-        pos.x + def.spriteSource.point.x, pos.y + def.spriteSource.point.y,
-        def.frame.size.x, def.frame.size.y
-      );
-
-      // var p = new Promise<string>((resolve, reject) => { 
-      //   resolve('a string'); 
-      // });
     }
 
     // Will return promise when they are supported;) (by ArcticTypescript)

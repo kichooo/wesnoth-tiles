@@ -24,16 +24,18 @@ module WesnothTiles {
   }
 
   export class TerrainMacro implements Macro {
-    constructor(private terrain: ETerrain, private appendix: string, private versions: number) {
+    constructor(private terrain: ETerrain, private base: string, private versions: number) {
 
     }
     execute (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number): void {
       if (this.terrain !== hexMap.getHexP(q, r).terrain)
         return;
       var htd = ensureGet(imagesMap, q, r);
-      var hr = hexResources.get(this.appendix);
+      var hr = hexResources.get(this.base);
 
-      var sprite = hr.bases[(q + r) * (q + r) % hr.bases.length];
+      var sprite = hr.bases[Math.abs((q + r) * (q)) % hr.bases.length];
+
+      console.log("Drawing", Math.abs((q + r) * (q)) % hr.bases.length);
       htd.tiles.push({
         sprite: sprite, 
         point: { x: 0, y: 0},
@@ -43,35 +45,44 @@ module WesnothTiles {
   }
 
   export class TransitionMacro implements Macro {
-    constructor(private terrain: ETerrain, private appendix: string, private versions: number, private layer: number) {
+    constructor(private terrain: ETerrain, private base: string, private versions: number, private layer: number) {
 
     }
     execute (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number): void {
       if (this.terrain === hexMap.getHexP(q, r).terrain)
         return;
       var hexFrom = ensureGet(imagesMap, q, r);
-      iterateRotations((rotation, qDiff, rDiff) => {
-        var hex = hexMap.getHexP(q + qDiff, r + rDiff);
-        if (!hex || hex.terrain !== this.terrain)
+      iterateTransitions((rotations: Rotation[], app: string) => {
+        var hr = hexResources.get(this.base + "-" + app);
+        if (hr.bases.length === 0)
           return;
-        if (hexFrom.flags.has(rotationToString(rotation)))
-          return;
-        var htd = ensureGet(imagesMap, q + qDiff, r + rDiff);        
-        if (htd.flags.has(rotationToString((rotation + 3)%6)))
-          return;
-        hexFrom.flags.set(rotationToString(rotation), true);
-        htd.flags.set(rotationToString((rotation + 3)%6), true);
+        for (var i = 0; i < rotations.length; i++) {
+          var rot = rotations[i];
+          var hex = hexMap.getHexP(q + rot.q, r + rot.r);
+          if (!hex || hex.terrain !== this.terrain)
+            return;
+          if (hexFrom.flags.has(rot.app))
+            return;
+          var htd = ensureGet(imagesMap, q + rot.q, r + rot.r);
+          if (htd.flags.has(rot.opp))
+            return;          
+        }
 
-        var htd = ensureGet(imagesMap, q, r);
-        var hr = hexResources.get(this.appendix + "-" + rotationToString(rotation));
-
-        var sprite = hr.bases[(q + r) * (q + r) % hr.bases.length];
+        for (var i = 0; i < rotations.length; i++) {
+          hexFrom.flags.set(rot.app, true);
+          var rot = rotations[i];
+          var htd = ensureGet(imagesMap, q + rot.q, r + rot.r);
+          htd.flags.set(rot.opp, true);          
+        }
+      
+        var sprite = hr.bases[Math.abs((q + r) * (q)) % hr.bases.length];
 
         hexFrom.tiles.push({
           sprite: sprite, 
           point: { x: 0, y: 0},
           layer: this.layer
-        })
+        })        
+              
       });
     }
   }
@@ -123,18 +134,20 @@ module WesnothTiles {
   export interface Rotation {
     q: number;
     r: number;
+    app: string; // app
+    opp: string; // Opposite to the app.
   }
 
   var tv: Rotation[] = [
-    new HexPos(0, 1), 
-    new HexPos(-1, 1), 
-    new HexPos(-1, 0),
-    new HexPos(0, -1),
-    new HexPos(1, -1),
-    new HexPos(1, 0),
+    {q: 0, r: 1, app: "s", opp: "n"}, 
+    {q: -1, r: 1, app: "sw", opp: "ne"},
+    {q: -1, r: 0, app: "nw", opp: "se"},
+    {q: 0, r: -1, app: "n", opp: "s"},
+    {q: 1, r: -1, app: "ne", opp: "sw"},
+    {q: 1, r: 0, app: "se", opp: "nw"},
   ]
 
-  export var iterateTransitions = (callback: (rotations: Rotation[], appendix: string) => void) => {
+  export var iterateTransitions = (callback: (rotations: Rotation[], app: string) => void) => {
     callback(tv, "s-sw-nw-n-ne-se");
 
     callback([tv[0], tv[1], tv[2], tv[3], tv[4]], "s-sw-nw-n-ne");
@@ -143,6 +156,34 @@ module WesnothTiles {
     callback([tv[3], tv[4], tv[5], tv[0], tv[1]], "n-ne-se-s-sw");
     callback([tv[4], tv[5], tv[0], tv[1], tv[2]], "ne-se-s-sw-nw");
     callback([tv[5], tv[0], tv[1], tv[2], tv[3]], "se-s-sw-nw-n");
+
+    callback([tv[0], tv[1], tv[2], tv[3]], "s-sw-nw-n");
+    callback([tv[1], tv[2], tv[3], tv[4]], "sw-nw-n-ne");
+    callback([tv[2], tv[3], tv[4], tv[5]], "nw-n-ne-se");
+    callback([tv[3], tv[4], tv[5], tv[0]], "n-ne-se-s");
+    callback([tv[4], tv[5], tv[0], tv[1]], "ne-se-s-sw");
+    callback([tv[5], tv[0], tv[1], tv[2]], "se-s-sw-nw");
+
+    callback([tv[0], tv[1], tv[2]], "s-sw-nw");
+    callback([tv[1], tv[2], tv[3]], "sw-nw-n");
+    callback([tv[2], tv[3], tv[4]], "nw-n-ne");
+    callback([tv[3], tv[4], tv[5]], "n-ne-se");
+    callback([tv[4], tv[5], tv[0]], "ne-se-s");
+    callback([tv[5], tv[0], tv[1]], "se-s-sw");    
+
+    callback([tv[0], tv[1]], "s-sw");
+    callback([tv[1], tv[2]], "sw-nw");
+    callback([tv[2], tv[3]], "nw-n");
+    callback([tv[3], tv[4]], "n-ne");
+    callback([tv[4], tv[5]], "ne-se");
+    callback([tv[5], tv[0]], "se-s");
+
+    callback([tv[0]], "s");
+    callback([tv[1]], "sw");
+    callback([tv[2]], "nw");
+    callback([tv[3]], "n");
+    callback([tv[4]], "ne");
+    callback([tv[5]], "se");
   }
 
   export var rotationToString = (rotation: number): string => {
