@@ -20,10 +20,7 @@ module WesnothTiles {
     private definitions = new Map<string, SpriteDefinition>();
     
 
-    constructor() {
-    }
-
-    private toString2(n: number): string {
+    private toString(n: number): string {
       if (n === 0)
         return "";
       return (n + 1).toString();
@@ -38,10 +35,10 @@ module WesnothTiles {
             bases: [],
           }
           name += "-" + rotationToString((rot + size) % 6)              
-          for (var i = 0; this.definitions.has(name + this.toString2(i)); i++) {
+          for (var i = 0; this.definitions.has(name + this.toString(i)); i++) {
             if (i > 0)
               console.log("Jeb z lasera",name, i);
-            hr.bases.push(this.definitions.get(name + this.toString2(i)));
+            hr.bases.push(this.definitions.get(name + this.toString(i)));
           }
           hexResources.set(name, hr);
         }  
@@ -53,10 +50,8 @@ module WesnothTiles {
       var hr: HexResource = {
         bases: [],
       }
-      for (var i = 0; this.definitions.has(base + this.toString2(i)); i++) {
-                    if (i > 0)
-              console.log("Jeb z lasera",name, i);
-        hr.bases.push(this.definitions.get(base + this.toString2(i)));
+      for (var i = 0; this.definitions.has(base + this.toString(i)); i++) {
+        hr.bases.push(this.definitions.get(base + this.toString(i)));
       }
 
       hexResources.set(base, hr);
@@ -126,25 +121,6 @@ module WesnothTiles {
       // });
     }
 
-    drawSprite(def: SpriteDefinition, pos: IVector, ctx: CanvasRenderingContext2D) {
-      if (def === null || def === undefined) {
-        console.error("Invalid sprite!", name);
-        return;
-      }
-      // console.log("drawing...", def.atlas, def.frame.point.x , def.frame.point.y,
-        // def.frame.size.x, def.frame.size.y,
-        // pos.x - def.spriteSource.point.x, pos.y - def.spriteSource.point.y,
-        // def.sourceSize.x, def.sourceSize.y);
-
-      ctx.drawImage(def.atlas, def.frame.point.x , def.frame.point.y,
-        def.frame.size.x, def.frame.size.y,
-        pos.x + def.spriteSource.point.x, pos.y + def.spriteSource.point.y,
-        def.frame.size.x, def.frame.size.y
-      );
-
-
-    }
-
     // Will return promise when they are supported;) (by ArcticTypescript)
     loadResources(): Promise {
       var promises: Promise[] = [];
@@ -153,6 +129,16 @@ module WesnothTiles {
       }
 
       return Promise.all(promises).then(() => {
+        this.groupBase("hills/regular");
+        this.groupBase("hills/snow");
+        this.groupBase("hills/dry");
+        this.groupBase("hills/desert");
+
+        this.groupBase("grass/green");
+        this.groupBase("grass/semi-dry");
+        this.groupBase("grass/dry");
+        this.groupBase("grass/leaf-litter");
+
         this.groupBase("hills/regular");
         this.groupBase("hills/snow");
         this.groupBase("hills/dry");
