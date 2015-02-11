@@ -182,6 +182,7 @@ module WesnothTiles {
         this.groupTransitions("grass/semi-dry-abrupt");
 
         this.groupTransitions("swamp/mud-to-land");
+        this.groupTransitions("swamp/water");
       });
 
     }
