@@ -13,6 +13,9 @@ module WesnothTiles {
     GRASS_DRY, // 5
     GRASS_LEAF_LITTER, // 6
     GRASS_SEMI_DRY, // 7
+
+    SWAMP_MUD, // 8
+    SWAMP_WATER, // 9
   }
 
   export class Hex extends HexPos {

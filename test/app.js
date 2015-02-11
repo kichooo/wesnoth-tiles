@@ -8,7 +8,7 @@ function start() {
 
     for (var i = -20; i < 20; i++)
       for (var j = -20; j < 20; j++) {
-        map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i /5 + i * 2 * j + j))) % 8));        
+        map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i / 2 + i / 5 + i * 2 * j + j))) % 9));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j + j))) % 4 + 4));        
       }
 

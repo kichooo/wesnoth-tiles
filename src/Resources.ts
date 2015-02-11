@@ -163,6 +163,9 @@ module WesnothTiles {
         this.groupBase("grass/dry");
         this.groupBase("grass/leaf-litter");
 
+        this.groupBase("swamp/mud");
+        this.groupBase("swamp/water");
+
         this.groupTransitions("hills/regular");
         this.groupTransitions("hills/snow");
         this.groupTransitions("hills/dry");
@@ -172,6 +175,13 @@ module WesnothTiles {
         this.groupTransitions("grass/dry-long");
         this.groupTransitions("grass/leaf-litter-long");
         this.groupTransitions("grass/semi-dry-long");
+
+        this.groupTransitions("grass/green-abrupt");
+        this.groupTransitions("grass/dry-abrupt");
+        this.groupTransitions("grass/leaf-litter");
+        this.groupTransitions("grass/semi-dry-abrupt");
+
+        this.groupTransitions("swamp/mud-to-land");
       });
 
     }
