@@ -1,4 +1,4 @@
-module WesnothTiles {
+module WesnothTiles.Resources {
   'use strict';
 
   export interface IVector {
@@ -13,7 +13,7 @@ module WesnothTiles {
   // This class is responsible for storing sprite data.
   export class SpriteDefinition {
 
-    constructor(public frame: IFrame, public spriteSource: IFrame, public sourceSize: IVector, public atlas: HTMLElement) {      
+    constructor(private frame: IFrame, private spriteSource: IFrame, private sourceSize: IVector, private atlas: HTMLElement) {      
     }
 
     draw(pos: IVector, ctx: CanvasRenderingContext2D) {

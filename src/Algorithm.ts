@@ -1,5 +1,3 @@
-/// <reference path="HexPos.ts"/>
-
 // Drawing algoritm. Pretty complicated, although much simplified compared to Wesnoth (which is much more powerful).
 
 module WesnothTiles {
@@ -13,8 +11,7 @@ module WesnothTiles {
   };
 
   export interface ImageToDraw {
-    sprite: SpriteDefinition;
-    point: IXY;
+    sprite: Resources.SpriteDefinition;
     layer: number;
   };
 
@@ -31,13 +28,12 @@ module WesnothTiles {
       if (this.terrain !== hexMap.getHexP(q, r).terrain)
         return;
       var htd = ensureGet(imagesMap, q, r);
-      var hr = hexResources.get(this.base);
+      var hr = Resources.hexResources.get(this.base);
 
       var sprite = hr.bases[Math.abs((q + r) * (q)) % hr.bases.length];
       // console.log("Drawing", Math.abs((q + r) * (q)) % hr.bases.length);
       htd.tiles.push({
-        sprite: sprite, 
-        point: { x: 0, y: 0},
+        sprite: sprite,
         layer: -500
       });
     }
@@ -64,7 +60,7 @@ module WesnothTiles {
 
       var hexFrom = ensureGet(imagesMap, q, r);
       iterateTransitions((rotations: Rotation[], app: string) => {
-        var hr = hexResources.get(this.base + "-" + app);
+        var hr = Resources.hexResources.get(this.base + "-" + app);
         if (hr.bases.length === 0)
           return;
         for (var i = 0; i < rotations.length; i++) {
@@ -222,27 +218,5 @@ module WesnothTiles {
     callback([tv[4]], "ne");
     callback([tv[5]], "se");
   }
-
-  export var rotationToString = (rotation: number): string => {
-    switch (rotation) {
-      case 0:
-        return "s";
-      case 1:
-        return "sw";        
-      case 2:
-        return "nw";
-      case 3:
-        return "n";
-      case 4:
-        return "ne";                
-      case 5:
-        return "se";
-
-      default:
-        console.error("Invalid rotation",rotation);
-        break;
-    }
-  }
-
 
 } 

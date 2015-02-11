@@ -5,7 +5,6 @@ module WesnothTiles {
 
   export class Renderer<HexType extends Hex> {
     private ctx: CanvasRenderingContext2D;
-    private resources = new Resources();
 
 
     constructor(private canvas: HTMLCanvasElement) {
@@ -36,8 +35,8 @@ module WesnothTiles {
             return;
           }
           hex.tiles[i].sprite.draw({                        
-            x: hex.tiles[i].point.x + Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
-            y: hex.tiles[i].point.y + Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
+            x: Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
+            y: Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
           }, this.ctx);
         }
       });
@@ -50,7 +49,7 @@ module WesnothTiles {
 
 
     load(): Promise {
-      return this.resources.loadResources();
+      return Resources.loadResources();
     }
 
   }
