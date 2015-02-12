@@ -7,8 +7,8 @@ declare class Promise {
 module WesnothTiles.Resources {
   'use strict';
 
-  export interface HexResource {
-    bases: SpriteDefinition[];
+  export interface IHexResource {
+    variations: IAnimationDef[];
   }
 
   var rotationToString = (rotation: number): string => {
@@ -33,7 +33,7 @@ module WesnothTiles.Resources {
   }
 
 
-  export var hexResources = new Map<string, HexResource>();
+  export var hexResources = new Map<string, IHexResource>();
 
 
   // This class is responsible for loading of the graphics.
@@ -50,29 +50,42 @@ module WesnothTiles.Resources {
     var groupTransitions = (base: string) => {
       // for each size (1..6), for each rotation (0..5):
       for (var rot = 0; rot < 6; rot++) {
-        var name = base;
+        var rotations = "";
         for (var size = 0; size < 6; size++) {
-          var hr: HexResource = {
-            bases: [],
+          var hr: IHexResource = {
+            variations: [],
           }
-          name += "-" + rotationToString((rot + size) % 6)              
-          for (var i = 0; definitions.has(name + toString(i)); i++) {
-            if (i > 0)
-              console.log("Jeb z lasera",name, i);
-            hr.bases.push(definitions.get(name + toString(i)));
+
+          rotations += "-" + rotationToString((rot + size) % 6)
+
+          for (var i = 0; definitions.has(base + rotations + toString(i)) || definitions.has(base + "-A01" + rotations + toString(i)); i++) {
+            if (definitions.has(base + rotations + toString(i))) {
+              var anim: IAnimationDef = {
+                count: 1,
+                frames: [definitions.get(base + rotations + toString(i))]
+              }
+              hr.variations.push(anim);  
+            }
+            
           }
-          hexResources.set(name, hr);
+          hexResources.set(base + rotations, hr);
         }  
       }
 
     }
 
     var groupBase = (base: string) => {
-      var hr: HexResource = {
-        bases: [],
+      var hr: IHexResource = {
+        variations: [],
       }
-      for (var i = 0; definitions.has(base + toString(i)); i++) {
-        hr.bases.push(definitions.get(base + toString(i)));
+      for (var i = 0; definitions.has(base + toString(i)) || definitions.has(base + "-A01" + toString(i)); i++) {
+        if (definitions.has(base + toString(i))) {
+          var anim: IAnimationDef = {
+            count: 1,
+            frames: [definitions.get(base + toString(i))]
+          }
+          hr.variations.push(anim);  
+        }
       }
 
       hexResources.set(base, hr);
@@ -197,10 +210,6 @@ module WesnothTiles.Resources {
 
   interface IFrames {
     frames: IDefinition[];
-  }
-
-  interface ISprite {
-
   }
 
   interface IDefinition {

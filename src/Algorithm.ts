@@ -6,15 +6,15 @@ module WesnothTiles {
   export interface HexToDraw {
     q: number;
     r: number;
-    tiles: ImageToDraw[];
+    sprites: ISprite[];
     flags: Map<string, boolean>;
   };
 
-  export interface ImageToDraw {
-    sprite: Resources.SpriteDefinition;
+  export interface ISprite {
+    animation: Resources.IAnimationDef;
+    frame: number;
     layer: number;
-  };
-
+  }
 
   export interface Macro {
     execute: (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number) => void;
@@ -30,11 +30,12 @@ module WesnothTiles {
       var htd = ensureGet(imagesMap, q, r);
       var hr = Resources.hexResources.get(this.base);
 
-      var sprite = hr.bases[Math.abs((q + r) * (q)) % hr.bases.length];
+      var animation = hr.variations[Math.abs((q + r) * (q)) % hr.variations.length];
       // console.log("Drawing", Math.abs((q + r) * (q)) % hr.bases.length);
-      htd.tiles.push({
-        sprite: sprite,
-        layer: -500
+      htd.sprites.push({
+        animation: animation,
+        layer: -500,
+        frame: 0
       });
     }
   }
@@ -61,7 +62,7 @@ module WesnothTiles {
       var hexFrom = ensureGet(imagesMap, q, r);
       iterateTransitions((rotations: Rotation[], app: string) => {
         var hr = Resources.hexResources.get(this.base + "-" + app);
-        if (hr.bases.length === 0)
+        if (hr.variations.length === 0)
           return;
         for (var i = 0; i < rotations.length; i++) {
           var rot = rotations[i];
@@ -84,15 +85,15 @@ module WesnothTiles {
           }
 
         }
-      
-        var sprite = hr.bases[Math.abs((q + r) * (q)) % hr.bases.length];
 
-        hexFrom.tiles.push({
-          sprite: sprite, 
-          point: { x: 0, y: 0},
-          layer: this.layer
-        })        
-              
+
+        var animation = hr.variations[Math.abs((q + r) * (q)) % hr.variations.length];
+      // console.log("Drawing", Math.abs((q + r) * (q)) % hr.bases.length);
+        hexFrom.sprites.push({
+          animation: animation,
+          layer: this.layer,
+          frame: 0
+        });
       });
     }
   }
@@ -150,7 +151,7 @@ module WesnothTiles {
         q: q,
         r: r,
         flags: new Map<string, boolean>(),
-        tiles: []
+        sprites: [],
       });
     return drawMap.get(key);          
   }

@@ -10,7 +10,13 @@ module WesnothTiles.Resources {
     point: IVector;
     size: IVector;
   }
-  // This class is responsible for storing sprite data.
+
+
+  export interface IAnimationDef {
+    frames: SpriteDefinition[];
+    count: number;
+  }
+
   export class SpriteDefinition {
 
     constructor(private frame: IFrame, private spriteSource: IFrame, private sourceSize: IVector, private atlas: HTMLElement) {      

@@ -15,7 +15,7 @@ module WesnothTiles {
     rebuild(hexMap: HexMap) {
       this.drawMap = rebuild(hexMap);
       this.drawMap.forEach(hex => {
-        hex.tiles.sort((a: ImageToDraw, b: ImageToDraw) => {
+        hex.sprites.sort((a: ISprite, b: ISprite) => {
           return a.layer - b.layer;
         });
       });
@@ -24,13 +24,13 @@ module WesnothTiles {
     redraw(hexMap: HexMap): void {
 // console.log(this.canvas.width, this.canvas.height);
       this.drawMap.forEach(hex => {
-        for (var i = 0; i < hex.tiles.length; i++) {
-
-          if (hex.tiles[i].sprite === null || hex.tiles[i].sprite === undefined) {
+        for (var i = 0; i < hex.sprites.length; i++) {
+          var sprite = hex.sprites[i]
+          if (sprite.animation === null || sprite.animation === undefined) {
             console.error("Invalid sprite!", name);
             return;
           }
-          hex.tiles[i].sprite.draw({                        
+          sprite.animation.frames[sprite.frame].draw({                        
             x: Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
             y: Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
           }, this.ctx);
