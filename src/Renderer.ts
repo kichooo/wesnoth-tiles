@@ -5,29 +5,25 @@ module WesnothTiles {
 
   export class Renderer<HexType extends Hex> {
     private ctx: CanvasRenderingContext2D;
+    private drawMap = new Map<string,  HexToDraw>();
 
 
     constructor(private canvas: HTMLCanvasElement) {
       this.ctx = this.canvas.getContext('2d');
     }
 
-    redraw(hexMap: HexMap): void {
-      console.log("Redraw.");
-      this.ctx.beginPath();
-      this.ctx.rect(0, this.canvas.height / 2 - 5, this.canvas.width, 10);
-      this.ctx.fillStyle = 'yellow';
-      this.ctx.fill();
-      this.ctx.lineWidth = 1;
-      this.ctx.strokeStyle = 'gray';
-      this.ctx.stroke();
-
-      // var drawMap = drawTiles(hexMap);
-      var drawMap = rebuild(hexMap);
-// console.log(this.canvas.width, this.canvas.height);
-      drawMap.forEach(hex => {
+    rebuild(hexMap: HexMap) {
+      this.drawMap = rebuild(hexMap);
+      this.drawMap.forEach(hex => {
         hex.tiles.sort((a: ImageToDraw, b: ImageToDraw) => {
           return a.layer - b.layer;
         });
+      });
+    }
+
+    redraw(hexMap: HexMap): void {
+// console.log(this.canvas.width, this.canvas.height);
+      this.drawMap.forEach(hex => {
         for (var i = 0; i < hex.tiles.length; i++) {
 
           if (hex.tiles[i].sprite === null || hex.tiles[i].sprite === undefined) {

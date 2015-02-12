@@ -155,15 +155,6 @@ module WesnothTiles {
     return drawMap.get(key);          
   }
 
-  export var iterateRotations = (callback: (rotation: number, q: number, r: number) => void) => {
-    callback(0, 0 , 1);
-    callback(1, -1 , 1);
-    callback(2, -1 , 0);
-    callback(3, 0 , -1);
-    callback(4, 1 , -1);
-    callback(5, 1 , 0);    
-  }
-
   export interface Rotation {
     q: number;
     r: number;
