@@ -23,19 +23,38 @@ module WesnothTiles {
 
     redraw(hexMap: HexMap): void {
 // console.log(this.canvas.width, this.canvas.height);
-      this.drawMap.forEach(hex => {
-        for (var i = 0; i < hex.sprites.length; i++) {
-          var sprite = hex.sprites[i]
-          if (sprite.animation === null || sprite.animation === undefined) {
-            console.error("Invalid sprite!", name);
-            return;
-          }
-          sprite.animation.frames[sprite.frame].draw({                        
-            x: Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
-            y: Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
-          }, this.ctx);
+      for (var q = -20; q < 20; q++) {
+        for (var r = -20; r < 20; r++) {
+          var hex = this.drawMap.get(HexPos.toString(q, r));
+            for (var i = 0; i < hex.sprites.length; i++) {
+              var sprite = hex.sprites[i]
+              if (sprite.animation === null || sprite.animation === undefined) {
+                console.error("Invalid sprite!", name);
+                return;
+              }
+              sprite.animation.frames[sprite.frame].draw({                        
+                x: Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
+                y: Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
+              }, this.ctx);
+            }          
         }
-      });
+      }
+
+
+
+      // this.drawMap.forEach(hex => {
+      //   for (var i = 0; i < hex.sprites.length; i++) {
+      //     var sprite = hex.sprites[i]
+      //     if (sprite.animation === null || sprite.animation === undefined) {
+      //       console.error("Invalid sprite!", name);
+      //       return;
+      //     }
+      //     sprite.animation.frames[sprite.frame].draw({                        
+      //       x: Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
+      //       y: Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
+      //     }, this.ctx);
+      //   }
+      // });
     }
 
     Resize(width: number, height: number): void {    
