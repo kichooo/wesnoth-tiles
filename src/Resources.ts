@@ -41,10 +41,18 @@ module WesnothTiles.Resources {
     var definitions = new Map<string, SpriteDefinition>();
     
 
-    var toString = (n: number): string => {
+    var toVariantString = (n: number): string => {
       if (n === 0)
         return "";
       return (n + 1).toString();
+    }
+
+    var toAnimationString = (n: number): string => {
+
+      if (n < 9) {
+        return "-A0" + (n + 1);
+      } else 
+      return "-A" + (n + 1);
     }
 
     var groupTransitions = (base: string) => {
@@ -58,13 +66,21 @@ module WesnothTiles.Resources {
 
           rotations += "-" + rotationToString((rot + size) % 6)
 
-          for (var i = 0; definitions.has(base + rotations + toString(i)) || definitions.has(base + "-A01" + rotations + toString(i)); i++) {
-            if (definitions.has(base + rotations + toString(i))) {
+          for (var i = 0; definitions.has(base + rotations + toVariantString(i)) || definitions.has(base + toAnimationString(0) + rotations + toVariantString(i)); i++) {
+            if (definitions.has(base + rotations + toVariantString(i))) {
               var anim: IAnimationDef = {
-                count: 1,
-                frames: [definitions.get(base + rotations + toString(i))]
+                frames: [definitions.get(base + rotations + toVariantString(i))]
               }
               hr.variations.push(anim);  
+            } else {
+              var anim: IAnimationDef = {
+                frames: []
+              }
+              // Group the animation.
+              for (var j = 0; j < 100 && definitions.has(base + toAnimationString(j) + rotations + toVariantString(i)); j++) {
+                anim.frames.push(definitions.get(base + toAnimationString(j) + rotations + toVariantString(i)));
+              }
+              hr.variations.push(anim);
             }
             
           }
@@ -78,13 +94,20 @@ module WesnothTiles.Resources {
       var hr: IHexResource = {
         variations: [],
       }
-      for (var i = 0; definitions.has(base + toString(i)) || definitions.has(base + "-A01" + toString(i)); i++) {
-        if (definitions.has(base + toString(i))) {
+      for (var i = 0; definitions.has(base + toVariantString(i)) || definitions.has(base + toAnimationString(0) + toVariantString(i)); i++) {
+        if (definitions.has(base + toVariantString(i))) {
           var anim: IAnimationDef = {
-            count: 1,
-            frames: [definitions.get(base + toString(i))]
+            frames: [definitions.get(base + toVariantString(i))]
           }
-          hr.variations.push(anim);  
+          hr.variations.push(anim);
+        } else {
+          var anim: IAnimationDef = {
+            frames: []
+          }
+          for (var j = 0; j < 100 && definitions.has(base + toAnimationString(j) + toVariantString(i)); j++) {
+            anim.frames.push(definitions.get(base + toAnimationString(j) + toVariantString(i)));
+          } 
+          hr.variations.push(anim);    
         }
       }
 
@@ -185,6 +208,9 @@ module WesnothTiles.Resources {
 
         groupBase("swamp/mud");
         groupBase("swamp/water");
+
+        groupBase("water/coast-tropical");
+        groupBase("water/ocean");
 
         groupTransitions("hills/regular");
         groupTransitions("hills/snow");

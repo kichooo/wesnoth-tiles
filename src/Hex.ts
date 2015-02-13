@@ -16,6 +16,9 @@ module WesnothTiles {
 
     SWAMP_MUD, // 8
     SWAMP_WATER, // 9
+
+    WATER_COAST_TROPICAL, // 10
+    WATER_OCEAN // 11
   }
 
   export class Hex extends HexPos {

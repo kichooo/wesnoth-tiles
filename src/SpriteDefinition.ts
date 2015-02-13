@@ -14,7 +14,6 @@ module WesnothTiles.Resources {
 
   export interface IAnimationDef {
     frames: SpriteDefinition[];
-    count: number;
   }
 
   export class SpriteDefinition {

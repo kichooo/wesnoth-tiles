@@ -112,6 +112,8 @@ module WesnothTiles {
   macros.push(new TerrainMacro(ETerrain.SWAMP_MUD, "swamp/mud"));
   macros.push(new TerrainMacro(ETerrain.SWAMP_WATER, "swamp/water"));
 
+  macros.push(new TerrainMacro(ETerrain.WATER_COAST_TROPICAL, "water/coast-tropical"));
+  macros.push(new TerrainMacro(ETerrain.WATER_OCEAN, "water/ocean"));
 
   macros.push(new TransitionMacro(ETerrain.HILLS_SNOW, "hills/snow", -172, false, [ETerrain.HILLS_SNOW], true));
   macros.push(new TransitionMacro(ETerrain.HILLS_REGULAR, "hills/regular", -180, false, [ETerrain.HILLS_REGULAR], true));
