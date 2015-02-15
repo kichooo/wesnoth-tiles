@@ -22,12 +22,13 @@ module WesnothTiles {
     }
 
     redraw(hexMap: HexMap): void {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 // console.log(this.canvas.width, this.canvas.height);
-      for (var q = -20; q < 20; q++) {
+      for (var q = -20; q < 20; q++) { // very temporary...
         for (var r = -20; r < 20; r++) {
           var hex = this.drawMap.get(HexPos.toString(q, r));
             for (var i = 0; i < hex.sprites.length; i++) {
-              var sprite = hex.sprites[i]
+              var sprite = hex.sprites[i];
               if (sprite.animation === null || sprite.animation === undefined) {
                 console.error("Invalid sprite!", sprite);
                 return;
@@ -37,6 +38,7 @@ module WesnothTiles {
                 y: Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
               }, this.ctx);
               sprite.frame = (sprite.frame + 1) % sprite.animation.frames.length;
+              // sprite.frame = Math.min(sprite.animation.frames.length - 1, 3);
             }          
         }
       }

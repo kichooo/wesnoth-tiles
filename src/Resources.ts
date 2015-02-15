@@ -229,6 +229,11 @@ module WesnothTiles.Resources {
 
         groupTransitions("swamp/mud-to-land");
         groupTransitions("swamp/water");
+
+        groupTransitions("water/ocean-blend");
+        groupTransitions("water/coast-tropical-long");
+
+        groupTransitions("flat/bank");
       });
 
     }
