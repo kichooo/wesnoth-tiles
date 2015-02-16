@@ -218,6 +218,9 @@ module WesnothTiles.Resources {
         groupTransitions("hills/snow-to-water");
         groupTransitions("hills/dry");
         groupTransitions("hills/desert");
+        groupTransitions("hills/regular-to-water");
+        groupTransitions("hills/dry-to-water");
+
 
         groupTransitions("grass/green-long");
         groupTransitions("grass/dry-long");
