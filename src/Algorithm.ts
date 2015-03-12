@@ -21,8 +21,24 @@ module WesnothTiles {
   }
 
   // var TerrainMacro = () => {
-    
+
   // }
+
+  export class WMLImage {
+    name: string;
+  }
+
+  export class WMLTile {
+    x: number;
+    y: number;
+    type: string;
+    images: WMLImage[];
+  }
+
+  export class WMLTerrainGraphics {
+    tiles: WMLTile[];
+
+  }
 
   export class TerrainMacro implements Macro {
     constructor(private terrain: ETerrain, private base: string) {
