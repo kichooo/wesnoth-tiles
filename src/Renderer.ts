@@ -50,7 +50,7 @@ module WesnothTiles {
     }
 
 
-    load(): Promise {
+    load(): Promise<void> {
       return Resources.loadResources();
     }
 

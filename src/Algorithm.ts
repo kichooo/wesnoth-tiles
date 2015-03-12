@@ -20,6 +20,10 @@ module WesnothTiles {
     execute: (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number) => void;
   }
 
+  // var TerrainMacro = () => {
+    
+  // }
+
   export class TerrainMacro implements Macro {
     constructor(private terrain: ETerrain, private base: string) {
 
