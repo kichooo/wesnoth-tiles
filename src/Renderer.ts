@@ -13,7 +13,7 @@ module WesnothTiles {
     }
 
     rebuild(hexMap: HexMap) {
-      this.drawMap = rebuild(hexMap);
+      // this.drawMap = rebuild(hexMap);
       this.drawMap.forEach(hex => {
         hex.sprites.sort((a: ISprite, b: ISprite) => {
           return a.layer - b.layer;
