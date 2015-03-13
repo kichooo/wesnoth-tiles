@@ -24,20 +24,34 @@ module WesnothTiles {
 
   // }
 
+
   export class WMLImage {
     name: string;
+    layer: number;
   }
 
   export class WMLTile {
+    set_flag: string[];
+    has_flag: string[];
+    no_flag: string[];
+
     x: number;
     y: number;
     type: string;
     images: WMLImage[];
+
+    anchor: number;
   }
 
   export class WMLTerrainGraphics {
     tiles: WMLTile[];
+    set_flag: string[];
+    has_flag: string[];
+    no_flag: string[];
 
+    probability: number;
+
+    rotations: string[];
   }
 
   export class TerrainMacro implements Macro {
