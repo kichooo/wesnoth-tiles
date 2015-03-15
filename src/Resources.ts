@@ -7,9 +7,11 @@
 module WesnothTiles.Resources {
   'use strict';
 
-  export interface IHexResource {
-    variations: IAnimationDef[];
-  }
+  // export interface IHexResource {
+  //   variations: IAnimationDef[];
+  // }
+
+  
 
   var rotationToString = (rotation: number): string => {
     switch (rotation) {
@@ -33,12 +35,12 @@ module WesnothTiles.Resources {
   }
 
 
-  export var hexResources = new Map<string, IHexResource>();
+  // export var hexResources = new Map<string, IHexResource>();
 
 
 // This class is responsible for loading of the graphics.
   var atlases = new Map<string, HTMLElement>();
-  var definitions = new Map<string, SpriteDefinition>();
+  export var definitions = new Map<string, SpriteDefinition>();
 
 
   var toVariantString = (n: number): string => {
@@ -55,64 +57,64 @@ module WesnothTiles.Resources {
     }
   }
 
-  var groupTransitions = (base: string) => {
-    // for each size (1..6), for each rotation (0..5):
-    for (var rot = 0; rot < 6; rot++) {
-      var rotations = "";
-      for (var size = 0; size < 6; size++) {
-        var hr: IHexResource = {
-          variations: [],
-        }
+  // var groupTransitions = (base: string) => {
+  //   // for each size (1..6), for each rotation (0..5):
+  //   for (var rot = 0; rot < 6; rot++) {
+  //     var rotations = "";
+  //     for (var size = 0; size < 6; size++) {
+  //       var hr: IHexResource = {
+  //         variations: [],
+  //       }
 
-        rotations += "-" + rotationToString((rot + size) % 6)
+  //       rotations += "-" + rotationToString((rot + size) % 6)
 
-        for (var i = 0; definitions.has(base + rotations + toVariantString(i)) || definitions.has(base + toAnimationString(0) + rotations + toVariantString(i)); i++) {
-          if (definitions.has(base + rotations + toVariantString(i))) {
-            var anim: IAnimationDef = {
-              frames: [definitions.get(base + rotations + toVariantString(i))]
-            }
-            hr.variations.push(anim);  
-            } else {
-              var anim: IAnimationDef = {
-                frames: []
-              }
-            // Group the animation.
-            for (var j = 0; j < 100 && definitions.has(base + toAnimationString(j) + rotations + toVariantString(i)); j++) {
-              anim.frames.push(definitions.get(base + toAnimationString(j) + rotations + toVariantString(i)));
-            }
-            hr.variations.push(anim);
-          }
+  //       for (var i = 0; definitions.has(base + rotations + toVariantString(i)) || definitions.has(base + toAnimationString(0) + rotations + toVariantString(i)); i++) {
+  //         if (definitions.has(base + rotations + toVariantString(i))) {
+  //           var anim: IAnimationDef = {
+  //             frames: [definitions.get(base + rotations + toVariantString(i))]
+  //           }
+  //           hr.variations.push(anim);  
+  //           } else {
+  //             var anim: IAnimationDef = {
+  //               frames: []
+  //             }
+  //           // Group the animation.
+  //           for (var j = 0; j < 100 && definitions.has(base + toAnimationString(j) + rotations + toVariantString(i)); j++) {
+  //             anim.frames.push(definitions.get(base + toAnimationString(j) + rotations + toVariantString(i)));
+  //           }
+  //           hr.variations.push(anim);
+  //         }
           
-        }
-        hexResources.set(base + rotations, hr);
-      }  
-    }
+  //       }
+  //       hexResources.set(base + rotations, hr);
+  //     }  
+  //   }
 
-  }
+  // }
 
-  var groupBase = (base: string) => {
-    var hr: IHexResource = {
-      variations: [],
-    }
-    for (var i = 0; definitions.has(base + toVariantString(i)) || definitions.has(base + toAnimationString(0) + toVariantString(i)); i++) {
-      if (definitions.has(base + toVariantString(i))) {
-        var anim: IAnimationDef = {
-          frames: [definitions.get(base + toVariantString(i))]
-        }
-        hr.variations.push(anim);
-        } else {
-          var anim: IAnimationDef = {
-            frames: []
-          }
-          for (var j = 0; j < 100 && definitions.has(base + toAnimationString(j) + toVariantString(i)); j++) {
-            anim.frames.push(definitions.get(base + toAnimationString(j) + toVariantString(i)));
-          } 
-          hr.variations.push(anim);    
-        }
-      }
+  // var groupBase = (base: string) => {
+  //   var hr: IHexResource = {
+  //     variations: [],
+  //   }
+  //   for (var i = 0; definitions.has(base + toVariantString(i)) || definitions.has(base + toAnimationString(0) + toVariantString(i)); i++) {
+  //     if (definitions.has(base + toVariantString(i))) {
+  //       var anim: IAnimationDef = {
+  //         frames: [definitions.get(base + toVariantString(i))]
+  //       }
+  //       hr.variations.push(anim);
+  //       } else {
+  //         var anim: IAnimationDef = {
+  //           frames: []
+  //         }
+  //         for (var j = 0; j < 100 && definitions.has(base + toAnimationString(j) + toVariantString(i)); j++) {
+  //           anim.frames.push(definitions.get(base + toAnimationString(j) + toVariantString(i)));
+  //         } 
+  //         hr.variations.push(anim);    
+  //       }
+  //     }
 
-      hexResources.set(base, hr);
-    }
+  //     hexResources.set(base, hr);
+  //   }
 
     var provideAtlas = (name: string): Promise<void> => {
       var img = new Image();
@@ -179,59 +181,59 @@ module WesnothTiles.Resources {
     }
 
     return Promise.all(promises).then(() => {
-      groupBase("hills/regular");
-      groupBase("hills/snow");
-      groupBase("hills/dry");
-      groupBase("hills/desert");
+      // groupBase("hills/regular");
+      // groupBase("hills/snow");
+      // groupBase("hills/dry");
+      // groupBase("hills/desert");
 
-      groupBase("grass/green");
-      groupBase("grass/semi-dry");
-      groupBase("grass/dry");
-      groupBase("grass/leaf-litter");
+      // groupBase("grass/green");
+      // groupBase("grass/semi-dry");
+      // groupBase("grass/dry");
+      // groupBase("grass/leaf-litter");
 
-      groupBase("hills/regular");
-      groupBase("hills/snow");
-      groupBase("hills/dry");
-      groupBase("hills/desert");
+      // groupBase("hills/regular");
+      // groupBase("hills/snow");
+      // groupBase("hills/dry");
+      // groupBase("hills/desert");
 
-      groupBase("grass/green");
-      groupBase("grass/semi-dry");
-      groupBase("grass/dry");
-      groupBase("grass/leaf-litter");
+      // groupBase("grass/green");
+      // groupBase("grass/semi-dry");
+      // groupBase("grass/dry");
+      // groupBase("grass/leaf-litter");
 
-      groupBase("swamp/mud");
-      groupBase("swamp/water");
+      // groupBase("swamp/mud");
+      // groupBase("swamp/water");
 
-      groupBase("water/coast-tropical");
-      groupBase("water/ocean");
+      // groupBase("water/coast-tropical");
+      // groupBase("water/ocean");
 
-      groupTransitions("hills/regular");
-      groupTransitions("hills/snow");
-      groupTransitions("hills/snow-to-hills");
-      groupTransitions("hills/snow-to-water");
-      groupTransitions("hills/dry");
-      groupTransitions("hills/desert");
-      groupTransitions("hills/regular-to-water");
-      groupTransitions("hills/dry-to-water");
+      // groupTransitions("hills/regular");
+      // groupTransitions("hills/snow");
+      // groupTransitions("hills/snow-to-hills");
+      // groupTransitions("hills/snow-to-water");
+      // groupTransitions("hills/dry");
+      // groupTransitions("hills/desert");
+      // groupTransitions("hills/regular-to-water");
+      // groupTransitions("hills/dry-to-water");
 
 
-      groupTransitions("grass/green-long");
-      groupTransitions("grass/dry-long");
-      groupTransitions("grass/leaf-litter-long");
-      groupTransitions("grass/semi-dry-long");
+      // groupTransitions("grass/green-long");
+      // groupTransitions("grass/dry-long");
+      // groupTransitions("grass/leaf-litter-long");
+      // groupTransitions("grass/semi-dry-long");
 
-      groupTransitions("grass/green-abrupt");
-      groupTransitions("grass/dry-abrupt");
-      groupTransitions("grass/leaf-litter");
-      groupTransitions("grass/semi-dry-abrupt");
+      // groupTransitions("grass/green-abrupt");
+      // groupTransitions("grass/dry-abrupt");
+      // groupTransitions("grass/leaf-litter");
+      // groupTransitions("grass/semi-dry-abrupt");
 
-      groupTransitions("swamp/mud-to-land");
-      groupTransitions("swamp/water");
+      // groupTransitions("swamp/mud-to-land");
+      // groupTransitions("swamp/water");
 
-      groupTransitions("water/ocean-blend");
-      groupTransitions("water/coast-tropical-long");
+      // groupTransitions("water/ocean-blend");
+      // groupTransitions("water/coast-tropical-long");
 
-      groupTransitions("flat/bank");
+      // groupTransitions("flat/bank");
       });
 
   }

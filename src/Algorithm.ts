@@ -3,18 +3,21 @@
 module WesnothTiles {
   'use strict';
 
-  export interface HexToDraw {
-    q: number;
-    r: number;
-    sprites: ISprite[];
-    flags: Map<string, boolean>;
-  };
+  // export interface IDrawable {
+  //   q: number;
+  //   r: number;
 
-  export interface ISprite {
-    animation: Resources.IAnimationDef;
-    frame: number;
-    layer: number;
-  }
+  //   // sprites: ISprite[];
+  //   // flags: Map<string, boolean>;
+  //   name: string;
+  // };
+
+
+  // export interface ISprite {
+  //   animation: Resources.IAnimationDef;
+  //   frame: number;
+  //   layer: number;
+  // }
 
   // export interface Macro {
   //   execute: (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number) => void;
@@ -181,8 +184,17 @@ module WesnothTiles {
   // macros.push(new TransitionMacro(ETerrain.WATER_COAST_TROPICAL, "water/coast-tropical-long", -553, true, [ETerrain.WATER_OCEAN], false));
 
 
+  var macros: { (data: string): void; } [];
 
   export var rebuild = (hexMap: HexMap) => {
+    var flagsMap = new Map<string,  Map<string, boolean>>();
+
+    var drawables: IDrawable[] = [];
+
+    drawables.push(new StaticImage(100, 150, "hills/desert", 100));
+
+    return drawables;
+
     // var drawMap = new Map<string,  HexToDraw>();
 
     // macros.forEach(macro => {

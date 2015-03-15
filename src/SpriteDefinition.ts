@@ -1,10 +1,7 @@
 module WesnothTiles.Resources {
   'use strict';
 
-  export interface IVector {
-    x: number;
-    y: number;
-  }
+
 
   export interface IFrame {
     point: IVector;
@@ -12,9 +9,9 @@ module WesnothTiles.Resources {
   }
 
 
-  export interface IAnimationDef {
-    frames: SpriteDefinition[];
-  }
+  // export interface IAnimationDef {
+  //   frames: SpriteDefinition[];
+  // }
 
   export class SpriteDefinition {
 
