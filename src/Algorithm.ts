@@ -3,6 +3,8 @@
 module WesnothTiles {
   'use strict';
 
+  interface Flags extends Map<string,  Map<string, boolean>> {};
+
   // export interface IDrawable {
   //   q: number;
   //   r: number;
@@ -55,6 +57,21 @@ module WesnothTiles {
     probability: number;
 
     rotations: string[];
+  }
+
+  var addGrassGreen = (hex: Hex, hexMap: HexMap, flags: Flags, drawables: IDrawable[]) => {
+    if (hex.terrain == ETerrain.HILLS_REGULAR) {
+
+      drawables.push(new StaticImage(
+        (36 * 1.5) * hex.q - 36, 
+        36 * (2 * hex.r + hex.q) - 36, 
+        "hills/regular", 100));
+    }
+      
+
+
+                //       x: Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
+                // y: Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
   }
 
   // export class TerrainMacro implements Macro {
@@ -184,14 +201,20 @@ module WesnothTiles {
   // macros.push(new TransitionMacro(ETerrain.WATER_COAST_TROPICAL, "water/coast-tropical-long", -553, true, [ETerrain.WATER_OCEAN], false));
 
 
-  var macros: { (data: string): void; } [];
+  var macros: { (hex: Hex, hexMap: HexMap, flags: Flags, drawables: IDrawable[]): void; } [] = [];
+  macros.push(addGrassGreen);
 
   export var rebuild = (hexMap: HexMap) => {
-    var flagsMap = new Map<string,  Map<string, boolean>>();
+    var flags = new Map<string,  Map<string, boolean>>();
 
     var drawables: IDrawable[] = [];
 
-    drawables.push(new StaticImage(100, 150, "hills/desert", 100));
+    macros.forEach(macro => {
+      hexMap.iterate(hex => {
+        macro(hex, hexMap, flags, drawables);
+      });
+    });
+
 
     return drawables;
 
