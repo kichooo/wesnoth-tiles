@@ -59,12 +59,27 @@ module WesnothTiles {
     rotations: string[];
   }
 
-  var addGrassGreen = (hex: Hex, hexMap: HexMap, flags: Flags, drawables: IDrawable[]) => {
-    if (hex.terrain == ETerrain.HILLS_REGULAR) {
+  interface IDrawParams {
+    hex: Hex;
+    hexMap: HexMap;
+    flags: Flags;
+    drawables: IDrawable[];
+  }
 
-      drawables.push(new StaticImage(
-        (36 * 1.5) * hex.q - 36, 
-        36 * (2 * hex.r + hex.q) - 36, 
+  var GENERIC_SINGLE_PLFB = () => {
+
+  }
+
+  var TERRAIN_BASE_PLFB = (terrain: string ) => {
+
+  }
+
+  var addGrassGreen = (dp: IDrawParams) => {
+    if (dp.hex.terrain == ETerrain.HILLS_REGULAR) {
+
+      dp.drawables.push(new StaticImage(
+        (36 * 1.5) * dp.hex.q - 36, 
+        36 * (2 * dp.hex.r + dp.hex.q) - 36, 
         "hills/regular", 100));
     }
       
@@ -201,7 +216,7 @@ module WesnothTiles {
   // macros.push(new TransitionMacro(ETerrain.WATER_COAST_TROPICAL, "water/coast-tropical-long", -553, true, [ETerrain.WATER_OCEAN], false));
 
 
-  var macros: { (hex: Hex, hexMap: HexMap, flags: Flags, drawables: IDrawable[]): void; } [] = [];
+  var macros: { (dp: IDrawParams): void; } [] = [];
   macros.push(addGrassGreen);
 
   export var rebuild = (hexMap: HexMap) => {
@@ -209,9 +224,18 @@ module WesnothTiles {
 
     var drawables: IDrawable[] = [];
 
+    var dp: IDrawParams = {
+      hex: null,
+      hexMap: hexMap,
+      flags: flags,
+      drawables: drawables
+    }
+
+
     macros.forEach(macro => {
       hexMap.iterate(hex => {
-        macro(hex, hexMap, flags, drawables);
+        dp.hex = hex;
+        macro(dp);
       });
     });
 
