@@ -42,7 +42,7 @@ module WesnothTiles {
 
     x: number;
     y: number;
-    type: string;
+    type: Map<number, boolean>;
 
     image?: WMLImage;
 
@@ -82,7 +82,7 @@ module WesnothTiles {
 
   }
 
-  var TERRAIN_BASE_P = (terrain: string ) => {
+  var TERRAIN_BASE_P = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string) => {
     
   }
 
@@ -95,7 +95,7 @@ module WesnothTiles {
     var tile: WMLTile = {
       x: 0,
       y: 0,
-      type: "*",
+      type: new Map<number, boolean>(),
       image: img
 
     }
