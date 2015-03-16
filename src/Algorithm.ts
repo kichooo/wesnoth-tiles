@@ -247,12 +247,29 @@ module WesnothTiles {
   // macros.push(new TransitionMacro(ETerrain.WATER_COAST_TROPICAL, "water/coast-tropical-long", -553, true, [ETerrain.WATER_OCEAN], false));
 
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
-    dp.drawables.push(new StaticImage(
-        (36 * 1.5) * dp.hex.q - 36, 
-        36 * (2 * dp.hex.r + dp.hex.q) - 36, 
-        "grass/green", 100
-        )
-    );
+    if (tg.tiles !== undefined) {
+      for (var i = tg.Tiles.length - 1; i >= 0; i--) {
+        // tg.Tiles[i]
+        if (true) {
+
+          } else {
+            return;
+          }
+      }
+      for (var i = tg.Tiles.length - 1; i >= 0; i--) {
+        if (tg.image !== undefined) {
+          dp.drawables.push(new StaticImage(
+              (36 * 1.5) * dp.hex.q - 36, 
+              36 * (2 * dp.hex.r + dp.hex.q) - 36, 
+              tg.Tiles[i].image.name, 100
+            )
+          ); 
+         
+        }
+        
+      }
+    }   
+    
   }
 
   var macros: { (terrainGraphics: WMLTerrainGraphics[]): void; } [] = [];
