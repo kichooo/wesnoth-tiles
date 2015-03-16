@@ -248,7 +248,7 @@ module WesnothTiles {
 
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
     if (tg.tiles !== undefined) {
-      for (var i = tg.Tiles.length - 1; i >= 0; i--) {
+      for (var i = tg.tiles.length - 1; i >= 0; i--) {
         // tg.Tiles[i]
         if (true) {
 
@@ -256,12 +256,12 @@ module WesnothTiles {
             return;
           }
       }
-      for (var i = tg.Tiles.length - 1; i >= 0; i--) {
-        if (tg.image !== undefined) {
+      for (var i = tg.tiles.length - 1; i >= 0; i--) {
+        if (tg.tiles[i].image !== undefined) {
           dp.drawables.push(new StaticImage(
               (36 * 1.5) * dp.hex.q - 36, 
               36 * (2 * dp.hex.r + dp.hex.q) - 36, 
-              tg.Tiles[i].image.name, 100
+              tg.tiles[i].image.name, 100
             )
           ); 
          
