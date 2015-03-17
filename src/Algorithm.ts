@@ -110,8 +110,13 @@ module WesnothTiles {
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: LFB) => {
-    
+  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, lfb: LFB) => {
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, {
+      prob: 100,
+      layer: lfb.layer,
+      flag: lfb.flag,
+      builder: lfb.builder
+    });
   }
 
   var TERRAIN_BASE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: LFB) => {
@@ -119,7 +124,6 @@ module WesnothTiles {
       plfb.layer = -1000;
     if (plfb.flag === undefined)
       plfb.flag = "base";
-
   }
 
   var getTerrainMap = (terrains: ETerrain[]) => {
