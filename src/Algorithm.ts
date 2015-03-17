@@ -40,9 +40,9 @@ module WesnothTiles {
     has_flag?: string[];
     no_flag?: string[];
 
-    x: number;
-    y: number;
-    type: Map<number, boolean>;
+    q: number;
+    r: number;
+    type: Map<ETerrain, boolean>;
 
     image?: WMLImage;
 
@@ -68,36 +68,23 @@ module WesnothTiles {
   }
 
   interface PLFB {
-    prob: number;
-    layer: number;
-    flag: string;
-    builder: string;
+    prob?: number;
+    layer?: number;
+    flag?: string;
+    builder?: string;
   }
 
-  var GENERIC_SINGLE_PLFB = () => {
-
-  }
-
-  var TERRAIN_BASE_PLFB = (terrain: string ) => {
-
-  }
-
-  var TERRAIN_BASE_P = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string) => {
-    
-  }
-
-  var addGrassGreen = (terrainGraphics: WMLTerrainGraphics[]) => {
+  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
-      name: "grass/green",
-      layer: 1000
+      name: imageStem,
+      layer: plfb.layer
     }
 
     var tile: WMLTile = {
-      x: 0,
-      y: 0,
-      type: new Map<number, boolean>(),
+      q: 0,
+      r: 0,
+      type: terrainList,
       image: img
-
     }
     var terrainGraphic: WMLTerrainGraphics = {
       tiles: [
@@ -105,19 +92,17 @@ module WesnothTiles {
       ]
     }
     terrainGraphics.push(terrainGraphic);
+  }
 
-    // if (dp.hex.terrain == ETerrain.HILLS_REGULAR) {
+  var TERRAIN_BASE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: PLFB) => {
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
+  }
 
-    //   dp.drawables.push(new StaticImage(
-    //     (36 * 1.5) * dp.hex.q - 36, 
-    //     36 * (2 * dp.hex.r + dp.hex.q) - 36, 
-    //     "hills/regular", 100));
-    // }
-      
+  var addGrassGreen = (terrainGraphics: WMLTerrainGraphics[]) => {
 
-
-                //       x: Math.floor((this.canvas.width) / 2) + (36 * 1.5) * hex.q - 36,
-                // y: Math.floor((this.canvas.height) / 2) + 36 * (2 * hex.r + hex.q) - 36
+    var terrainList = new Map<ETerrain, boolean>();
+    terrainList.set(ETerrain.GRASS_GREEN, true);
+    TERRAIN_BASE_PLFB(terrainGraphics, terrainList, "grass/green", { prob: 20 });
   }
 
   // export class TerrainMacro implements Macro {
@@ -249,12 +234,10 @@ module WesnothTiles {
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
     if (tg.tiles !== undefined) {
       for (var i = tg.tiles.length - 1; i >= 0; i--) {
-        // tg.Tiles[i]
-        if (true) {
-
-          } else {
-            return;
-          }
+        var hex = dp.hexMap.getHex(new HexPos(dp.hex.q + tg.tiles[i].q, dp.hex.r + tg.tiles[i].r));
+        if (!tg.tiles[i].type.get(dp.hex.terrain)) {
+          return;
+        }
       }
       for (var i = tg.tiles.length - 1; i >= 0; i--) {
         if (tg.tiles[i].image !== undefined) {
