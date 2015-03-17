@@ -74,6 +74,12 @@ module WesnothTiles {
     builder?: string;
   }
 
+  interface LFB {
+    layer?: number;
+    flag?: string;
+    builder?: string;
+  }
+
   var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
@@ -95,14 +101,33 @@ module WesnothTiles {
   }
 
   var TERRAIN_BASE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: PLFB) => {
+    if (plfb.prob === undefined)
+      plfb.layer = 100;
+    if (plfb.layer === undefined)
+      plfb.layer = -1000;
+    if (plfb.flag === undefined)
+      plfb.flag = "base";      
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
   }
 
-  var addGrassGreen = (terrainGraphics: WMLTerrainGraphics[]) => {
+  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: LFB) => {
+    
+  }
 
+  var TERRAIN_BASE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: LFB) => {
+    if (plfb.layer === undefined)
+      plfb.layer = -1000;
+    if (plfb.flag === undefined)
+      plfb.flag = "base";
+
+  }
+
+  var getTerrainMap = (terrains: ETerrain[]) => {
     var terrainList = new Map<ETerrain, boolean>();
-    terrainList.set(ETerrain.GRASS_GREEN, true);
-    TERRAIN_BASE_PLFB(terrainGraphics, terrainList, "grass/green", { prob: 20 });
+    terrains.forEach(terrain => {
+      terrainList.set(terrain, true);
+    });
+    return terrainList;
   }
 
   // export class TerrainMacro implements Macro {
@@ -254,17 +279,15 @@ module WesnothTiles {
     }   
     
   }
+  
 
-  var macros: { (terrainGraphics: WMLTerrainGraphics[]): void; } [] = [];
-  macros.push(addGrassGreen);
-
-  var TerrainGraphics: WMLTerrainGraphics[] = [];
-
-
+  var terrainGraphics: WMLTerrainGraphics[] = [];
+  TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
+  TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", { prob: 20 });
+  TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", { prob: 20 });
+  TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", { prob: 20 });
 
   export var rebuild = (hexMap: HexMap) => {
-    var terrainGraphics: WMLTerrainGraphics[] = [];
-    macros.forEach(macro => macro(terrainGraphics));
 
     var flags = new Map<string,  Map<string, boolean>>();
 
