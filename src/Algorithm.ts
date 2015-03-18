@@ -39,6 +39,7 @@ module WesnothTiles {
     set_flag?: string[];
     has_flag?: string[];
     no_flag?: string[];
+    set_no_flag?: string[];
 
     q: number;
     r: number;
@@ -54,6 +55,7 @@ module WesnothTiles {
     set_flag?: string[];
     has_flag?: string[];
     no_flag?: string[];
+    set_no_flag?: string[];
 
     probability?: number;
 
@@ -83,30 +85,35 @@ module WesnothTiles {
   var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
-      layer: plfb.layer
+      layer: plfb.layer,      
     }
 
     var tile: WMLTile = {
       q: 0,
       r: 0,
       type: terrainList,
-      image: img
+      image: img,
     }
+    if (plfb.flag !== undefined)
+      tile.set_no_flag = [plfb.flag];
+
     var terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile
-      ]
+      ],
+      probability: plfb.prob
     }
     terrainGraphics.push(terrainGraphic);
   }
 
   var TERRAIN_BASE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: PLFB) => {
     if (plfb.prob === undefined)
-      plfb.layer = 100;
+      plfb.prob = 100;
     if (plfb.layer === undefined)
       plfb.layer = -1000;
     if (plfb.flag === undefined)
-      plfb.flag = "base";      
+      plfb.flag = "base";
+    console.log(Resources.definitions.has(imageStem));
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
   }
 
@@ -119,11 +126,12 @@ module WesnothTiles {
     });
   }
 
-  var TERRAIN_BASE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: LFB) => {
-    if (plfb.layer === undefined)
-      plfb.layer = -1000;
-    if (plfb.flag === undefined)
-      plfb.flag = "base";
+  var TERRAIN_BASE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, lfb: LFB) => {
+    if (lfb.layer === undefined)
+      lfb.layer = -1000;
+    if (lfb.flag === undefined)
+      lfb.flag = "base";
+    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
   }
 
   var getTerrainMap = (terrains: ETerrain[]) => {
@@ -260,10 +268,34 @@ module WesnothTiles {
   // macros.push(new TransitionMacro(ETerrain.WATER_OCEAN, "water/ocean-blend", -550, true, [ETerrain.WATER_COAST_TROPICAL], false));
   // macros.push(new TransitionMacro(ETerrain.WATER_COAST_TROPICAL, "water/coast-tropical-long", -553, true, [ETerrain.WATER_OCEAN], false));
 
+  var checkFlags = (hexPos: HexPos, 
+    has_flags: string[], has_flags_tg: string[],
+    no_flags: string[], no_flags_tg: string[],
+    set_no_flags: string[], set_no_flags_tg: string[],
+    flags: Flags) => {
+    var hexFlags = flags.get(hexPos.toString);
+    // If we do not have any flags here, quit.
+    if (hexFlags === null) {
+      if ((has_flags !== undefined && has_flags.length > 0) || (has_flags_tg !== undefined && has_flags_tg.length > 0))
+        return false;
+      return true;
+    }
+    // 1st. Check if all needed flags are in place
+    if (has_flags !== undefined && has_flags.length > 0) {
+      has_flags.forEach()
+    }
+  }
+
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
+    var chance = Math.floor(Math.random()*101);
+    if (chance > tg.probability)
+      return;
     if (tg.tiles !== undefined) {
       for (var i = tg.tiles.length - 1; i >= 0; i--) {
-        var hex = dp.hexMap.getHex(new HexPos(dp.hex.q + tg.tiles[i].q, dp.hex.r + tg.tiles[i].r));
+        var hexPos = new HexPos(dp.hex.q + tg.tiles[i].q, dp.hex.r + tg.tiles[i].r)
+        var hex = dp.hexMap.getHex(hexPos);
+        var flags = (dp.flags.get(hexPos.toString()));
+        if (flags !== null && )
         if (!tg.tiles[i].type.get(dp.hex.terrain)) {
           return;
         }
@@ -287,6 +319,7 @@ module WesnothTiles {
 
   var terrainGraphics: WMLTerrainGraphics[] = [];
   TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
+  TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", {});
   TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", { prob: 20 });
   TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", { prob: 20 });
   TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", { prob: 20 });
