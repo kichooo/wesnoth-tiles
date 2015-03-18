@@ -36,10 +36,10 @@ module WesnothTiles {
   }
 
   interface WMLTile {
-    set_flag?: string[];
-    has_flag?: string[];
-    no_flag?: string[];
-    set_no_flag?: string[];
+    set_flag: string[];
+    has_flag: string[];
+    no_flag: string[];
+    set_no_flag: string[];
 
     q: number;
     r: number;
@@ -52,10 +52,10 @@ module WesnothTiles {
 
   interface WMLTerrainGraphics {
     tiles: WMLTile[];
-    set_flag?: string[];
-    has_flag?: string[];
-    no_flag?: string[];
-    set_no_flag?: string[];
+    set_flag: string[];
+    has_flag: string[];
+    no_flag: string[];
+    set_no_flag: string[];
 
     probability?: number;
 
@@ -93,14 +93,22 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
     }
     if (plfb.flag !== undefined)
-      tile.set_no_flag = [plfb.flag];
+      tile.set_no_flag.push(plfb.flag);
 
     var terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile
       ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
       probability: plfb.prob
     }
     terrainGraphics.push(terrainGraphic);
@@ -117,8 +125,8 @@ module WesnothTiles {
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, lfb: LFB) => {
-    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, {
+  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, lfb: LFB) => {    
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -273,17 +281,45 @@ module WesnothTiles {
     no_flags: string[], no_flags_tg: string[],
     set_no_flags: string[], set_no_flags_tg: string[],
     flags: Flags) => {
-    var hexFlags = flags.get(hexPos.toString);
+
+    var hexFlags = flags.get(hexPos.toString());
     // If we do not have any flags here, quit.
     if (hexFlags === null) {
-      if ((has_flags !== undefined && has_flags.length > 0) || (has_flags_tg !== undefined && has_flags_tg.length > 0))
+      if (has_flags.length > 0 || has_flags_tg.length > 0)
         return false;
       return true;
     }
-    // 1st. Check if all needed flags are in place
-    if (has_flags !== undefined && has_flags.length > 0) {
-      has_flags.forEach()
-    }
+    // 1st. Check if all needed has_flags are in place
+    var ok = true;
+    has_flags.forEach(flag => {
+      if (!hexFlags.has(flag)) ok = false;
+    });
+    has_flags_tg.forEach(flag => {
+      if (!hexFlags.has(flag)) ok = false;
+    });
+
+    if (!ok)
+      return false;
+
+    no_flags.forEach(flag => {
+      if (hexFlags.has(flag)) ok = false;
+    });
+    no_flags_tg.forEach(flag => {
+      if (hexFlags.has(flag)) ok = false;
+    });
+
+    if (!ok)
+      return false;
+
+    set_no_flags.forEach(flag => {
+      if (hexFlags.has(flag)) ok = false;
+    });
+    set_no_flags_tg.forEach(flag => {
+      if (hexFlags.has(flag)) ok = false;
+    });
+
+    return ok;
+    // 2nd. Check if all needed no_flags are in place
   }
 
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
@@ -295,7 +331,7 @@ module WesnothTiles {
         var hexPos = new HexPos(dp.hex.q + tg.tiles[i].q, dp.hex.r + tg.tiles[i].r)
         var hex = dp.hexMap.getHex(hexPos);
         var flags = (dp.flags.get(hexPos.toString()));
-        if (flags !== null && )
+        if (flags !== null)
         if (!tg.tiles[i].type.get(dp.hex.terrain)) {
           return;
         }
