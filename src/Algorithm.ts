@@ -126,7 +126,7 @@ module WesnothTiles {
   }
 
   var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, lfb: LFB) => {    
-    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem + "@V", {
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -354,13 +354,14 @@ module WesnothTiles {
   
 
   var terrainGraphics: WMLTerrainGraphics[] = [];
-  TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
-  TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", {});
-  TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", { prob: 20 });
-  TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", { prob: 20 });
-  TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", { prob: 20 });
-
+  
   export var rebuild = (hexMap: HexMap) => {
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", {});
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", { prob: 20 });
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", { prob: 20 });
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", { prob: 20 });
+
 
     var flags = new Map<string,  Map<string, boolean>>();
 
