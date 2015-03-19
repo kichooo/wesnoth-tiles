@@ -276,14 +276,41 @@ module WesnothTiles {
   // macros.push(new TransitionMacro(ETerrain.WATER_OCEAN, "water/ocean-blend", -550, true, [ETerrain.WATER_COAST_TROPICAL], false));
   // macros.push(new TransitionMacro(ETerrain.WATER_COAST_TROPICAL, "water/coast-tropical-long", -553, true, [ETerrain.WATER_OCEAN], false));
 
+  var setFlags = (hexPos: HexPos,
+    set_flags: string[], set_flags_tg: string[],
+    set_no_flags: string[], set_no_flags_tg: string[], flags: Flags) => {
+
+    var hexFlags = flags.get(hexPos.toString());
+    // If we do not have any flags here, we need to create them.
+    if (hexFlags === undefined) {
+      hexFlags = new Map<string, boolean>();
+      flags.set(hexPos.toString(), hexFlags);
+    }
+
+    set_no_flags.forEach(flag => {
+      hexFlags.set(flag, true);
+    });
+    set_no_flags_tg.forEach(flag => {
+      hexFlags.set(flag, true);
+    });
+
+    set_flags.forEach(flag => {
+      hexFlags.set(flag, true);
+    });
+    set_flags_tg.forEach(flag => {
+      hexFlags.set(flag, true);
+    });
+  }
+
   var checkFlags = (hexPos: HexPos, 
     has_flags: string[], has_flags_tg: string[],
     no_flags: string[], no_flags_tg: string[],
     set_no_flags: string[], set_no_flags_tg: string[],
     flags: Flags) => {
+
     var hexFlags = flags.get(hexPos.toString());
     // If we do not have any flags here, quit.
-    if (hexFlags === null) {
+    if (hexFlags === undefined) {
       if (has_flags.length > 0 || has_flags_tg.length > 0)
         return false;
       return true;
@@ -298,6 +325,8 @@ module WesnothTiles {
     });
     if (!ok)
       return false;
+
+    // 3rd. Check if all needed no_flags are in place
     no_flags.forEach(flag => {
       if (hexFlags.has(flag)) ok = false;
     });
@@ -306,15 +335,15 @@ module WesnothTiles {
     });
     if (!ok)
       return false;
+
+    // 4rd. Check if all needed set_no_flags are in place      
     set_no_flags.forEach(flag => {
       if (hexFlags.has(flag)) ok = false;
     });
-    return true;
     set_no_flags_tg.forEach(flag => {
       if (hexFlags.has(flag)) ok = false;
     });
-    return ok;
-    // 2nd. Check if all needed no_flags are in place
+    return ok;    
   }
 
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
@@ -338,6 +367,8 @@ module WesnothTiles {
       }
       for (var i = tg.tiles.length - 1; i >= 0; i--) {
         var tile = tg.tiles[i];
+        setFlags(hexPos, tile.set_flag, tg.set_flag, 
+          tile.set_no_flag, tg.set_no_flag, dp.flags);
         if (tile.image !== undefined) {
           var imgName;
           var matched = tile.image.name.split('@');
