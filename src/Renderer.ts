@@ -17,6 +17,9 @@ module WesnothTiles {
 
     draw(pos: IVector, ctx: CanvasRenderingContext2D) {
       var sprite = Resources.definitions.get(this.name);
+      if (sprite === undefined) {
+        console.error("Undefined sprite", this.name)
+      }
       var pos: IVector = {
         x: this.x + pos.x,
         y: this.y + pos.y

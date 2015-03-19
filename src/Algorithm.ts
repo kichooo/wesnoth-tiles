@@ -33,6 +33,7 @@ module WesnothTiles {
   interface WMLImage {
     name: string;
     layer: number;
+    variations: string[];
   }
 
   interface WMLTile {
@@ -82,10 +83,11 @@ module WesnothTiles {
     builder?: string;
   }
 
-  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: PLFB) => {
+  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
-      layer: plfb.layer,      
+      layer: plfb.layer,
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
     var tile: WMLTile = {
@@ -114,7 +116,7 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);
   }
 
-  var TERRAIN_BASE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, plfb: PLFB) => {
+  var TERRAIN_BASE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     if (plfb.prob === undefined)
       plfb.prob = 100;
     if (plfb.layer === undefined)
@@ -125,7 +127,7 @@ module WesnothTiles {
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, lfb: LFB) => {    
+  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {    
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -134,13 +136,87 @@ module WesnothTiles {
     });
   }
 
-  var TERRAIN_BASE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, lfb: LFB) => {
+  var TERRAIN_BASE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
     if (lfb.layer === undefined)
       lfb.layer = -1000;
     if (lfb.flag === undefined)
       lfb.flag = "base";
     GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
   }
+
+  var BORDER_RESTRICTED_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    var img: WMLImage = {
+      name: imageStem,
+      layer: plfb.layer,      
+    }
+
+    var tileCenter: WMLTile = {
+      q: 0,
+      r: 0,
+      type: adjacent,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
+    }
+    if (plfb.flag !== undefined)
+      tileCenter.set_no_flag.push(plfb.flag + "-@R0");
+
+    var tileRotated: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
+    }
+    if (plfb.flag !== undefined)
+      tileRotated.set_no_flag.push(plfb.flag + "-@R3");      
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tileCenter
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: plfb.prob
+    }
+    terrainGraphics.push(terrainGraphic);
+  }
+
+
+  var BORDER_RESTRICTED_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED_PLFB(terrainGraphics, terrainList, adjacent, imageStem, {
+      prob: 100,
+      layer: lfb.layer,
+      flag: lfb.flag,
+      builder: lfb.builder
+    });
+  }
+
+  var BORDER_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+
+    BORDER_RESTRICTED_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
+  }
+
+  var TRANSITION_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    if (lfb.layer === undefined)
+      lfb.layer = -500;
+    if (lfb.flag === undefined)
+      lfb.flag = "transition";
+    if (lfb.builder === undefined)
+      lfb.flag = "IMAGE_SINGLE";      
+    BORDER_COMPLETE_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
+  }
+
+
+  
+
 
   var getTerrainMap = (terrains: ETerrain[]) => {
     var terrainList = new Map<ETerrain, boolean>();
@@ -375,8 +451,8 @@ module WesnothTiles {
           if (matched.length == 2) {
             var num;
             for (num = 2; Resources.definitions.has(matched[0] + num); num++);
-            num = 2 + Math.floor(Math.random() * (num - 2));
-            imgName = matched[0] + num;
+            num = 1 + Math.floor(Math.random() * (num - 1));
+            imgName = matched[0] + (num === 1 ? "": num);
             if (!Resources.definitions.has(imgName)) {
               console.error("Invalid number macro", imgName);
             }
@@ -409,6 +485,34 @@ module WesnothTiles {
     TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", { prob: 25 });
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", {});
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", {});
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+      "grass/semi-dry-long", { flag: "inside", layer: -250 });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_GREEN]), getTerrainMap([ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+      "grass/green-long", { flag: "inside", layer: -251 });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+      "grass/dry-long", { flag: "inside", layer: -252 });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]), 
+      "grass/leaf-litter-long", { flag: "inside", layer: -253 });
+
+// {TRANSITION_COMPLETE_LF     Gs              Gg,Gd,Gll,Re,Rb,Rd,Rp              -250     inside      grass/semi-dry-long}
+// {TRANSITION_COMPLETE_LF     Gg              Gs,Gd,Gll,Re,Rb,Rd,Rp              -251     inside      grass/green-long}
+// {TRANSITION_COMPLETE_LF     Gd              Gg,Gs,Gll,Re,Rb,Rd,Rp              -252     inside      grass/dry-long}
+// {TRANSITION_COMPLETE_LF     Gll             Gg,Gs,Gd,Re,Rb,Rd,Rp               -253     inside      grass/leaf-litter-long}
+
+// {TRANSITION_COMPLETE_L      Gll             Gg,Gs,Gd                           -254                 grass/leaf-litter-long}
+// {TRANSITION_COMPLETE_L      Gd              Gg,Gs,Gll                          -255                 grass/dry-long}
+// {TRANSITION_COMPLETE_L      Gg              Gs,Gd,Gll                          -256                 grass/green-long}
+// {TRANSITION_COMPLETE_L      Gs              Gg,Gd,Gll                          -257                 grass/semi-dry-long}
+
+    
 
 
     var flags = new Map<string,  Map<string, boolean>>();
