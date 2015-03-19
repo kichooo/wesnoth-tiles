@@ -373,7 +373,13 @@ module WesnothTiles {
           var imgName;
           var matched = tile.image.name.split('@');
           if (matched.length == 2) {
-            imgName = matched[0] + 3;
+            var num;
+            for (num = 2; Resources.definitions.has(matched[0] + num); num++);
+            num = 2 + Math.floor(Math.random() * (num - 2));
+            imgName = matched[0] + num;
+            if (!Resources.definitions.has(imgName)) {
+              console.error("Invalid number macro", imgName);
+            }
           }
           else 
             imgName = matched[0];
@@ -398,9 +404,11 @@ module WesnothTiles {
   export var rebuild = (hexMap: HexMap) => {
     TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", {});
-    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", { prob: 20 });
-    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", { prob: 20 });
-    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", { prob: 20 });
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", { prob: 25 });
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", {});
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", { prob: 25 });
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", {});
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", {});
 
 
     var flags = new Map<string,  Map<string, boolean>>();
