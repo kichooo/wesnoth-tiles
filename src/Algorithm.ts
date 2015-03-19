@@ -126,7 +126,7 @@ module WesnothTiles {
   }
 
   var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: any, imageStem: string, lfb: LFB) => {    
-    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, {
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -281,7 +281,6 @@ module WesnothTiles {
     no_flags: string[], no_flags_tg: string[],
     set_no_flags: string[], set_no_flags_tg: string[],
     flags: Flags) => {
-
     var hexFlags = flags.get(hexPos.toString());
     // If we do not have any flags here, quit.
     if (hexFlags === null) {
@@ -297,27 +296,23 @@ module WesnothTiles {
     has_flags_tg.forEach(flag => {
       if (!hexFlags.has(flag)) ok = false;
     });
-
     if (!ok)
       return false;
-
     no_flags.forEach(flag => {
       if (hexFlags.has(flag)) ok = false;
     });
     no_flags_tg.forEach(flag => {
       if (hexFlags.has(flag)) ok = false;
     });
-
     if (!ok)
       return false;
-
     set_no_flags.forEach(flag => {
       if (hexFlags.has(flag)) ok = false;
     });
+    return true;
     set_no_flags_tg.forEach(flag => {
       if (hexFlags.has(flag)) ok = false;
     });
-
     return ok;
     // 2nd. Check if all needed no_flags are in place
   }
@@ -328,20 +323,34 @@ module WesnothTiles {
       return;
     if (tg.tiles !== undefined) {
       for (var i = tg.tiles.length - 1; i >= 0; i--) {
-        var hexPos = new HexPos(dp.hex.q + tg.tiles[i].q, dp.hex.r + tg.tiles[i].r)
+        var tile = tg.tiles[i];
+        var hexPos = new HexPos(dp.hex.q + tile.q, dp.hex.r + tile.r)
         var hex = dp.hexMap.getHex(hexPos);
         var flags = (dp.flags.get(hexPos.toString()));
         if (flags !== null)
-        if (!tg.tiles[i].type.get(dp.hex.terrain)) {
+        if (!tile.type.get(dp.hex.terrain)) {
           return;
         }
+        if (!checkFlags(hexPos, tile.has_flag, tg.has_flag, 
+          tile.no_flag, tg.no_flag, 
+          tile.set_no_flag, tg.set_no_flag, dp.flags))
+          return;
       }
       for (var i = tg.tiles.length - 1; i >= 0; i--) {
-        if (tg.tiles[i].image !== undefined) {
+        var tile = tg.tiles[i];
+        if (tile.image !== undefined) {
+          var imgName;
+          var matched = tile.image.name.split('@');
+          if (matched.length == 2) {
+            imgName = matched[0] + 3;
+          }
+          else 
+            imgName = matched[0];
+
           dp.drawables.push(new StaticImage(
               (36 * 1.5) * dp.hex.q - 36, 
               36 * (2 * dp.hex.r + dp.hex.q) - 36, 
-              tg.tiles[i].image.name, 100
+              imgName, 100
             )
           ); 
          
