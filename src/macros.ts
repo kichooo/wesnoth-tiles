@@ -1,0 +1,185 @@
+// Drawing algoritm. Pretty complicated, although much simplified compared to Wesnoth (which is much more powerful).
+
+module WesnothTiles {
+  'use strict';
+
+  export interface WMLImage {
+    name: string;
+    layer: number;
+    variations: string[];
+  }
+
+  export interface WMLTile {
+    set_flag: string[];
+    has_flag: string[];
+    no_flag: string[];
+    set_no_flag: string[];
+
+    q: number;
+    r: number;
+    type: Map<ETerrain, boolean>;
+
+    image?: WMLImage;
+
+    anchor?: number;
+  }
+
+  export interface WMLTerrainGraphics {
+    tiles: WMLTile[];
+    set_flag: string[];
+    has_flag: string[];
+    no_flag: string[];
+    set_no_flag: string[];
+
+    probability?: number;
+
+    rotations?: string[];
+  }
+
+  export interface PLFB {
+    prob?: number;
+    layer?: number;
+    flag?: string;
+    builder?: string;
+  }
+
+  export interface LFB {
+    layer?: number;
+    flag?: string;
+    builder?: string;
+  }
+
+  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    var img: WMLImage = {
+      name: imageStem,
+      layer: plfb.layer,
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+
+    var tile: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
+    }
+    if (plfb.flag !== undefined)
+      tile.set_no_flag.push(plfb.flag);
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: plfb.prob
+    }
+    terrainGraphics.push(terrainGraphic);
+  }
+
+  export var TERRAIN_BASE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    if (plfb.prob === undefined)
+      plfb.prob = 100;
+    if (plfb.layer === undefined)
+      plfb.layer = -1000;
+    if (plfb.flag === undefined)
+      plfb.flag = "base";
+    console.log(Resources.definitions.has(imageStem));
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
+  }
+
+  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {    
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem + "@V", {
+      prob: 100,
+      layer: lfb.layer,
+      flag: lfb.flag,
+      builder: lfb.builder
+    });
+  }
+
+  export var TERRAIN_BASE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    if (lfb.layer === undefined)
+      lfb.layer = -1000;
+    if (lfb.flag === undefined)
+      lfb.flag = "base";
+    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
+  }
+
+  var BORDER_RESTRICTED_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    var img: WMLImage = {
+      name: imageStem,
+      layer: plfb.layer,
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+
+    var tileCenter: WMLTile = {
+      q: 0,
+      r: 0,
+      type: adjacent,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
+    }
+    if (plfb.flag !== undefined)
+      tileCenter.set_no_flag.push(plfb.flag + "-@R0");
+
+    var tileRotated: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
+    }
+    if (plfb.flag !== undefined)
+      tileRotated.set_no_flag.push(plfb.flag + "-@R3");      
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tileCenter
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: plfb.prob
+    }
+    terrainGraphics.push(terrainGraphic);
+  }
+
+
+  var BORDER_RESTRICTED_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED_PLFB(terrainGraphics, terrainList, adjacent, imageStem, {
+      prob: 100,
+      layer: lfb.layer,
+      flag: lfb.flag,
+      builder: lfb.builder
+    });
+  }
+
+  var BORDER_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+
+    BORDER_RESTRICTED_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
+  }
+
+  export var TRANSITION_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    if (lfb.layer === undefined)
+      lfb.layer = -500;
+    if (lfb.flag === undefined)
+      lfb.flag = "transition";
+    if (lfb.builder === undefined)
+      lfb.flag = "IMAGE_SINGLE";      
+    BORDER_COMPLETE_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
+  }
+
+  
+} 

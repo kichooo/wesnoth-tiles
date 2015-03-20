@@ -1,67 +1,9 @@
 // Drawing algoritm. Pretty complicated, although much simplified compared to Wesnoth (which is much more powerful).
 
+/// <reference path="Macros.ts"/>
+
 module WesnothTiles {
   'use strict';
-
-  interface Flags extends Map<string,  Map<string, boolean>> {};
-
-  // export interface IDrawable {
-  //   q: number;
-  //   r: number;
-
-  //   // sprites: ISprite[];
-  //   // flags: Map<string, boolean>;
-  //   name: string;
-  // };
-
-
-  // export interface ISprite {
-  //   animation: Resources.IAnimationDef;
-  //   frame: number;
-  //   layer: number;
-  // }
-
-  // export interface Macro {
-  //   execute: (hexMap: HexMap, imagesMap: Map<string, HexToDraw>, q: number, r: number) => void;
-  // }
-
-  // var TerrainMacro = () => {
-
-  // }
-
-
-  interface WMLImage {
-    name: string;
-    layer: number;
-    variations: string[];
-  }
-
-  interface WMLTile {
-    set_flag: string[];
-    has_flag: string[];
-    no_flag: string[];
-    set_no_flag: string[];
-
-    q: number;
-    r: number;
-    type: Map<ETerrain, boolean>;
-
-    image?: WMLImage;
-
-    anchor?: number;
-  }
-
-  interface WMLTerrainGraphics {
-    tiles: WMLTile[];
-    set_flag: string[];
-    has_flag: string[];
-    no_flag: string[];
-    set_no_flag: string[];
-
-    probability?: number;
-
-    rotations?: string[];
-  }
 
   interface IDrawParams {
     hex: Hex;
@@ -70,153 +12,7 @@ module WesnothTiles {
     drawables: IDrawable[];
   }
 
-  interface PLFB {
-    prob?: number;
-    layer?: number;
-    flag?: string;
-    builder?: string;
-  }
-
-  interface LFB {
-    layer?: number;
-    flag?: string;
-    builder?: string;
-  }
-
-  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
-      name: imageStem,
-      layer: plfb.layer,
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
-    }
-
-    var tile: WMLTile = {
-      q: 0,
-      r: 0,
-      type: terrainList,
-      image: img,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: []
-    }
-    if (plfb.flag !== undefined)
-      tile.set_no_flag.push(plfb.flag);
-
-    var terrainGraphic: WMLTerrainGraphics = {
-      tiles: [
-        tile
-      ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
-      probability: plfb.prob
-    }
-    terrainGraphics.push(terrainGraphic);
-  }
-
-  var TERRAIN_BASE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    if (plfb.prob === undefined)
-      plfb.prob = 100;
-    if (plfb.layer === undefined)
-      plfb.layer = -1000;
-    if (plfb.flag === undefined)
-      plfb.flag = "base";
-    console.log(Resources.definitions.has(imageStem));
-    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
-  }
-
-  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {    
-    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem + "@V", {
-      prob: 100,
-      layer: lfb.layer,
-      flag: lfb.flag,
-      builder: lfb.builder
-    });
-  }
-
-  var TERRAIN_BASE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    if (lfb.layer === undefined)
-      lfb.layer = -1000;
-    if (lfb.flag === undefined)
-      lfb.flag = "base";
-    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
-  }
-
-  var BORDER_RESTRICTED_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
-      name: imageStem,
-      layer: plfb.layer,      
-    }
-
-    var tileCenter: WMLTile = {
-      q: 0,
-      r: 0,
-      type: adjacent,
-      image: img,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: []
-    }
-    if (plfb.flag !== undefined)
-      tileCenter.set_no_flag.push(plfb.flag + "-@R0");
-
-    var tileRotated: WMLTile = {
-      q: 0,
-      r: -1,
-      type: adjacent,
-      image: img,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: []
-    }
-    if (plfb.flag !== undefined)
-      tileRotated.set_no_flag.push(plfb.flag + "-@R3");      
-
-    var terrainGraphic: WMLTerrainGraphics = {
-      tiles: [
-        tileCenter
-      ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
-      probability: plfb.prob
-    }
-    terrainGraphics.push(terrainGraphic);
-  }
-
-
-  var BORDER_RESTRICTED_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED_PLFB(terrainGraphics, terrainList, adjacent, imageStem, {
-      prob: 100,
-      layer: lfb.layer,
-      flag: lfb.flag,
-      builder: lfb.builder
-    });
-  }
-
-  var BORDER_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-
-    BORDER_RESTRICTED_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
-  }
-
-  var TRANSITION_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    if (lfb.layer === undefined)
-      lfb.layer = -500;
-    if (lfb.flag === undefined)
-      lfb.flag = "transition";
-    if (lfb.builder === undefined)
-      lfb.flag = "IMAGE_SINGLE";      
-    BORDER_COMPLETE_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
-  }
-
-
-  
-
+  interface Flags extends Map<string,  Map<string, boolean>> {};
 
   var getTerrainMap = (terrains: ETerrain[]) => {
     var terrainList = new Map<ETerrain, boolean>();
@@ -446,20 +242,29 @@ module WesnothTiles {
         setFlags(hexPos, tile.set_flag, tg.set_flag, 
           tile.set_no_flag, tg.set_no_flag, dp.flags);
         if (tile.image !== undefined) {
-          var imgName;
-          var matched = tile.image.name.split('@');
-          if (matched.length == 2) {
-            var num;
-            for (num = 2; Resources.definitions.has(matched[0] + num); num++);
-            num = 1 + Math.floor(Math.random() * (num - 1));
-            imgName = matched[0] + (num === 1 ? "": num);
-            if (!Resources.definitions.has(imgName)) {
-              console.error("Invalid number macro", imgName);
-            }
+          var img = tile.image;          
+          var imgName: string;
+          img.name = "grass/green@V";
+          console.log();
+          var num = img.variations.length;
+          for (;;) {
+            num = Math.floor(Math.random() * num);
+            imgName = img.name.replace("@V", img.variations[num]);
+            if (Resources.definitions.has(imgName))
+              break;
           }
-          else 
-            imgName = matched[0];
 
+          // for (num = 0; Resources.definitions.has(img.name.replace("@V", img.variations[num])); num++);
+          // for (num = 0; Resources.definitions.has(img.name.replace("@V", img.variations[num])); num++);
+          // num = Math.floor(Math.random() * num);
+
+          // var imgName = img.name.replace("@V", img.variations[num]);
+
+          // if (!Resources.definitions.has(imgName)) {
+          //   console.error("Invalid number macro", imgName);
+          //   return;
+          // }
+// var imgName = img.name;
           dp.drawables.push(new StaticImage(
               (36 * 1.5) * dp.hex.q - 36, 
               36 * (2 * dp.hex.r + dp.hex.q) - 36, 
@@ -507,7 +312,7 @@ module WesnothTiles {
 // {TRANSITION_COMPLETE_LF     Gd              Gg,Gs,Gll,Re,Rb,Rd,Rp              -252     inside      grass/dry-long}
 // {TRANSITION_COMPLETE_LF     Gll             Gg,Gs,Gd,Re,Rb,Rd,Rp               -253     inside      grass/leaf-litter-long}
 
-// {TRANSITION_COMPLETE_L      Gll             Gg,Gs,Gd                           -254                 grass/leaf-litter-long}
+// {TRANSITION_COMPLETE_L      Gll             Gg,Gs,Gd                           -254                 grass/leaf-litter-long
 // {TRANSITION_COMPLETE_L      Gd              Gg,Gs,Gll                          -255                 grass/dry-long}
 // {TRANSITION_COMPLETE_L      Gg              Gs,Gd,Gll                          -256                 grass/green-long}
 // {TRANSITION_COMPLETE_L      Gs              Gg,Gd,Gll                          -257                 grass/semi-dry-long}
@@ -537,17 +342,7 @@ module WesnothTiles {
 
 
     return drawables;
-
-    // var drawMap = new Map<string,  HexToDraw>();
-
-    // macros.forEach(macro => {
-    //   hexMap.iterate(hex => {
-    //     macro.execute(hexMap, drawMap, hex.q, hex.r);
-    //   });
-    // });
-
-    // return drawMap;
-  }
+ }
 
   // export var ensureGet = (drawMap: Map<string, HexToDraw>, q: number, r: number) => {
   //   var key = HexPos.toString(q, r)
