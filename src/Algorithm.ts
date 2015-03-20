@@ -218,7 +218,11 @@ module WesnothTiles {
     return ok;    
   }
 
+  var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
+  }
+
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
+
     var chance = Math.floor(Math.random()*101);
     if (chance > tg.probability)
       return;
@@ -244,7 +248,7 @@ module WesnothTiles {
         if (tile.image !== undefined) {
           var img = tile.image;          
           var imgName: string;
-          img.name = "grass/green@V";
+          // img.name = "grass/green@V";
           console.log();
           var num = img.variations.length;
           for (;;) {
@@ -252,6 +256,12 @@ module WesnothTiles {
             imgName = img.name.replace("@V", img.variations[num]);
             if (Resources.definitions.has(imgName))
               break;
+            if (num === 0) {
+              console.log(imgName);
+              // imgName = "grass/green";
+
+              break;
+            }
           }
 
           // for (num = 0; Resources.definitions.has(img.name.replace("@V", img.variations[num])); num++);

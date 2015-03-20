@@ -158,7 +158,7 @@ module WesnothTiles {
 
 
   var BORDER_RESTRICTED_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED_PLFB(terrainGraphics, terrainList, adjacent, imageStem, {
+    BORDER_RESTRICTED_PLFB(terrainGraphics, terrainList, adjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
