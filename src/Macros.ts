@@ -110,9 +110,10 @@ module WesnothTiles {
     GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
   }
 
+
   var BORDER_RESTRICTED_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
-      name: imageStem,
+      name: imageStem + "-@R0",
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
@@ -133,8 +134,7 @@ module WesnothTiles {
     var tileRotated: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent,
-      image: img,
+      type: terrainList,
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -145,13 +145,15 @@ module WesnothTiles {
 
     var terrainGraphic: WMLTerrainGraphics = {
       tiles: [
-        tileCenter
+        tileCenter,
+        tileRotated
       ],
       set_flag: [],
       has_flag: [],
       no_flag: [],
       set_no_flag: [],
-      probability: plfb.prob
+      probability: plfb.prob,
+      rotations: ["n", "ne", "se", "s", "sw", "nw"]
     }
     terrainGraphics.push(terrainGraphic);
   }
@@ -177,7 +179,7 @@ module WesnothTiles {
     if (lfb.flag === undefined)
       lfb.flag = "transition";
     if (lfb.builder === undefined)
-      lfb.flag = "IMAGE_SINGLE";      
+      lfb.builder = "IMAGE_SINGLE";      
     BORDER_COMPLETE_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
   }
 

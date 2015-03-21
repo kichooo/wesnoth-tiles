@@ -148,136 +148,143 @@ module WesnothTiles {
   // macros.push(new TransitionMacro(ETerrain.WATER_OCEAN, "water/ocean-blend", -550, true, [ETerrain.WATER_COAST_TROPICAL], false));
   // macros.push(new TransitionMacro(ETerrain.WATER_COAST_TROPICAL, "water/coast-tropical-long", -553, true, [ETerrain.WATER_OCEAN], false));
 
-  var setFlags = (hexPos: HexPos,
+  var setFlags = (rot: number, rotations: string[], hexPos: HexPos,
     set_flags: string[], set_flags_tg: string[],
     set_no_flags: string[], set_no_flags_tg: string[], flags: Flags) => {
 
     var hexFlags = flags.get(hexPos.toString());
-    // If we do not have any flags here, we need to create them.
-    if (hexFlags === undefined) {
-      hexFlags = new Map<string, boolean>();
-      flags.set(hexPos.toString(), hexFlags);
-    }
 
     set_no_flags.forEach(flag => {
-      hexFlags.set(flag, true);
+      // console.log("Setting flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
+      hexFlags.set(replaceRotation(flag, rot, rotations), true);
     });
     set_no_flags_tg.forEach(flag => {
-      hexFlags.set(flag, true);
+      hexFlags.set(replaceRotation(flag, rot, rotations), true);
     });
 
-    set_flags.forEach(flag => {
-      hexFlags.set(flag, true);
+    set_flags.forEach(flag => {      
+      hexFlags.set(replaceRotation(flag, rot, rotations), true);
     });
     set_flags_tg.forEach(flag => {
-      hexFlags.set(flag, true);
+      hexFlags.set(replaceRotation(flag, rot, rotations), true);
     });
   }
 
-  var checkFlags = (hexPos: HexPos, 
+  var checkFlags = (rot: number, rotations: string[], hexPos: HexPos, 
     has_flags: string[], has_flags_tg: string[],
     no_flags: string[], no_flags_tg: string[],
     set_no_flags: string[], set_no_flags_tg: string[],
     flags: Flags) => {
 
     var hexFlags = flags.get(hexPos.toString());
-    // If we do not have any flags here, quit.
-    if (hexFlags === undefined) {
-      if (has_flags.length > 0 || has_flags_tg.length > 0)
-        return false;
-      return true;
-    }
+
     // 1st. Check if all needed has_flags are in place
     var ok = true;
-    has_flags.forEach(flag => {
-      if (!hexFlags.has(flag)) ok = false;
+    has_flags.forEach(flag => {      
+      if (!hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
     });
     has_flags_tg.forEach(flag => {
-      if (!hexFlags.has(flag)) ok = false;
+      if (!hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
     });
     if (!ok)
       return false;
 
     // 3rd. Check if all needed no_flags are in place
     no_flags.forEach(flag => {
-      if (hexFlags.has(flag)) ok = false;
+      if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
     });
     no_flags_tg.forEach(flag => {
-      if (hexFlags.has(flag)) ok = false;
+      if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
     });
     if (!ok)
       return false;
 
     // 4rd. Check if all needed set_no_flags are in place      
     set_no_flags.forEach(flag => {
-      if (hexFlags.has(flag)) ok = false;
+      // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
+      if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
     });
     set_no_flags_tg.forEach(flag => {
-      if (hexFlags.has(flag)) ok = false;
+      if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
     });
     return ok;    
   }
 
-  var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
+  var rotatePos = (q: number, r: number, rot: number) => {
+    var result = [0, 0, 0];
+
+    result[(6 - rot) % 3] = rot % 2 === 0 ? q : -q;
+    result[(7 - rot) % 3] = rot % 2 === 0 ? r : -r;
+    result[(8 - rot) % 3] = rot % 2 === 0 ? -q - r : q + r;
+    return new HexPos(result[0], result[1]);
   }
 
-  var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
+  var replaceRotation = (input: string, rot: number, rotations: string[]) => {
+    if (rotations === undefined)
+      return input;
+    return rotations === undefined ? input: input.replace("@R0", rotations[rot])
+      .replace("@R1", rotations[(rot + 1) % 6])
+      .replace("@R2", rotations[(rot + 2) % 6])
+      .replace("@R3", rotations[(rot + 3) % 6])
+      .replace("@R4", rotations[(rot + 4) % 6])
+      .replace("@R5", rotations[(rot + 5) % 6])  
 
+  }
+
+  var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
+    console.log("Performing macro for rotation", dp.hex.toString(), rot);
     var chance = Math.floor(Math.random()*101);
     if (chance > tg.probability)
       return;
     if (tg.tiles !== undefined) {
-      for (var i = tg.tiles.length - 1; i >= 0; i--) {
+      for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
-        var hexPos = new HexPos(dp.hex.q + tile.q, dp.hex.r + tile.r)
+        var rotHex = rotatePos(tile.q, tile.r, rot);
+        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
         var hex = dp.hexMap.getHex(hexPos);
-        var flags = (dp.flags.get(hexPos.toString()));
-        if (flags !== null)
-        if (!tile.type.get(dp.hex.terrain)) {
+        if (hex === undefined)
+          return;
+
+        if (!dp.flags.has(hexPos.toString()))
+          dp.flags.set(hexPos.toString(), new Map<string, boolean>());
+          
+        if (!tile.type.has(hex.terrain)) {
           return;
         }
-        if (!checkFlags(hexPos, tile.has_flag, tg.has_flag, 
+        if (!checkFlags(rot, tg.rotations, hexPos, tile.has_flag, tg.has_flag, 
           tile.no_flag, tg.no_flag, 
           tile.set_no_flag, tg.set_no_flag, dp.flags))
           return;
       }
-      for (var i = tg.tiles.length - 1; i >= 0; i--) {
+
+      for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
-        setFlags(hexPos, tile.set_flag, tg.set_flag, 
+        var rotHex = rotatePos(tile.q, tile.r, rot);
+        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);        
+        setFlags(rot, tg.rotations, hexPos, tile.set_flag, tg.set_flag, 
           tile.set_no_flag, tg.set_no_flag, dp.flags);
         if (tile.image !== undefined) {
           var img = tile.image;          
           var imgName: string;
-          // img.name = "grass/green@V";
           console.log();
           var num = img.variations.length;
           for (;;) {
             num = Math.floor(Math.random() * num);
-            imgName = img.name.replace("@V", img.variations[num]);
+            var imgName = replaceRotation(img.name, rot, tg.rotations);
+            imgName = imgName.replace("@V", img.variations[num]);
             if (Resources.definitions.has(imgName))
               break;
             if (num === 0) {
-              console.log(imgName);
-              // imgName = "grass/green";
-
+              console.log("improper name", imgName, img.name);
               break;
             }
           }
-
-          // for (num = 0; Resources.definitions.has(img.name.replace("@V", img.variations[num])); num++);
-          // for (num = 0; Resources.definitions.has(img.name.replace("@V", img.variations[num])); num++);
-          // num = Math.floor(Math.random() * num);
-
-          // var imgName = img.name.replace("@V", img.variations[num]);
-
-          // if (!Resources.definitions.has(imgName)) {
-          //   console.error("Invalid number macro", imgName);
-          //   return;
-          // }
-// var imgName = img.name;
+          var rotHex = rotatePos(tile.q, tile.r, rot);
+          var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
+          // console.log("Adding", imgName, img.name);
           dp.drawables.push(new StaticImage(
-              (36 * 1.5) * dp.hex.q - 36, 
-              36 * (2 * dp.hex.r + dp.hex.q) - 36, 
+              (36 * 1.5) * hexPos.q - 36, 
+              36 * (2 * hexPos.r + hexPos.q) - 36, 
               imgName, 100
             )
           ); 
@@ -285,8 +292,16 @@ module WesnothTiles {
         }
         
       }
-    }   
-    
+    }       
+  }
+
+  var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
+    if (tg.rotations !== undefined) {
+      for (var i = 0; i < tg.rotations.length; i++) {
+        performRotatedTerrainGraphics(tg, dp, i);
+      }
+    } else
+      performRotatedTerrainGraphics(tg, dp);
   }
   
 
@@ -301,21 +316,38 @@ module WesnothTiles {
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", {});
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", {});
 
-    TRANSITION_COMPLETE_LFB(terrainGraphics,
-      getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
-      "grass/semi-dry-long", { flag: "inside", layer: -250 });
+    // TRANSITION_COMPLETE_LFB(terrainGraphics,
+    //   getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+    //   "grass/semi-dry-long", { flag: "inside", layer: -250 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.GRASS_GREEN]), getTerrainMap([ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
       "grass/green-long", { flag: "inside", layer: -251 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
-      getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+      getTerrainMap([ETerrain.GRASS_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER]), 
       "grass/dry-long", { flag: "inside", layer: -252 });
 
+    // TRANSITION_COMPLETE_LFB(terrainGraphics,
+    //   getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]), 
+    //   "grass/leaf-litter-long", { flag: "inside", layer: -253 });
+
+
+    // TRANSITION_COMPLETE_LFB(terrainGraphics,
+    //   getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]), 
+    //   "grass/leaf-litter-long", { flag: "inside", layer: -253 });
+
     TRANSITION_COMPLETE_LFB(terrainGraphics,
-      getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]), 
-      "grass/leaf-litter-long", { flag: "inside", layer: -253 });
+      getTerrainMap([ETerrain.GRASS_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+      "grass/dry-long", {layer: -255 });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_GREEN]), getTerrainMap([ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+      "grass/green-long", { layer: -256 });
+
+
+
+
 
 // {TRANSITION_COMPLETE_LF     Gs              Gg,Gd,Gll,Re,Rb,Rd,Rp              -250     inside      grass/semi-dry-long}
 // {TRANSITION_COMPLETE_LF     Gg              Gs,Gd,Gll,Re,Rb,Rd,Rp              -251     inside      grass/green-long}
