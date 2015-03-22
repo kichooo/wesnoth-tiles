@@ -118,7 +118,7 @@ module WesnothTiles {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tileCenter: WMLTile = {
+    var tile1: WMLTile = {
       q: 0,
       r: 0,
       type: adjacent,
@@ -126,27 +126,23 @@ module WesnothTiles {
       set_flag: [],
       has_flag: [],
       no_flag: [],
-      set_no_flag: []
+      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
     }
-    if (plfb.flag !== undefined)
-      tileCenter.set_no_flag.push(plfb.flag + "-@R0");
 
-    var tileRotated: WMLTile = {
+    var tile2: WMLTile = {
       q: 0,
       r: -1,
       type: terrainList,
       set_flag: [],
       has_flag: [],
       no_flag: [],
-      set_no_flag: []
-    }
-    if (plfb.flag !== undefined)
-      tileRotated.set_no_flag.push(plfb.flag + "-@R3");      
+      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
+    } 
 
     var terrainGraphic: WMLTerrainGraphics = {
       tiles: [
-        tileCenter,
-        tileRotated
+        tile1,
+        tile2
       ],
       set_flag: [],
       has_flag: [],
@@ -156,6 +152,69 @@ module WesnothTiles {
       rotations: ["n", "ne", "se", "s", "sw", "nw"]
     }
     terrainGraphics.push(terrainGraphic);
+  }
+
+  var BORDER_RESTRICTED2_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    var img: WMLImage = {
+      name: imageStem + "-@R0-@R1",
+      layer: plfb.layer,
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+
+    var tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: adjacent,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1"] : []
+    }
+
+    var tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
+    }
+
+    var tile2: WMLTile = {
+      q: 1,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
+    }    
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile1,
+        tile2
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: plfb.prob,
+      rotations: ["n", "ne", "se", "s", "sw", "nw"]
+    }
+    terrainGraphics.push(terrainGraphic);
+  }
+
+
+  var BORDER_RESTRICTED2_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED2_PLFB(terrainGraphics, terrainList, adjacent, imageStem + "@V", {
+      prob: 100,
+      layer: lfb.layer,
+      flag: lfb.flag,
+      builder: lfb.builder
+    });
   }
 
 
@@ -170,6 +229,7 @@ module WesnothTiles {
 
   var BORDER_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
 
+    BORDER_RESTRICTED2_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
     BORDER_RESTRICTED_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
   }
 

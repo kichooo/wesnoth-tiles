@@ -227,12 +227,11 @@ module WesnothTiles {
       .replace("@R2", rotations[(rot + 2) % 6])
       .replace("@R3", rotations[(rot + 3) % 6])
       .replace("@R4", rotations[(rot + 4) % 6])
-      .replace("@R5", rotations[(rot + 5) % 6])  
-
+      .replace("@R5", rotations[(rot + 5) % 6])
   }
 
   var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
-    console.log("Performing macro for rotation", dp.hex.toString(), rot);
+    // console.log("Performing macro for rotation", dp.hex.toString(), rot);
     var chance = Math.floor(Math.random()*101);
     if (chance > tg.probability)
       return;
@@ -257,12 +256,12 @@ module WesnothTiles {
           return;
       }
 
+      var drawables: IDrawable[] = [];
+
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
         var rotHex = rotatePos(tile.q, tile.r, rot);
         var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);        
-        setFlags(rot, tg.rotations, hexPos, tile.set_flag, tg.set_flag, 
-          tile.set_no_flag, tg.set_no_flag, dp.flags);
         if (tile.image !== undefined) {
           var img = tile.image;          
           var imgName: string;
@@ -275,23 +274,30 @@ module WesnothTiles {
             if (Resources.definitions.has(imgName))
               break;
             if (num === 0) {
-              console.log("improper name", imgName, img.name);
-              break;
+              return;
             }
           }
           var rotHex = rotatePos(tile.q, tile.r, rot);
           var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
           // console.log("Adding", imgName, img.name);
-          dp.drawables.push(new StaticImage(
+          drawables.push(new StaticImage(
               (36 * 1.5) * hexPos.q - 36, 
               36 * (2 * hexPos.r + hexPos.q) - 36, 
               imgName, 100
             )
           ); 
          
-        }
-        
+        }              
       }
+      for (var i = 0; i < tg.tiles.length; i++) {
+        var tile = tg.tiles[i];
+        var rotHex = rotatePos(tile.q, tile.r, rot);
+        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);        
+        setFlags(rot, tg.rotations, hexPos, tile.set_flag, tg.set_flag, 
+          tile.set_no_flag, tg.set_no_flag, dp.flags);      
+      }
+      // dp.drawables.push(drawables[0]);
+      dp.drawables.push.apply(dp.drawables, drawables);
     }       
   }
 
@@ -316,9 +322,9 @@ module WesnothTiles {
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", {});
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", {});
 
-    // TRANSITION_COMPLETE_LFB(terrainGraphics,
-    //   getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
-    //   "grass/semi-dry-long", { flag: "inside", layer: -250 });
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+      "grass/semi-dry-long", { flag: "inside", layer: -250 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.GRASS_GREEN]), getTerrainMap([ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
@@ -328,14 +334,13 @@ module WesnothTiles {
       getTerrainMap([ETerrain.GRASS_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER]), 
       "grass/dry-long", { flag: "inside", layer: -252 });
 
-    // TRANSITION_COMPLETE_LFB(terrainGraphics,
-    //   getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]), 
-    //   "grass/leaf-litter-long", { flag: "inside", layer: -253 });
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]), 
+      "grass/leaf-litter-long", { flag: "inside", layer: -253 });
 
-
-    // TRANSITION_COMPLETE_LFB(terrainGraphics,
-    //   getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]), 
-    //   "grass/leaf-litter-long", { flag: "inside", layer: -253 });
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]), 
+      "grass/leaf-litter-long", { layer: -253 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.GRASS_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER]), 
@@ -345,7 +350,9 @@ module WesnothTiles {
       getTerrainMap([ETerrain.GRASS_GREEN]), getTerrainMap([ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
       "grass/green-long", { layer: -256 });
 
-
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
+      "grass/semi-dry-long", { layer: -250 });
 
 
 
