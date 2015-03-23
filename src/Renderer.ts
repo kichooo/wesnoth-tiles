@@ -7,7 +7,7 @@ module WesnothTiles {
   }
 
   export interface IDrawable {
-    draw(pos: IVector, ctx: CanvasRenderingContext2D);
+    draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number);
     layer: number;
   }
 
@@ -15,7 +15,7 @@ module WesnothTiles {
     constructor(private x: number, private y: number, private name: string, public layer: number ) {
     }
 
-    draw(pos: IVector, ctx: CanvasRenderingContext2D) {
+    draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {
       var sprite = Resources.definitions.get(this.name);
       if (sprite === undefined) {
         console.error("Undefined sprite", this.name)
@@ -29,11 +29,38 @@ module WesnothTiles {
     }
   }
 
+  export class AnimatedImage implements IDrawable {
+    private animTime = Date.now();
+    constructor(private x: number, 
+      private y: number, 
+      private name: string, 
+      public layer: number, 
+      private frames: number, 
+      private duration:  number) {
+    }
+
+    draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {
+      this.animTime = (this.animTime + timePassed) % (this.frames * this.duration);
+      var frame = 1 + Math.floor(this.animTime / this.duration);
+      var frameString = "A" + (frame >= 10 ? frame.toString() : ("0" + frame.toString()));
+      var sprite = Resources.definitions.get(this.name.replace("@A", frameString));
+      if (sprite === undefined) {
+        console.error("Undefined sprite", this.name.replace("@A", frameString))
+      }
+      var pos: IVector = {
+        x: this.x + pos.x,
+        y: this.y + pos.y
+      }
+
+      sprite.draw(pos, ctx);
+    }
+  }
 
   export class Renderer<HexType extends Hex> {
     private ctx: CanvasRenderingContext2D;
     // private drawMap = new Map<string,  HexToDraw>();
     private drawables: IDrawable[];
+    private lastDraw: number = Date.now();
 
 
 
@@ -50,11 +77,14 @@ module WesnothTiles {
 
     redraw(hexMap: HexMap): void {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      var now = Date.now();
+      var diff = now - this.lastDraw;
+      this.lastDraw = now;
       this.drawables.forEach(drawable => {
-        drawable.draw({                        
+        drawable.draw({                    
           x: Math.floor((this.canvas.width) / 2),
-          y: Math.floor((this.canvas.height) / 2)
-        }, this.ctx);
+          y: Math.floor((this.canvas.height) / 2),          
+        }, this.ctx, diff);
       });
       
 // console.log(this.canvas.width, this.canvas.height);

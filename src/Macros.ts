@@ -1,12 +1,56 @@
-// Drawing algoritm. Pretty complicated, although much simplified compared to Wesnoth (which is much more powerful).
-
 module WesnothTiles {
   'use strict';
+
+
+  export interface IBuilder {
+    toDrawable(imageStem: string, postfix: string, hexPos: HexPos, layer: number): IDrawable;
+    toString(imageStem: string, postfix?: string): string;
+  }
+  // image builders.
+  export var IB_IMAGE_SINGLE: IBuilder = {
+    toDrawable: (imageStem: string, postfix: string, hexPos: HexPos, layer: number) => {
+      return new StaticImage(
+        (36 * 1.5) * hexPos.q - 36, 
+        36 * (2 * hexPos.r + hexPos.q) - 36, 
+        imageStem + postfix, 100
+      )
+    },
+    toString: (imageStem: string, postfix: string) => {
+      return imageStem + postfix;
+    }
+  }
+
+  export var IB_ANIMATION_15_SLOW: IBuilder = {
+    toDrawable: (imageStem: string, postfix: string, hexPos: HexPos, layer: number) => {
+      return new AnimatedImage(
+        (36 * 1.5) * hexPos.q - 36, 
+        36 * (2 * hexPos.r + hexPos.q) - 36, 
+        imageStem + "-@A" + postfix, 100, 15, 150
+      )
+    },
+    toString: (imageStem: string, postfix: string) => {
+      return imageStem + "-A01" + postfix;
+    }
+  }
+
+  export var IB_ANIMATION_15: IBuilder = {
+    toDrawable: (imageStem: string, postfix: string, hexPos: HexPos, layer: number) => {
+      return new AnimatedImage(
+        (36 * 1.5) * hexPos.q - 36, 
+        36 * (2 * hexPos.r + hexPos.q) - 36, 
+        imageStem + "-@A" + postfix, 100, 15, 110
+      )
+    },
+    toString: (imageStem: string, postfix: string) => {
+      return imageStem + "-A01" + postfix;
+    }
+  }  
 
   export interface WMLImage {
     name: string;
     layer: number;
     variations: string[];
+    postfix?: string;
   }
 
   export interface WMLTile {
@@ -34,19 +78,18 @@ module WesnothTiles {
     probability?: number;
 
     rotations?: string[];
+
+    builder: IBuilder;
   }
 
-  export interface PLFB {
+  export interface PLFB extends LFB {
     prob?: number;
-    layer?: number;
-    flag?: string;
-    builder?: string;
   }
 
   export interface LFB {
     layer?: number;
     flag?: string;
-    builder?: string;
+    builder?: IBuilder;
   }
 
   var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
@@ -64,10 +107,8 @@ module WesnothTiles {
       set_flag: [],
       has_flag: [],
       no_flag: [],
-      set_no_flag: []
+      set_no_flag: plfb.flag !== undefined? [plfb.flag] : []      
     }
-    if (plfb.flag !== undefined)
-      tile.set_no_flag.push(plfb.flag);
 
     var terrainGraphic: WMLTerrainGraphics = {
       tiles: [
@@ -77,7 +118,8 @@ module WesnothTiles {
       has_flag: [],
       no_flag: [],
       set_no_flag: [],
-      probability: plfb.prob
+      probability: plfb.prob,
+      builder: plfb.builder
     }
     terrainGraphics.push(terrainGraphic);
   }
@@ -89,6 +131,8 @@ module WesnothTiles {
       plfb.layer = -1000;
     if (plfb.flag === undefined)
       plfb.flag = "base";
+    if (plfb.builder === undefined)
+      plfb.builder = IB_IMAGE_SINGLE;
     console.log(Resources.definitions.has(imageStem));
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
   }
@@ -107,15 +151,18 @@ module WesnothTiles {
       lfb.layer = -1000;
     if (lfb.flag === undefined)
       lfb.flag = "base";
+    if (lfb.builder === undefined)
+      lfb.builder = IB_IMAGE_SINGLE;      
     GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
   }
 
 
   var BORDER_RESTRICTED_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
-      name: imageStem + "-@R0",
+      name: imageStem,
+      postfix: "-@R0",
       layer: plfb.layer,
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]      
     }
 
     var tile1: WMLTile = {
@@ -149,14 +196,16 @@ module WesnothTiles {
       no_flag: [],
       set_no_flag: [],
       probability: plfb.prob,
-      rotations: ["n", "ne", "se", "s", "sw", "nw"]
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
     }
     terrainGraphics.push(terrainGraphic);
   }
 
   var BORDER_RESTRICTED6_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
-      name: imageStem + "-@R0-@R1-@R2-@R3-@R4-@R5",
+      name: imageStem,
+      postfix: "-@R0-@R1-@R2-@R3-@R4-@R5",      
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
@@ -247,14 +296,16 @@ module WesnothTiles {
       no_flag: [],
       set_no_flag: [],
       probability: plfb.prob,
-      rotations: ["n", "ne", "se", "s", "sw", "nw"]
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
     }
     terrainGraphics.push(terrainGraphic);
   }
 
   var BORDER_RESTRICTED5_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
-      name: imageStem + "-@R0-@R1-@R2-@R3-@R4",
+      name: imageStem,
+      postfix: "-@R0-@R1-@R2-@R3-@R4",  
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
@@ -334,14 +385,16 @@ module WesnothTiles {
       no_flag: [],
       set_no_flag: [],
       probability: plfb.prob,
-      rotations: ["n", "ne", "se", "s", "sw", "nw"]
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
     }
     terrainGraphics.push(terrainGraphic);
   }
 
   var BORDER_RESTRICTED4_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
-      name: imageStem + "-@R0-@R1-@R2-@R3",
+      name: imageStem,
+      postfix: "-@R0-@R1-@R2-@R3",  
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
@@ -410,14 +463,16 @@ module WesnothTiles {
       no_flag: [],
       set_no_flag: [],
       probability: plfb.prob,
-      rotations: ["n", "ne", "se", "s", "sw", "nw"]
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
     }
     terrainGraphics.push(terrainGraphic);
   }
 
   var BORDER_RESTRICTED3_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
-      name: imageStem + "-@R0-@R1-@R2",
+      name: imageStem,
+      postfix: "-@R0-@R1-@R2",  
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
@@ -475,14 +530,16 @@ module WesnothTiles {
       no_flag: [],
       set_no_flag: [],
       probability: plfb.prob,
-      rotations: ["n", "ne", "se", "s", "sw", "nw"]
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
     }
     terrainGraphics.push(terrainGraphic);
   }
 
   var BORDER_RESTRICTED2_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
-      name: imageStem + "-@R0-@R1",
+      name: imageStem,
+      postfix: "-@R0-@R1",  
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
@@ -529,7 +586,8 @@ module WesnothTiles {
       no_flag: [],
       set_no_flag: [],
       probability: plfb.prob,
-      rotations: ["n", "ne", "se", "s", "sw", "nw"]
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
     }
     terrainGraphics.push(terrainGraphic);
   }
@@ -603,8 +661,53 @@ module WesnothTiles {
     if (lfb.flag === undefined)
       lfb.flag = "transition";
     if (lfb.builder === undefined)
-      lfb.builder = "IMAGE_SINGLE";      
+      lfb.builder = IB_IMAGE_SINGLE;      
     BORDER_COMPLETE_LFB(terrainGraphics, terrainList, adjacent, imageStem, lfb);
+  }
+
+
+  var GENERIC_SINGLEHEX_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    var img: WMLImage = {
+      name: imageStem,
+      layer: plfb.layer,
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+
+    var tile: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: plfb.flag !== undefined? [plfb.flag] : []      
+    }
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: plfb.prob,
+      builder: plfb.builder
+    }
+    terrainGraphics.push(terrainGraphic);    
+  }
+
+  export var TERRAIN_BASE_SINGLEHEX_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    if (plfb.prob === undefined)
+      plfb.prob = 100;
+    if (plfb.layer === undefined)
+      plfb.layer = -1000;
+    if (plfb.flag === undefined)
+      plfb.flag = "base";
+    if (plfb.builder === undefined)
+      plfb.builder = IB_IMAGE_SINGLE;      
+    GENERIC_SINGLEHEX_PLFB(terrainGraphics, terrainList, imageStem, plfb); 
   }
 
   

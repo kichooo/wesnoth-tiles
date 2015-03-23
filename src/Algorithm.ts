@@ -241,8 +241,10 @@ module WesnothTiles {
         var rotHex = rotatePos(tile.q, tile.r, rot);
         var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
         var hex = dp.hexMap.getHex(hexPos);
+
         if (hex === undefined)
           return;
+
 
         if (!dp.flags.has(hexPos.toString()))
           dp.flags.set(hexPos.toString(), new Map<string, boolean>());
@@ -253,7 +255,7 @@ module WesnothTiles {
         if (!checkFlags(rot, tg.rotations, hexPos, tile.has_flag, tg.has_flag, 
           tile.no_flag, tg.no_flag, 
           tile.set_no_flag, tg.set_no_flag, dp.flags))
-          return;
+          return;          
       }
 
       var drawables: IDrawable[] = [];
@@ -263,29 +265,29 @@ module WesnothTiles {
         var rotHex = rotatePos(tile.q, tile.r, rot);
         var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);        
         if (tile.image !== undefined) {
-          var img = tile.image;          
+          var img = tile.image;
+          var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): ""
           var imgName: string;
-          console.log();
           var num = img.variations.length;
           for (;;) {
             num = Math.floor(Math.random() * num);
-            var imgName = replaceRotation(img.name, rot, tg.rotations);
-            imgName = imgName.replace("@V", img.variations[num]);
-            if (Resources.definitions.has(imgName))
+            var translatedName = tg.builder.toString(img.name, translatedPostfix);
+            translatedName = translatedName.replace("@V", img.variations[num]);
+            if (Resources.definitions.has(translatedName)) {
+              imgName = img.name.replace("@V", img.variations[num]);
               break;
+            }
             if (num === 0) {
               return;
             }
           }
+
           var rotHex = rotatePos(tile.q, tile.r, rot);
           var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
           // console.log("Adding", imgName, img.name);
-          drawables.push(new StaticImage(
-              (36 * 1.5) * hexPos.q - 36, 
-              36 * (2 * hexPos.r + hexPos.q) - 36, 
-              imgName, 100
-            )
-          ); 
+
+          drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, hexPos, img.layer)); 
+
          
         }              
       }
@@ -326,6 +328,14 @@ module WesnothTiles {
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.HILLS_DRY]), "hills/dry", {}); // Hhd
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.HILLS_DESERT]), "hills/desert", {}); // Hd
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.HILLS_SNOW]), "hills/snow", {}); // Ha
+
+    TERRAIN_BASE_SINGLEHEX_PLFB(terrainGraphics, getTerrainMap([ETerrain.WATER_OCEAN]), "water/ocean", {
+      builder: IB_ANIMATION_15_SLOW
+    }); // Wo
+
+    TERRAIN_BASE_SINGLEHEX_PLFB(terrainGraphics, getTerrainMap([ETerrain.WATER_COAST_TROPICAL]), "water/coast-tropical", {
+      builder: IB_ANIMATION_15
+    }); // Wwt    
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), 

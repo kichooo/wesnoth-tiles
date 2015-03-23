@@ -14,11 +14,15 @@ module WesnothTiles {
     GRASS_LEAF_LITTER, // 6
     GRASS_SEMI_DRY, // 7
 
-    SWAMP_MUD, // 8
-    SWAMP_WATER, // 9
+    WATER_OCEAN, // 8
+    WATER_COAST_TROPICAL, // 9
 
-    WATER_COAST_TROPICAL, // 10
-    WATER_OCEAN // 11
+
+    // SWAMP_MUD, // 8
+    // SWAMP_WATER, // 9
+
+
+
   }
 
   export class Hex extends HexPos {
