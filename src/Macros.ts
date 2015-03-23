@@ -757,8 +757,8 @@ module WesnothTiles {
 
   export var NEW_BEACH = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string) => {
     var img: WMLImage = {
-      name: imageStem + "-concave-@R0-@R5",
-      postfix: "-@R0",
+      name: imageStem + "-concave",
+      postfix: "-@R0-@R5",
       layer: -500,
       variations: [""]
     }
@@ -771,7 +771,7 @@ module WesnothTiles {
       set_flag: [],
       has_flag: [],
       no_flag: [],
-      set_no_flag: ["beach-@R0-@R5", "beach-@R1"]
+      set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
     var tile2: WMLTile = {
