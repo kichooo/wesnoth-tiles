@@ -710,5 +710,53 @@ module WesnothTiles {
     GENERIC_SINGLEHEX_PLFB(terrainGraphics, terrainList, imageStem, plfb); 
   }
 
+  export var ANIMATED_WATER_15_TRANSITION = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, layer: number) => {
+    var img: WMLImage = {
+      name: imageStem,
+      postfix: "-@R0",
+      layer: layer,
+      variations: [""]      
+    }
+
+    var tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: adjacent,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["transition-@R0"]
+    }
+
+    var tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
+    } 
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile1,
+        tile2
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: 100,
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: IB_ANIMATION_15_SLOW
+    }
+    terrainGraphics.push(terrainGraphic);
+  }
+
   
 } 
+
+
+

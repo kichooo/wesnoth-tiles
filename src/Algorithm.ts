@@ -417,6 +417,15 @@ module WesnothTiles {
       getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), 
       "flat/bank", { layer: -300 });
 
+    ANIMATED_WATER_15_TRANSITION(terrainGraphics,
+      getTerrainMap([ETerrain.WATER_OCEAN]), 
+      getTerrainMap([ETerrain.WATER_COAST_TROPICAL]), 
+      "water/ocean-blend", -550);
+
+    ANIMATED_WATER_15_TRANSITION(terrainGraphics,      
+      getTerrainMap([ETerrain.WATER_COAST_TROPICAL]), 
+      getTerrainMap([ETerrain.WATER_OCEAN]), 
+      "water/coast-tropical-long", -555);
 
 // {TRANSITION_COMPLETE_LF     Gs              Gg,Gd,Gll,Re,Rb,Rd,Rp              -250     inside      grass/semi-dry-long}
 // {TRANSITION_COMPLETE_LF     Gg              Gs,Gd,Gll,Re,Rb,Rd,Rp              -251     inside      grass/green-long}
