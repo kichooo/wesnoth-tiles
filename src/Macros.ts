@@ -755,8 +755,61 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);
   }
 
+  export var NEW_BEACH = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string) => {
+    var img: WMLImage = {
+      name: imageStem + "-concave-@R0-@R5",
+      postfix: "-@R0",
+      layer: -500,
+      variations: [""]
+    }
+
+    var tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: adjacent,
+      image: img,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R0-@R5", "beach-@R1"]
+    }
+
+    var tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R2-@R3"]
+    } 
+
+    var tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R4-@R3"]
+    } 
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile1,
+        tile2,
+        tile3
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: 100,
+      rotations: ["tr", "r", "br", "bl", "l", "tl"],      
+      builder: IB_IMAGE_SINGLE
+    }
+    terrainGraphics.push(terrainGraphic);
+  }
+
   
-} 
-
-
-
+}
