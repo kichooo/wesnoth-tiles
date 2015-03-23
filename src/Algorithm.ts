@@ -342,6 +342,10 @@ module WesnothTiles {
       "hills/snow-to-hills", { layer: -170 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      "hills/snow-to-water", { layer: -171 });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_SNOW]), getTerrainMap([
         ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER]), 
       "hills/snow", { layer: -172 });
@@ -396,6 +400,22 @@ module WesnothTiles {
       getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]), 
       "grass/semi-dry-long", { layer: -257 });
 
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_GREEN]), getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN]), 
+      "grass/green-abrupt", {layer: -271 });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN]), 
+      "grass/semi-dry-abrupt", { layer: -272 });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_DRY]), getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN]), 
+      "grass/dry-abrupt", { layer: -273 });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), 
+      "flat/bank", { layer: -300 });
 
 
 // {TRANSITION_COMPLETE_LF     Gs              Gg,Gd,Gll,Re,Rb,Rd,Rp              -250     inside      grass/semi-dry-long}

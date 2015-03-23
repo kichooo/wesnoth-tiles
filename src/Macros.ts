@@ -12,7 +12,7 @@ module WesnothTiles {
       return new StaticImage(
         (36 * 1.5) * hexPos.q - 36, 
         36 * (2 * hexPos.r + hexPos.q) - 36, 
-        imageStem + postfix, 100
+        imageStem + postfix, layer
       )
     },
     toString: (imageStem: string, postfix: string) => {
@@ -25,7 +25,7 @@ module WesnothTiles {
       return new AnimatedImage(
         (36 * 1.5) * hexPos.q - 36, 
         36 * (2 * hexPos.r + hexPos.q) - 36, 
-        imageStem + "-@A" + postfix, 100, 15, 150
+        imageStem + "-@A" + postfix, layer, 15, 150
       )
     },
     toString: (imageStem: string, postfix: string) => {
@@ -38,7 +38,7 @@ module WesnothTiles {
       return new AnimatedImage(
         (36 * 1.5) * hexPos.q - 36, 
         36 * (2 * hexPos.r + hexPos.q) - 36, 
-        imageStem + "-@A" + postfix, 100, 15, 110
+        imageStem + "-@A" + postfix, layer, 15, 110
       )
     },
     toString: (imageStem: string, postfix: string) => {
