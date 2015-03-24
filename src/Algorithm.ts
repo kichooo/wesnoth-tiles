@@ -431,6 +431,13 @@ module WesnothTiles {
       getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), 
       "flat/bank", { layer: -300 });
 
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY]), 
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      "flat/bank-to-ice", { layer: -483, flag: "non_submerged" });
+
+
+
     NEW_BEACH(terrainGraphics,
       getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER,
         ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW]), 

@@ -15,13 +15,13 @@ function start() {
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j + j))) % 4 + 4));        
       }
 
-    // map.addHex(new WesnothTiles.Hex(0, 0, 5));
-    // map.addHex(new WesnothTiles.Hex(1, 0, 4));
-    // map.addHex(new WesnothTiles.Hex(-1, 0, 4));
-    // map.addHex(new WesnothTiles.Hex(0, 1, 4));
-    // map.addHex(new WesnothTiles.Hex(0, -1, 4));
-    // map.addHex(new WesnothTiles.Hex(1, -1, 4));
-    // map.addHex(new WesnothTiles.Hex(-1, 1, 4));
+    // map.addHex(new WesnothTiles.Hex(0, 0, 6));
+    // map.addHex(new WesnothTiles.Hex(1, 0, 9));
+    // map.addHex(new WesnothTiles.Hex(-1, 0, 9));
+    // map.addHex(new WesnothTiles.Hex(0, 1, 9));
+    // map.addHex(new WesnothTiles.Hex(0, -1, 9));
+    // map.addHex(new WesnothTiles.Hex(1, -1, 9));
+    // map.addHex(new WesnothTiles.Hex(-1, 1, 9));
     renderer.rebuild(map);
     renderer.Resize(window.innerWidth, window.innerHeight);
     var anim = function() {

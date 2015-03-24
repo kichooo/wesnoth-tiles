@@ -820,8 +820,9 @@ module WesnothTiles {
       builder: IB_IMAGE_SINGLE
     }
     terrainGraphics.push(concave_terrainGraphic);
+// ----------------------------------------------------
 
-    var convex_img1: WMLImage = {
+    var convex0_img1: WMLImage = {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
@@ -829,7 +830,7 @@ module WesnothTiles {
       variations: [""]
     }
 
-    var convex_img2: WMLImage = {
+    var convex0_img2: WMLImage = {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
@@ -837,42 +838,42 @@ module WesnothTiles {
       variations: [""]
     }
 
-    var convex_tile1: WMLTile = {
+    var convex0_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
-      images: [convex_img1, convex_img2],
+      type: terrainList,
+      images: [convex0_img1, convex0_img2],
       set_flag: [],
       has_flag: [],
       no_flag: [],
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
-    var convex_tile2: WMLTile = {
+    var convex0_tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: adjacent,
       set_flag: [],
       has_flag: [],
       no_flag: [],
       set_no_flag: ["beach-@R2-@R3"]
     } 
 
-    var convex_tile3: WMLTile = {
+    var convex0_tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: terrainList,
+      type: adjacent,
       set_flag: [],
       has_flag: [],
       no_flag: [],
       set_no_flag: ["beach-@R4-@R3"]
     } 
 
-    var convex_terrainGraphic: WMLTerrainGraphics = {
+    var convex0_terrainGraphic: WMLTerrainGraphics = {
       tiles: [
-        convex_tile1,
-        convex_tile2,
-        convex_tile3
+        convex0_tile1,
+        convex0_tile2,
+        convex0_tile3
       ],
       set_flag: [],
       has_flag: [],
@@ -882,7 +883,118 @@ module WesnothTiles {
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
     }
-    terrainGraphics.push(convex_terrainGraphic);    
+    terrainGraphics.push(convex0_terrainGraphic);
+// ----------------------------------------------------
+    var convex1_img1: WMLImage = {
+      name: imageStem + "-convex",
+      postfix: "-@R0-@R5",
+      layer: -500,
+      base: {x: 90, y: 144},
+      variations: [""]
+    }
+
+    var convex1_tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,
+      images: [convex1_img1],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R0-@R5"]
+    }
+
+    var convex1_tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R2-@R3"]
+    } 
+
+    var convex1_tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: swapTerrainTypes(sumTerrainMaps(adjacent, terrainList)),
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
+    } 
+
+    var convex1_terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        convex1_tile1,
+        convex1_tile2,
+        convex1_tile3
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: 100,
+      rotations: ["tr", "r", "br", "bl", "l", "tl"],      
+      builder: IB_IMAGE_SINGLE
+    }
+    terrainGraphics.push(convex1_terrainGraphic);
+
+// ----------------------------------------------------
+    var convex2_img1: WMLImage = {
+      name: imageStem + "-convex",
+      postfix: "-@R0-@R1",
+      layer: -500,
+      base: {x: 90, y: 144},
+      variations: [""]
+    }
+
+    var convex2_tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,
+      images: [convex2_img1],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R0-@R1"]
+    }
+
+    var convex2_tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: swapTerrainTypes(sumTerrainMaps(adjacent, terrainList)),
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: []
+    } 
+
+    var convex2_tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: adjacent,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R4-@R3"]
+    } 
+
+    var convex2_terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        convex2_tile1,
+        convex2_tile2,
+        convex2_tile3
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: 100,
+      rotations: ["tr", "r", "br", "bl", "l", "tl"],      
+      builder: IB_IMAGE_SINGLE
+    }
+    terrainGraphics.push(convex2_terrainGraphic);        
   }
 
   
