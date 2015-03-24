@@ -230,32 +230,6 @@ module WesnothTiles {
       .replace("@R5", rotations[(rot + 5) % 6])
   }
 
-  var addDrawablesFromImage = (img: WMLImage) => {
-    var img = tile.images[j];
-    var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): ""
-    var imgName: string;
-    var num = img.variations.length;
-    for (;;) {
-      num = Math.floor(Math.random() * num);
-      var translatedName = tg.builder.toString(img.name, translatedPostfix);
-      translatedName = translatedName.replace("@V", img.variations[num]);
-      if (Resources.definitions.has(translatedName)) {
-        imgName = img.name.replace("@V", img.variations[num]);
-        break;
-      }
-      if (num === 0) {
-        return;
-      }
-    }
-
-    var rotHex = rotatePos(tile.q, tile.r, rot);
-    var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
-    // console.log("Adding", imgName, img.name);
-
-    drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, hexPos, img.layer)); 
-
-  }
-
   var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
     // console.log("Performing macro for rotation", dp.hex.toString(), rot);
     var chance = Math.floor(Math.random()*101);
@@ -292,7 +266,39 @@ module WesnothTiles {
         var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);        
         if (tile.images !== undefined) {
           for (var j = 0; j < tile.images.length; j++) {
-            
+            var img = tile.images[j];
+            var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): ""
+            var imgName: string;
+            var num = img.variations.length;
+            for (;;) {
+              num = Math.floor(Math.random() * num);
+              var translatedName = tg.builder.toString(img.name, translatedPostfix);
+              translatedName = translatedName.replace("@V", img.variations[num]);
+              if (Resources.definitions.has(translatedName)) {
+                imgName = img.name.replace("@V", img.variations[num]);
+                break;
+              }
+              if (num === 0) {
+                return;
+              }
+            }
+
+            var rotHex = rotatePos(tile.q, tile.r, rot);
+            var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
+
+            var pos = {
+              x: (36 * 1.5) * hexPos.q - 36, 
+              y: 36 * (2 * hexPos.r + hexPos.q) - 36
+            } 
+            if (img.base !== undefined) {
+              pos.x -= img.base.x / 2 + 9;
+              pos.y -= img.base.y / 2;
+            }
+
+            // console.log("Adding", imgName, img.name);
+
+            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer)); 
+
           }
 
 

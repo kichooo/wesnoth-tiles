@@ -3,15 +3,15 @@ module WesnothTiles {
 
 
   export interface IBuilder {
-    toDrawable(imageStem: string, postfix: string, hexPos: HexPos, layer: number): IDrawable;
+    toDrawable(imageStem: string, postfix: string, pos: IVector, layer: number): IDrawable;
     toString(imageStem: string, postfix?: string): string;
   }
   // image builders.
   export var IB_IMAGE_SINGLE: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, hexPos: HexPos, layer: number) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number) => {
       return new StaticImage(
-        (36 * 1.5) * hexPos.q - 36, 
-        36 * (2 * hexPos.r + hexPos.q) - 36, 
+        pos.x, 
+        pos.y, 
         imageStem + postfix, layer
       )
     },
@@ -21,10 +21,10 @@ module WesnothTiles {
   }
 
   export var IB_ANIMATION_15_SLOW: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, hexPos: HexPos, layer: number) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number) => {
       return new AnimatedImage(
-        (36 * 1.5) * hexPos.q - 36, 
-        36 * (2 * hexPos.r + hexPos.q) - 36, 
+        pos.x, 
+        pos.y,
         imageStem + "-@A" + postfix, layer, 15, 150
       )
     },
@@ -34,10 +34,10 @@ module WesnothTiles {
   }
 
   export var IB_ANIMATION_15: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, hexPos: HexPos, layer: number) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number) => {
       return new AnimatedImage(
-        (36 * 1.5) * hexPos.q - 36, 
-        36 * (2 * hexPos.r + hexPos.q) - 36, 
+        pos.x, 
+        pos.y,
         imageStem + "-@A" + postfix, layer, 15, 110
       )
     },
@@ -51,6 +51,7 @@ module WesnothTiles {
     layer: number;
     variations: string[];
     postfix?: string;
+    base?: IVector;
   }
 
   export interface WMLTile {
@@ -74,7 +75,7 @@ module WesnothTiles {
     has_flag: string[];
     no_flag: string[];
     set_no_flag: string[];
-    images: WMLImage[];
+    // images: WMLImage[];
     probability?: number;
 
     rotations?: string[];
@@ -96,7 +97,8 @@ module WesnothTiles {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+
     }
 
     var tile: WMLTile = {
@@ -756,32 +758,34 @@ module WesnothTiles {
   }
 
   export var NEW_BEACH = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string) => {
-    var img1: WMLImage = {
+    var concave_img1: WMLImage = {
       name: imageStem + "-concave",
       postfix: "-@R0-@R5",
       layer: -500,
+      base: {x: 90, y: 144},
       variations: [""]
     }
 
-    var img2: WMLImage = {
+    var concave_img2: WMLImage = {
       name: imageStem + "-concave",
       postfix: "-@R0-@R1",
       layer: -500,
+      base: {x: 90, y: 144},
       variations: [""]
     }
 
-    var tile1: WMLTile = {
+    var concave_tile1: WMLTile = {
       q: 0,
       r: 0,
       type: adjacent,
-      images: [img1, img2],
+      images: [concave_img1, concave_img2],
       set_flag: [],
       has_flag: [],
       no_flag: [],
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
-    var tile2: WMLTile = {
+    var concave_tile2: WMLTile = {
       q: 0,
       r: -1,
       type: terrainList,
@@ -791,7 +795,7 @@ module WesnothTiles {
       set_no_flag: ["beach-@R2-@R3"]
     } 
 
-    var tile3: WMLTile = {
+    var concave_tile3: WMLTile = {
       q: 1,
       r: -1,
       type: terrainList,
@@ -801,13 +805,12 @@ module WesnothTiles {
       set_no_flag: ["beach-@R4-@R3"]
     } 
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    var concave_terrainGraphic: WMLTerrainGraphics = {
       tiles: [
-        tile1,
-        tile2,
-        tile3
+        concave_tile1,
+        concave_tile2,
+        concave_tile3
       ],
-      images: [img1, img2],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -816,7 +819,70 @@ module WesnothTiles {
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
     }
-    terrainGraphics.push(terrainGraphic);
+    terrainGraphics.push(concave_terrainGraphic);
+
+    var convex_img1: WMLImage = {
+      name: imageStem + "-convex",
+      postfix: "-@R0-@R5",
+      layer: -500,
+      base: {x: 90, y: 144},
+      variations: [""]
+    }
+
+    var convex_img2: WMLImage = {
+      name: imageStem + "-convex",
+      postfix: "-@R0-@R1",
+      layer: -500,
+      base: {x: 90, y: 144},
+      variations: [""]
+    }
+
+    var convex_tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: adjacent,
+      images: [convex_img1, convex_img2],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
+    }
+
+    var convex_tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R2-@R3"]
+    } 
+
+    var convex_tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["beach-@R4-@R3"]
+    } 
+
+    var convex_terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        convex_tile1,
+        convex_tile2,
+        convex_tile3
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: 100,
+      rotations: ["tr", "r", "br", "bl", "l", "tl"],      
+      builder: IB_IMAGE_SINGLE
+    }
+    terrainGraphics.push(convex_terrainGraphic);    
   }
 
   
