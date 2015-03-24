@@ -63,7 +63,7 @@ module WesnothTiles {
     r: number;
     type: Map<ETerrain, boolean>;
 
-    image?: WMLImage;
+    images?: WMLImage[];
 
     anchor?: number;
   }
@@ -74,7 +74,7 @@ module WesnothTiles {
     has_flag: string[];
     no_flag: string[];
     set_no_flag: string[];
-
+    images: WMLImage[];
     probability?: number;
 
     rotations?: string[];
@@ -103,7 +103,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: terrainList,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -169,7 +169,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -214,7 +214,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -314,7 +314,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -403,7 +403,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -481,7 +481,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -548,7 +548,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -677,7 +677,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: terrainList,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -722,7 +722,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      image: img,
+      images: [img],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -756,9 +756,16 @@ module WesnothTiles {
   }
 
   export var NEW_BEACH = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string) => {
-    var img: WMLImage = {
+    var img1: WMLImage = {
       name: imageStem + "-concave",
       postfix: "-@R0-@R5",
+      layer: -500,
+      variations: [""]
+    }
+
+    var img2: WMLImage = {
+      name: imageStem + "-concave",
+      postfix: "-@R0-@R1",
       layer: -500,
       variations: [""]
     }
@@ -767,7 +774,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      image: img,
+      images: [img1, img2],
       set_flag: [],
       has_flag: [],
       no_flag: [],
@@ -800,6 +807,7 @@ module WesnothTiles {
         tile2,
         tile3
       ],
+      images: [img1, img2],
       set_flag: [],
       has_flag: [],
       no_flag: [],
