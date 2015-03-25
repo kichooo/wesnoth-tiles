@@ -6,9 +6,28 @@ function start() {
 
     var map = new WesnothTiles.HexMap();
 
+
+    var min = 0;
+    var max = 0;
     for (var i = -20; i < 20; i++)
       for (var j = -20; j < 20; j++) {
-        map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i + j * j + i * j))) % 10));
+        var x = i;
+        var y = j;
+
+        var code = Math.sin(x + (Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 2);
+        if (code > max) max = code;
+        if (code < min) min = code;
+      }
+    var spread = max - min;
+    for (var i = -20; i < 20; i++)
+      for (var j = -20; j < 20; j++) {
+        var x = i;
+        var y = j;
+
+        var code = Math.sin((x + Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 2);
+        code = (code - min) * 10 / spread;
+
+        map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.max(0, Math.min(code, 9)))));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(j * j * i * i * i / 5 + i / 5 + i * 2 * j + j))) % 10));
         // map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 10)));
         // map.addHex(new WesnothTiles.Hex(i, j, 4));
