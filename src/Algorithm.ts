@@ -432,10 +432,30 @@ module WesnothTiles {
       "flat/bank", { layer: -300 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_REGULAR]), getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      "hills/regular-to-water", { layer: -482, flag: "non_submerged" });
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_DRY]), getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      "hills/dry-to-water", { layer: -482, flag: "non_submerged" });    
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY]), 
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
       "flat/bank-to-ice", { layer: -483, flag: "non_submerged" });
 
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      "frozen/ice", { layer: -485, flag: "non_submerged" }); 
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      "frozen/ice-to-water", { layer: -505, flag: "submerged" }); 
+
+    NEW_BEACH(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_DESERT]), 
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      "sand/shore");
 
 
     NEW_BEACH(terrainGraphics,

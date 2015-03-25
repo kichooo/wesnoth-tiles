@@ -10,7 +10,7 @@ function start() {
       for (var j = -20; j < 20; j++) {
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(j * j * i * i * i / 5 + i / 5 + i * 2 * j + j))) % 10));
         // map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 10)));
-        map.addHex(new WesnothTiles.Hex(i, j, 6 + Math.floor(Math.random() * 4)));
+        map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 10)));
         // map.addHex(new WesnothTiles.Hex(i, j, 4));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j + j))) % 4 + 4));        
       }
