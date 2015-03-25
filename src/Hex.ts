@@ -6,17 +6,16 @@ module WesnothTiles {
   export enum ETerrain {
     HILLS_REGULAR, // 0
     HILLS_DRY, // 1    
-    HILLS_DESERT, // 2
-    HILLS_SNOW, // 3
+    HILLS_SNOW, // 2
 
-    GRASS_GREEN, // 4
-    GRASS_DRY, // 5
-    GRASS_LEAF_LITTER, // 6
-    GRASS_SEMI_DRY, // 7
+    GRASS_GREEN, // 3
+    GRASS_DRY, // 4
+    GRASS_LEAF_LITTER, // 5
+    GRASS_SEMI_DRY, // 6
 
-    WATER_OCEAN, // 8
-    WATER_COAST_TROPICAL, // 9
-
+    WATER_OCEAN, // 7
+    WATER_COAST_TROPICAL, // 8
+    HILLS_DESERT, // 9
 
     // SWAMP_MUD, // 8
     // SWAMP_WATER, // 9

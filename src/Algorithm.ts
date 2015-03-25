@@ -431,6 +431,11 @@ module WesnothTiles {
       getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), 
       "flat/bank", { layer: -300 });
 
+    NEW_WAVES(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_DESERT]), 
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      -499, "water/waves");
+
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_REGULAR]), getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
       "hills/regular-to-water", { layer: -482, flag: "non_submerged" });

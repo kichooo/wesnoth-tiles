@@ -46,6 +46,20 @@ module WesnothTiles {
     }
   }  
 
+  export var IB_ANIMATION_06: IBuilder = {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number) => {
+      return new AnimatedImage(
+        pos.x, 
+        pos.y,
+        imageStem + "-@A" + postfix, layer, 6, 150
+      )
+    },
+    toString: (imageStem: string, postfix: string) => {
+      return imageStem + "-A01" + postfix;
+    }
+  }
+
+
   export interface WMLImage {
     name: string;
     layer: number;
@@ -995,6 +1009,120 @@ module WesnothTiles {
       builder: IB_IMAGE_SINGLE
     }
     terrainGraphics.push(convex2_terrainGraphic);        
+  }
+
+  export var NEW_WAVES = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, layer: number, imageStem: string) => {
+    var convex_img1: WMLImage = {
+      name: imageStem + "-convex",
+      postfix: "-@R0",
+      layer: layer,
+      base: {x: 90, y: 144},
+      variations: [""]
+    }
+
+    var convex_tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,
+      images: [convex_img1],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["waves-@R0"]
+    }
+
+    var convex_tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["waves-@R2"]
+    } 
+
+    var convex_tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: adjacent,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["waves-@R4"]
+    } 
+
+    var convex_terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        convex_tile1,
+        convex_tile2,
+        convex_tile3
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: 100,
+      rotations: ["tr", "r", "br", "bl", "l", "tl"],      
+      builder: IB_ANIMATION_06
+    }
+    terrainGraphics.push(convex_terrainGraphic);
+// ----------------------------------------------------
+
+    var concave_img1: WMLImage = {
+      name: imageStem + "-concave",
+      postfix: "-@R0",
+      layer: layer,
+      base: {x: 90, y: 144},
+      variations: [""]
+    }
+
+    var concave_tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: adjacent,
+      images: [concave_img1],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["waves-@R0"]
+    }
+
+    var concave_tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["waves-@R2"]
+    } 
+
+    var concave_tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: terrainList,
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: ["waves-@R4"]
+    } 
+
+    var concave_terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        concave_tile1,
+        concave_tile2,
+        concave_tile3
+      ],
+      set_flag: [],
+      has_flag: [],
+      no_flag: [],
+      set_no_flag: [],
+      probability: 100,
+      rotations: ["tr", "r", "br", "bl", "l", "tl"],      
+      builder: IB_ANIMATION_06
+    }
+    terrainGraphics.push(concave_terrainGraphic);
+
   }
 
   
