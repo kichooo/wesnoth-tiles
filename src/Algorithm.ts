@@ -373,6 +373,10 @@ module WesnothTiles {
       "mountains/dry", { layer: -166 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.MOUNTAIN_BASIC]), 
+      "mountains/blend-from-dry", { layer: -0, flag: "inside" });    
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), 
       "hills/snow-to-hills", { layer: -170 });
 
