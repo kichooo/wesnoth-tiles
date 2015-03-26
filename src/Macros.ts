@@ -69,10 +69,10 @@ module WesnothTiles {
   }
 
   export interface WMLTile {
-    set_flag: string[];
-    has_flag: string[];
-    no_flag: string[];
-    set_no_flag: string[];
+    set_flag?: string[];
+    has_flag?: string[];
+    no_flag?: string[];
+    set_no_flag?: string[];
 
     q: number;
     r: number;
@@ -85,10 +85,10 @@ module WesnothTiles {
 
   export interface WMLTerrainGraphics {
     tiles: WMLTile[];
-    set_flag: string[];
-    has_flag: string[];
-    no_flag: string[];
-    set_no_flag: string[];
+    set_flag?: string[];
+    has_flag?: string[];
+    no_flag?: string[];
+    set_no_flag?: string[];
     // images: WMLImage[];
     probability?: number;
 
@@ -112,7 +112,6 @@ module WesnothTiles {
       name: imageStem,
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
-
     }
 
     var tile: WMLTile = {
@@ -120,9 +119,6 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag] : []      
     }
 
@@ -130,10 +126,6 @@ module WesnothTiles {
       tiles: [
         tile
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: plfb.prob,
       builder: plfb.builder
     }
@@ -186,9 +178,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
     }
 
@@ -196,9 +185,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
     } 
 
@@ -207,10 +193,6 @@ module WesnothTiles {
         tile1,
         tile2
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: plfb.builder
@@ -231,9 +213,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4", plfb.flag + "-@R5"] : []
     }
 
@@ -241,9 +220,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
     }
 
@@ -251,9 +227,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
     }    
 
@@ -261,9 +234,6 @@ module WesnothTiles {
       q: 1,
       r: 0,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R5"] : []
     }
 
@@ -271,9 +241,6 @@ module WesnothTiles {
       q: 0,
       r: 1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
     }              
 
@@ -281,9 +248,6 @@ module WesnothTiles {
       q: -1,
       r: 1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R1"] : []
     }
 
@@ -291,9 +255,6 @@ module WesnothTiles {
       q: -1,
       r: 0,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R2"] : []
     }                      
 
@@ -307,9 +268,6 @@ module WesnothTiles {
         tile6,
         tile7
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
@@ -331,9 +289,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4"] : []
     }
 
@@ -341,9 +296,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
     }
 
@@ -351,9 +303,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
     }    
 
@@ -361,9 +310,6 @@ module WesnothTiles {
       q: 1,
       r: 0,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R5"] : []
     }
 
@@ -371,9 +317,6 @@ module WesnothTiles {
       q: 0,
       r: 1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
     }              
 
@@ -381,9 +324,6 @@ module WesnothTiles {
       q: -1,
       r: 1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R1"] : []
     }             
 
@@ -396,9 +336,7 @@ module WesnothTiles {
         tile5,
         tile6
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
+
       set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
@@ -420,9 +358,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3"] : []
     }
 
@@ -430,9 +365,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
     }
 
@@ -440,9 +372,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
     }    
 
@@ -450,9 +379,6 @@ module WesnothTiles {
       q: 1,
       r: 0,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R5"] : []
     }
 
@@ -460,9 +386,6 @@ module WesnothTiles {
       q: 0,
       r: 1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
     }              
 
@@ -474,10 +397,6 @@ module WesnothTiles {
         tile4,
         tile5
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: plfb.builder
@@ -498,9 +417,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2"] : []
     }
 
@@ -508,9 +424,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
     }
 
@@ -518,9 +431,7 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
+
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
     }    
 
@@ -528,9 +439,6 @@ module WesnothTiles {
       q: 1,
       r: 0,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R5"] : []
     }        
 
@@ -541,10 +449,6 @@ module WesnothTiles {
         tile3,
         tile4
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: plfb.builder
@@ -565,9 +469,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1"] : []
     }
 
@@ -575,9 +476,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
     }
 
@@ -585,9 +483,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
     }    
 
@@ -597,10 +492,6 @@ module WesnothTiles {
         tile2,
         tile3
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: plfb.builder
@@ -694,9 +585,6 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: plfb.flag !== undefined? [plfb.flag] : []      
     }
 
@@ -704,10 +592,6 @@ module WesnothTiles {
       tiles: [
         tile
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: plfb.prob,
       builder: plfb.builder
     }
@@ -739,9 +623,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["transition-@R0"]
     }
 
@@ -749,10 +630,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: []
     } 
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -760,10 +637,6 @@ module WesnothTiles {
         tile1,
         tile2
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: 100,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: IB_ANIMATION_15_SLOW
@@ -793,9 +666,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [concave_img1, concave_img2],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
@@ -803,9 +673,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R2-@R3"]
     } 
 
@@ -813,9 +680,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R4-@R3"]
     } 
 
@@ -825,10 +689,6 @@ module WesnothTiles {
         concave_tile2,
         concave_tile3
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
@@ -857,9 +717,6 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       images: [convex0_img1, convex0_img2],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
@@ -867,9 +724,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: adjacent,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R2-@R3"]
     } 
 
@@ -877,9 +731,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: adjacent,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R4-@R3"]
     } 
 
@@ -889,10 +740,6 @@ module WesnothTiles {
         convex0_tile2,
         convex0_tile3
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
@@ -912,9 +759,6 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       images: [convex1_img1],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R0-@R5"]
     }
 
@@ -922,9 +766,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: adjacent,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R2-@R3"]
     } 
 
@@ -932,10 +773,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: swapTerrainTypes(sumTerrainMaps(adjacent, terrainList)),
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: []
     } 
 
     var convex1_terrainGraphic: WMLTerrainGraphics = {
@@ -944,10 +781,6 @@ module WesnothTiles {
         convex1_tile2,
         convex1_tile3
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
@@ -968,9 +801,6 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       images: [convex2_img1],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R0-@R1"]
     }
 
@@ -978,19 +808,12 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: swapTerrainTypes(sumTerrainMaps(adjacent, terrainList)),
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: []
     } 
 
     var convex2_tile3: WMLTile = {
       q: 1,
       r: -1,
       type: adjacent,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["beach-@R4-@R3"]
     } 
 
@@ -1000,10 +823,6 @@ module WesnothTiles {
         convex2_tile2,
         convex2_tile3
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
@@ -1025,9 +844,6 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       images: [convex_img1],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["waves-@R0"]
     }
 
@@ -1035,9 +851,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: adjacent,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["waves-@R2"]
     } 
 
@@ -1045,9 +858,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: adjacent,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["waves-@R4"]
     } 
 
@@ -1057,10 +867,6 @@ module WesnothTiles {
         convex_tile2,
         convex_tile3
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_ANIMATION_06
@@ -1081,9 +887,6 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [concave_img1],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["waves-@R0"]
     }
 
@@ -1091,9 +894,6 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["waves-@R2"]
     } 
 
@@ -1101,9 +901,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
       set_no_flag: ["waves-@R4"]
     } 
 
@@ -1113,10 +910,6 @@ module WesnothTiles {
         concave_tile2,
         concave_tile3
       ],
-      set_flag: [],
-      has_flag: [],
-      no_flag: [],
-      set_no_flag: [],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_ANIMATION_06

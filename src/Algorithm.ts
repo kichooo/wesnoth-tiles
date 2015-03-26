@@ -154,20 +154,24 @@ module WesnothTiles {
 
     var hexFlags = flags.get(hexPos.toString());
 
-    set_no_flags.forEach(flag => {
-      // console.log("Setting flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
-      hexFlags.set(replaceRotation(flag, rot, rotations), true);
-    });
-    set_no_flags_tg.forEach(flag => {
-      hexFlags.set(replaceRotation(flag, rot, rotations), true);
-    });
+    if (set_no_flags !== undefined)
+      set_no_flags.forEach(flag => {
+        // console.log("Setting flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
+        hexFlags.set(replaceRotation(flag, rot, rotations), true);
+      });
+    if (set_no_flags_tg !== undefined)
+      set_no_flags_tg.forEach(flag => {
+        hexFlags.set(replaceRotation(flag, rot, rotations), true);
+      });
 
-    set_flags.forEach(flag => {      
-      hexFlags.set(replaceRotation(flag, rot, rotations), true);
-    });
-    set_flags_tg.forEach(flag => {
-      hexFlags.set(replaceRotation(flag, rot, rotations), true);
-    });
+    if (set_flags !== undefined)
+      set_flags.forEach(flag => {      
+        hexFlags.set(replaceRotation(flag, rot, rotations), true);
+      });
+    if (set_flags_tg !== undefined)
+      set_flags_tg.forEach(flag => {
+        hexFlags.set(replaceRotation(flag, rot, rotations), true);
+      });
   }
 
   var checkFlags = (rot: number, rotations: string[], hexPos: HexPos, 
@@ -180,33 +184,39 @@ module WesnothTiles {
 
     // 1st. Check if all needed has_flags are in place
     var ok = true;
-    has_flags.forEach(flag => {      
-      if (!hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-    });
-    has_flags_tg.forEach(flag => {
-      if (!hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-    });
+    if (has_flags !== undefined)
+      has_flags.forEach(flag => {      
+        if (!hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
+      });
+    if (has_flags_tg !== undefined)
+      has_flags_tg.forEach(flag => {
+        if (!hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
+      });
     if (!ok)
       return false;
 
-    // 3rd. Check if all needed no_flags are in place
-    no_flags.forEach(flag => {
-      if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-    });
-    no_flags_tg.forEach(flag => {
-      if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-    });
+    // 2rd. Check if all needed no_flags are in place
+    if (no_flags !== undefined)
+      no_flags.forEach(flag => {
+        if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
+      });
+    if (no_flags_tg !== undefined)      
+      no_flags_tg.forEach(flag => {
+        if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
+      });
     if (!ok)
       return false;
 
-    // 4rd. Check if all needed set_no_flags are in place      
-    set_no_flags.forEach(flag => {
-      // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
-      if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-    });
-    set_no_flags_tg.forEach(flag => {
-      if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-    });
+    // 3rd. Check if all needed set_no_flags are in place      
+    if (set_no_flags !== undefined)
+      set_no_flags.forEach(flag => {
+        // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
+        if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
+      });
+    if (set_no_flags_tg !== undefined)
+      set_no_flags_tg.forEach(flag => {
+        if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
+      });
     return ok;    
   }
 

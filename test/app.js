@@ -14,7 +14,7 @@ function start() {
         var x = i;
         var y = j;
 
-        var code = Math.sin(x + (Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 2);
+        var code = Math.sin((Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 2);
         if (code > max) max = code;
         if (code < min) min = code;
       }
@@ -24,7 +24,7 @@ function start() {
         var x = i;
         var y = j;
 
-        var code = Math.sin((x + Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 2);
+        var code = Math.sin((Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 2);
         code = (code - min) * 10 / spread;
 
         map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.max(0, Math.min(code, 9)))));
