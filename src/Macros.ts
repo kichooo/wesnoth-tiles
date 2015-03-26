@@ -918,5 +918,36 @@ module WesnothTiles {
 
   }
 
+export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, prob: number, flag: string) => {
+    var img: WMLImage = {
+      name: imageStem,
+      layer: -1000,
+      base: {x: 90, y: 144},
+      variations: ["", "2", "3", "4", "5", "6"],
+    }
+
+    var tile: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,
+      images: [img],
+      set_no_flag: [flag]      
+    }
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile
+      ],
+      probability: prob,
+      builder: IB_IMAGE_SINGLE
+    }
+    terrainGraphics.push(terrainGraphic);
+
+}
+
+export var MOUNTAIN_SINGLE_RANDOM = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string) => {
+  MOUNTAIN_SINGLE(terrainGraphics, terrainList, imageStem + "@V", 100, flag);
+}
+
   
 }

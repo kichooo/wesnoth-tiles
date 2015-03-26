@@ -14,7 +14,7 @@ function start() {
         var x = i;
         var y = j;
 
-        var code = Math.sin((Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 2);
+        var code = Math.sin(-1 + (Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 1.2);
         if (code > max) max = code;
         if (code < min) min = code;
       }
@@ -24,12 +24,12 @@ function start() {
         var x = i;
         var y = j;
 
-        var code = Math.sin((Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 2);
-        code = (code - min) * 10 / spread;
+        var code = Math.sin(-1 + (Math.sqrt(Math.abs(x + y)) + Math.sqrt(Math.abs(y * x))) / 1.2);
+        code = (code - min) * 13 / spread;
 
-        map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.max(0, Math.min(code, 9)))));
+        // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.max(0, Math.min(code, 12)))));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(j * j * i * i * i / 5 + i / 5 + i * 2 * j + j))) % 10));
-        // map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 10)));
+        map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 13)));
         // map.addHex(new WesnothTiles.Hex(i, j, 4));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j + j))) % 4 + 4));        
       }

@@ -17,6 +17,9 @@ module WesnothTiles {
     HILLS_SNOW, // 4
     HILLS_DESERT, // 9
     
+    MOUNTAIN_BASIC, // 10
+    MOUNTAIN_DRY, // 11
+    MOUNTAIN_SNOW, // 12
 
     // SWAMP_MUD, // 8
     // SWAMP_WATER, // 9
