@@ -119,7 +119,7 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       images: [img],
-      set_no_flag: plfb.flag !== undefined? [plfb.flag] : []      
+      set_no_flag: [plfb.flag]      
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -178,14 +178,14 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
+      set_no_flag: [plfb.flag + "-@R0"]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
+      set_no_flag: [plfb.flag + "-@R3"]
     } 
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -213,49 +213,49 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4", plfb.flag + "-@R5"] : []
+      set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4", plfb.flag + "-@R5"]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
+      set_no_flag: [plfb.flag + "-@R3"]
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
+      set_no_flag: [plfb.flag + "-@R4"]
     }    
 
     var tile4: WMLTile = {
       q: 1,
       r: 0,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R5"] : []
+      set_no_flag: [plfb.flag + "-@R5"]
     }
 
     var tile5: WMLTile = {
       q: 0,
       r: 1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
+      set_no_flag: [plfb.flag + "-@R0"]
     }              
 
     var tile6: WMLTile = {
       q: -1,
       r: 1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R1"] : []
+      set_no_flag: [plfb.flag + "-@R1"]
     }
 
     var tile7: WMLTile = {
       q: -1,
       r: 0,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R2"] : []
+      set_no_flag: [plfb.flag + "-@R2"]
     }                      
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -289,42 +289,42 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4"] : []
+      set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4"]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
+      set_no_flag: [plfb.flag + "-@R3"]
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
+      set_no_flag: [plfb.flag + "-@R4"]
     }    
 
     var tile4: WMLTile = {
       q: 1,
       r: 0,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R5"] : []
+      set_no_flag: [plfb.flag + "-@R5"]
     }
 
     var tile5: WMLTile = {
       q: 0,
       r: 1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
+      set_no_flag: [plfb.flag + "-@R0"]
     }              
 
     var tile6: WMLTile = {
       q: -1,
       r: 1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R1"] : []
+      set_no_flag: [plfb.flag + "-@R1"]
     }             
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -358,35 +358,35 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3"] : []
+      set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3"]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
+      set_no_flag: [plfb.flag + "-@R3"]
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
+      set_no_flag: [plfb.flag + "-@R4"]
     }    
 
     var tile4: WMLTile = {
       q: 1,
       r: 0,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R5"] : []
+      set_no_flag: [plfb.flag + "-@R5"]
     }
 
     var tile5: WMLTile = {
       q: 0,
       r: 1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0"] : []
+      set_no_flag: [plfb.flag + "-@R0"]
     }              
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -417,14 +417,14 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2"] : []
+      set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2"]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
+      set_no_flag: [plfb.flag + "-@R3"]
     }
 
     var tile3: WMLTile = {
@@ -432,14 +432,14 @@ module WesnothTiles {
       r: -1,
       type: terrainList,
 
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
+      set_no_flag: [plfb.flag + "-@R4"]
     }    
 
     var tile4: WMLTile = {
       q: 1,
       r: 0,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R5"] : []
+      set_no_flag: [plfb.flag + "-@R5"]
     }        
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -469,21 +469,21 @@ module WesnothTiles {
       r: 0,
       type: adjacent,
       images: [img],
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R0", plfb.flag + "-@R1"] : []
+      set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1"]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R3"] : []
+      set_no_flag: [plfb.flag + "-@R3"]
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: -1,
       type: terrainList,
-      set_no_flag: plfb.flag !== undefined? [plfb.flag + "-@R4"] : []
+      set_no_flag: [plfb.flag + "-@R4"]
     }    
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -585,7 +585,7 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       images: [img],
-      set_no_flag: plfb.flag !== undefined? [plfb.flag] : []      
+      set_no_flag: [plfb.flag]      
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
