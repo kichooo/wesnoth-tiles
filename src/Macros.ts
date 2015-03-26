@@ -89,7 +89,7 @@ module WesnothTiles {
     has_flag?: string[];
     no_flag?: string[];
     set_no_flag?: string[];
-    // images: WMLImage[];
+    images?: WMLImage[];
     probability?: number;
 
     rotations?: string[];
@@ -649,7 +649,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: 90, y: 144},
+      base: {x: -63, y: -108},
       variations: [""]
     }
 
@@ -657,15 +657,14 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: 90, y: 144},
+      base: {x: -63, y: -108},
       variations: [""]
     }
 
     var concave_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
-      images: [concave_img1, concave_img2],
+      type: adjacent,      
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
@@ -689,6 +688,7 @@ module WesnothTiles {
         concave_tile2,
         concave_tile3
       ],
+      images: [concave_img1, concave_img2],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
@@ -700,7 +700,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: 90, y: 144},
+      base: {x: -63, y: -108},
       variations: [""]
     }
 
@@ -708,7 +708,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: 90, y: 144},
+      base: {x: -63, y: -108},
       variations: [""]
     }
 
@@ -716,7 +716,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: terrainList,
-      images: [convex0_img1, convex0_img2],
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
@@ -740,6 +739,7 @@ module WesnothTiles {
         convex0_tile2,
         convex0_tile3
       ],
+      images: [convex0_img1, convex0_img2],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
@@ -750,7 +750,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: 90, y: 144},
+      base: {x: -63, y: -108},
       variations: [""]
     }
 
@@ -758,7 +758,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: terrainList,
-      images: [convex1_img1],
       set_no_flag: ["beach-@R0-@R5"]
     }
 
@@ -781,6 +780,7 @@ module WesnothTiles {
         convex1_tile2,
         convex1_tile3
       ],
+      images: [convex1_img1],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
@@ -792,7 +792,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: 90, y: 144},
+      base: {x: -63, y: -108},
       variations: [""]
     }
 
@@ -800,7 +800,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: terrainList,
-      images: [convex2_img1],
+
       set_no_flag: ["beach-@R0-@R1"]
     }
 
@@ -823,6 +823,7 @@ module WesnothTiles {
         convex2_tile2,
         convex2_tile3
       ],
+      images: [convex2_img1],      
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_IMAGE_SINGLE
@@ -835,7 +836,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0",
       layer: layer,
-      base: {x: 90, y: 144},
+      base: {x: -63, y: -108},
       variations: [""]
     }
 
@@ -843,7 +844,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: terrainList,
-      images: [convex_img1],
       set_no_flag: ["waves-@R0"]
     }
 
@@ -867,6 +867,7 @@ module WesnothTiles {
         convex_tile2,
         convex_tile3
       ],
+      images: [convex_img1],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_ANIMATION_06
@@ -878,15 +879,14 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0",
       layer: layer,
-      base: {x: 90, y: 144},
+      base: {x: -63, y: -108},
       variations: [""]
     }
 
     var concave_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
-      images: [concave_img1],
+      type: adjacent,      
       set_no_flag: ["waves-@R0"]
     }
 
@@ -910,6 +910,7 @@ module WesnothTiles {
         concave_tile2,
         concave_tile3
       ],
+      images: [concave_img1],      
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],      
       builder: IB_ANIMATION_06

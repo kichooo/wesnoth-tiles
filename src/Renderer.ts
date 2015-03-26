@@ -88,6 +88,12 @@ module WesnothTiles {
           y: Math.floor((this.canvas.height) / 2),          
         }, this.ctx, diff);
       });
+
+      this.ctx.beginPath();
+      this.ctx.lineWidth = 4;
+      this.ctx.strokeStyle = "green";
+      this.ctx.rect(this.canvas.width / 2 - 4, this.canvas.height / 2 - 4,8,8);
+      this.ctx.stroke();
       
 // console.log(this.canvas.width, this.canvas.height);
       // for (var q = -20; q < 20; q++) { // very temporary...

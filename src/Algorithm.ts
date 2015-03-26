@@ -240,6 +240,27 @@ module WesnothTiles {
       .replace("@R5", rotations[(rot + 5) % 6])
   }
 
+
+  var getImgName = (img: WMLImage, tg: WMLTerrainGraphics, rot: number, translatedPostfix: string) => {
+                
+    var imgName: string;
+    var num = img.variations.length;
+    for (;;) {
+      num = Math.floor(Math.random() * num);
+      var translatedName = tg.builder.toString(img.name, translatedPostfix);
+      translatedName = translatedName.replace("@V", img.variations[num]);
+      if (Resources.definitions.has(translatedName)) {
+        imgName = img.name.replace("@V", img.variations[num]);
+        break;
+      }
+      if (num === 0) {
+        return undefined;
+      }
+    }
+    return imgName;
+
+  }
+
   var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
     // console.log("Performing macro for rotation", dp.hex.toString(), rot);
     var chance = Math.floor(Math.random()*101);
@@ -277,33 +298,16 @@ module WesnothTiles {
         if (tile.images !== undefined) {
           for (var j = 0; j < tile.images.length; j++) {
             var img = tile.images[j];
-            var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): ""
-            var imgName: string;
-            var num = img.variations.length;
-            for (;;) {
-              num = Math.floor(Math.random() * num);
-              var translatedName = tg.builder.toString(img.name, translatedPostfix);
-              translatedName = translatedName.replace("@V", img.variations[num]);
-              if (Resources.definitions.has(translatedName)) {
-                imgName = img.name.replace("@V", img.variations[num]);
-                break;
-              }
-              if (num === 0) {
-                return;
-              }
-            }
 
-            var rotHex = rotatePos(tile.q, tile.r, rot);
-            var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
+            var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
+            var imgName = getImgName(img, tg, rot, translatedPostfix);
+            if (imgName === undefined)
+              continue;
             var pos = {
               x: (36 * 1.5) * hexPos.q - 36, 
               y: 36 * (2 * hexPos.r + hexPos.q) - 36
             } 
-            if (img.base !== undefined) {
-              pos.x -= img.base.x / 2 + 9;
-              pos.y -= img.base.y / 2;
-            }
 
             // console.log("Adding", imgName, img.name);
 
@@ -315,6 +319,32 @@ module WesnothTiles {
          
         }              
       }
+      if (tg.images !== undefined) {
+        for (var j = 0; j < tg.images.length; j++) {
+            var img = tg.images[j];
+
+            var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
+
+            var imgName = getImgName(img, tg, rot, translatedPostfix);
+            if (imgName === undefined)
+              continue;
+            var pos = {
+              x: (36 * 1.5) * dp.hex.q - 36, 
+              y: 36 * (2 * dp.hex.r + dp.hex.q) - 36
+            }
+
+            if (img.base !== undefined) {
+              pos.x = img.base.x;
+              pos.y = img.base.y;
+            }
+
+            // console.log("Adding", imgName, img.name);
+
+            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer)); 
+
+          }
+      }
+
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
         var rotHex = rotatePos(tile.q, tile.r, rot);
@@ -340,9 +370,9 @@ module WesnothTiles {
   var terrainGraphics: WMLTerrainGraphics[] = [];
   
   export var rebuild = (hexMap: HexMap) => {
-    MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
-    MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
-    MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
+    // MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
+    // MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
+    // MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
 
 
     TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
@@ -456,10 +486,10 @@ module WesnothTiles {
       getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), 
       "flat/bank", { layer: -300 });
 
-    NEW_WAVES(terrainGraphics,
-      getTerrainMap([ETerrain.HILLS_DESERT]), 
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
-      -499, "water/waves");
+    // NEW_WAVES(terrainGraphics,
+    //   getTerrainMap([ETerrain.HILLS_DESERT]), 
+    //   getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+    //   -499, "water/waves");
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_REGULAR]), getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
