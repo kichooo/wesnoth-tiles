@@ -649,7 +649,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: -63, y: -108},
+      base: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -657,7 +657,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: -63, y: -108},
+      base: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -700,7 +700,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: -63, y: -108},
+      base: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -708,7 +708,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: -63, y: -108},
+      base: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -750,7 +750,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: -63, y: -108},
+      base: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -792,7 +792,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: -63, y: -108},
+      base: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -836,7 +836,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0",
       layer: layer,
-      base: {x: -63, y: -108},
+      base: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -879,7 +879,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0",
       layer: layer,
-      base: {x: -63, y: -108},
+      base: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -923,7 +923,7 @@ export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList
     var img: WMLImage = {
       name: imageStem,
       layer: -1000,
-      base: {x: 90, y: 144},
+      base: {x: -54, y: -72},
       variations: ["", "2", "3", "4", "5", "6"],
     }
 
@@ -931,7 +931,6 @@ export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList
       q: 0,
       r: 0,
       type: terrainList,
-      images: [img],
       set_no_flag: [flag]      
     }
 
@@ -939,6 +938,7 @@ export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList
       tiles: [
         tile
       ],
+      images: [img],
       probability: prob,
       builder: IB_IMAGE_SINGLE
     }

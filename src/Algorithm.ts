@@ -314,8 +314,6 @@ module WesnothTiles {
             drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer)); 
 
           }
-
-
          
         }              
       }
@@ -328,14 +326,16 @@ module WesnothTiles {
             var imgName = getImgName(img, tg, rot, translatedPostfix);
             if (imgName === undefined)
               continue;
+            var hexQ = dp.hex.q;
+            var hexR = dp.hex.r;
             var pos = {
-              x: (36 * 1.5) * dp.hex.q - 36, 
-              y: 36 * (2 * dp.hex.r + dp.hex.q) - 36
+              x: (36 * 1.5) * hexQ - 36, 
+              y: 36 * (2 * hexR + hexQ) - 36
             }
 
             if (img.base !== undefined) {
-              pos.x = img.base.x;
-              pos.y = img.base.y;
+              pos.x += img.base.x;
+              pos.y += img.base.y;
             }
 
             // console.log("Adding", imgName, img.name);
@@ -370,9 +370,9 @@ module WesnothTiles {
   var terrainGraphics: WMLTerrainGraphics[] = [];
   
   export var rebuild = (hexMap: HexMap) => {
-    // MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
-    // MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
-    // MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
+    MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
+    MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
+    MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
 
 
     TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
@@ -404,7 +404,19 @@ module WesnothTiles {
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.MOUNTAIN_BASIC]), 
-      "mountains/blend-from-dry", { layer: -0, flag: "inside" });    
+      "mountains/blend-from-dry", { layer: 0, flag: "inside" });    
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY]), getTerrainMap([ETerrain.MOUNTAIN_SNOW]), 
+      "mountains/blend-from-dry", { layer: 0, flag: "inside" });        
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.MOUNTAIN_BASIC]), getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW]), 
+      "hills/dry", { layer: -166 })
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.MOUNTAIN_SNOW]), getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY]), 
+      "hills/dry", { layer: -166 })
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), 
@@ -486,10 +498,10 @@ module WesnothTiles {
       getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), 
       "flat/bank", { layer: -300 });
 
-    // NEW_WAVES(terrainGraphics,
-    //   getTerrainMap([ETerrain.HILLS_DESERT]), 
-    //   getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
-    //   -499, "water/waves");
+    NEW_WAVES(terrainGraphics,
+      getTerrainMap([ETerrain.HILLS_DESERT]), 
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+      -499, "water/waves");
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_REGULAR]), getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
