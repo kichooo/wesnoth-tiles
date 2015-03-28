@@ -4,20 +4,61 @@ module WesnothTiles {
   'use strict';
 
   export enum ETerrain {
-MOUNTAIN_SNOW, // 12    
-MOUNTAIN_DRY, // 11
-MOUNTAIN_BASIC, // 10
+    HILLS_DESERT, // 9        
     
-GRASS_SEMI_DRY, // 8    
-GRASS_LEAF_LITTER, // 7
-HILLS_SNOW, // 4
-    HILLS_DRY, // 3
-HILLS_REGULAR, // 2
-HILLS_DESERT, // 9    
+    WATER_OCEAN, // 0
     WATER_COAST_TROPICAL, // 1
-WATER_OCEAN, // 0
-GRASS_GREEN, // 5
+
+    GRASS_GREEN, // 5
+    GRASS_SEMI_DRY, // 8
     GRASS_DRY, // 6
+    GRASS_LEAF_LITTER, // 7
+
+    HILLS_REGULAR, // 2
+    MOUNTAIN_BASIC, // 10
+    
+    MOUNTAIN_DRY, // 11
+    HILLS_DRY, // 3
+    MOUNTAIN_SNOW, // 12        
+    HILLS_SNOW, // 4    
+    
+    
+    
+    
+    
+    
+
+    
+    
+
+
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+
+
+    
+
+
+    
 
 
 

@@ -46,6 +46,7 @@ module WesnothTiles {
     draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {
       this.animTime = (this.animTime + timePassed) % (this.frames * this.duration);
       var frame = 1 + Math.floor(this.animTime / this.duration);
+      // console.log("frame",frame);
       var frameString = "A" + (frame >= 10 ? frame.toString() : ("0" + frame.toString()));
       var sprite = Resources.definitions.get(this.name.replace("@A", frameString));
       if (sprite === undefined) {

@@ -9,7 +9,7 @@ module WesnothTiles {
   // image builders.
   export var IB_IMAGE_SINGLE: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      console.log("Adding " + imageStem + postfix);
+      // console.log("Adding " + imageStem + postfix);
       return new StaticImage(
         pos.x, 
         pos.y, 
@@ -53,7 +53,7 @@ module WesnothTiles {
       return new AnimatedImage(
         pos.x, 
         pos.y,
-        imageStem + "-@A" + postfix, layer, base, 6, 150
+        imageStem + "-@A" + postfix, layer, base, 6, 200
       )
     },
     toString: (imageStem: string, postfix: string) => {
