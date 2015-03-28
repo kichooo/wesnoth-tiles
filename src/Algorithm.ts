@@ -302,16 +302,21 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
+            console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
-              continue;
+              return;
             var pos = {
               x: (36 * 1.5) * hexPos.q - 36, 
               y: 36 * (2 * hexPos.r + hexPos.q) - 36
             } 
 
+            var newBase = img.base !== undefined ?{
+              x: pos.x + img.base.x,
+              y: pos.y + img.base.y
+            } : undefined;            
             // console.log("Adding", imgName, img.name);
 
-            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer)); 
+            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer, newBase)); 
 
           }
          
@@ -324,23 +329,29 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
+            console.log("Name",imgName);
             if (imgName === undefined)
-              continue;
+              return;
             var hexQ = dp.hex.q;
             var hexR = dp.hex.r;
-            var pos = {
+            var drawPos = {
               x: (36 * 1.5) * hexQ - 36, 
               y: 36 * (2 * hexR + hexQ) - 36
             }
 
-            if (img.base !== undefined) {
-              pos.x += img.base.x;
-              pos.y += img.base.y;
+            if (img.pos !== undefined) {
+              drawPos.x += img.pos.x;
+              drawPos.y += img.pos.y;
             }
+
+            var newBase = img.base !== undefined ?{
+              x: drawPos.x + img.base.x,
+              y: drawPos.y + img.base.y
+            } : undefined;
 
             // console.log("Adding", imgName, img.name);
 
-            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer)); 
+            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase)); 
 
           }
       }
@@ -485,7 +496,7 @@ module WesnothTiles {
       "grass/semi-dry-long", { layer: -257 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
-      getTerrainMap([ETerrain.GRASS_GREEN]), getTerrainMap([ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY,
+      getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY,
         ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY]), 
       "grass/leaf-litter", {layer: -270 });
 

@@ -8,11 +8,12 @@ module WesnothTiles {
 
   export interface IDrawable {
     draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number);
-    layer: number;
+    layer?: number;
+    base?: IVector; 
   }
 
   export class StaticImage implements IDrawable {
-    constructor(private x: number, private y: number, private name: string, public layer: number ) {
+    constructor(private x: number, private y: number, private name: string, public layer: number, public base: IVector) {
     }
 
     draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {
@@ -36,7 +37,8 @@ module WesnothTiles {
     constructor(private x: number, 
       private y: number, 
       private name: string, 
-      public layer: number, 
+      public layer: number,
+      public base: IVector,
       private frames: number, 
       private duration:  number) {
     }
@@ -73,7 +75,14 @@ module WesnothTiles {
     rebuild(hexMap: HexMap) {
       this.drawables = rebuild(hexMap);
       this.drawables.sort((a: IDrawable, b: IDrawable) => {
-        return a.layer - b.layer;
+        if (a.base !== undefined && b.base !== undefined)
+          return a.base.y - b.base.y;
+        if (a.base === undefined && b.base === undefined)
+          return a.layer - b.layer;
+        if (a.base === undefined) {
+          return (a.layer >= 0) ? 1 : -1;
+        }
+        return (b.layer >= 0) ? -1 : 1;
       });
     }
 

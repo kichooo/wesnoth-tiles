@@ -3,29 +3,31 @@ module WesnothTiles {
 
 
   export interface IBuilder {
-    toDrawable(imageStem: string, postfix: string, pos: IVector, layer: number): IDrawable;
+    toDrawable(imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector): IDrawable;
     toString(imageStem: string, postfix?: string): string;
   }
   // image builders.
   export var IB_IMAGE_SINGLE: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
+      console.log("Adding " + imageStem + postfix);
       return new StaticImage(
         pos.x, 
         pos.y, 
-        imageStem + postfix, layer
+        imageStem + postfix, layer, base
       )
-    },
+    },    
+    
     toString: (imageStem: string, postfix: string) => {
       return imageStem + postfix;
     }
   }
 
   export var IB_ANIMATION_15_SLOW: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new AnimatedImage(
         pos.x, 
         pos.y,
-        imageStem + "-@A" + postfix, layer, 15, 150
+        imageStem + "-@A" + postfix, layer, base, 15, 150
       )
     },
     toString: (imageStem: string, postfix: string) => {
@@ -34,11 +36,11 @@ module WesnothTiles {
   }
 
   export var IB_ANIMATION_15: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new AnimatedImage(
         pos.x, 
         pos.y,
-        imageStem + "-@A" + postfix, layer, 15, 110
+        imageStem + "-@A" + postfix, layer, base, 15, 110
       )
     },
     toString: (imageStem: string, postfix: string) => {
@@ -47,11 +49,11 @@ module WesnothTiles {
   }  
 
   export var IB_ANIMATION_06: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new AnimatedImage(
         pos.x, 
         pos.y,
-        imageStem + "-@A" + postfix, layer, 6, 150
+        imageStem + "-@A" + postfix, layer, base, 6, 150
       )
     },
     toString: (imageStem: string, postfix: string) => {
@@ -62,9 +64,10 @@ module WesnothTiles {
 
   export interface WMLImage {
     name: string;
-    layer: number;
+    layer?: number;
     variations: string[];
     postfix?: string;
+    pos?: IVector;
     base?: IVector;
   }
 
@@ -649,7 +652,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: -54, y: -72},
+      pos: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -657,7 +660,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: -54, y: -72},
+      pos: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -700,7 +703,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: -54, y: -72},
+      pos: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -708,7 +711,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: -54, y: -72},
+      pos: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -750,7 +753,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
-      base: {x: -54, y: -72},
+      pos: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -792,7 +795,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
-      base: {x: -54, y: -72},
+      pos: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -836,7 +839,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0",
       layer: layer,
-      base: {x: -54, y: -72},
+      pos: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -879,7 +882,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0",
       layer: layer,
-      base: {x: -54, y: -72},
+      pos: {x: -54, y: -72},
       variations: [""]
     }
 
@@ -922,8 +925,8 @@ module WesnothTiles {
 export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, prob: number, flag: string) => {
     var img: WMLImage = {
       name: imageStem,
-      layer: -1000,
-      base: {x: -54, y: -72},
+      base: {x: 90, y: 107},
+      pos: {x: -54, y: -72},
       variations: ["", "2", "3", "4", "5", "6"],
     }
 
