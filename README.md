@@ -40,7 +40,7 @@ WML files with terrain definitions will be converted using short GO program.
  - [ ] snow
  - [ ] desert
  - [ ] beach
-- [ ] hills
+- [x] hills
  - [x] green
  - [x] dry
  - [x] dunes
@@ -61,16 +61,22 @@ WML files with terrain definitions will be converted using short GO program.
 - [ ] villages (multiple types)
 - [ ] woods, jungle and palms (multiple types)
 - [ ] extra overlays
--  [ ] rubbles
--  [ ] oasis
--  [ ] flowers
--  [ ] farms
--  [ ] stones
--  [ ] mushrooms
--  [ ] remains
+ -  [ ] rubbles
+ -  [ ] oasis
+ -  [ ] flowers
+ -  [ ] farms
+ -  [ ] stones
+ -  [ ] mushrooms
+ -  [ ] remains
 - [ ] ethereal abyss (chasm)
- - 
-- 
+
+# current iteration (v0.2)
+
+ - [ ] encode all needed terrain types
+ - [ ] finish plains
+ - [ ] finish mountains
+ - [ ] finish water
+ 
 # license
 
 GPL. See LICENSE file in the root of the repository.
