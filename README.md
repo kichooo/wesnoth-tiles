@@ -31,15 +31,15 @@ WML files with terrain definitions will be converted using short GO program.
 
 # supported terrains
 
-- [ ] plains
+- [x] plains
  - [x] green grass
  - [x] semi-dry grass
  - [x] dry grass
  - [x] leaf litter (base for trees)
- - [ ] ice
- - [ ] snow
- - [ ] desert
- - [ ] beach
+ - [x] ice
+ - [x] snow
+ - [x] desert
+ - [x] beach
 - [x] hills
  - [x] green
  - [x] dry
@@ -72,7 +72,7 @@ WML files with terrain definitions will be converted using short GO program.
 
 # current iteration (v0.2)
 
- - [ ] encode all needed terrain types
+ - [x] encode all needed terrain types
  - [ ] finish plains
  - [ ] finish mountains
  - [ ] finish water
