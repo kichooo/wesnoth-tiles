@@ -310,7 +310,7 @@ module WesnothTiles {
               y: 36 * (2 * hexPos.r + hexPos.q) - 36
             } 
 
-            var newBase = img.base !== undefined ?{
+            var newBase = img.base !== undefined ? {
               x: pos.x + img.base.x,
               y: pos.y + img.base.y
             } : undefined;            
@@ -329,7 +329,7 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
-            console.log("Name",imgName);
+            console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
             var hexQ = dp.hex.q;
@@ -551,12 +551,12 @@ module WesnothTiles {
       "sand/shore");
 
 
-    NEW_BEACH(terrainGraphics,
-      getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER,
-        ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
-        ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY]), 
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
-      "flat/shore");
+    // NEW_BEACH(terrainGraphics,
+    //   getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER,
+    //     ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
+    //     ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY]), 
+    //   getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]), 
+    //   "flat/shore");
 
 
     ANIMATED_WATER_15_TRANSITION(terrainGraphics,

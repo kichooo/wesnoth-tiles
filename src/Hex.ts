@@ -22,63 +22,7 @@ module WesnothTiles {
     MOUNTAIN_SNOW, // 12        
     HILLS_SNOW, // 4    
     
-    
-    
-    
-    
-    
-
-    
-    
-
-
-    
-    
-    
-    
-    
-    
-    
-
-    
-
-
-
-    
-
-
-
-    
-
-
-
-    
-
-
-    
-
-
-    
-
-
-
-
-    
-    
-
-
-    
-    
-
-    
-    
-
-
-
-
-    
-    
-
+  
     // SWAMP_MUD, // 8
     // SWAMP_WATER, // 9
 
@@ -88,7 +32,7 @@ module WesnothTiles {
 
   export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
     var swapped = new Map<ETerrain, boolean>();
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 13; i++) {
       if (!types.has(i))
         swapped.set(i, true);
     }
