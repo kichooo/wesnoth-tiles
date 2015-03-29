@@ -30,7 +30,7 @@ function start() {
 
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.max(0, Math.min(code, 12)))));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(j * j * i * i * i / 5 + i / 5 + i * 2 * j + j))) % 10));
-        map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 13)));
+        map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 17)));
         // map.addHex(new WesnothTiles.Hex(i, j, 4));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j + j))) % 4 + 4));        
       }
@@ -54,11 +54,6 @@ function start() {
       });
     };
     anim();
-
-    var set1 = new Map();
-    set1.set(1, true);
-    var dupa = WesnothTiles.swapTerrainTypes(set1);
-    console.log(dupa);
   });
 
 }

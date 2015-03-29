@@ -22,7 +22,12 @@ module WesnothTiles {
     MOUNTAIN_SNOW, // 12        
     HILLS_SNOW, // 4    
     
-  
+    FROZEN_ICE, // Ai
+    FROZEN_SNOW, // Aa
+    
+    SAND_DESERT, // Dd
+    SAND_BEACH, // Ds
+
     // SWAMP_MUD, // 8
     // SWAMP_WATER, // 9
 
@@ -30,9 +35,11 @@ module WesnothTiles {
 
   }
 
+
+  // TODO it could be improved...
   export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
     var swapped = new Map<ETerrain, boolean>();
-    for (var i = 0; i < 13; i++) {
+    for (var i = 0; i < Object.keys(ETerrain).length / 2; i++) {
       if (!types.has(i))
         swapped.set(i, true);
     }
