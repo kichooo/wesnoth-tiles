@@ -33,6 +33,10 @@ WML files with terrain definitions will be converted using short GO program.
 
 GPL. See LICENSE file in the root of the repository.
 
+# preview
+
+![](http://i.imgur.com/drejkVh.jpg)
+
 # from author
 
 Special thanks for the awesome authors of Battle for Wesnoth!
