@@ -29,6 +29,48 @@ WML files with terrain definitions will be converted using short GO program.
 3. Create bower component.
 4. Easy usage.
 
+# supported terrains
+
+- [ ] plains
+ - [x] green grass
+ - [x] semi-dry grass
+ - [x] dry grass
+ - [x] leaf litter (base for trees)
+ - [ ] ice
+ - [ ] snow
+ - [ ] desert
+ - [ ] beach
+- [ ] hills
+ - [x] green
+ - [x] dry
+ - [x] dunes
+ - [x] snow
+- [ ] water
+ - [x] ocean
+ - [x] coast
+ - [ ] waves
+ - [ ] swamps
+ - [ ] mud
+- [ ] mountains
+ - [x] regular
+ - [x] dry
+ - [x] snow
+ - [ ] volcano
+ - [ ] multihex
+ - [ ] impassable
+- [ ] villages (multiple types)
+- [ ] woods, jungle and palms (multiple types)
+- [ ] extra overlays
+-  [ ] rubbles
+-  [ ] oasis
+-  [ ] flowers
+-  [ ] farms
+-  [ ] stones
+-  [ ] mushrooms
+-  [ ] remains
+- [ ] ethereal abyss (chasm)
+ - 
+- 
 # license
 
 GPL. See LICENSE file in the root of the repository.
