@@ -974,5 +974,220 @@ module WesnothTiles {
     MOUNTAIN_SINGLE(terrainGraphics, terrainList, imageStem + "@V", 100, flag);
   }
 
+  var GENERIC_RESTRICTED3_N_NE_SE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+    var img: WMLImage = {
+      name: imageStem + rotation,
+      postfix: "",
+      layer: plfb.layer,
+      center: {x: 36, y: 36},
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+
+    var tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,      
+      set_no_flag: [plfb.flag]
+    }
+
+    var tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent
+    } 
+
+    var tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: adjacent
+    } 
+
+    var tile4: WMLTile = {
+      q: 1,
+      r: 0,
+      type: adjacent
+    } 
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile1,
+        tile2,
+        tile3,
+        tile4
+      ],
+      images: [img],
+      probability: plfb.prob,
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
+    }
+    terrainGraphics.push(terrainGraphic);
+
+  }
+
+  var GENERIC_RESTRICTED3_N_NE_S_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+    var img: WMLImage = {
+      name: imageStem + rotation,
+      postfix: "",
+      layer: plfb.layer,
+      center: {x: 36, y: 36},
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+
+    var tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,      
+      set_no_flag: [plfb.flag]
+    }
+
+    var tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent
+    } 
+
+    var tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: adjacent
+    } 
+
+    var tile4: WMLTile = {
+      q: 0,
+      r: 1,
+      type: adjacent
+    } 
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile1,
+        tile2,
+        tile3,
+        tile4
+      ],
+      images: [img],
+      probability: plfb.prob,
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
+    }
+    terrainGraphics.push(terrainGraphic);
+
+  }
+
+  var GENERIC_RESTRICTED3_N_NE_SW_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+    var img: WMLImage = {
+      name: imageStem + rotation,
+      postfix: "",
+      layer: plfb.layer,
+      center: {x: 36, y: 36},
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+
+    var tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,      
+      set_no_flag: [plfb.flag]
+    }
+
+    var tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent
+    } 
+
+    var tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: adjacent
+    } 
+
+    var tile4: WMLTile = {
+      q: -1,
+      r: 1,
+      type: adjacent
+    } 
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile1,
+        tile2,
+        tile3,
+        tile4
+      ],
+      images: [img],
+      probability: plfb.prob,
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
+    }
+    terrainGraphics.push(terrainGraphic);    
+  }
+
+  var GENERIC_RESTRICTED3_N_SE_SW_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+    var img: WMLImage = {
+      name: imageStem + rotation,
+      postfix: "",
+      layer: plfb.layer,
+      center: {x: 36, y: 36},
+      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+    }
+
+    var tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList,      
+      set_no_flag: [plfb.flag]
+    }
+
+    var tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent
+    } 
+
+    var tile3: WMLTile = {
+      q: 1,
+      r: 0,
+      type: adjacent
+    } 
+
+    var tile4: WMLTile = {
+      q: -1,
+      r: 1,
+      type: adjacent
+    } 
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile1,
+        tile2,
+        tile3,
+        tile4
+      ],
+      images: [img],
+      probability: plfb.prob,
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      builder: plfb.builder
+    }
+    terrainGraphics.push(terrainGraphic);    
+  }
+
+  var GENERIC_RESTRICTED3_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+    GENERIC_RESTRICTED3_N_NE_SE_PLFB(terrainGraphics, terrainList, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_NE_S_PLFB(terrainGraphics, terrainList, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_NE_SW_PLFB(terrainGraphics, terrainList, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_SE_SW_PLFB(terrainGraphics, terrainList, adjacent, imageStem, plfb, rotation);
+
+  }
+
+  export var OVERLAY_RESTRICTED3_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    GENERIC_RESTRICTED3_PLFB(terrainGraphics, terrainList, adjacent, imageStem, {
+      prob: plfb.prob === undefined ? 100: plfb.prob,
+      layer: plfb.layer === undefined ? 0: plfb.layer,
+      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
+      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE: plfb.builder,
+    }, "");
+  }
+
   
 }

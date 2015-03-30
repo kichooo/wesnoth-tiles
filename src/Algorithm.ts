@@ -250,12 +250,31 @@ module WesnothTiles {
   var terrainGraphics: WMLTerrainGraphics[] = [];
   
   export var rebuild = (hexMap: HexMap) => {
+    OVERLAY_RESTRICTED3_PLFB(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+    "mountains/basic-castle-n", { flag: "base2" });
+
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
+
+    OVERLAY_RESTRICTED3_PLFB(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_DRY]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+    "mountains/dry-castle-n", { flag: "base2" });
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
+
+
     OVERLAY_COMPLETE_LFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
       getTerrainMap([]), "mountains/volcano", { flag: "base2" }); // Mv
+
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
+
+
+    // fillers for mountains
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "hills/regular", {});
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "hills/dry", {});
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "hills/snow", {});
 
 
     TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
