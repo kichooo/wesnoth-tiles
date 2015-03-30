@@ -55,7 +55,7 @@ WML files with terrain definitions will be converted using short GO program.
  - [x] regular
  - [x] dry
  - [x] snow
- - [ ] volcano
+ - [x] volcano
  - [ ] multihex
  - [ ] impassable
 - [ ] villages (multiple types)
@@ -73,9 +73,16 @@ WML files with terrain definitions will be converted using short GO program.
 # current iteration (v0.2)
 
  - [x] encode all needed terrain types
- - [ ] finish plains
+ - [x] finish plains
  - [ ] finish mountains
  - [ ] finish water
+ - [ ] hunt transition bugs
+
+# next iteration (sketch)
+
+ - [ ] typescript formatter
+ - [ ] macros cleanup
+ - [ ] introduce some testing
  
 # license
 

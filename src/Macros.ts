@@ -67,8 +67,8 @@ module WesnothTiles {
     layer?: number;
     variations: string[];
     postfix?: string;
-    pos?: IVector;
     base?: IVector;
+    center?: IVector;
   }
 
   export interface WMLTile {
@@ -115,13 +115,13 @@ module WesnothTiles {
       name: imageStem,
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+      center: {x: 36, y: 36}
     }
 
     var tile: WMLTile = {
       q: 0,
       r: 0,
       type: terrainList,
-      images: [img],
       set_no_flag: [plfb.flag]      
     }
 
@@ -129,6 +129,7 @@ module WesnothTiles {
       tiles: [
         tile
       ],
+      images: [img],      
       probability: plfb.prob,
       builder: plfb.builder
     }
@@ -173,6 +174,7 @@ module WesnothTiles {
       name: imageStem,
       postfix: "-@R0",
       layer: plfb.layer,
+      center: {x: 36, y: 36},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]      
     }
 
@@ -180,7 +182,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      images: [img],
       set_no_flag: [plfb.flag + "-@R0"]
     }
 
@@ -196,6 +197,7 @@ module WesnothTiles {
         tile1,
         tile2
       ],
+      images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: plfb.builder
@@ -208,6 +210,7 @@ module WesnothTiles {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4-@R5",      
       layer: plfb.layer,
+      center: {x: 36, y: 36},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -215,7 +218,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      images: [img],
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4", plfb.flag + "-@R5"]
     }
 
@@ -271,6 +273,7 @@ module WesnothTiles {
         tile6,
         tile7
       ],
+      images: [img],
       set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
@@ -284,6 +287,7 @@ module WesnothTiles {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4",  
       layer: plfb.layer,
+      center: {x: 36, y: 36},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -291,7 +295,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      images: [img],
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4"]
     }
 
@@ -339,7 +342,7 @@ module WesnothTiles {
         tile5,
         tile6
       ],
-
+      images: [img],
       set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
@@ -353,6 +356,7 @@ module WesnothTiles {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3",  
       layer: plfb.layer,
+      center: {x: 36, y: 36},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -360,7 +364,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      images: [img],
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3"]
     }
 
@@ -400,6 +403,7 @@ module WesnothTiles {
         tile4,
         tile5
       ],
+      images: [img],      
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: plfb.builder
@@ -412,6 +416,7 @@ module WesnothTiles {
       name: imageStem,
       postfix: "-@R0-@R1-@R2",  
       layer: plfb.layer,
+      center: {x: 36, y: 36},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -419,7 +424,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      images: [img],
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2"]
     }
 
@@ -434,7 +438,6 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
-
       set_no_flag: [plfb.flag + "-@R4"]
     }    
 
@@ -452,6 +455,7 @@ module WesnothTiles {
         tile3,
         tile4
       ],
+      images: [img],      
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: plfb.builder
@@ -464,6 +468,7 @@ module WesnothTiles {
       name: imageStem,
       postfix: "-@R0-@R1",  
       layer: plfb.layer,
+      center: {x: 36, y: 36},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -471,7 +476,6 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
-      images: [img],
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1"]
     }
 
@@ -495,6 +499,7 @@ module WesnothTiles {
         tile2,
         tile3
       ],
+      images: [img],      
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: plfb.builder
@@ -652,7 +657,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0-@R5",
       layer: -500,
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: [""]
     }
 
@@ -660,7 +665,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0-@R1",
       layer: -500,
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: [""]
     }
 
@@ -703,7 +708,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: [""]
     }
 
@@ -711,7 +716,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: [""]
     }
 
@@ -753,7 +758,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: [""]
     }
 
@@ -795,7 +800,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: [""]
     }
 
@@ -839,7 +844,7 @@ module WesnothTiles {
       name: imageStem + "-convex",
       postfix: "-@R0",
       layer: layer,
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: [""]
     }
 
@@ -882,7 +887,7 @@ module WesnothTiles {
       name: imageStem + "-concave",
       postfix: "-@R0",
       layer: layer,
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: [""]
     }
 
@@ -922,11 +927,11 @@ module WesnothTiles {
 
   }
 
-export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, prob: number, flag: string) => {
+  export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, prob: number, flag: string) => {
     var img: WMLImage = {
       name: imageStem,
       base: {x: 90, y: 107},
-      pos: {x: -54, y: -72},
+      center: {x: 36, y: 36},
       variations: ["", "2", "3", "4", "5", "6"],
     }
 
@@ -946,12 +951,28 @@ export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList
       builder: IB_IMAGE_SINGLE
     }
     terrainGraphics.push(terrainGraphic);
+  }
 
-}
+  // var GENERIC_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+  //   // GENERIC_COMPLETE_LFB(terrainGraphics, terrainList, imageStem);
+  // }
 
-export var MOUNTAIN_SINGLE_RANDOM = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string) => {
-  MOUNTAIN_SINGLE(terrainGraphics, terrainList, imageStem + "@V", 100, flag);
-}
+
+  var GENERIC_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
+  }
+
+  export var OVERLAY_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    GENERIC_COMPLETE_LFB(terrainGraphics, terrainList, adjacent, imageStem, {
+      layer: lfb.layer === undefined ? 0: lfb.layer,
+      flag: lfb.flag === undefined ? "overlay" : lfb.flag,
+      builder: lfb.builder === undefined ? IB_IMAGE_SINGLE: lfb.builder,
+    });
+  }
+
+  export var MOUNTAIN_SINGLE_RANDOM = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string) => {
+    MOUNTAIN_SINGLE(terrainGraphics, terrainList, imageStem + "@V", 100, flag);
+  }
 
   
 }
