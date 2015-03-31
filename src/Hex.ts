@@ -5,7 +5,7 @@ module WesnothTiles {
 
   export enum ETerrain {
     MOUNTAIN_BASIC, // Mm 10  
-    WATER_OCEAN, // Wo 
+
     FROZEN_SNOW, // Aa
        
     SAND_BEACH, // Ds
@@ -19,7 +19,7 @@ module WesnothTiles {
     HILLS_DESERT, // 9        
     
 
-    WATER_COAST_TROPICAL, // 1
+
 
 
 
@@ -44,8 +44,8 @@ module WesnothTiles {
     // SWAMP_MUD, // 8
     // SWAMP_WATER, // 9
 
-
-
+    WATER_OCEAN, // Wo 
+    WATER_COAST_TROPICAL, // 1
   }
 
 
