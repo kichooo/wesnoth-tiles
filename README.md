@@ -82,7 +82,8 @@ WML files with terrain definitions will be converted using short GO program.
 
  - [ ] typescript formatter
  - [ ] macros cleanup
- - [ ] introduce some testing
+ - [ ] introduce some automatic testing
+ - [ ] introduce some way to test manually without changing app.js all the time.
  
 # license
 

@@ -51,10 +51,17 @@ function start() {
     // map.addHex(new WesnothTiles.Hex(-1, 1, WesnothTiles.ETerrain.GRASS_GREEN));
     // map.addHex(new WesnothTiles.Hex(-1, 0, WesnothTiles.ETerrain.GRASS_GREEN));
 
-    for (var i = 0; i < 4; i++) {
-      map.addHex(new WesnothTiles.Hex(i, 0, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
-      map.addHex(new WesnothTiles.Hex(i + 1, -1, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+    for (var i = 0; i < 5; i++) {
+      map.addHex(new WesnothTiles.Hex(i, 0 + 2, WesnothTiles.ETerrain.MOUNTAIN_DRY));
+      map.addHex(new WesnothTiles.Hex(i + 1, -1 + 2, WesnothTiles.ETerrain.MOUNTAIN_DRY));
     }
+
+    for (var i = 0; i < 5; i++) {
+      map.addHex(new WesnothTiles.Hex(-i, i - 3, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+      map.addHex(new WesnothTiles.Hex(1 - i, i - 3, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+    }
+
+
 
     // map.addHex(new WesnothTiles.Hex(-2, 1, WesnothTiles.ETerrain.GRASS_GREEN));
 

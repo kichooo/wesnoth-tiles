@@ -263,7 +263,8 @@ module WesnothTiles {
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
     "mountains/basic-castle", { flag: "base2" });
 
-    MOUNTAINS_2x4_NW_SE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range3", "base2", 100); // Mm    
+    MOUNTAINS_2x4_NW_SE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range3", "base2", 18); // Mm    
+    MOUNTAINS_2x4_SW_NE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range4", "base2", 26); // Mm    
 
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
 
@@ -279,6 +280,9 @@ module WesnothTiles {
       getTerrainMap([ETerrain.MOUNTAIN_DRY]),
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
     "mountains/dry-castle", { flag: "base2" });
+
+    MOUNTAINS_2x4_NW_SE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range3", "base2", 18); // Md    
+    MOUNTAINS_2x4_SW_NE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range4", "base2", 26); // Md    
 
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
 

@@ -1378,7 +1378,7 @@ module WesnothTiles {
   }
 
   export var MOUNTAINS_2x4_NW_SE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
-    var center = {x: 196 - 54, y: 180-108}
+    var center = {x: 198 - 54, y: 180 - 108}
     var img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
@@ -1423,7 +1423,6 @@ module WesnothTiles {
       tiles: [],
       images: [img1, img2, img3, img4, img5],
       probability: prob,
-      rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: IB_IMAGE_SINGLE
     }
 
@@ -1445,6 +1444,71 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);     
   }
 
+  export var MOUNTAINS_2x4_SW_NE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+    var center = {x: 198 - 216, y: 180 - 72}
+    var img1: WMLImage = {
+      name: imageStem + "_1",
+      postfix: "",
+      center: center,
+      base: {x: 88 - 54, y: 107 - 72},
+      variations: [""]
+    }
 
+    var img2: WMLImage = {
+      name: imageStem + "_2",
+      postfix: "",
+      center: center,
+      base: {x: 144 - 54, y: 107 - 72},
+      variations: [""]
+    }    
+
+    var img3: WMLImage = {
+      name: imageStem + "_3",
+      postfix: "",
+      center: center,
+      base: {x: 196 - 54, y: 107 - 72},
+      variations: [""]
+    }    
+
+    var img4: WMLImage = {
+      name: imageStem + "_4",
+      postfix: "",
+      center: center,
+      base: {x: 248 - 54, y: 107 - 72},
+      variations: [""]
+    }    
+
+    var img5: WMLImage = {
+      name: imageStem + "_5",
+      postfix: "",
+      center: center,
+      base: {x: 304 - 54, y: 107 - 72},
+      variations: [""]
+    }    
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [],
+      images: [img1, img2, img3, img4, img5],
+      probability: prob,
+      builder: IB_IMAGE_SINGLE
+    }
+
+    for (var i = 0; i < 4; i++) {
+      terrainGraphic.tiles.push({
+        q: -i,
+        r: i,
+        type: terrainList,      
+        set_no_flag: [flag]
+      });
+      terrainGraphic.tiles.push({
+        q: 1 -i,
+        r: i,
+        type: terrainList,      
+        set_no_flag: [flag]
+      });
+    }
+
+    terrainGraphics.push(terrainGraphic);     
+  }
   
 }
