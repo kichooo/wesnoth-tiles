@@ -1444,13 +1444,13 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);     
   }
 
-  export var MOUNTAINS_2x4_SW_NE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
-    var center = {x: 198 - 216, y: 180 - 72}
+  export var MOUNTAINS_1x3_NW_SE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+    var center = {x: 144 - 54, y: 162 - 108}
     var img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
       center: center,
-      base: {x: 88 - 54, y: 107 - 72},
+      base: {x: 88 - 54, y: 128 - 108},
       variations: [""]
     }
 
@@ -1458,7 +1458,7 @@ module WesnothTiles {
       name: imageStem + "_2",
       postfix: "",
       center: center,
-      base: {x: 144 - 54, y: 107 - 72},
+      base: {x: 142 - 54, y: 144 - 108},
       variations: [""]
     }    
 
@@ -1466,7 +1466,52 @@ module WesnothTiles {
       name: imageStem + "_3",
       postfix: "",
       center: center,
-      base: {x: 196 - 54, y: 107 - 72},
+      base: {x: 196 - 54, y: 180 - 108},
+      variations: [""]
+    }      
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [],
+      images: [img1, img2, img3],
+      probability: prob,
+      builder: IB_IMAGE_SINGLE
+    }
+
+    for (var i = 0; i < 3; i++) {
+      terrainGraphic.tiles.push({
+        q: i,
+        r: 0,
+        type: terrainList,      
+        set_no_flag: [flag]
+      });
+    }
+
+    terrainGraphics.push(terrainGraphic);     
+  }
+
+  export var MOUNTAINS_2x4_SW_NE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+    var center = {x: 198 - 216, y: 180 - 72}
+    var img1: WMLImage = {
+      name: imageStem + "_1",
+      postfix: "",
+      center: center,
+      base: {x: 88 - 216, y: 107 - 72},
+      variations: [""]
+    }
+
+    var img2: WMLImage = {
+      name: imageStem + "_2",
+      postfix: "",
+      center: center,
+      base: {x: 144 - 216, y: 107 - 72},
+      variations: [""]
+    }    
+
+    var img3: WMLImage = {
+      name: imageStem + "_3",
+      postfix: "",
+      center: center,
+      base: {x: 196 - 216, y: 107 - 72},
       variations: [""]
     }    
 
@@ -1474,7 +1519,7 @@ module WesnothTiles {
       name: imageStem + "_4",
       postfix: "",
       center: center,
-      base: {x: 248 - 54, y: 107 - 72},
+      base: {x: 248 - 216, y: 107 - 72},
       variations: [""]
     }    
 
@@ -1482,7 +1527,7 @@ module WesnothTiles {
       name: imageStem + "_5",
       postfix: "",
       center: center,
-      base: {x: 304 - 54, y: 107 - 72},
+      base: {x: 304 - 216, y: 107 - 72},
       variations: [""]
     }    
 
@@ -1510,5 +1555,51 @@ module WesnothTiles {
 
     terrainGraphics.push(terrainGraphic);     
   }
+
+  export var MOUNTAINS_1x3_SW_NE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+    var center = {x: 144 - 162, y: 162 - 108}
+    var img1: WMLImage = {
+      name: imageStem + "_1",
+      postfix: "",
+      center: center,
+      base: {x: 88 - 162, y: 180 - 108},
+      variations: [""]
+    }
+
+    var img2: WMLImage = {
+      name: imageStem + "_2",
+      postfix: "",
+      center: center,
+      base: {x: 142 - 162, y: 144 - 108},
+      variations: [""]
+    }    
+
+    var img3: WMLImage = {
+      name: imageStem + "_3",
+      postfix: "",
+      center: center,
+      base: {x: 196 - 162, y: 128 - 108},
+      variations: [""]
+    }      
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [],
+      images: [img1, img2, img3],
+      probability: prob,
+      builder: IB_IMAGE_SINGLE
+    }
+
+    for (var i = 0; i < 3; i++) {
+      terrainGraphic.tiles.push({
+        q: -i,
+        r: i,
+        type: terrainList,      
+        set_no_flag: [flag]
+      });
+    }
+
+    terrainGraphics.push(terrainGraphic);     
+  }
+
   
 }

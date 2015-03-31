@@ -61,7 +61,14 @@ function start() {
       map.addHex(new WesnothTiles.Hex(1 - i, i - 3, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
     }
 
+    for (var i = 0; i < 3; i++) {
+      map.addHex(new WesnothTiles.Hex(i + 4, - 2, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+      map.addHex(new WesnothTiles.Hex(i + 1 + 4, -1 - 2, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+    }
 
+    for (var i = 0; i < 3; i++) {
+      map.addHex(new WesnothTiles.Hex(-i - 6, i, WesnothTiles.ETerrain.MOUNTAIN_DRY));
+    }    
 
     // map.addHex(new WesnothTiles.Hex(-2, 1, WesnothTiles.ETerrain.GRASS_GREEN));
 
