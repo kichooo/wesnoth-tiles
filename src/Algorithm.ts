@@ -254,6 +254,14 @@ module WesnothTiles {
       getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
     "mountains/basic-castle-n", { flag: "base2" });
+    OVERLAY_ROTATION_RESTRICTED2_PLFB(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+    "mountains/basic-castle", { flag: "base2" });
+    OVERLAY_ROTATION_RESTRICTED_PLFB(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+    "mountains/basic-castle", { flag: "base2" });
 
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
 
@@ -261,6 +269,15 @@ module WesnothTiles {
       getTerrainMap([ETerrain.MOUNTAIN_DRY]),
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
     "mountains/dry-castle-n", { flag: "base2" });
+    OVERLAY_ROTATION_RESTRICTED2_PLFB(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_DRY]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+    "mountains/dry-castle", { flag: "base2" });
+    OVERLAY_ROTATION_RESTRICTED_PLFB(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_DRY]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+    "mountains/dry-castle", { flag: "base2" });
+
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
 
 
