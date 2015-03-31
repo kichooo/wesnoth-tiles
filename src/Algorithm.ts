@@ -263,6 +263,8 @@ module WesnothTiles {
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
     "mountains/basic-castle", { flag: "base2" });
 
+    MOUNTAINS_2x4_NW_SE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range3", "base2", 100); // Mm    
+
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
 
     OVERLAY_RESTRICTED3_PLFB(terrainGraphics, 

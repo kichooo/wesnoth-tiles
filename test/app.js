@@ -34,23 +34,27 @@ function start() {
       }
 
 
-    map.addHex(new WesnothTiles.Hex(0, 0, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+    // map.addHex(new WesnothTiles.Hex(0, 0, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
 
     // map.addHex(new WesnothTiles.Hex(0, -1, WesnothTiles.ETerrain.WATER_OCEAN));
     // map.addHex(new WesnothTiles.Hex(1, -1, WesnothTiles.ETerrain.WATER_OCEAN));
     // map.addHex(new WesnothTiles.Hex(1, 0, WesnothTiles.ETerrain.WATER_OCEAN));
     // map.addHex(new WesnothTiles.Hex(0, 1, WesnothTiles.ETerrain.WATER_OCEAN));
     // map.addHex(new WesnothTiles.Hex(-1, 1, WesnothTiles.ETerrain.WATER_OCEAN));
-    map.addHex(new WesnothTiles.Hex(-1, 0, WesnothTiles.ETerrain.WATER_OCEAN));
+    // map.addHex(new WesnothTiles.Hex(-1, 0, WesnothTiles.ETerrain.WATER_OCEAN));
 
 
-    map.addHex(new WesnothTiles.Hex(0, -1, WesnothTiles.ETerrain.GRASS_GREEN));
-    map.addHex(new WesnothTiles.Hex(1, -1, WesnothTiles.ETerrain.GRASS_GREEN));
-    map.addHex(new WesnothTiles.Hex(1, 0, WesnothTiles.ETerrain.GRASS_GREEN));
-    map.addHex(new WesnothTiles.Hex(0, 1, WesnothTiles.ETerrain.GRASS_GREEN));
-    map.addHex(new WesnothTiles.Hex(-1, 1, WesnothTiles.ETerrain.GRASS_GREEN));
+    // map.addHex(new WesnothTiles.Hex(0, -1, WesnothTiles.ETerrain.GRASS_GREEN));
+    // map.addHex(new WesnothTiles.Hex(1, -1, WesnothTiles.ETerrain.GRASS_GREEN));
+    // map.addHex(new WesnothTiles.Hex(1, 0, WesnothTiles.ETerrain.GRASS_GREEN));
+    // map.addHex(new WesnothTiles.Hex(0, 1, WesnothTiles.ETerrain.GRASS_GREEN));
+    // map.addHex(new WesnothTiles.Hex(-1, 1, WesnothTiles.ETerrain.GRASS_GREEN));
     // map.addHex(new WesnothTiles.Hex(-1, 0, WesnothTiles.ETerrain.GRASS_GREEN));
 
+    for (var i = 0; i < 4; i++) {
+      map.addHex(new WesnothTiles.Hex(i, 0, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+      map.addHex(new WesnothTiles.Hex(i + 1, -1, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+    }
 
     // map.addHex(new WesnothTiles.Hex(-2, 1, WesnothTiles.ETerrain.GRASS_GREEN));
 
