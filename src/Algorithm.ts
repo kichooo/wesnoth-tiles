@@ -250,6 +250,12 @@ module WesnothTiles {
   var terrainGraphics: WMLTerrainGraphics[] = [];
   
   export var rebuild = (hexMap: HexMap) => {
+
+    VOLCANO_2x2(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
+      getTerrainMap([ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY]),
+    "mountains/volcano6", "base2");
+
     OVERLAY_RESTRICTED3_PLFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),

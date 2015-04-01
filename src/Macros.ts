@@ -1652,5 +1652,69 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);     
   } 
 
+  export var VOLCANO_2x2 = (terrainGraphics: WMLTerrainGraphics[], volcano: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, flag: string) => {
+    var center = {x: 144 - 108, y: 144 - 72}
+    var img1: WMLImage = {
+      name: imageStem + "_1",
+      postfix: "",
+      center: center,
+      base: {x: 88 - 108, y: 107 - 72},
+      variations: [""]
+    }
+
+    var img2: WMLImage = {
+      name: imageStem + "_2",
+      postfix: "",
+      center: center,
+      base: {x: 142 - 108, y: 72 - 72},
+      variations: [""]
+    }    
+
+    var img3: WMLImage = {
+      name: imageStem + "_3",
+      postfix: "",
+      center: center,
+      base: {x: 196 - 108, y: 107 - 72},
+      variations: [""]
+    }      
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [],
+      images: [img1, img2, img3],
+      probability: 100,
+      builder: IB_IMAGE_SINGLE
+    }
+
+    terrainGraphic.tiles.push({
+      q: 0,
+      r: 0,
+      type: volcano,      
+      set_no_flag: [flag]
+    });
+    terrainGraphic.tiles.push({
+      q: 1,
+      r: 0,
+      type: adjacent,      
+      set_no_flag: [flag]
+    });    
+
+    terrainGraphic.tiles.push({
+      q: -1,
+      r: 1,
+      type: adjacent,      
+      set_no_flag: [flag]
+    });
+    terrainGraphic.tiles.push({
+      q: 0,
+      r: 1,
+      type: adjacent,      
+      set_no_flag: [flag]
+    });    
+
+
+    terrainGraphics.push(terrainGraphic);     
+  } 
+
+
 
 }
