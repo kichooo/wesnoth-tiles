@@ -267,7 +267,8 @@ module WesnothTiles {
     MOUNTAINS_2x4_SW_NE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range4", "base2", 26); // Mm    
     MOUNTAINS_1x3_NW_SE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range1", "base2", 20); // Mm    
     MOUNTAINS_1x3_SW_NE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range2", "base2", 20); // Mm    
-
+    MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic5", "base2", 40); // Mm    
+    MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic6", "base2", 30); // Mm    
 
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
 
@@ -288,6 +289,8 @@ module WesnothTiles {
     MOUNTAINS_2x4_SW_NE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range4", "base2", 26); // Md    
     MOUNTAINS_1x3_NW_SE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range1", "base2", 20); // Md
     MOUNTAINS_1x3_SW_NE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range2", "base2", 20); // Md       
+    MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry5", "base2", 40); // Md
+    MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry6", "base2", 30); // Md
 
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
 
@@ -296,6 +299,8 @@ module WesnothTiles {
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
       getTerrainMap([]), "mountains/volcano", { flag: "base2" }); // Mv
 
+    MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow5", "base2", 15); // Ms
+    MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow6", "base2", 20); // Ms
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
 
 

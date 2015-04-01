@@ -1601,5 +1601,56 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);     
   }
 
-  
+  export var MOUNTAINS_2x2 = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+    var center = {x: 144 - 108, y: 144 - 72}
+    var img1: WMLImage = {
+      name: imageStem + "_1",
+      postfix: "",
+      center: center,
+      base: {x: 88 - 108, y: 107 - 72},
+      variations: [""]
+    }
+
+    var img2: WMLImage = {
+      name: imageStem + "_2",
+      postfix: "",
+      center: center,
+      base: {x: 142 - 108, y: 72 - 72},
+      variations: [""]
+    }    
+
+    var img3: WMLImage = {
+      name: imageStem + "_3",
+      postfix: "",
+      center: center,
+      base: {x: 196 - 108, y: 107 - 72},
+      variations: [""]
+    }      
+
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [],
+      images: [img1, img2, img3],
+      probability: prob,
+      builder: IB_IMAGE_SINGLE
+    }
+
+    for (var i = 0; i < 2; i++) {
+      terrainGraphic.tiles.push({
+        q: -i,
+        r: i,
+        type: terrainList,      
+        set_no_flag: [flag]
+      });
+      terrainGraphic.tiles.push({
+        q: 1 -i,
+        r: i,
+        type: terrainList,      
+        set_no_flag: [flag]
+      });    
+    }
+
+    terrainGraphics.push(terrainGraphic);     
+  } 
+
+
 }

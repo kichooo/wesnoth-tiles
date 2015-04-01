@@ -7,8 +7,8 @@ function start() {
 
     var min = 0;
     var max = 0;
-    for (var i = -20; i < 20; i++)
-      for (var j = -20; j < 20; j++) {
+    for (var i = -18; i < 18; i++)
+      for (var j = -18; j < 18; j++) {
         var x = i / 4;
         var y = j / 4;
 
@@ -18,8 +18,8 @@ function start() {
         if (code < min) min = code;
       }
     var spread = max - min;
-    for (var i = -20; i < 20; i++)
-      for (var j = -20; j < 20; j++) {
+    for (var i = -18; i < 18; i++)
+      for (var j = -18; j < 18; j++) {
         var x = i / 4;
         var y = j / 4;
 
@@ -61,14 +61,14 @@ function start() {
       map.addHex(new WesnothTiles.Hex(1 - i, i - 3, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
     }
 
-    for (var i = 0; i < 3; i++) {
-      map.addHex(new WesnothTiles.Hex(i + 4, - 2, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
-      map.addHex(new WesnothTiles.Hex(i + 1 + 4, -1 - 2, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+    for (var i = 0; i < 2; i++) {
+      map.addHex(new WesnothTiles.Hex(i + 4, -2, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
+      map.addHex(new WesnothTiles.Hex(i + 1 + 4, -1 - 2, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
     }
 
     for (var i = 0; i < 3; i++) {
       map.addHex(new WesnothTiles.Hex(-i - 6, i, WesnothTiles.ETerrain.MOUNTAIN_DRY));
-    }    
+    }
 
     // map.addHex(new WesnothTiles.Hex(-2, 1, WesnothTiles.ETerrain.GRASS_GREEN));
 
