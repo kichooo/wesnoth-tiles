@@ -56,7 +56,7 @@ WML files with terrain definitions will be converted using short GO program.
  - [x] dry
  - [x] snow
  - [x] volcano
- - [ ] multihex
+ - [x] multihex
  - [ ] impassable
 - [ ] villages (multiple types)
 - [ ] woods, jungle and palms (multiple types)

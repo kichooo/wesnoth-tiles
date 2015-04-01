@@ -953,7 +953,40 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);
   }
 
+  var GENERIC_RESTRICTED3_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED3_PLFB(terrainGraphics, terrainList, adjacent, imageStem + "@V", {
+      layer: lfb.layer,
+      prob: 100,
+      flag: lfb.flag,
+      builder: lfb.builder
+    }, rotation);
+  }
+
+  var GENERIC_RESTRICTED2_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED2_PLFB(terrainGraphics, terrainList, adjacent, imageStem + "@V", {
+      layer: lfb.layer,
+      prob: 100,
+      flag: lfb.flag,
+      builder: lfb.builder
+    }, rotation);
+  }
+
+  var GENERIC_RESTRICTED_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED_PLFB(terrainGraphics, terrainList, adjacent, imageStem + "@V", {
+      layer: lfb.layer,
+      prob: 100,
+      flag: lfb.flag,
+      builder: lfb.builder
+    }, rotation);
+  }
+
   var GENERIC_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+    GENERIC_RESTRICTED3_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "-@R0-@R1-@R2");
+    GENERIC_RESTRICTED3_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "");
+    GENERIC_RESTRICTED2_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "-@R0-@R1");
+    GENERIC_RESTRICTED2_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "");    
+    GENERIC_RESTRICTED_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "-@R0");
+    GENERIC_RESTRICTED_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "");        
     GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
   }
 
