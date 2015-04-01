@@ -76,14 +76,44 @@ module WesnothTiles {
     rebuild(hexMap: HexMap) {
       this.drawables = rebuild(hexMap);
       this.drawables.sort((a: IDrawable, b: IDrawable) => {
-        if (a.base !== undefined && b.base !== undefined)
-          return a.base.y - b.base.y;
-        if (a.base === undefined && b.base === undefined)
-          return a.layer - b.layer;
-        if (a.base === undefined) {
-          return (a.layer >= 0) ? 1 : -1;
+        if (a.layer === b.layer) {
+          if (a.base !== undefined && b.base !== undefined) {
+            return a.base.y - b.base.y;
+          }
+          if (b.base !== undefined) {
+            return a.layer < 0 ? -1: 1;
+          } else if (a.base !== undefined) {
+            return b.layer < 0 ? 1: -1;          
+          }
+          return 0;
         }
-        return (b.layer >= 0) ? -1 : 1;
+        return a.layer - b.layer;        
+        // if (a.layer !== undefined && b.layer === undefined) {
+        //   return a.layer < 0 ? -1: 1;          
+        // }
+        // if (a.layer === undefined && b.layer !== undefined) {
+        //   return b.layer < 0 ? 1: -1;          
+        // }
+        // if (a.layer === undefined && b.layer === undefined) {
+        //   return a.base.y - b.base.y;
+        // }
+        // return a.layer - b.layer;
+        // if (a.base !== undefined && b.base !== undefined)
+        //   return a.base.y - b.base.y;
+        // if (a.base === undefined && b.base === undefined)
+        //   return a.layer - b.layer;
+        // if (a.base === undefined) {
+        //   return (a.layer > 0) ? 1 : -1;
+        // }
+        // return (b.layer > 0) ? -1 : 1;
+        // if (a.base !== undefined && b.layer!== undefined)
+        //   return a.base.y - b.base.y;
+        // if (a.base === undefined && b.base === undefined)
+        //   return a.layer - b.layer;
+        // if (a.base === undefined) {
+        //   return (a.layer >= 0) ? 1 : -1;
+        // }
+        // return (b.layer >= 0) ? -1 : 1;        
       });
     }
 

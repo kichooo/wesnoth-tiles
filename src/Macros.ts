@@ -64,7 +64,7 @@ module WesnothTiles {
 
   export interface WMLImage {
     name: string;
-    layer?: number;
+    layer: number;
     variations: string[];
     postfix?: string;
     base?: IVector;
@@ -115,7 +115,8 @@ module WesnothTiles {
       name: imageStem,
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
-      center: {x: 36, y: 36}
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72}
     }
 
     var tile: WMLTile = {
@@ -930,8 +931,9 @@ module WesnothTiles {
   export var MOUNTAIN_SINGLE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, prob: number, flag: string) => {
     var img: WMLImage = {
       name: imageStem,
-      base: {x: 90, y: 107},
-      center: {x: 36, y: 36},
+      base: {x: 90 - 54, y: 107 - 72},
+      layer: 0,
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6"],
     }
 
@@ -943,20 +945,13 @@ module WesnothTiles {
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
-      tiles: [
-        tile
-      ],
+      tiles: [tile],
       images: [img],
       probability: prob,
       builder: IB_IMAGE_SINGLE
     }
     terrainGraphics.push(terrainGraphic);
   }
-
-  // var GENERIC_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-  //   // GENERIC_COMPLETE_LFB(terrainGraphics, terrainList, imageStem);
-  // }
-
 
   var GENERIC_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
     GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
@@ -1338,7 +1333,8 @@ module WesnothTiles {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
-      center: {x: 36, y: 36},
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -1382,6 +1378,7 @@ module WesnothTiles {
     var img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 88 - 54, y: 107 - 108},
       variations: [""]
@@ -1390,6 +1387,7 @@ module WesnothTiles {
     var img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 144 - 54, y: 107 - 108},
       variations: [""]
@@ -1399,6 +1397,7 @@ module WesnothTiles {
       name: imageStem + "_3",
       postfix: "",
       center: center,
+      layer: 0,
       base: {x: 196 - 54, y: 107 - 108},
       variations: [""]
     }    
@@ -1407,6 +1406,7 @@ module WesnothTiles {
       name: imageStem + "_4",
       postfix: "",
       center: center,
+      layer: 0,
       base: {x: 248 - 54, y: 107 - 108},
       variations: [""]
     }    
@@ -1415,6 +1415,7 @@ module WesnothTiles {
       name: imageStem + "_5",
       postfix: "",
       center: center,
+      layer: 0,
       base: {x: 304 - 54, y: 107 - 108},
       variations: [""]
     }    
@@ -1449,6 +1450,7 @@ module WesnothTiles {
     var img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 88 - 54, y: 128 - 108},
       variations: [""]
@@ -1457,6 +1459,7 @@ module WesnothTiles {
     var img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 142 - 54, y: 144 - 108},
       variations: [""]
@@ -1465,6 +1468,7 @@ module WesnothTiles {
     var img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 196 - 54, y: 180 - 108},
       variations: [""]
@@ -1494,6 +1498,7 @@ module WesnothTiles {
     var img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 88 - 216, y: 107 - 72},
       variations: [""]
@@ -1502,6 +1507,7 @@ module WesnothTiles {
     var img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 144 - 216, y: 107 - 72},
       variations: [""]
@@ -1510,6 +1516,7 @@ module WesnothTiles {
     var img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 196 - 216, y: 107 - 72},
       variations: [""]
@@ -1518,6 +1525,7 @@ module WesnothTiles {
     var img4: WMLImage = {
       name: imageStem + "_4",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 248 - 216, y: 107 - 72},
       variations: [""]
@@ -1526,6 +1534,7 @@ module WesnothTiles {
     var img5: WMLImage = {
       name: imageStem + "_5",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 304 - 216, y: 107 - 72},
       variations: [""]
@@ -1561,6 +1570,7 @@ module WesnothTiles {
     var img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 88 - 162, y: 180 - 108},
       variations: [""]
@@ -1569,6 +1579,7 @@ module WesnothTiles {
     var img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 142 - 162, y: 144 - 108},
       variations: [""]
@@ -1577,6 +1588,7 @@ module WesnothTiles {
     var img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 196 - 162, y: 128 - 108},
       variations: [""]
@@ -1606,6 +1618,7 @@ module WesnothTiles {
     var img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 88 - 108, y: 107 - 72},
       variations: [""]
@@ -1614,6 +1627,7 @@ module WesnothTiles {
     var img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 142 - 108, y: 72 - 72},
       variations: [""]
@@ -1622,6 +1636,7 @@ module WesnothTiles {
     var img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 196 - 108, y: 107 - 72},
       variations: [""]
@@ -1657,6 +1672,7 @@ module WesnothTiles {
     var img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 88 - 108, y: 107 - 72},
       variations: [""]
@@ -1665,6 +1681,7 @@ module WesnothTiles {
     var img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
+      layer: 0,
       center: center,
       base: {x: 142 - 108, y: 72 - 72},
       variations: [""]
@@ -1674,6 +1691,7 @@ module WesnothTiles {
       name: imageStem + "_3",
       postfix: "",
       center: center,
+      layer: 0,
       base: {x: 196 - 108, y: 107 - 72},
       variations: [""]
     }      

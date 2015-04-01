@@ -28,20 +28,20 @@ function start() {
 
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.max(0, Math.min(code, 12)))));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(j * j * i * i * i / 5 + i / 5 + i * 2 * j + j))) % 10));
-        map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 16)));
+        map.addHex(new WesnothTiles.Hex(i, j, 0 + Math.floor(Math.random() * 18)));
         // map.addHex(new WesnothTiles.Hex(i, j, 4));
         // map.addHex(new WesnothTiles.Hex(i, j, Math.round(Math.sqrt(Math.abs(i * i/2 + i * 2 * j * j + j))) % 4 + 4));        
       }
 
 
-    // map.addHex(new WesnothTiles.Hex(0, 0, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+    map.addHex(new WesnothTiles.Hex(0, 0, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
 
-    // map.addHex(new WesnothTiles.Hex(0, -1, WesnothTiles.ETerrain.WATER_OCEAN));
-    // map.addHex(new WesnothTiles.Hex(1, -1, WesnothTiles.ETerrain.WATER_OCEAN));
-    // map.addHex(new WesnothTiles.Hex(1, 0, WesnothTiles.ETerrain.WATER_OCEAN));
-    // map.addHex(new WesnothTiles.Hex(0, 1, WesnothTiles.ETerrain.WATER_OCEAN));
-    // map.addHex(new WesnothTiles.Hex(-1, 1, WesnothTiles.ETerrain.WATER_OCEAN));
-    // map.addHex(new WesnothTiles.Hex(-1, 0, WesnothTiles.ETerrain.WATER_OCEAN));
+    map.addHex(new WesnothTiles.Hex(0, -1, WesnothTiles.ETerrain.SAND_DESERT));
+    map.addHex(new WesnothTiles.Hex(1, -1, WesnothTiles.ETerrain.SAND_DESERT));
+    map.addHex(new WesnothTiles.Hex(1, 0, WesnothTiles.ETerrain.SAND_DESERT));
+    map.addHex(new WesnothTiles.Hex(0, 1, WesnothTiles.ETerrain.SAND_DESERT));
+    map.addHex(new WesnothTiles.Hex(-1, 1, WesnothTiles.ETerrain.SAND_DESERT));
+    map.addHex(new WesnothTiles.Hex(-1, 0, WesnothTiles.ETerrain.SAND_DESERT));
 
 
     // map.addHex(new WesnothTiles.Hex(0, -1, WesnothTiles.ETerrain.GRASS_GREEN));

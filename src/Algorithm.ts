@@ -219,7 +219,6 @@ module WesnothTiles {
             } : undefined;
 
             // console.log("Adding", imgName, img.name);
-
             drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase)); 
 
           }
