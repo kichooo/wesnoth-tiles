@@ -176,7 +176,7 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
-            console.log("Name",imgName, img.name, translatedPostfix);
+            // console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
             var pos = {
@@ -203,7 +203,7 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
-            console.log("Name",imgName, img.name, translatedPostfix);
+            // console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
             var hexQ = dp.hex.q;

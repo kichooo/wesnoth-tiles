@@ -25,5 +25,9 @@ module WesnothTiles {
       this.hexes.forEach(func);
     }
 
+    clear() {
+      this.hexes.clear();
+    }
+
   }
 } 
