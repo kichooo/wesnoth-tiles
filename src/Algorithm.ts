@@ -592,11 +592,6 @@ module WesnothTiles {
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.SWAMP_MUD]), 
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER]), 
-      "frozen/ice-to-water", { layer: -1001}); 
-
-    TRANSITION_COMPLETE_LFB(terrainGraphics,
-      getTerrainMap([ETerrain.SWAMP_MUD]), 
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER]), 
       "swamp/mud-long", { layer: -556}); 
 
 

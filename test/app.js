@@ -6,13 +6,13 @@ function loadRandomMap(map) {
 }
 
 function loadChunksRandom(map) {
-  for (var i = -15; i < 15; i++)
-    for (var j = -15; j < 15; j++) {
-      map.addHex(new WesnothTiles.Hex(i, j, 4));
+  for (var i = -17; i < 17; i++)
+    for (var j = -17; j < 17; j++) {
+      map.addHex(new WesnothTiles.Hex(i, j, WesnothTiles.ETerrain.GRASS_GREEN));
     }
-  for (var i = 0; i < 100; i++) {
-    var x = -15 + Math.floor(Math.random() * 30);
-    var y = -15 + Math.floor(Math.random() * 30);
+  for (var i = 0; i < 160; i++) {
+    var x = -17 + Math.floor(Math.random() * 34);
+    var y = -17 + Math.floor(Math.random() * 34);
 
     var terrainCode = Math.floor(Math.random() * 20)
     map.addHex(new WesnothTiles.Hex(x, y, terrainCode));
