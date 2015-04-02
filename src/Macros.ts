@@ -1007,7 +1007,8 @@ module WesnothTiles {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
-      center: {x: 36, y: 36},
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -1057,7 +1058,8 @@ module WesnothTiles {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
-      center: {x: 36, y: 36},
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -1107,7 +1109,8 @@ module WesnothTiles {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
-      center: {x: 36, y: 36},
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -1156,7 +1159,8 @@ module WesnothTiles {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
-      center: {x: 36, y: 36},
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -1221,7 +1225,8 @@ module WesnothTiles {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
-      center: {x: 36, y: 36},
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -1264,7 +1269,8 @@ module WesnothTiles {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
-      center: {x: 36, y: 36},
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
@@ -1308,7 +1314,8 @@ module WesnothTiles {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
-      center: {x: 36, y: 36},
+      base: {x: 90 - 90, y: 108 - 144},
+      center: {x: 90 - 54, y: 108 - 72},
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
