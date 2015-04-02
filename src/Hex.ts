@@ -41,8 +41,8 @@ module WesnothTiles {
 
     MOUNTAIN_VOLCANO, // Mv
 
-    // SWAMP_MUD, // 8
-    // SWAMP_WATER, // 9
+    SWAMP_MUD, // Sm
+    SWAMP_WATER, // Ss
 
     WATER_OCEAN, // Wo 
     WATER_COAST_TROPICAL, // 1

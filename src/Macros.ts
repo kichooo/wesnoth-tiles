@@ -1352,6 +1352,14 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);    
   }
 
+  export var OVERLAY_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, {
+      prob: plfb.prob === undefined ? 100: plfb.prob,
+      layer: plfb.layer === undefined ? 0: plfb.layer,
+      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
+      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE: plfb.builder,
+    });
+  }  
 
   var GENERIC_RESTRICTED2_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
     GENERIC_RESTRICTED2_N_NE_PLFB(terrainGraphics, terrainList, adjacent, imageStem, plfb, rotation);

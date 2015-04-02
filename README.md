@@ -74,17 +74,17 @@ WML files with terrain definitions will be converted using short GO program.
 
  - [x] encode all needed terrain types
  - [x] finish plains
- - [ ] finish mountains
+ - [x] finish mountains (clouds stalled till overlay iteration)
  - [ ] finish water
  - [ ] hunt transition bugs
 
-# next iteration (sketch)
+# next iterations (sketch)
 
  - [ ] typescript formatter
  - [ ] macros cleanup
  - [ ] introduce some automatic testing
  - [ ] introduce some way to test manually without changing app.js all the time.
- 
+ - [ ] overlays
 # license
 
 GPL. See LICENSE file in the root of the repository.
