@@ -71,12 +71,11 @@ WML files with terrain definitions will be converted using short GO program.
 - [ ] ethereal abyss (chasm)
 
 # current iteration (v0.2)
-
- - [x] encode all needed terrain types
+ - [x] encode all needed terrain types (postponed)
  - [x] finish plains
  - [x] finish mountains (clouds stalled till overlay iteration)
- - [ ] finish water
- - [ ] hunt transition bugs
+ - [x] finish water
+ - [x] hunt transition bugs
 
 # next iterations (sketch)
 
