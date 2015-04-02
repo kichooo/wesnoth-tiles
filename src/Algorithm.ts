@@ -250,6 +250,12 @@ module WesnothTiles {
   
   export var rebuild = (hexMap: HexMap) => {
 
+    OVERLAY_COMPLETE_LFB(terrainGraphics, getTerrainMap([ETerrain.SWAMP_WATER]),
+      getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
+        ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW,
+        ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
+      "swamp/reed", {layer: -85, flag: "base2"});
+
     VOLCANO_2x2(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
       getTerrainMap([ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY]),
