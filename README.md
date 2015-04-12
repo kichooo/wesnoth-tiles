@@ -49,8 +49,8 @@ WML files with terrain definitions will be converted using short GO program.
  - [x] ocean
  - [x] coast
  - [ ] waves
- - [ ] swamps
- - [ ] mud
+ - [x] swamps
+ - [x] mud
 - [ ] mountains
  - [x] regular
  - [x] dry
@@ -70,20 +70,21 @@ WML files with terrain definitions will be converted using short GO program.
  -  [ ] remains
 - [ ] ethereal abyss (chasm)
 
-# current iteration (v0.2)
- - [x] encode all needed terrain types (postponed)
- - [x] finish plains
- - [x] finish mountains (clouds stalled till overlay iteration)
- - [x] finish water
- - [x] hunt transition bugs
+# current iteration (v0.3)
+ - [ ] plan implementation of overlays
+ - [ ] forests, farms and other overlays
+ - [ ] impassable terrains
+ - [ ] add waves to the water
+ - [ ] villages
 
-# next iterations (sketch)
+# backlog list
+ - typescript formatter
+ - macros cleanup
+ - introduce some automatic testing
+ - introduce some way to test manually without changing app.js all the time. Editor, preset map buttons, better randomizers, etc.
+ - overlays
+ - cleanup texture atlases, we do not need most of the sprites from Wesnoth.
 
- - [ ] typescript formatter
- - [ ] macros cleanup
- - [ ] introduce some automatic testing
- - [ ] introduce some way to test manually without changing app.js all the time.
- - [ ] overlays
 # license
 
 GPL. See LICENSE file in the root of the repository.
