@@ -1,7 +1,7 @@
 function loadRandomMap(map) {
   for (var i = -18; i < 18; i++)
     for (var j = -18; j < 18; j++) {
-      map.addHex(new WesnothTiles.Hex(i, j, Math.floor(Math.random() * 20)));
+      map.addHex(new WesnothTiles.Hex(i, j, Math.floor(Math.random() * 21)));
     }
 }
 
@@ -14,7 +14,7 @@ function loadChunksRandom(map) {
     var x = -17 + Math.floor(Math.random() * 34);
     var y = -17 + Math.floor(Math.random() * 34);
 
-    var terrainCode = Math.floor(Math.random() * 20)
+    var terrainCode = Math.floor(Math.random() * 21)
     map.addHex(new WesnothTiles.Hex(x, y, terrainCode));
     map.addHex(new WesnothTiles.Hex(x, y - 1, terrainCode));
     map.addHex(new WesnothTiles.Hex(x + 1, y - 1, terrainCode));
@@ -31,8 +31,8 @@ function start() {
   renderer.load().then(function() {
 
     var map = new WesnothTiles.HexMap();
-    loadChunksRandom(map);
-    // loadRandomMap(map);
+    // loadChunksRandom(map);
+    loadRandomMap(map);
     // var min = 0;
     // var max = 0;
     // for (var i = -18; i < 18; i++)

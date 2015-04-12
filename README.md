@@ -45,19 +45,18 @@ WML files with terrain definitions will be converted using short GO program.
  - [x] dry
  - [x] dunes
  - [x] snow
-- [ ] water
+- [x] water
  - [x] ocean
  - [x] coast
- - [ ] waves
+ - [x] waves
  - [x] swamps
  - [x] mud
-- [ ] mountains
+- [x] mountains
  - [x] regular
  - [x] dry
  - [x] snow
  - [x] volcano
  - [x] multihex
- - [ ] impassable
 - [ ] villages (multiple types)
 - [ ] woods, jungle and palms (multiple types)
 - [ ] extra overlays

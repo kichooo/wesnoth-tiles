@@ -1211,6 +1211,16 @@ module WesnothTiles {
     GENERIC_RESTRICTED3_N_SE_SW_PLFB(terrainGraphics, terrainList, adjacent, imageStem, plfb, rotation);
   }
 
+
+  export var OVERLAY_RESTRICTED2_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    GENERIC_RESTRICTED2_PLFB(terrainGraphics, terrainList, adjacent, imageStem, {
+      prob: plfb.prob === undefined ? 100: plfb.prob,
+      layer: plfb.layer === undefined ? 0: plfb.layer,
+      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
+      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE: plfb.builder,
+    }, "");
+  }
+
   export var OVERLAY_RESTRICTED3_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     GENERIC_RESTRICTED3_PLFB(terrainGraphics, terrainList, adjacent, imageStem, {
       prob: plfb.prob === undefined ? 100: plfb.prob,
@@ -1777,10 +1787,30 @@ module WesnothTiles {
       set_no_flag: [flag]
     });    
 
-
     terrainGraphics.push(terrainGraphic);     
   } 
 
+  export var DISABLE_BASE_TRANSITIONS = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>) => {
+    DISABLE_BASE_TRANSITIONS_F(terrainGraphics, terrainList, "transition");
+  }
+
+  export var DISABLE_BASE_TRANSITIONS_F = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, flag: string) => {
+    var terrainGraphic: WMLTerrainGraphics = {
+      tiles: [],
+      images: [],
+      probability: 100,
+      builder: IB_IMAGE_SINGLE
+    }
+
+    terrainGraphic.tiles.push({
+      q: 0,
+      r: 0,
+      type: terrainList,      
+      set_flag: [flag + "-n", flag + "-ne", flag + "-se", flag + "-s", flag + "-sw", flag + "-nw"]
+    });
+
+    terrainGraphics.push(terrainGraphic);
+  }
 
 
 }

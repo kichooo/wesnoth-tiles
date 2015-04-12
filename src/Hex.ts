@@ -46,6 +46,8 @@ module WesnothTiles {
 
     WATER_OCEAN, // Wo 
     WATER_COAST_TROPICAL, // 1
+
+    ABYSS, // 1
   }
 
 

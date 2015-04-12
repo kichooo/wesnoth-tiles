@@ -263,15 +263,19 @@ module WesnothTiles {
 
     OVERLAY_RESTRICTED3_PLFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
     "mountains/basic-castle-n", { flag: "base2" });
     OVERLAY_ROTATION_RESTRICTED2_PLFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
     "mountains/basic-castle", { flag: "base2" });
+    OVERLAY_RESTRICTED2_PLFB(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
+      getTerrainMap([ETerrain.ABYSS]),
+    "mountains/basic-castle-n", { flag: "base2" });    
     OVERLAY_ROTATION_RESTRICTED_PLFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
     "mountains/basic-castle", { flag: "base2" });
 
     MOUNTAINS_2x4_NW_SE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range3", "base2", 18); // Mm    
@@ -285,15 +289,19 @@ module WesnothTiles {
 
     OVERLAY_RESTRICTED3_PLFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_DRY]),
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
     "mountains/dry-castle-n", { flag: "base2" });
     OVERLAY_ROTATION_RESTRICTED2_PLFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_DRY]),
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
     "mountains/dry-castle", { flag: "base2" });
+    OVERLAY_RESTRICTED2_PLFB(terrainGraphics, 
+      getTerrainMap([ETerrain.MOUNTAIN_DRY]),
+      getTerrainMap([ETerrain.ABYSS]),
+    "mountains/dry-castle-n", { flag: "base2" });     
     OVERLAY_ROTATION_RESTRICTED_PLFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_DRY]),
-      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
     "mountains/dry-castle", { flag: "base2" });
 
     MOUNTAINS_2x4_NW_SE(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range3", "base2", 18); // Md    
@@ -308,7 +316,7 @@ module WesnothTiles {
 
     OVERLAY_COMPLETE_LFB(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
-      getTerrainMap([]), "mountains/volcano", { flag: "base2" }); // Mv
+      getTerrainMap([ETerrain.ABYSS]), "mountains/volcano", { flag: "base2" }); // Mv
 
     MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow5", "base2", 15); // Ms
     MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow6", "base2", 20); // Ms
@@ -334,6 +342,8 @@ module WesnothTiles {
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.HILLS_DESERT]), "hills/desert", {}); // Hd
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.HILLS_SNOW]), "hills/snow", {}); // Ha
 
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.ABYSS]), "chasm/abyss", {}); // Ha
+
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.SAND_DESERT]), "sand/desert", {}); // Hhd
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.SAND_BEACH]), "sand/beach", {}); // Hhd
 
@@ -357,6 +367,15 @@ module WesnothTiles {
     TERRAIN_BASE_SINGLEHEX_PLFB(terrainGraphics, getTerrainMap([ETerrain.WATER_COAST_TROPICAL]), "water/coast-tropical", {
       builder: IB_ANIMATION_15
     }); // Wwt
+
+    // chasms transitions
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.ABYSS]), 
+      getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
+      "mountains/blend-from-chasm", { layer: 2, flag: "transition3" });
+
+    DISABLE_BASE_TRANSITIONS(terrainGraphics, getTerrainMap([ETerrain.ABYSS]));
 
     // transitions --------------------------
 
