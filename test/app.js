@@ -25,6 +25,17 @@ function loadChunksRandom(map) {
   }
 }
 
+function loadCircle(map, terrain1, terrain2) {
+  map.addHex(new WesnothTiles.Hex(0, 0, terrain1));
+
+  map.addHex(new WesnothTiles.Hex(0, -1, terrain2));
+  map.addHex(new WesnothTiles.Hex(1, -1, terrain2));
+  map.addHex(new WesnothTiles.Hex(1, 0, terrain2));
+  map.addHex(new WesnothTiles.Hex(0, 1, terrain2));
+  map.addHex(new WesnothTiles.Hex(-1, 1, terrain2));
+  map.addHex(new WesnothTiles.Hex(-1, 0, terrain2));
+}
+
 function start() {
   var canvas = document.getElementById("map-canvas");
   var renderer = new WesnothTiles.Renderer(canvas);
@@ -32,7 +43,8 @@ function start() {
 
     var map = new WesnothTiles.HexMap();
     // loadChunksRandom(map);
-    loadRandomMap(map);
+    // loadRandomMap(map);
+    loadCircle(map, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.GRASS_GREEN);
     // var min = 0;
     // var max = 0;
     // for (var i = -18; i < 18; i++)

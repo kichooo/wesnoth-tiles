@@ -203,7 +203,7 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
-            // console.log("Name",imgName, img.name, translatedPostfix);
+            console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
             var hexQ = dp.hex.q;
@@ -217,8 +217,7 @@ module WesnothTiles {
               x: drawPos.x,
               y: drawPos.y
             } : undefined;
-
-            // console.log("Adding", imgName, img.name);
+        
             drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase)); 
 
           }
@@ -231,7 +230,7 @@ module WesnothTiles {
         setFlags(rot, tg.rotations, hexPos, tile.set_flag, tg.set_flag, 
           tile.set_no_flag, tg.set_no_flag, dp.flags);      
       }
-      // dp.drawables.push(drawables[0]);
+      dp.drawables.push(drawables[0]);
       dp.drawables.push.apply(dp.drawables, drawables);
     }       
   }
@@ -376,6 +375,23 @@ module WesnothTiles {
       "mountains/blend-from-chasm", { layer: 2, flag: "transition3" });
 
     DISABLE_BASE_TRANSITIONS(terrainGraphics, getTerrainMap([ETerrain.ABYSS]));
+
+
+
+    WALL_TRANSITION_PLFB(terrainGraphics,
+      getTerrainMap([ETerrain.ABYSS]), 
+      getTerrainMap([ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW]),
+      "chasm/regular-snow", { layer: -90, flag: "ground" });
+
+    WALL_TRANSITION_PLFB(terrainGraphics,
+      getTerrainMap([ETerrain.ABYSS]), 
+      getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD]),
+      "chasm/water", { layer: -90, flag: "ground" });
+
+    WALL_TRANSITION_PLFB(terrainGraphics,
+      getTerrainMap([ETerrain.ABYSS]), 
+      swapTerrainTypes(getTerrainMap([ETerrain.ABYSS])),
+      "chasm/regular", { layer: -90, flag: "ground" });          
 
     // transitions --------------------------
 

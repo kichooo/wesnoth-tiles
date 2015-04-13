@@ -9,7 +9,7 @@ module WesnothTiles {
   // image builders.
   export var IB_IMAGE_SINGLE: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      // console.log("Adding " + imageStem + postfix);
+      console.log("Adding " + imageStem + postfix);
       return new StaticImage(
         pos.x, 
         pos.y, 
@@ -1812,5 +1812,65 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);
   }
 
+  export var CORNER_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList1: Map<ETerrain, boolean>, adjacent1: Map<ETerrain, boolean>, 
+    adjacent2: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+ 
+    var img: WMLImage = {
+      name: imageStem,
+      postfix: "-@R0",
+      layer: plfb.layer,
+      center: {x: 0, y: 0},
+      variations: [""]
+    }
+
+    var tile1: WMLTile = {
+      q: 0,
+      r: 0,
+      type: terrainList1,      
+      set_no_flag: [plfb.flag + "-@R0"]
+    }
+
+    var tile2: WMLTile = {
+      q: 0,
+      r: -1,
+      type: adjacent1,
+      set_no_flag: [plfb.flag + "-@R2"]
+    } 
+
+    var tile3: WMLTile = {
+      q: 1,
+      r: -1,
+      type: adjacent2,
+      set_no_flag: [plfb.flag + "-@R4"]
+    } 
+
+    var concave_terrainGraphic: WMLTerrainGraphics = {
+      tiles: [
+        tile1,
+        tile2,
+        tile3
+      ],
+      images: [img],
+      probability: plfb.prob,
+      rotations: ["tr", "r", "br", "bl", "l", "tl"],      
+      builder: plfb.builder
+    }
+    terrainGraphics.push(concave_terrainGraphic);
+
+  }
+
+  export var WALL_TRANSITION_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, 
+    adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    if (plfb.layer === undefined)
+      plfb.layer = 0;
+    if (plfb.flag === undefined)
+      plfb.flag = "overlay";
+    if (plfb.builder === undefined)
+      plfb.builder = IB_IMAGE_SINGLE;     
+    if (plfb.prob === undefined)
+      plfb.prob = 100;     
+    CORNER_PLFB(terrainGraphics, terrainList, adjacent, adjacent, imageStem + "-convex", plfb);
+    // CORNER_PLFB(terrainGraphics, adjacent, terrainList, terrainList, imageStem + "-concave", plfb);
+  }
 
 }
