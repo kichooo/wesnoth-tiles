@@ -45,6 +45,7 @@ function start() {
     // loadChunksRandom(map);
     // loadRandomMap(map);
     loadCircle(map, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.GRASS_GREEN);
+    // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.ABYSS);
     // var min = 0;
     // var max = 0;
     // for (var i = -18; i < 18; i++)

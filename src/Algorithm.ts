@@ -140,6 +140,7 @@ module WesnothTiles {
     var chance = Math.floor(Math.random()*101);
     if (chance > tg.probability)
       return;
+    // we need to know coors of the leftmost hex.
     if (tg.tiles !== undefined) {
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
@@ -230,7 +231,6 @@ module WesnothTiles {
         setFlags(rot, tg.rotations, hexPos, tile.set_flag, tg.set_flag, 
           tile.set_no_flag, tg.set_no_flag, dp.flags);      
       }
-      dp.drawables.push(drawables[0]);
       dp.drawables.push.apply(dp.drawables, drawables);
     }       
   }
