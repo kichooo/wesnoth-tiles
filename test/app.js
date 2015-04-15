@@ -25,6 +25,45 @@ function loadChunksRandom(map) {
   }
 }
 
+function loadRing(map, radius, terrain) {
+  for (var i = 0; i < radius; i++) {
+    map.addHex(new WesnothTiles.Hex(2 + i, -radius - 1, terrain));
+    map.addHex(new WesnothTiles.Hex(2 + radius, i - radius - 1, terrain));
+    map.addHex(new WesnothTiles.Hex(2 + radius - i, i - 1, terrain));
+    map.addHex(new WesnothTiles.Hex(-2 - i, radius + 1, terrain));
+    map.addHex(new WesnothTiles.Hex(-2 - radius, radius - i + 1, terrain));
+    map.addHex(new WesnothTiles.Hex(-2 + i - radius, -i + 1, terrain));
+  }
+
+  // map.addHex(new WesnothTiles.Hex(1, -radius - 1, terrain));
+  map.addHex(new WesnothTiles.Hex(1, -radius, terrain));
+  map.addHex(new WesnothTiles.Hex(0, -radius, terrain));
+  map.addHex(new WesnothTiles.Hex(-1, -radius + 1, terrain));
+  map.addHex(new WesnothTiles.Hex(-2, -radius + 1, terrain));
+
+  map.addHex(new WesnothTiles.Hex(-1, radius, terrain));
+  map.addHex(new WesnothTiles.Hex(0, radius, terrain));
+  map.addHex(new WesnothTiles.Hex(1, radius - 1, terrain));
+  map.addHex(new WesnothTiles.Hex(2, radius - 1, terrain));
+}
+
+function loadDisk(map) {
+  // map.addHex(new WesnothTiles.Hex(0, 0, WesnothTiles.ETerrain.ABYSS));
+  loadRing(map, 5, WesnothTiles.ETerrain.ABYSS);
+  loadRing(map, 6, WesnothTiles.ETerrain.ABYSS);
+
+  for (var i = 0; i < 5; i++) {
+    map.addHex(new WesnothTiles.Hex(-6, i + 1, WesnothTiles.ETerrain.WATER_OCEAN));
+    map.addHex(new WesnothTiles.Hex(-5, i, WesnothTiles.ETerrain.WATER_OCEAN));
+
+    map.addHex(new WesnothTiles.Hex(6, -i - 1, WesnothTiles.ETerrain.FROZEN_ICE));
+  }
+  for (var i = 0; i < 4; i++) {
+    map.addHex(new WesnothTiles.Hex(-2 - i, 4 + 1, WesnothTiles.ETerrain.WATER_OCEAN));
+    map.addHex(new WesnothTiles.Hex(-1 - i, 4, WesnothTiles.ETerrain.WATER_OCEAN));
+  }
+}
+
 function loadCircle(map, terrain1, terrain2, x, y) {
   map.addHex(new WesnothTiles.Hex(x, y, terrain1));
 
@@ -42,10 +81,11 @@ function start() {
   renderer.load().then(function() {
 
     var map = new WesnothTiles.HexMap();
-    loadChunksRandom(map);
+    // loadChunksRandom(map);
     // loadRandomMap(map);
     // loadCircle(map, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.GRASS_GREEN, -2, 0);
     // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.ABYSS, 2, -2);
+    loadDisk(map);
     // var min = 0;
     // var max = 0;
     // for (var i = -18; i < 18; i++)
