@@ -1812,7 +1812,7 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
     terrainGraphics.push(terrainGraphic);
   }
 
-  export var CORNER_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList1: Map<ETerrain, boolean>, adjacent1: Map<ETerrain, boolean>, 
+  export var CORNER_PLFB_CONVEX = (terrainGraphics: WMLTerrainGraphics[], terrainList1: Map<ETerrain, boolean>, adjacent1: Map<ETerrain, boolean>, 
     adjacent2: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
  
     // 0 ["tr", "r", "br", "bl", "l", "tl"]
@@ -1928,6 +1928,190 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
           name: imageStem,
           postfix: "-bl",
           layer: plfb.layer,
+          center: {x: 0, y: 36+9},
+          variations: [""]
+        }],
+      probability: plfb.prob,
+      builder: plfb.builder
+    });
+
+    // 4 ["tr", "r", "br", "bl", "l", "tl"]
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          type: terrainList1,      
+          set_no_flag: [plfb.flag + "-l"]
+        }, {
+          q: -1,
+          r: 1,
+          type: adjacent1,
+          set_no_flag: [plfb.flag + "-tr"]
+        }, {
+          q: -1,
+          r: 0,
+          type: adjacent2,
+          set_no_flag: [plfb.flag + "-br"]
+        }
+      ],
+      images: [{
+          name: imageStem,
+          postfix: "-l",
+          layer: plfb.layer,
+          center: {x: 0, y: 27},
+          variations: [""]
+        }],
+      probability: plfb.prob,
+      builder: plfb.builder
+    });
+
+    // 5 ["tr", "r", "br", "bl", "l", "tl"]
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          type: terrainList1,      
+          set_no_flag: [plfb.flag + "-tl"]
+        }, {
+          q: -1,
+          r: 0,
+          type: adjacent1,
+          set_no_flag: [plfb.flag + "-r"]
+        }, {
+          q: 0,
+          r: -1,
+          type: adjacent2,
+          set_no_flag: [plfb.flag + "-bl"]
+        }
+      ],
+      images: [{
+          name: imageStem,
+          postfix: "-tl",
+          layer: plfb.layer,
+          center: {x: 9, y: -18},
+          variations: [""]
+        }],
+      probability: plfb.prob,
+      builder: plfb.builder
+    });
+  }
+
+  export var CORNER_PLFB_CONCAVE = (terrainGraphics: WMLTerrainGraphics[], terrainList1: Map<ETerrain, boolean>, adjacent1: Map<ETerrain, boolean>, 
+    adjacent2: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+ 
+    // 0 ["tr", "r", "br", "bl", "l", "tl"]
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          type: terrainList1,      
+          set_no_flag: [plfb.flag + "-tr"]
+        }, {
+          q: 0,
+          r: -1,
+          type: adjacent1,
+          set_no_flag: [plfb.flag + "-br"]
+        }, {
+          q: 1,
+          r: -1,
+          type: adjacent2,
+          set_no_flag: [plfb.flag + "-l"]
+        }
+      ],
+      images: [{
+          name: imageStem,
+          postfix: "-tr",
+          layer: plfb.layer,
+          center: {x: 72-9, y: 0},
+          variations: [""]
+        }],
+      probability: plfb.prob,
+      builder: plfb.builder
+    });
+
+    // 1 ["tr", "r", "br", "bl", "l", "tl"]
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          type: terrainList1,      
+          set_no_flag: [plfb.flag + "-r"]
+        }, {
+          q: 1,
+          r: -1,
+          type: adjacent1,
+          set_no_flag: [plfb.flag + "-bl"]
+        }, {
+          q: 1,
+          r: 0,
+          type: adjacent2,
+          set_no_flag: [plfb.flag + "-tl"]
+        }
+      ],
+      images: [{
+          name: imageStem,
+          postfix: "-r",
+          layer: plfb.layer,
+          center: {x: 72-9, y: 18},
+          variations: [""]
+        }],
+      probability: plfb.prob,
+      builder: plfb.builder
+    });
+
+    // 2 ["tr", "r", "br", "bl", "l", "tl"]
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          type: terrainList1,      
+          set_no_flag: [plfb.flag + "-br"]
+        }, {
+          q: 1,
+          r: 0,
+          type: adjacent1,
+          set_no_flag: [plfb.flag + "-l"]
+        }, {
+          q: 0,
+          r: 1,
+          type: adjacent2,
+          set_no_flag: [plfb.flag + "-tr"]
+        }
+      ],
+      images: [{
+          name: imageStem,
+          postfix: "-br",
+          layer: plfb.layer,
+          center: {x: 54+9, y: 54+9},
+          variations: [""]
+        }],
+      probability: plfb.prob,
+      builder: plfb.builder
+    });
+
+    // 3 ["tr", "r", "br", "bl", "l", "tl"]
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          type: terrainList1,      
+          set_no_flag: [plfb.flag + "-bl"]
+        }, {
+          q: 0,
+          r: 1,
+          type: adjacent1,
+          set_no_flag: [plfb.flag + "-tl"]
+        }, {
+          q: -1,
+          r: 1,
+          type: adjacent2,
+          set_no_flag: [plfb.flag + "-r"]
+        }
+      ],
+      images: [{
+          name: imageStem,
+          postfix: "-bl",
+          layer: plfb.layer,
           center: {x: 9, y: 36+9},
           variations: [""]
         }],
@@ -1958,7 +2142,7 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
           name: imageStem,
           postfix: "-l",
           layer: plfb.layer,
-          center: {x: -10, y: 36},
+          center: {x: 9, y: 36},
           variations: [""]
         }],
       probability: plfb.prob,
@@ -1988,12 +2172,12 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
           name: imageStem,
           postfix: "-tl",
           layer: plfb.layer,
-          center: {x: 9, y: -180},
+          center: {x: 9, y: -18},
           variations: [""]
         }],
       probability: plfb.prob,
       builder: plfb.builder
-    });    
+    });
   }
 
   export var WALL_TRANSITION_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, 
@@ -2006,8 +2190,8 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
       plfb.builder = IB_IMAGE_SINGLE;     
     if (plfb.prob === undefined)
       plfb.prob = 100;     
-    CORNER_PLFB(terrainGraphics, terrainList, adjacent, adjacent, imageStem + "-convex", plfb);
-    CORNER_PLFB(terrainGraphics, adjacent, terrainList, terrainList, imageStem + "-concave", plfb);
+    CORNER_PLFB_CONVEX(terrainGraphics, terrainList, adjacent, adjacent, imageStem + "-convex", plfb);
+    CORNER_PLFB_CONCAVE(terrainGraphics, adjacent, terrainList, terrainList, imageStem + "-concave", plfb);
   }
 
 }
