@@ -56,8 +56,108 @@ function loadDisk(map) {
     map.addHex(new WesnothTiles.Hex(-6, i + 1, WesnothTiles.ETerrain.WATER_OCEAN));
     map.addHex(new WesnothTiles.Hex(-5, i, WesnothTiles.ETerrain.WATER_OCEAN));
 
-    map.addHex(new WesnothTiles.Hex(6, -i - 1, WesnothTiles.ETerrain.FROZEN_ICE));
+    map.addHex(new WesnothTiles.Hex(-4, i - 1, WesnothTiles.ETerrain.SAND_BEACH));
+    // map.addHex(new WesnothTiles.Hex(2 + i, -radius - 2, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
   }
+
+
+  map.addHex(new WesnothTiles.Hex(5, -5, WesnothTiles.ETerrain.GRASS_DRY));
+  map.addHex(new WesnothTiles.Hex(4, -5, WesnothTiles.ETerrain.GRASS_DRY));
+  map.addHex(new WesnothTiles.Hex(3, -5, WesnothTiles.ETerrain.GRASS_DRY));
+  map.addHex(new WesnothTiles.Hex(2, -5, WesnothTiles.ETerrain.GRASS_DRY));
+  map.addHex(new WesnothTiles.Hex(4, -4, WesnothTiles.ETerrain.HILLS_DRY));
+
+  map.addHex(new WesnothTiles.Hex(3, -4, WesnothTiles.ETerrain.SWAMP_MUD));
+  map.addHex(new WesnothTiles.Hex(2, -4, WesnothTiles.ETerrain.SWAMP_MUD));
+  map.addHex(new WesnothTiles.Hex(1, -4, WesnothTiles.ETerrain.SWAMP_MUD));
+
+  map.addHex(new WesnothTiles.Hex(1, -3, WesnothTiles.ETerrain.MOUNTAIN_DRY));
+  map.addHex(new WesnothTiles.Hex(2, -3, WesnothTiles.ETerrain.SWAMP_MUD));
+
+  map.addHex(new WesnothTiles.Hex(0, -2, WesnothTiles.ETerrain.MOUNTAIN_DRY));
+
+
+  map.addHex(new WesnothTiles.Hex(3, -3, WesnothTiles.ETerrain.HILLS_DRY));
+
+  map.addHex(new WesnothTiles.Hex(6, -5, WesnothTiles.ETerrain.GRASS_DRY));
+  map.addHex(new WesnothTiles.Hex(6, -4, WesnothTiles.ETerrain.FROZEN_SNOW));
+  map.addHex(new WesnothTiles.Hex(6, -3, WesnothTiles.ETerrain.HILLS_SNOW));
+  map.addHex(new WesnothTiles.Hex(6, -2, WesnothTiles.ETerrain.FROZEN_SNOW));
+  map.addHex(new WesnothTiles.Hex(6, -1, WesnothTiles.ETerrain.FROZEN_SNOW));
+
+  map.addHex(new WesnothTiles.Hex(4, -1, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
+  map.addHex(new WesnothTiles.Hex(3, -1, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
+  map.addHex(new WesnothTiles.Hex(4, -2, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
+  map.addHex(new WesnothTiles.Hex(5, -2, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
+  map.addHex(new WesnothTiles.Hex(2, 0, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
+  map.addHex(new WesnothTiles.Hex(3, 0, WesnothTiles.ETerrain.MOUNTAIN_SNOW));
+  map.addHex(new WesnothTiles.Hex(5, -3, WesnothTiles.ETerrain.HILLS_SNOW));
+  map.addHex(new WesnothTiles.Hex(4, -3, WesnothTiles.ETerrain.HILLS_DRY));
+  map.addHex(new WesnothTiles.Hex(5, -4, WesnothTiles.ETerrain.GRASS_DRY));
+
+  map.addHex(new WesnothTiles.Hex(5, -1, WesnothTiles.ETerrain.FROZEN_SNOW));
+  map.addHex(new WesnothTiles.Hex(5, 0, WesnothTiles.ETerrain.FROZEN_SNOW));
+
+  map.addHex(new WesnothTiles.Hex(4, 0, WesnothTiles.ETerrain.FROZEN_SNOW));
+  map.addHex(new WesnothTiles.Hex(4, 1, WesnothTiles.ETerrain.FROZEN_SNOW));
+
+  map.addHex(new WesnothTiles.Hex(3, 1, WesnothTiles.ETerrain.FROZEN_ICE));
+  map.addHex(new WesnothTiles.Hex(3, 2, WesnothTiles.ETerrain.FROZEN_ICE));
+
+  map.addHex(new WesnothTiles.Hex(2, 1, WesnothTiles.ETerrain.FROZEN_ICE));
+  map.addHex(new WesnothTiles.Hex(2, 2, WesnothTiles.ETerrain.FROZEN_ICE));
+  map.addHex(new WesnothTiles.Hex(2, 3, WesnothTiles.ETerrain.FROZEN_ICE));
+
+  map.addHex(new WesnothTiles.Hex(1, 2, WesnothTiles.ETerrain.FROZEN_ICE));
+  map.addHex(new WesnothTiles.Hex(1, 3, WesnothTiles.ETerrain.FROZEN_ICE));
+
+  map.addHex(new WesnothTiles.Hex(0, 3, WesnothTiles.ETerrain.WATER_OCEAN));
+  map.addHex(new WesnothTiles.Hex(0, 4, WesnothTiles.ETerrain.WATER_OCEAN));
+
+  map.addHex(new WesnothTiles.Hex(-3, 2, WesnothTiles.ETerrain.GRASS_GREEN));
+  map.addHex(new WesnothTiles.Hex(-3, 3, WesnothTiles.ETerrain.GRASS_GREEN));
+  map.addHex(new WesnothTiles.Hex(-3, 1, WesnothTiles.ETerrain.GRASS_SEMI_DRY));
+  map.addHex(new WesnothTiles.Hex(-3, 0, WesnothTiles.ETerrain.GRASS_DRY));
+  map.addHex(new WesnothTiles.Hex(-3, -1, WesnothTiles.ETerrain.SAND_DESERT));
+  map.addHex(new WesnothTiles.Hex(-3, -2, WesnothTiles.ETerrain.HILLS_DESERT));
+
+  map.addHex(new WesnothTiles.Hex(-2, 2, WesnothTiles.ETerrain.GRASS_GREEN));
+  map.addHex(new WesnothTiles.Hex(-2, 3, WesnothTiles.ETerrain.GRASS_GREEN));
+  map.addHex(new WesnothTiles.Hex(-2, 1, WesnothTiles.ETerrain.GRASS_SEMI_DRY));
+  map.addHex(new WesnothTiles.Hex(-2, 0, WesnothTiles.ETerrain.GRASS_DRY));
+  map.addHex(new WesnothTiles.Hex(-2, -1, WesnothTiles.ETerrain.SAND_DESERT));
+  map.addHex(new WesnothTiles.Hex(-2, -2, WesnothTiles.ETerrain.SAND_DESERT));
+  map.addHex(new WesnothTiles.Hex(-2, -3, WesnothTiles.ETerrain.HILLS_DESERT));
+
+  map.addHex(new WesnothTiles.Hex(-1, -3, WesnothTiles.ETerrain.HILLS_DESERT));
+  map.addHex(new WesnothTiles.Hex(-1, -2, WesnothTiles.ETerrain.MOUNTAIN_DRY));
+
+  map.addHex(new WesnothTiles.Hex(-1, 3, WesnothTiles.ETerrain.WATER_OCEAN));
+  map.addHex(new WesnothTiles.Hex(-1, 1, WesnothTiles.ETerrain.GRASS_SEMI_DRY));
+  map.addHex(new WesnothTiles.Hex(-1, 2, WesnothTiles.ETerrain.GRASS_SEMI_DRY));
+
+  map.addHex(new WesnothTiles.Hex(0, 1, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+  map.addHex(new WesnothTiles.Hex(0, 2, WesnothTiles.ETerrain.HILLS_REGULAR));
+
+  map.addHex(new WesnothTiles.Hex(1, 1, WesnothTiles.ETerrain.FROZEN_SNOW));
+
+  map.addHex(new WesnothTiles.Hex(2, -1, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+  map.addHex(new WesnothTiles.Hex(3, -2, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+  map.addHex(new WesnothTiles.Hex(1, 0, WesnothTiles.ETerrain.MOUNTAIN_BASIC));
+
+  map.addHex(new WesnothTiles.Hex(1, -1, WesnothTiles.ETerrain.SWAMP_WATER));
+  map.addHex(new WesnothTiles.Hex(2, -2, WesnothTiles.ETerrain.SWAMP_WATER));
+  map.addHex(new WesnothTiles.Hex(1, -2, WesnothTiles.ETerrain.SWAMP_WATER));
+  map.addHex(new WesnothTiles.Hex(0, 0, WesnothTiles.ETerrain.SWAMP_WATER));
+
+
+  map.addHex(new WesnothTiles.Hex(-1, 0, WesnothTiles.ETerrain.WATER_COAST_TROPICAL));
+  map.addHex(new WesnothTiles.Hex(-1, -1, WesnothTiles.ETerrain.WATER_COAST_TROPICAL));
+  map.addHex(new WesnothTiles.Hex(0, -1, WesnothTiles.ETerrain.WATER_COAST_TROPICAL));
+
+  map.addHex(new WesnothTiles.Hex(0, -3, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO));
+  map.addHex(new WesnothTiles.Hex(0, -4, WesnothTiles.ETerrain.SAND_DESERT));
+
   for (var i = 0; i < 4; i++) {
     map.addHex(new WesnothTiles.Hex(-2 - i, 4 + 1, WesnothTiles.ETerrain.WATER_OCEAN));
     map.addHex(new WesnothTiles.Hex(-1 - i, 4, WesnothTiles.ETerrain.WATER_OCEAN));
