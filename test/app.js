@@ -32,8 +32,8 @@ function loadCircle(map, terrain1, terrain2, x, y) {
   map.addHex(new WesnothTiles.Hex(x + 1, y - 1, terrain2));
   map.addHex(new WesnothTiles.Hex(x + 1, y, terrain2));
   map.addHex(new WesnothTiles.Hex(x, y + 1, terrain2));
-  map.addHex(new WesnothTiles.Hex(x -1, y + 1, terrain2));
-  map.addHex(new WesnothTiles.Hex(x -1, y, terrain2));
+  map.addHex(new WesnothTiles.Hex(x - 1, y + 1, terrain2));
+  map.addHex(new WesnothTiles.Hex(x - 1, y, terrain2));
 }
 
 function start() {
@@ -42,10 +42,10 @@ function start() {
   renderer.load().then(function() {
 
     var map = new WesnothTiles.HexMap();
-    // loadChunksRandom(map);
+    loadChunksRandom(map);
     // loadRandomMap(map);
-    loadCircle(map, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.GRASS_GREEN, -2, 0);
-    loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.ABYSS, 2, -2);
+    // loadCircle(map, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.GRASS_GREEN, -2, 0);
+    // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.ABYSS, 2, -2);
     // var min = 0;
     // var max = 0;
     // for (var i = -18; i < 18; i++)

@@ -67,12 +67,12 @@ WML files with terrain definitions will be converted using short GO program.
  -  [ ] stones
  -  [ ] mushrooms
  -  [ ] remains
-- [ ] ethereal abyss (chasm)
+- [x] ethereal abyss (chasm)
 
 # current iteration (v0.3)
  - [ ] plan implementation of overlays
  - [ ] forests, farms and other overlays
- - [ ] impassable terrains
+ - [x] chasms
  - [ ] add waves to the water
  - [ ] villages
 
