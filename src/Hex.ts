@@ -50,6 +50,13 @@ module WesnothTiles {
     ABYSS, // 1
   }
 
+  export enum EOverlay {
+    WOODS_PINE,
+    SNOW_FOREST,
+    JUNGLE,
+    NONE
+  }
+
 
   // TODO it could be improved...
   export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
@@ -74,7 +81,7 @@ module WesnothTiles {
 
   export class Hex extends HexPos {
 
-    constructor(q: number, r: number, public terrain: ETerrain) {
+    constructor(q: number, r: number, public terrain: ETerrain, public overlay: EOverlay = EOverlay.NONE) {
       super(q, r);
     }
 

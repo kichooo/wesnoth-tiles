@@ -22,6 +22,14 @@ module WesnothTiles {
     return terrainList;
   }
 
+  var getOverlayMap = (overlays: EOverlay[]) => {
+    var overlayList = new Map<EOverlay, boolean>();
+    overlays.forEach(overlay => {
+      overlayList.set(overlay, true);
+    });
+    return overlayList;
+  }
+
   var setFlags = (rot: number, rotations: string[], hexPos: HexPos,
     set_flags: string[], set_flags_tg: string[],
     set_no_flags: string[], set_no_flags_tg: string[], flags: Flags) => {
@@ -155,9 +163,14 @@ module WesnothTiles {
         if (!dp.flags.has(hexPos.toString()))
           dp.flags.set(hexPos.toString(), new Map<string, boolean>());
           
-        if (!tile.type.has(hex.terrain)) {
+        if (tile.type !== undefined && !tile.type.has(hex.terrain)) {
           return;
         }
+
+        if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay)) {
+          return;
+        }
+
         if (!checkFlags(rot, tg.rotations, hexPos, tile.has_flag, tg.has_flag, 
           tile.no_flag, tg.no_flag, 
           tile.set_no_flag, tg.set_no_flag, dp.flags))
@@ -246,7 +259,25 @@ module WesnothTiles {
   
 
   var terrainGraphics: WMLTerrainGraphics[] = [];
+
+  var addSparseForestMacro = (terrainGraphics: WMLTerrainGraphics[], overlay: EOverlay, imagestem: string) => {
+    NEW_FOREST(terrainGraphics, 
+      getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
+      ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC]),
+      getOverlayMap([overlay]),
+      getTerrainMap([ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
+        ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
+      imagestem);
+  }
   
+  var addForestMacro = (terrainGraphics: WMLTerrainGraphics[], overlay: EOverlay, imagestem: string) => {
+    NEW_FOREST(terrainGraphics, undefined,
+      getOverlayMap([overlay]),
+      getTerrainMap([ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
+        ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
+      imagestem);
+  }
+
   export var rebuild = (hexMap: HexMap) => {
 
     OVERLAY_COMPLETE_LFB(terrainGraphics, getTerrainMap([ETerrain.SWAMP_WATER]),
@@ -254,6 +285,15 @@ module WesnothTiles {
         ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW,
         ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
       "swamp/reed", {layer: -85, flag: "base2"});
+
+    addSparseForestMacro(terrainGraphics, EOverlay.WOODS_PINE, "forest/pine-sparse");
+    addForestMacro(terrainGraphics, EOverlay.WOODS_PINE, "forest/pine");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.SNOW_FOREST, "forest/snow-forest-sparse");
+    addForestMacro(terrainGraphics, EOverlay.SNOW_FOREST, "forest/snow-forest");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.JUNGLE, "forest/jungle-sparse");
+    addForestMacro(terrainGraphics, EOverlay.JUNGLE, "forest/jungle");
 
     VOLCANO_2x2(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),

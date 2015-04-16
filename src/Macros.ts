@@ -79,8 +79,8 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
 
     q: number;
     r: number;
-    type: Map<ETerrain, boolean>;
-
+    type?: Map<ETerrain, boolean>;
+    overlay?: Map<EOverlay, boolean>;
     images?: WMLImage[];
 
     anchor?: number;
@@ -2194,4 +2194,52 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
     CORNER_PLFB_CONCAVE(terrainGraphics, adjacent, terrainList, terrainList, imageStem + "-concave", plfb);
   }
 
+  export var NEW_FOREST = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, 
+    adjacent: Map<ETerrain, boolean>, imageStem: string) => {
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          overlay: overlayList,      
+          type: terrainList,
+          set_no_flag: ["overlay"]
+        }, {
+          q: 0,
+          r: -1,
+          type: adjacent
+        }
+      ],
+      images: [{
+          name: imageStem + "-small@V",
+          postfix: "",
+          layer: 0,
+          center: {x: 36, y: 36},
+          base: {x: 36, y: 36},
+          variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+          rotations: ["n", "ne", "se", "s", "sw", "nw"],
+        }],
+      probability: 100,
+      builder: IB_IMAGE_SINGLE
+    });
+
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          overlay: overlayList,      
+          type: terrainList,
+          set_no_flag: ["overlay"]
+        }],
+      images: [{
+          name: imageStem + "@V",
+          postfix: "",
+          layer: 0,
+          center: {x: 36, y: 36},
+          base: {x: 36, y: 36},
+          variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
+        }],
+      probability: 100,
+      builder: IB_IMAGE_SINGLE
+    });
+  }
 }
