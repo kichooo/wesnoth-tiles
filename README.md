@@ -58,22 +58,22 @@ WML files with terrain definitions will be converted using short GO program.
  - [x] volcano
  - [x] multihex
 - [ ] villages (multiple types)
-- [ ] woods, jungle and palms (multiple types)
+- [x] woods, jungle and palms (multiple types)
 - [ ] extra overlays
  -  [ ] rubbles
  -  [ ] oasis
  -  [ ] flowers
  -  [ ] farms
  -  [ ] stones
- -  [ ] mushrooms
+ -  [x] mushrooms
  -  [ ] remains
 - [x] ethereal abyss (chasm)
 
 # current iteration (v0.3)
- - [ ] plan implementation of overlays
+ - [x] plan implementation of overlays
  - [ ] forests, farms and other overlays
  - [x] chasms
- - [ ] add waves to the water
+ - [x] add waves to the water
  - [ ] villages
 
 # backlog list

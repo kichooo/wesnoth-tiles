@@ -5,6 +5,13 @@ function loadRandomMap(map) {
     }
 }
 
+function loadRandomMapWithWoods(map) {
+  for (var i = -18; i < 18; i++)
+    for (var j = -18; j < 18; j++) {
+      map.addHex(new WesnothTiles.Hex(i, j, WesnothTiles.ETerrain.GRASS_SEMI_DRY, Math.floor(Math.random() * 15)));
+    }
+}
+
 function loadChunksRandom(map) {
   for (var i = -17; i < 17; i++)
     for (var j = -17; j < 17; j++) {
@@ -182,11 +189,12 @@ function start() {
 
     var map = new WesnothTiles.HexMap();
     // loadChunksRandom(map);
+    loadRandomMapWithWoods(map);
     // loadRandomMap(map);
     // loadCircle(map, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.GRASS_GREEN, -2, 0);
     // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.EOverlay.WOODS_PINE, WesnothTiles.EOverlay.WOODS_PINE, 2, -2);
     // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.ABYSS, 2, -2);
-    loadDisk(map);
+    // loadDisk(map);
     // var min = 0;
     // var max = 0;
     // for (var i = -18; i < 18; i++)

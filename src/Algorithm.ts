@@ -298,6 +298,40 @@ module WesnothTiles {
     addSparseForestMacro(terrainGraphics, EOverlay.PALM_DESERT, "forest/tropical/palm-desert-sparse");
     addForestMacro(terrainGraphics, EOverlay.PALM_DESERT, "forest/tropical/palm-desert");
 
+    addSparseForestMacro(terrainGraphics, EOverlay.PALM_DESERT, "forest/tropical/palm-desert-sparse");
+    addForestMacro(terrainGraphics, EOverlay.PALM_DESERT, "forest/tropical/palm-desert");
+
+    addForestMacro(terrainGraphics, EOverlay.RAINFOREST, "forest/tropical/rainforest");  
+
+    addSparseForestMacro(terrainGraphics, EOverlay.SAVANNA, "forest/tropical/savanna-sparse");
+    addForestMacro(terrainGraphics, EOverlay.SAVANNA, "forest/tropical/savanna");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.DECIDUOUS_SUMMER, "forest/deciduous-summer-sparse");
+    addForestMacro(terrainGraphics, EOverlay.DECIDUOUS_SUMMER, "forest/deciduous-summer");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.DECIDUOUS_FALL, "forest/deciduous-fall-sparse");
+    addForestMacro(terrainGraphics, EOverlay.DECIDUOUS_FALL, "forest/deciduous-fall");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.DECIDUOUS_WINTER, "forest/deciduous-winter-sparse");
+    addForestMacro(terrainGraphics, EOverlay.DECIDUOUS_WINTER, "forest/deciduous-winter");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.DECIDUOUS_WINTER_SNOW, "forest/deciduous-winter-snow-sparse");
+    addForestMacro(terrainGraphics, EOverlay.DECIDUOUS_WINTER_SNOW, "forest/deciduous-winter-snow");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.MIXED_SUMMER, "forest/mixed-summer-sparse");
+    addForestMacro(terrainGraphics, EOverlay.MIXED_SUMMER, "forest/mixed-summer");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.MIXED_FALL, "forest/mixed-fall-sparse");
+    addForestMacro(terrainGraphics, EOverlay.MIXED_FALL, "forest/mixed-fall");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.MIXED_WINTER, "forest/mixed-winte-sparse");
+    addForestMacro(terrainGraphics, EOverlay.MIXED_WINTER, "forest/mixed-winter");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.MIXED_WINTER_SNOW, "forest/mixed-winter-snow-sparse");
+    addForestMacro(terrainGraphics, EOverlay.MIXED_WINTER_SNOW, "forest/mixed-winter-snow");
+
+    addForestMacro(terrainGraphics, EOverlay.MUSHROOMS, "forest/mushrooms");
+
     VOLCANO_2x2(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
       getTerrainMap([ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY]),
