@@ -292,8 +292,11 @@ module WesnothTiles {
     addSparseForestMacro(terrainGraphics, EOverlay.SNOW_FOREST, "forest/snow-forest-sparse");
     addForestMacro(terrainGraphics, EOverlay.SNOW_FOREST, "forest/snow-forest");
 
-    addSparseForestMacro(terrainGraphics, EOverlay.JUNGLE, "forest/jungle-sparse");
-    addForestMacro(terrainGraphics, EOverlay.JUNGLE, "forest/jungle");
+    addSparseForestMacro(terrainGraphics, EOverlay.JUNGLE, "forest/tropical/jungle-sparse");
+    addForestMacro(terrainGraphics, EOverlay.JUNGLE, "forest/tropical/jungle");
+
+    addSparseForestMacro(terrainGraphics, EOverlay.PALM_DESERT, "forest/tropical/palm-desert-sparse");
+    addForestMacro(terrainGraphics, EOverlay.PALM_DESERT, "forest/tropical/palm-desert");
 
     VOLCANO_2x2(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),

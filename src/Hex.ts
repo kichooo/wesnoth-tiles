@@ -54,6 +54,7 @@ module WesnothTiles {
     WOODS_PINE,
     SNOW_FOREST,
     JUNGLE,
+    PALM_DESERT,
     NONE
   }
 

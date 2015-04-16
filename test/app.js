@@ -118,14 +118,14 @@ function loadDisk(map) {
   map.addHex(new WesnothTiles.Hex(-3, 3, WesnothTiles.ETerrain.GRASS_GREEN));
   map.addHex(new WesnothTiles.Hex(-3, 1, WesnothTiles.ETerrain.GRASS_SEMI_DRY));
   map.addHex(new WesnothTiles.Hex(-3, 0, WesnothTiles.ETerrain.GRASS_DRY));
-  map.addHex(new WesnothTiles.Hex(-3, -1, WesnothTiles.ETerrain.SAND_DESERT));
-  map.addHex(new WesnothTiles.Hex(-3, -2, WesnothTiles.ETerrain.HILLS_DESERT));
+  map.addHex(new WesnothTiles.Hex(-3, -1, WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.EOverlay.PALM_DESERT));
+  map.addHex(new WesnothTiles.Hex(-3, -2, WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.EOverlay.PALM_DESERT));
 
   map.addHex(new WesnothTiles.Hex(-2, 2, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.EOverlay.WOODS_PINE));
   map.addHex(new WesnothTiles.Hex(-2, 3, WesnothTiles.ETerrain.GRASS_GREEN));
   map.addHex(new WesnothTiles.Hex(-2, 1, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.EOverlay.WOODS_PINE));
   map.addHex(new WesnothTiles.Hex(-2, 0, WesnothTiles.ETerrain.GRASS_DRY));
-  map.addHex(new WesnothTiles.Hex(-2, -1, WesnothTiles.ETerrain.SAND_DESERT));
+  map.addHex(new WesnothTiles.Hex(-2, -1, WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.EOverlay.PALM_DESERT));
   map.addHex(new WesnothTiles.Hex(-2, -2, WesnothTiles.ETerrain.SAND_DESERT));
   map.addHex(new WesnothTiles.Hex(-2, -3, WesnothTiles.ETerrain.HILLS_DESERT));
 
