@@ -60,11 +60,11 @@ WML files with terrain definitions will be converted using short GO program.
 - [ ] villages (multiple types)
 - [x] woods, jungle and palms (multiple types)
 - [ ] extra overlays
- -  [ ] rubbles
- -  [ ] oasis
- -  [ ] flowers
- -  [ ] farms
- -  [ ] stones
+ -  [x] rubbles
+ -  [x] oasis
+ -  [x] flowers
+ -  [x] farms
+ -  [x] stones
  -  [x] mushrooms
  -  [ ] remains
 - [x] ethereal abyss (chasm)

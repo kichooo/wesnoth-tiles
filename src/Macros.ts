@@ -110,7 +110,7 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
     builder?: IBuilder;
   }
 
-  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
@@ -123,6 +123,7 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
       q: 0,
       r: 0,
       type: terrainList,
+      overlay: overlayList,
       set_no_flag: [plfb.flag]      
     }
 
@@ -147,15 +148,23 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
     if (plfb.builder === undefined)
       plfb.builder = IB_IMAGE_SINGLE;
     console.log(Resources.definitions.has(imageStem));
-    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, plfb);
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, undefined, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {    
-    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem + "@V", {
+  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, imageStem: string, lfb: LFB) => {    
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, overlayList, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
       builder: lfb.builder
+    });
+  }
+
+  export var OVERLAY_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, imageStem: string, lfb: LFB) => {    
+    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, overlayList, imageStem , {
+      layer: lfb.layer === undefined ? 0 : lfb.layer,
+      flag: lfb.flag === undefined ? "overlay" : lfb.flag,
+      builder: lfb.builder === undefined ? IB_IMAGE_SINGLE : lfb.builder,
     });
   }
 
@@ -166,7 +175,7 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
       lfb.flag = "base";
     if (lfb.builder === undefined)
       lfb.builder = IB_IMAGE_SINGLE;      
-    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
+    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, undefined, imageStem, lfb);
   }
 
 
@@ -987,7 +996,7 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
     GENERIC_RESTRICTED2_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "");    
     GENERIC_RESTRICTED_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "-@R0");
     GENERIC_RESTRICTED_RANDOM_LFB(terrainGraphics, terrainList, adjacent, imageStem + "-small", lfb, "");        
-    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, imageStem, lfb);
+    GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, undefined, imageStem, lfb);
   }
 
   export var OVERLAY_COMPLETE_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
@@ -1362,14 +1371,14 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
     terrainGraphics.push(terrainGraphic);    
   }
 
-  export var OVERLAY_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, imageStem, {
+  export var OVERLAY_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, imageStem: string, plfb: PLFB) => {
+    GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, overlayList, imageStem, {
       prob: plfb.prob === undefined ? 100: plfb.prob,
       layer: plfb.layer === undefined ? 0: plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
       builder: plfb.builder === undefined ? IB_IMAGE_SINGLE: plfb.builder,
     });
-  }  
+  }
 
   var GENERIC_RESTRICTED2_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
     GENERIC_RESTRICTED2_N_NE_PLFB(terrainGraphics, terrainList, adjacent, imageStem, plfb, rotation);

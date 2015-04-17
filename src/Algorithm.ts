@@ -159,10 +159,9 @@ module WesnothTiles {
         if (hex === undefined)
           return;
 
-
         if (!dp.flags.has(hexPos.toString()))
           dp.flags.set(hexPos.toString(), new Map<string, boolean>());
-          
+
         if (tile.type !== undefined && !tile.type.has(hex.terrain)) {
           return;
         }
@@ -170,6 +169,8 @@ module WesnothTiles {
         if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay)) {
           return;
         }
+
+
 
         if (!checkFlags(rot, tg.rotations, hexPos, tile.has_flag, tg.has_flag, 
           tile.no_flag, tg.no_flag, 
@@ -332,6 +333,12 @@ module WesnothTiles {
 
     addForestMacro(terrainGraphics, EOverlay.MUSHROOMS, "forest/mushrooms");
 
+    OVERLAY_PLFB (terrainGraphics, undefined, getOverlayMap([EOverlay.OASIS]), "village/desert-oasis-1", {prob: 30});
+    OVERLAY_PLFB (terrainGraphics, undefined, getOverlayMap([EOverlay.OASIS]), "village/desert-oasis-2", {prob: 43});
+    OVERLAY_PLFB (terrainGraphics, undefined, getOverlayMap([EOverlay.OASIS]), "village/desert-oasis-3", {prob: 100});
+
+    OVERLAY_PLFB (terrainGraphics, undefined, getOverlayMap([EOverlay.REMAINS]), "misc/detritus/detritusB-1", {prob: 100});
+
     VOLCANO_2x2(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
       getTerrainMap([ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY]),
@@ -398,6 +405,17 @@ module WesnothTiles {
     MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow6", "base2", 20); // Ms
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
 
+    OVERLAY_RANDOM_LFB(terrainGraphics, undefined, 
+      getOverlayMap([EOverlay.FARM_VEGS]), "embellishments/farm-veg-spring", {layer: -81});
+
+    OVERLAY_RANDOM_LFB(terrainGraphics, undefined, 
+      getOverlayMap([EOverlay.FLOWERS_MIXED]), "embellishments/flowers-mixed", {layer: -500});
+
+    OVERLAY_RANDOM_LFB(terrainGraphics, undefined, 
+      getOverlayMap([EOverlay.RUBBLE]), "misc/rubble", {layer: -1});
+
+    OVERLAY_RANDOM_LFB(terrainGraphics, undefined, 
+      getOverlayMap([EOverlay.STONES_SMALL]), "embellishments/stones-small", {});    
 
     // fillers for mountains
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "hills/regular", {});

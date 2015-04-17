@@ -66,6 +66,12 @@ module WesnothTiles {
     MIXED_WINTER,
     MIXED_WINTER_SNOW,
     MUSHROOMS,
+    FARM_VEGS,
+    FLOWERS_MIXED,
+    RUBBLE,
+    STONES_SMALL,
+    OASIS,
+    REMAINS,
     NONE
   }
 
