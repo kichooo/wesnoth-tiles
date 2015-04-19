@@ -57,24 +57,24 @@ WML files with terrain definitions will be converted using short GO program.
  - [x] snow
  - [x] volcano
  - [x] multihex
-- [ ] villages (multiple types)
+- [x] villages (multiple types)
 - [x] woods, jungle and palms (multiple types)
-- [ ] extra overlays
+- [x] extra overlays
  -  [x] rubbles
  -  [x] oasis
  -  [x] flowers
  -  [x] farms
  -  [x] stones
  -  [x] mushrooms
- -  [ ] remains
+ -  [x] remains
 - [x] ethereal abyss (chasm)
 
 # current iteration (v0.3)
  - [x] plan implementation of overlays
- - [ ] forests, farms and other overlays
+ - [x] forests, farms and other overlays
  - [x] chasms
  - [x] add waves to the water
- - [ ] villages
+ - [x] villages
 
 # backlog list
  - typescript formatter
@@ -90,7 +90,7 @@ GPL. See LICENSE file in the root of the repository.
 
 # preview
 
-![](http://i.imgur.com/bbFXNpg.jpg)
+![](http://i.imgur.com/jO4kabC.jpg)
 
 # from author
 

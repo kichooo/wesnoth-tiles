@@ -2251,4 +2251,28 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
       builder: IB_IMAGE_SINGLE
     });
   }
+  export var NEW_VILLAGE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, 
+    imageStem: string) => {
+
+    terrainGraphics.push({
+      tiles: [{
+          q: 0,
+          r: 0,
+          overlay: overlayList,
+          type: terrainList,
+          set_no_flag: ["village"]
+        }],
+      images: [{
+          name: imageStem + "@V",
+          postfix: "",
+          layer: 0,
+          center: {x: 36, y: 36},
+          base: {x: 36, y: 36},
+          variations: ["", "2", "3", "4"],
+        }],
+      probability: 100,
+      builder: IB_IMAGE_SINGLE
+
+    });    
+  }
 }

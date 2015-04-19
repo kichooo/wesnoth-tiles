@@ -405,6 +405,45 @@ module WesnothTiles {
     MOUNTAINS_2x2(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow6", "base2", 20); // Ms
     MOUNTAIN_SINGLE_RANDOM(terrainGraphics, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
 
+    // villages
+
+    NEW_VILLAGE(terrainGraphics, getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-hills");
+    NEW_VILLAGE(terrainGraphics, getTerrainMap([ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-snow-hills");
+    NEW_VILLAGE(terrainGraphics, getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), getOverlayMap([EOverlay.VILLAGE_HUMAN_RUIN]), "village/human-hills-ruin");
+
+    NEW_VILLAGE(terrainGraphics, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-snow");
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human");    
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_RUIN]), "village/human-cottage-ruin");
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY]), "village/human-city");
+    NEW_VILLAGE(terrainGraphics, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY]), "village/human-city-snow");
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY_RUIN]), "village/human-city-ruin");    
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_TROPICAL]), "village/tropical-forest");
+
+    NEW_VILLAGE(terrainGraphics, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUT]), "village/hut-snow");
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_LOG_CABIN]), "village/log-cabin");
+
+    NEW_VILLAGE(terrainGraphics, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUT]), "village/hut-snow");
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_LOG_CABIN]), "village/log-cabin");
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_CAMP]), "village/camp");
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_IGLOO]), "village/igloo");
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_ORC]), "village/orc");
+
+    NEW_VILLAGE(terrainGraphics, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_ELVEN]), "village/elven-snow");
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_ELVEN]), "village/elven");    
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_DESERT]), "village/desert");
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_DESERT_CAMP]), "village/desert-camp");
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_DWARVEN]), "village/dwarven");
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_SWAMP]), "village/swampwater");
+
+    NEW_VILLAGE(terrainGraphics, undefined, getOverlayMap([EOverlay.VILLAGE_COAST]), "village/coast");
     OVERLAY_RANDOM_LFB(terrainGraphics, undefined, 
       getOverlayMap([EOverlay.FARM_VEGS]), "embellishments/farm-veg-spring", {layer: -81});
 
