@@ -325,7 +325,7 @@ module WesnothTiles {
     addSparseForestMacro(terrainGraphics, EOverlay.MIXED_FALL, "forest/mixed-fall-sparse");
     addForestMacro(terrainGraphics, EOverlay.MIXED_FALL, "forest/mixed-fall");
 
-    addSparseForestMacro(terrainGraphics, EOverlay.MIXED_WINTER, "forest/mixed-winte-sparse");
+    addSparseForestMacro(terrainGraphics, EOverlay.MIXED_WINTER, "forest/mixed-winter-sparse");
     addForestMacro(terrainGraphics, EOverlay.MIXED_WINTER, "forest/mixed-winter");
 
     addSparseForestMacro(terrainGraphics, EOverlay.MIXED_WINTER_SNOW, "forest/mixed-winter-snow-sparse");

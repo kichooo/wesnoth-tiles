@@ -2224,10 +2224,10 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
           layer: 0,
           center: {x: 36, y: 36},
           base: {x: 36, y: 36},
-          variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
-          rotations: ["n", "ne", "se", "s", "sw", "nw"],
+          variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],          
         }],
       probability: 100,
+      rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: IB_IMAGE_SINGLE
     });
 
