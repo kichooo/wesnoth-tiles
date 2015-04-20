@@ -69,12 +69,10 @@ WML files with terrain definitions will be converted using short GO program.
  -  [x] remains
 - [x] ethereal abyss (chasm)
 
-# current iteration (v0.3)
- - [x] plan implementation of overlays
- - [x] forests, farms and other overlays
- - [x] chasms
- - [x] add waves to the water
- - [x] villages
+# current iteration (v0.4)
+ - [ ] implement gradual map edge fog of war
+ - [ ] cleanup atlas from not needed textures
+ - [ ] typescript formatter
 
 # backlog list
  - typescript formatter
@@ -83,6 +81,7 @@ WML files with terrain definitions will be converted using short GO program.
  - introduce some way to test manually without changing app.js all the time. Editor, preset map buttons, better randomizers, etc.
  - overlays
  - cleanup texture atlases, we do not need most of the sprites from Wesnoth.
+ - seedable randoms
 
 # license
 
