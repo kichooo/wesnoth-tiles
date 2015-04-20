@@ -170,8 +170,6 @@ module WesnothTiles {
           return;
         }
 
-
-
         if (!checkFlags(rot, tg.rotations, hexPos, tile.has_flag, tg.has_flag, 
           tile.no_flag, tg.no_flag, 
           tile.set_no_flag, tg.set_no_flag, dp.flags))
@@ -218,7 +216,7 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
-            console.log("Name",imgName, img.name, translatedPostfix);
+            // console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
             var hexQ = dp.hex.q;
@@ -501,6 +499,8 @@ module WesnothTiles {
       builder: IB_ANIMATION_15
     }); // Wwt
 
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.VOID]), "void/void", {layer: 1000});
+
     // chasms transitions
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
@@ -508,7 +508,7 @@ module WesnothTiles {
       getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
       "mountains/blend-from-chasm", { layer: 2, flag: "transition3" });
 
-    DISABLE_BASE_TRANSITIONS(terrainGraphics, getTerrainMap([ETerrain.ABYSS]));
+    // DISABLE_BASE_TRANSITIONS(terrainGraphics, getTerrainMap([ETerrain.ABYSS]));
 
 
 
@@ -532,7 +532,7 @@ module WesnothTiles {
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO]), 
       swapTerrainTypes(getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_VOLCANO, 
-        ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain. SWAMP_MUD])),
+        ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain. SWAMP_MUD, ETerrain.ABYSS])),
       "mountains/dry", { layer: -166 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
@@ -576,7 +576,7 @@ module WesnothTiles {
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC]), 
       swapTerrainTypes(getTerrainMap([ETerrain.HILLS_REGULAR, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
-        ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER])),      
+        ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS])),      
       "hills/regular", {layer: -180 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
@@ -587,7 +587,7 @@ module WesnothTiles {
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.HILLS_DESERT]), 
-      swapTerrainTypes(getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL])),      
+      swapTerrainTypes(getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS])),      
       "hills/desert", {layer: -184 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
@@ -595,7 +595,7 @@ module WesnothTiles {
       swapTerrainTypes(getTerrainMap([ETerrain.SWAMP_WATER, 
         ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW, 
         ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY,
-        ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE])),      
+        ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.ABYSS])),      
       "swamp/water", {layer: -230 });
 
 
@@ -675,7 +675,7 @@ module WesnothTiles {
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.FROZEN_SNOW]), 
-      swapTerrainTypes(getTerrainMap([ETerrain.FROZEN_SNOW])), 
+      swapTerrainTypes(getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.ABYSS])), 
       "frozen/snow", { layer: -281 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
@@ -697,14 +697,14 @@ module WesnothTiles {
       getTerrainMap([ETerrain.SAND_BEACH]), 
       swapTerrainTypes(getTerrainMap([ETerrain.SAND_BEACH,
         ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
-        ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER])), 
+        ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS])), 
       "sand/beach", { layer: -510 });
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.SAND_DESERT]), 
       swapTerrainTypes(getTerrainMap([ETerrain.SAND_DESERT,
         ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
-        ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER])), 
+        ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS])), 
       "sand/desert", { layer: -510 });    
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
@@ -773,6 +773,11 @@ module WesnothTiles {
       getTerrainMap([ETerrain.WATER_COAST_TROPICAL]), 
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD]), 
       "water/coast-tropical-long", -555);
+
+
+    TRANSITION_COMPLETE_LFB(terrainGraphics,
+      getTerrainMap([ETerrain.VOID]), swapTerrainTypes(getTerrainMap([])),
+      "void/void", { layer: 1000});
 
 // {TRANSITION_COMPLETE_LF     Gs              Gg,Gd,Gll,Re,Rb,Rd,Rp              -250     inside      grass/semi-dry-long}
 // {TRANSITION_COMPLETE_LF     Gg              Gs,Gd,Gll,Re,Rb,Rd,Rp              -251     inside      grass/green-long}

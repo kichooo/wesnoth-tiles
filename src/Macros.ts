@@ -9,7 +9,7 @@ module WesnothTiles {
   // image builders.
   export var IB_IMAGE_SINGLE: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      console.log("Adding " + imageStem + postfix);
+      // console.log("Adding " + imageStem + postfix);
       return new StaticImage(
         pos.x, 
         pos.y, 
@@ -40,7 +40,7 @@ module WesnothTiles {
       return new AnimatedImage(
         pos.x, 
         pos.y,
-imageStem + "-@A" + postfix, layer, base, 15, 110
+        imageStem + "-@A" + postfix, layer, base, 15, 110
       )
     },
     toString: (imageStem: string, postfix: string) => {
@@ -147,7 +147,6 @@ imageStem + "-@A" + postfix, layer, base, 15, 110
       plfb.flag = "base";
     if (plfb.builder === undefined)
       plfb.builder = IB_IMAGE_SINGLE;
-    console.log(Resources.definitions.has(imageStem));
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, undefined, imageStem, plfb);
   }
 

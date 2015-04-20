@@ -70,7 +70,7 @@ WML files with terrain definitions will be converted using short GO program.
 - [x] ethereal abyss (chasm)
 
 # current iteration (v0.4)
- - [ ] implement gradual map edge fog of war
+ - [1] implement gradual map edge fog of war
  - [ ] cleanup atlas from not needed textures
  - [ ] typescript formatter
 

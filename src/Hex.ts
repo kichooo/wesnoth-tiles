@@ -15,30 +15,15 @@ module WesnothTiles {
 
     GRASS_GREEN, // 5
     GRASS_SEMI_DRY, // 8
-
-    HILLS_DESERT, // 9        
-    
-
-
-
-
-
+    HILLS_DESERT, // 9            
     GRASS_LEAF_LITTER, // 7
 
     HILLS_REGULAR, // 2
-
-    
     MOUNTAIN_DRY, // 11
     HILLS_DRY, // 3
     MOUNTAIN_SNOW, // 12        
-    HILLS_SNOW, // 4    
-    
-
-    
-    
+    HILLS_SNOW, // 4        
     SAND_DESERT, // Dd
-
-
     MOUNTAIN_VOLCANO, // Mv
 
     SWAMP_MUD, // Sm
@@ -48,6 +33,7 @@ module WesnothTiles {
     WATER_COAST_TROPICAL, // 1
 
     ABYSS, // 1
+    VOID
   }
 
   export enum EOverlay {
@@ -92,9 +78,9 @@ module WesnothTiles {
   }
 
 
-  // TODO it could be improved...
   export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
     var swapped = new Map<ETerrain, boolean>();
+    types.set(ETerrain.VOID, true);
     for (var i = 0; i < Object.keys(ETerrain).length / 2; i++) {
       if (!types.has(i))
         swapped.set(i, true);
