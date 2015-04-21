@@ -335,7 +335,9 @@ module WesnothTiles {
     OVERLAY_PLFB (terrainGraphics, undefined, getOverlayMap([EOverlay.OASIS]), "village/desert-oasis-2", {prob: 43});
     OVERLAY_PLFB (terrainGraphics, undefined, getOverlayMap([EOverlay.OASIS]), "village/desert-oasis-3", {prob: 100});
 
-    OVERLAY_PLFB (terrainGraphics, undefined, getOverlayMap([EOverlay.REMAINS]), "misc/detritus/detritusB-1", {prob: 100});
+    OVERLAY_RANDOM_LFB (terrainGraphics, undefined, getOverlayMap([EOverlay.DETRITUS]), "misc/detritus/detritusA", {});
+    OVERLAY_RANDOM_LFB (terrainGraphics, undefined, getOverlayMap([EOverlay.THRASH]), "misc/detritus/thrashA", {});
+    OVERLAY_RANDOM_LFB (terrainGraphics, undefined, getOverlayMap([EOverlay.LITTER]), "misc/detritus/litter", {});
 
     VOLCANO_2x2(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
@@ -484,8 +486,8 @@ module WesnothTiles {
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice3", { prob: 11 }); // Ai
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice5", { prob: 13 }); // Ai
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice6", { prob: 14 }); // Ai
-    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice6", { prob: 42 }); // Ai
-    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice5", {}); // Hhd
+    TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice4", { prob: 42 }); // Ai
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice", {}); // Hhd
 
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.SWAMP_MUD]), "swamp/mud", {}); // Sm
     TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.SWAMP_WATER]), "swamp/water-plant@V", { prob: 33}); // Sm
@@ -778,19 +780,6 @@ module WesnothTiles {
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.VOID]), swapTerrainTypes(getTerrainMap([])),
       "void/void", { layer: 1000});
-
-// {TRANSITION_COMPLETE_LF     Gs              Gg,Gd,Gll,Re,Rb,Rd,Rp              -250     inside      grass/semi-dry-long}
-// {TRANSITION_COMPLETE_LF     Gg              Gs,Gd,Gll,Re,Rb,Rd,Rp              -251     inside      grass/green-long}
-// {TRANSITION_COMPLETE_LF     Gd              Gg,Gs,Gll,Re,Rb,Rd,Rp              -252     inside      grass/dry-long}
-// {TRANSITION_COMPLETE_LF     Gll             Gg,Gs,Gd,Re,Rb,Rd,Rp               -253     inside      grass/leaf-litter-long}
-
-// {TRANSITION_COMPLETE_L      Gll             Gg,Gs,Gd                           -254                 grass/leaf-litter-long
-// {TRANSITION_COMPLETE_L      Gd              Gg,Gs,Gll                          -255                 grass/dry-long}
-// {TRANSITION_COMPLETE_L      Gg              Gs,Gd,Gll                          -256                 grass/green-long}
-// {TRANSITION_COMPLETE_L      Gs              Gg,Gd,Gll                          -257                 grass/semi-dry-long}
-
-    
-
 
     var flags = new Map<string,  Map<string, boolean>>();
 
