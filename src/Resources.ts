@@ -176,7 +176,7 @@ module WesnothTiles.Resources {
     // Will return promise when they are supported;) (by ArcticTypescript)
   export var loadResources = (): Promise<void> => {
     var promises: Promise<void>[] = [];
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < 2; i++) {
       promises.push(provideAtlas("hexes_" + i));
     }
 

@@ -216,7 +216,7 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
-            // console.log("Name",imgName, img.name, translatedPostfix);
+            console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
             var hexQ = dp.hex.q;
@@ -336,8 +336,8 @@ module WesnothTiles {
     OVERLAY_PLFB (terrainGraphics, undefined, getOverlayMap([EOverlay.OASIS]), "village/desert-oasis-3", {prob: 100});
 
     OVERLAY_RANDOM_LFB (terrainGraphics, undefined, getOverlayMap([EOverlay.DETRITUS]), "misc/detritus/detritusA", {});
-    OVERLAY_RANDOM_LFB (terrainGraphics, undefined, getOverlayMap([EOverlay.THRASH]), "misc/detritus/thrashA", {});
-    OVERLAY_RANDOM_LFB (terrainGraphics, undefined, getOverlayMap([EOverlay.LITTER]), "misc/detritus/litter", {});
+    OVERLAY_RANDOM_LFB (terrainGraphics, undefined, getOverlayMap([EOverlay.TRASH]), "misc/detritus/trashA", {});
+    OVERLAY_RANDOM_LFB (terrainGraphics, undefined, getOverlayMap([EOverlay.LITER]), "misc/detritus/liter", {});
 
     VOLCANO_2x2(terrainGraphics, 
       getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
