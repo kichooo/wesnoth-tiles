@@ -457,6 +457,8 @@ module WesnothTiles {
     TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.SWAMP_WATER]), "swamp/water-plant@V", { prob: 33}); // Sm
     TERRAIN_BASE_RANDOM_LFB(terrainGraphics, getTerrainMap([ETerrain.SWAMP_WATER]), "swamp/water", {}); // Sm
 
+    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.VOID]), "void/void", {layer: 1000});
+
     TERRAIN_BASE_SINGLEHEX_PLFB(terrainGraphics, getTerrainMap([ETerrain.WATER_OCEAN]), "water/ocean", {
       builder: IB_ANIMATION_15_SLOW
     }); // Wo
@@ -465,7 +467,7 @@ module WesnothTiles {
       builder: IB_ANIMATION_15
     }); // Wwt
 
-    TERRAIN_BASE_PLFB(terrainGraphics, getTerrainMap([ETerrain.VOID]), "void/void", {layer: 1000});
+
 
     // chasms transitions
 
@@ -735,7 +737,6 @@ module WesnothTiles {
       getTerrainMap([ETerrain.WATER_COAST_TROPICAL]), 
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD]), 
       "water/coast-tropical-long", -555);
-
 
     TRANSITION_COMPLETE_LFB(terrainGraphics,
       getTerrainMap([ETerrain.VOID]), swapTerrainTypes(getTerrainMap([])),

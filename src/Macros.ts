@@ -83,6 +83,18 @@ module WesnothTiles {
     anchor?: number;
   }
 
+  // Group of terrain graphics elements
+  export class TgGroup {
+
+    public terrain: WMLTerrainGraphics[];
+
+    // Need to perform no matter what.
+    public ungroupped: WMLTerrainGraphics[];
+    constructor() {
+    }
+
+  }
+
   export interface WMLTerrainGraphics {
     tiles: WMLTile[];
     set_no_flag?: string[];
