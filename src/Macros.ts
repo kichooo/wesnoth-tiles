@@ -72,9 +72,6 @@ module WesnothTiles {
   }
 
   export interface WMLTile {
-    set_flag?: string[];
-    has_flag?: string[];
-    no_flag?: string[];
     set_no_flag?: string[];
 
     q: number;
@@ -88,9 +85,6 @@ module WesnothTiles {
 
   export interface WMLTerrainGraphics {
     tiles: WMLTile[];
-    set_flag?: string[];
-    has_flag?: string[];
-    no_flag?: string[];
     set_no_flag?: string[];
     images?: WMLImage[];
     probability?: number;
@@ -1798,27 +1792,27 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);     
   } 
 
-  export var DISABLE_BASE_TRANSITIONS = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>) => {
-    DISABLE_BASE_TRANSITIONS_F(terrainGraphics, terrainList, "transition");
-  }
+  // export var DISABLE_BASE_TRANSITIONS = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>) => {
+  //   DISABLE_BASE_TRANSITIONS_F(terrainGraphics, terrainList, "transition");
+  // }
 
-  export var DISABLE_BASE_TRANSITIONS_F = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, flag: string) => {
-    var terrainGraphic: WMLTerrainGraphics = {
-      tiles: [],
-      images: [],
-      probability: 100,
-      builder: IB_IMAGE_SINGLE
-    }
+  // export var DISABLE_BASE_TRANSITIONS_F = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, flag: string) => {
+  //   var terrainGraphic: WMLTerrainGraphics = {
+  //     tiles: [],
+  //     images: [],
+  //     probability: 100,
+  //     builder: IB_IMAGE_SINGLE
+  //   }
 
-    terrainGraphic.tiles.push({
-      q: 0,
-      r: 0,
-      type: terrainList,      
-      set_flag: [flag + "-n", flag + "-ne", flag + "-se", flag + "-s", flag + "-sw", flag + "-nw"]
-    });
+  //   terrainGraphic.tiles.push({
+  //     q: 0,
+  //     r: 0,
+  //     type: terrainList,      
+  //     set_flag: [flag + "-n", flag + "-ne", flag + "-se", flag + "-s", flag + "-sw", flag + "-nw"]
+  //   });
 
-    terrainGraphics.push(terrainGraphic);
-  }
+  //   terrainGraphics.push(terrainGraphic);
+  // }
 
   export var CORNER_PLFB_CONVEX = (terrainGraphics: WMLTerrainGraphics[], terrainList1: Map<ETerrain, boolean>, adjacent1: Map<ETerrain, boolean>, 
     adjacent2: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {

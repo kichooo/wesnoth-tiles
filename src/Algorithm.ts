@@ -31,7 +31,6 @@ module WesnothTiles {
   }
 
   var setFlags = (rot: number, rotations: string[], hexPos: HexPos,
-    set_flags: string[], set_flags_tg: string[],
     set_no_flags: string[], set_no_flags_tg: string[], flags: Flags) => {
 
     var hexFlags = flags.get(hexPos.toString());
@@ -45,51 +44,17 @@ module WesnothTiles {
       set_no_flags_tg.forEach(flag => {
         hexFlags.set(replaceRotation(flag, rot, rotations), true);
       });
-
-    if (set_flags !== undefined)
-      set_flags.forEach(flag => {      
-        hexFlags.set(replaceRotation(flag, rot, rotations), true);
-      });
-    if (set_flags_tg !== undefined)
-      set_flags_tg.forEach(flag => {
-        hexFlags.set(replaceRotation(flag, rot, rotations), true);
-      });
   }
 
   var checkFlags = (rot: number, rotations: string[], hexPos: HexPos, 
-    has_flags: string[], has_flags_tg: string[],
-    no_flags: string[], no_flags_tg: string[],
     set_no_flags: string[], set_no_flags_tg: string[],
     flags: Flags) => {
 
     var hexFlags = flags.get(hexPos.toString());
 
-    // 1st. Check if all needed has_flags are in place
     var ok = true;
-    if (has_flags !== undefined)
-      has_flags.forEach(flag => {      
-        if (!hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-      });
-    if (has_flags_tg !== undefined)
-      has_flags_tg.forEach(flag => {
-        if (!hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-      });
-    if (!ok)
-      return false;
 
-    // 2rd. Check if all needed no_flags are in place
-    if (no_flags !== undefined)
-      no_flags.forEach(flag => {
-        if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-      });
-    if (no_flags_tg !== undefined)      
-      no_flags_tg.forEach(flag => {
-        if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-      });
-    if (!ok)
-      return false;
-
-    // 3rd. Check if all needed set_no_flags are in place      
+    // Check if all needed set_no_flags are in place      
     if (set_no_flags !== undefined)
       set_no_flags.forEach(flag => {
         // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
@@ -170,8 +135,7 @@ module WesnothTiles {
           return;
         }
 
-        if (!checkFlags(rot, tg.rotations, hexPos, tile.has_flag, tg.has_flag, 
-          tile.no_flag, tg.no_flag, 
+        if (!checkFlags(rot, tg.rotations, hexPos,
           tile.set_no_flag, tg.set_no_flag, dp.flags))
           return;          
       }
@@ -216,7 +180,7 @@ module WesnothTiles {
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
-            console.log("Name",imgName, img.name, translatedPostfix);
+            // console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
             var hexQ = dp.hex.q;
@@ -240,7 +204,7 @@ module WesnothTiles {
         var tile = tg.tiles[i];
         var rotHex = rotatePos(tile.q, tile.r, rot);
         var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);        
-        setFlags(rot, tg.rotations, hexPos, tile.set_flag, tg.set_flag, 
+        setFlags(rot, tg.rotations, hexPos,
           tile.set_no_flag, tg.set_no_flag, dp.flags);      
       }
       dp.drawables.push.apply(dp.drawables, drawables);
@@ -509,10 +473,6 @@ module WesnothTiles {
       getTerrainMap([ETerrain.ABYSS]), 
       getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
       "mountains/blend-from-chasm", { layer: 2, flag: "transition3" });
-
-    // DISABLE_BASE_TRANSITIONS(terrainGraphics, getTerrainMap([ETerrain.ABYSS]));
-
-
 
     WALL_TRANSITION_PLFB(terrainGraphics,
       getTerrainMap([ETerrain.ABYSS]), 
