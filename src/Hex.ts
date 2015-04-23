@@ -88,6 +88,21 @@ module WesnothTiles {
     return swapped;
   }
 
+  export var iterateTerrains = (callback: (ETerrain) => void) => {
+
+    for (var i = 0; i <= ETerrain.VOID; i++) {
+      callback(i);
+    }
+  }
+
+  // iterate terrains and overlays OVERLAY_NONE.
+  export var iterateTerrainsAndOverlays = (callback: (ETerrain) => void) => {
+
+    for (var i = 0; i < ETerrain.OVERLAY_NONE; i++) {
+      callback(i);
+    }
+  }
+
   export var sumTerrainMaps = (map1: Map<ETerrain, boolean>, map2: Map<ETerrain, boolean>) => {
     var result = new Map<ETerrain, boolean>();
     map1.forEach((_, key) => {

@@ -235,6 +235,8 @@ module WesnothTiles {
 
   export var rebuild = (hexMap: HexMap) => {
 
+    var tgGroup = new TgGroup();
+
     OVERLAY_COMPLETE_LFB(terrainGraphics, getTerrainMap([ETerrain.SWAMP_WATER]),
       getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
         ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW,
