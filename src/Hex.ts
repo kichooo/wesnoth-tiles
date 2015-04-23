@@ -33,10 +33,9 @@ module WesnothTiles {
     WATER_COAST_TROPICAL, // 1
 
     ABYSS, // 1
-    VOID
-  }
+    VOID,
 
-  export enum EOverlay {
+
     WOODS_PINE,
     SNOW_FOREST,
     JUNGLE,
@@ -76,14 +75,13 @@ module WesnothTiles {
     VILLAGE_DWARVEN,
     VILLAGE_SWAMP,
     VILLAGE_COAST,
-    NONE
+    OVERLAY_NONE
   }
 
 
   export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
     var swapped = new Map<ETerrain, boolean>();
-    types.set(ETerrain.VOID, true);
-    for (var i = 0; i < Object.keys(ETerrain).length / 2; i++) {
+    for (var i = 0; i < ETerrain.VOID; i++) {
       if (!types.has(i))
         swapped.set(i, true);
     }
@@ -103,7 +101,7 @@ module WesnothTiles {
 
   export class Hex extends HexPos {
 
-    constructor(q: number, r: number, public terrain: ETerrain, public overlay: EOverlay = EOverlay.NONE) {
+    constructor(q: number, r: number, public terrain: ETerrain, public overlay: ETerrain = ETerrain.OVERLAY_NONE) {
       super(q, r);
     }
 

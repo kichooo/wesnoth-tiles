@@ -77,7 +77,7 @@ module WesnothTiles {
     q: number;
     r: number;
     type?: Map<ETerrain, boolean>;
-    overlay?: Map<EOverlay, boolean>;
+    overlay?: Map<ETerrain, boolean>;
     images?: WMLImage[];
 
     anchor?: number;
@@ -116,7 +116,7 @@ module WesnothTiles {
     builder?: IBuilder;
   }
 
-  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, imageStem: string, plfb: PLFB) => {
+  var GENERIC_SINGLE_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
@@ -156,7 +156,7 @@ module WesnothTiles {
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, undefined, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, imageStem: string, lfb: LFB) => {    
+  var GENERIC_SINGLE_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {    
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, overlayList, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -165,7 +165,7 @@ module WesnothTiles {
     });
   }
 
-  export var OVERLAY_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, imageStem: string, lfb: LFB) => {    
+  export var OVERLAY_RANDOM_LFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {    
     GENERIC_SINGLE_RANDOM_LFB(terrainGraphics, terrainList, overlayList, imageStem , {
       layer: lfb.layer === undefined ? 0 : lfb.layer,
       flag: lfb.flag === undefined ? "overlay" : lfb.flag,
@@ -1387,7 +1387,7 @@ module WesnothTiles {
     terrainGraphics.push(terrainGraphic);    
   }
 
-  export var OVERLAY_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, imageStem: string, plfb: PLFB) => {
+  export var OVERLAY_PLFB = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
     GENERIC_SINGLE_PLFB(terrainGraphics, terrainList, overlayList, imageStem, {
       prob: plfb.prob === undefined ? 100: plfb.prob,
       layer: plfb.layer === undefined ? 0: plfb.layer,
@@ -2219,7 +2219,7 @@ module WesnothTiles {
     CORNER_PLFB_CONCAVE(terrainGraphics, adjacent, terrainList, terrainList, imageStem + "-concave", plfb);
   }
 
-  export var NEW_FOREST = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, 
+  export var NEW_FOREST = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, 
     adjacent: Map<ETerrain, boolean>, imageStem: string) => {
     terrainGraphics.push({
       tiles: [{
@@ -2267,7 +2267,7 @@ module WesnothTiles {
       builder: IB_IMAGE_SINGLE
     });
   }
-  export var NEW_VILLAGE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, 
+  export var NEW_VILLAGE = (terrainGraphics: WMLTerrainGraphics[], terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, 
     imageStem: string) => {
 
     terrainGraphics.push({
