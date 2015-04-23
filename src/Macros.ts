@@ -85,12 +85,18 @@ module WesnothTiles {
 
   // Group of terrain graphics elements
   export class TgGroup {
+    public mappedTerrains: Map<ETerrain, WMLTerrainGraphics[]>;
 
-    public terrain: WMLTerrainGraphics[];
+    public terrains: WMLTerrainGraphics[];
 
     // Need to perform no matter what.
     public ungroupped: WMLTerrainGraphics[];
     constructor() {
+    }
+
+    // add terrain graphics
+    addTg(tg: WMLTerrainGraphics) {
+      
     }
 
   }
