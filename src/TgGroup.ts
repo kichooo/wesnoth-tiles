@@ -31,14 +31,10 @@ module WesnothTiles {
 
   // Group of terrain graphics elements
   export class TgGroup {
-    public mappedTerrains = new Map<ETerrain, WMLTerrainGraphics[]>();
 
     public tgs: WMLTerrainGraphics[] = [];
 
-    constructor() {      
-      for (var i = 0; i <= ETerrain.OVERLAY_NONE; i++) {
-        this.mappedTerrains.set(i, []);
-      }
+    constructor() {
       this.populateTgs();
     }
 
@@ -50,24 +46,7 @@ module WesnothTiles {
         return;        
       }
       tg.hexes = [];
-      this.tgs.push(tg);
-
-      if (tile.type !== undefined) {
-        tile.type.forEach((_, key) => {
-          this.mappedTerrains.get(key).push(tg);
-        });  
-      } else {
-        iterateTerrains(terrain => {
-          this.mappedTerrains.get(terrain).push(tg);
-        });
-      }
-            
-      if (tile.overlay !== undefined) {
-        tile.overlay.forEach((_, key) => {
-          this.mappedTerrains.get(key).push(tg);        
-        });
-      }
-        
+      this.tgs.push(tg);        
     }
 
     private populateTgs() {

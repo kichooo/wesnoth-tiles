@@ -24,7 +24,16 @@ module WesnothTiles {
         // unlink all macros.
 
       }
-      this.tgGroup.mappedTerrains.get(hex.terrain).forEach(tg => {
+
+      // iterate through all the macros and check which of them applies here.
+      this.tgGroup.tgs.forEach(tg => {
+        var tile = tg.tiles[0];
+        if (tile.type !== undefined && !tile.type.has(hex.terrain))
+          return;
+
+        if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
+          return;
+
         tg.hexes.push(hex);
       });
 
