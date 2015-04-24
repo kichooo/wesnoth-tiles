@@ -3,6 +3,8 @@ module WesnothTiles {
 
   export class HexMap {
 
+
+    public tgGroup: TgGroup = new TgGroup();
     private hexes = new Map<string, Hex>();
     
     constructor() {
@@ -18,9 +20,18 @@ module WesnothTiles {
     }
 
     addHex(hex: Hex) {
-      // we also add 6 hexes around this hex, so that we are sure that we have a good fog of war.
+      if (this.hexes.has(hex.toString())) {
+        // unlink all macros.
+
+      }
+      this.tgGroup.mappedTerrains.get(hex.terrain).forEach(tg => {
+        tg.hexes.push(hex);
+      });
+
       this.hexes.set(hex.toString(), hex);
 
+
+      // we also add 6 hexes around this hex, so that we are sure that we have a good fog of war.
       this.setToVoidIfEmpty(hex.q + 1, hex.r);
       this.setToVoidIfEmpty(hex.q - 1, hex.r);
       this.setToVoidIfEmpty(hex.q, hex.r + 1);

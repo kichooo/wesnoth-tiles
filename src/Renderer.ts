@@ -117,6 +117,7 @@ module WesnothTiles {
       });
     }
 
+
     redraw(hexMap: HexMap): void {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       var now = Date.now();

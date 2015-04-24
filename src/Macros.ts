@@ -83,54 +83,13 @@ module WesnothTiles {
     anchor?: number;
   }
 
-  // Group of terrain graphics elements
-  export class TgGroup {
-    public mappedTerrains = new Map<ETerrain, WMLTerrainGraphics[]>();
-
-    public terrains: WMLTerrainGraphics[];
-
-    constructor() {
-      for (var i = 0; i <= ETerrain.OVERLAY_NONE; i++) {
-        this.mappedTerrains.set(i, []);
-      }
-    }
-
-    // add terrain graphics
-    addTg(tg: WMLTerrainGraphics) {
-      var tile = tg.tiles[0];      
-      if (tile.q !== 0 || tile.r !== 0) {
-        console.error("One of the macros has improper first tile!", tg);        
-      }
-      return;
-
-      this.terrains.push(tg);
-
-      if (tile.type !== undefined) {
-        tile.type.forEach((_, key) => {
-          this.mappedTerrains.get(key).push(tg);
-        });  
-      } else {
-        iterateTerrains(terrain => {
-          this.mappedTerrains.get(terrain).push(tg);
-        });
-      }
-            
-      if (tile.overlay !== undefined) {
-        tile.overlay.forEach((_, key) => {
-          this.mappedTerrains.get(key).push(tg);        
-        });
-      }
-        
-    }
-
-  }
 
   export interface WMLTerrainGraphics {
     tiles: WMLTile[];
     set_no_flag?: string[];
     images?: WMLImage[];
     probability?: number;
-
+    hexes?: Hex[];    
     rotations?: string[];
 
     builder: IBuilder;

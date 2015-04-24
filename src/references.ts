@@ -4,3 +4,4 @@
 /// <reference path="SpriteDefinition.ts"/>
 /// <reference path="Resources.ts"/>
 /// <reference path="Algorithm.ts"/>
+/// <reference path="TgGroup.ts"/>
