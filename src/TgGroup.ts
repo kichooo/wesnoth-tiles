@@ -45,7 +45,7 @@ module WesnothTiles {
         console.error("One of the macros has improper first tile!", tg);        
         return;        
       }
-      tg.hexes = [];
+      tg.hexes = new Map<string, Hex>();
       this.tgs.push(tg);        
     }
 

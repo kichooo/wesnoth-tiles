@@ -89,7 +89,7 @@ module WesnothTiles {
     set_no_flag?: string[];
     images?: WMLImage[];
     probability?: number;
-    hexes?: Hex[];    
+    hexes?: Map<string, Hex>;    
     rotations?: string[];
 
     builder: IBuilder;

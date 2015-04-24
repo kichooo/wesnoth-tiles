@@ -195,10 +195,10 @@ function start() {
     // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_GREEN, 
     //   WesnothTiles.ETerrain.VILLAGE_DESERT, WesnothTiles.ETerrain.NONE, 2, -2);
 
-    // loadCircle(map, WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_BASIC, 
-    //   WesnothTiles.ETerrain.NONE, WesnothTiles.ETerrain.NONE, 3, 0);
+    loadCircle(map, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.SWAMP_WATER, 
+      WesnothTiles.ETerrain.NONE, WesnothTiles.ETerrain.NONE, 3, 0);
     // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.ABYSS, 2, -2);
-    loadDisk(map);
+    // loadDisk(map);
     // var min = 0;
     // var max = 0;
     // for (var i = -18; i < 18; i++)

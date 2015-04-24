@@ -19,24 +19,9 @@ module WesnothTiles {
       return this.hexes.get(HexPos.toString(q, r));
     }
 
-    addHex(hex: Hex) {
-      if (this.hexes.has(hex.toString())) {
-        // unlink all macros.
 
-      }
-
-      // iterate through all the macros and check which of them applies here.
-      this.tgGroup.tgs.forEach(tg => {
-        var tile = tg.tiles[0];
-        if (tile.type !== undefined && !tile.type.has(hex.terrain))
-          return;
-
-        if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
-          return;
-
-        tg.hexes.push(hex);
-      });
-
+    addHex(hex: Hex) {      
+      this.addHexToTgs(hex)
       this.hexes.set(hex.toString(), hex);
 
 
@@ -53,8 +38,31 @@ module WesnothTiles {
     private setToVoidIfEmpty(q: number, r: number) {
       if (this.getHexP(q, r) === undefined) {
         var voidHex = new Hex(q, r, ETerrain.VOID);
+        this.addHexToTgs(voidHex);
         this.hexes.set(voidHex.toString(), voidHex);
       }
+    }
+
+    private addHexToTgs(hex: Hex) {
+      if (this.hexes.has(hex.toString())) {
+        var key = hex.toString();
+        this.tgGroup.tgs.forEach(tg => {
+          if (tg.hexes.has)
+            tg.hexes.delete(key);
+        });
+      }
+
+      // iterate through all the macros and check which of them applies here.      
+      this.tgGroup.tgs.forEach(tg => {
+        var tile = tg.tiles[0];
+        if (tile.type !== undefined && !tile.type.has(hex.terrain))
+          return;
+
+        if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
+          return;
+
+        tg.hexes.set(hex.toString(), hex);
+      });
     }
 
     iterate(func: (hex: Hex) => void) {
