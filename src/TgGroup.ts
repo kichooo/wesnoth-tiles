@@ -50,10 +50,10 @@ module WesnothTiles {
     }
 
     private populateTgs() {
-  OVERLAY_COMPLETE_LFB(this, getTerrainMap([ETerrain.SWAMP_WATER]),
+    OVERLAY_COMPLETE_LFB(this, getTerrainMap([ETerrain.SWAMP_WATER]),
       getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
         ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW,
-        ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
+        ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW, ETerrain.ABYSS]),
       "swamp/reed", {layer: -85, flag: "base2"});
 
     addSparseForestMacro(this, ETerrain.WOODS_PINE, "forest/pine-sparse");
