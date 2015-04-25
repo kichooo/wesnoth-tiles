@@ -71,9 +71,9 @@ WML files with terrain definitions will be converted using short GO program.
 
 # current iteration (v0.4)
  - [x] implement gradual map edge fog of war
- - [ ] cleanup atlas from not needed textures
+ - [x] cleanup atlas from not needed textures
  - [ ] typescript formatter
- - [ ] animated overlays - capfire and windmill.
+ - [ ] animated overlays - campfire and windmill.
 
 # backlog list
  - typescript formatter

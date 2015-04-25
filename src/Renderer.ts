@@ -25,9 +25,6 @@ module WesnothTiles {
         x: this.x + pos.x,
         y: this.y + pos.y
       }
-      // if (this.name == "flat/bank-n") {
-      //   console.log("dupa");
-      // }
       sprite.draw(pos, ctx);
     }
   }

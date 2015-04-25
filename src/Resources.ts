@@ -181,59 +181,6 @@ module WesnothTiles.Resources {
     }
 
     return Promise.all(promises).then(() => {
-      // groupBase("hills/regular");
-      // groupBase("hills/snow");
-      // groupBase("hills/dry");
-      // groupBase("hills/desert");
-
-      // groupBase("grass/green");
-      // groupBase("grass/semi-dry");
-      // groupBase("grass/dry");
-      // groupBase("grass/leaf-litter");
-
-      // groupBase("hills/regular");
-      // groupBase("hills/snow");
-      // groupBase("hills/dry");
-      // groupBase("hills/desert");
-
-      // groupBase("grass/green");
-      // groupBase("grass/semi-dry");
-      // groupBase("grass/dry");
-      // groupBase("grass/leaf-litter");
-
-      // groupBase("swamp/mud");
-      // groupBase("swamp/water");
-
-      // groupBase("water/coast-tropical");
-      // groupBase("water/ocean");
-
-      // groupTransitions("hills/regular");
-      // groupTransitions("hills/snow");
-      // groupTransitions("hills/snow-to-hills");
-      // groupTransitions("hills/snow-to-water");
-      // groupTransitions("hills/dry");
-      // groupTransitions("hills/desert");
-      // groupTransitions("hills/regular-to-water");
-      // groupTransitions("hills/dry-to-water");
-
-
-      // groupTransitions("grass/green-long");
-      // groupTransitions("grass/dry-long");
-      // groupTransitions("grass/leaf-litter-long");
-      // groupTransitions("grass/semi-dry-long");
-
-      // groupTransitions("grass/green-abrupt");
-      // groupTransitions("grass/dry-abrupt");
-      // groupTransitions("grass/leaf-litter");
-      // groupTransitions("grass/semi-dry-abrupt");
-
-      // groupTransitions("swamp/mud-to-land");
-      // groupTransitions("swamp/water");
-
-      // groupTransitions("water/ocean-blend");
-      // groupTransitions("water/coast-tropical-long");
-
-      // groupTransitions("flat/bank");
       });
 
   }

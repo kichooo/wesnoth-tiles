@@ -5,19 +5,14 @@ module WesnothTiles {
 
   export enum ETerrain {
     MOUNTAIN_BASIC, // Mm 10  
-
-    FROZEN_SNOW, // Aa
-       
-    SAND_BEACH, // Ds
-    
+    FROZEN_SNOW, // Aa      
+    SAND_BEACH, // Ds  
     FROZEN_ICE, // Ai      
     GRASS_DRY, // 6
-
     GRASS_GREEN, // 5
     GRASS_SEMI_DRY, // 8
     HILLS_DESERT, // 9            
     GRASS_LEAF_LITTER, // 7
-
     HILLS_REGULAR, // 2
     MOUNTAIN_DRY, // 11
     HILLS_DRY, // 3
@@ -25,13 +20,10 @@ module WesnothTiles {
     HILLS_SNOW, // 4        
     SAND_DESERT, // Dd
     MOUNTAIN_VOLCANO, // Mv
-
     SWAMP_MUD, // Sm
     SWAMP_WATER, // Ss
-
     WATER_OCEAN, // Wo 
     WATER_COAST_TROPICAL, // 1
-
     ABYSS, // 1
     VOID,
 
