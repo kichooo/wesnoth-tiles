@@ -38,6 +38,11 @@ module WesnothTiles {
       public base: IVector,
       private frames: number, 
       private duration:  number) {
+
+      // if (name.match("water/coast-tropical-long")) {
+      //   // console.log("water/coast used", name);
+      // }
+
     }
 
     draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {

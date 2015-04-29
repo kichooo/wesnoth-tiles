@@ -584,6 +584,24 @@ module WesnothTiles {
 
   }
 
+  export var transitionsOptimizer = new Map<ETerrain, Map<ETerrain, boolean>>();
+
+  export var addToTransitionsTable = (terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>) => {
+    terrainList.forEach((_0, terrainKey) => {
+
+      if (!transitionsOptimizer.has(terrainKey)) {
+        transitionsOptimizer.set(terrainKey, new Map<ETerrain, boolean>());
+      }      
+      adjacent.forEach((_1, adjacentKey) => {
+        if (transitionsOptimizer.get(terrainKey).has(adjacentKey)) {
+          console.log("Duplicate transnition from ", ETerrain[terrainKey], ETerrain[adjacentKey]);
+        } else {
+          transitionsOptimizer.get(terrainKey).set(adjacentKey, true);
+        }
+      });
+    });
+  }
+
   // grades is used by BORDER_COMPLETE, to filter out not needed macros.
   export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, grades = 6) => {
     if (lfb.layer === undefined)
@@ -592,6 +610,10 @@ module WesnothTiles {
       lfb.flag = "transition";
     if (lfb.builder === undefined)
       lfb.builder = IB_IMAGE_SINGLE;      
+    if (lfb.flag === "transition") {
+      addToTransitionsTable(terrainList, adjacent);
+      addToTransitionsTable(adjacent, terrainList);
+    }
     BORDER_COMPLETE_LFB(tgGroup, terrainList, adjacent, imageStem, lfb, grades);
   }
 
@@ -634,6 +656,7 @@ module WesnothTiles {
   }
 
   export var ANIMATED_WATER_15_TRANSITION = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, layer: number) => {
+    addToTransitionsTable(terrainList, adjacent);
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",

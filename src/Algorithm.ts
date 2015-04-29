@@ -229,6 +229,17 @@ module WesnothTiles {
       });
     });
 
+    var sum = 0;
+    var count = 0;
+    hexMap.tgGroup.tgs.forEach(tg => {
+      sum += tg.hexes.size;
+      count++;
+    });
+
+    if (count > 0) {
+      console.log("Tgs stats: count: " + count + ", percentage of hexes per tg: " + 100 * sum / count / hexMap.hexes.size);
+    }
+
     return drawables;
  }
 

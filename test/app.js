@@ -195,7 +195,7 @@ function start() {
     // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_GREEN, 
     //   WesnothTiles.ETerrain.VILLAGE_DESERT, WesnothTiles.ETerrain.NONE, 2, -2);
 
-    // loadCircle(map, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.SWAMP_WATER, 
+    // loadCircle(map, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL,
     //   WesnothTiles.ETerrain.NONE, WesnothTiles.ETerrain.NONE, 3, 0);
     // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.ABYSS, 2, -2);
     // loadDisk(map);

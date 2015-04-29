@@ -5,7 +5,7 @@ module WesnothTiles {
 
 
     public tgGroup: TgGroup = new TgGroup();
-    private hexes = new Map<string, Hex>();
+    public hexes = new Map<string, Hex>();
     
     constructor() {
 
