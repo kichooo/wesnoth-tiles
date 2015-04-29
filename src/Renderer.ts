@@ -39,9 +39,9 @@ module WesnothTiles {
       private frames: number, 
       private duration:  number) {
 
-      // if (name.match("water/coast-tropical-long")) {
-      //   // console.log("water/coast used", name);
-      // }
+      if (name.match("grass/semi-dry-long")) {
+        console.log("grass", name);
+      }
 
     }
 
