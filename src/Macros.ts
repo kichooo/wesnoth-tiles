@@ -586,7 +586,7 @@ module WesnothTiles {
 
   export var transitionsOptimizer = new Map<ETerrain, Map<ETerrain, boolean>>();
 
-  export var addToTransitionsTable = (terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>) => {
+  export var addToTransitionsTable = (terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, stem: string) => {
     terrainList.forEach((_0, terrainKey) => {
 
       if (!transitionsOptimizer.has(terrainKey)) {
@@ -594,7 +594,7 @@ module WesnothTiles {
       }      
       adjacent.forEach((_1, adjacentKey) => {
         if (transitionsOptimizer.get(terrainKey).has(adjacentKey)) {
-          console.log("Duplicate transnition from ", ETerrain[terrainKey], ETerrain[adjacentKey]);
+          console.log("Duplicate transnition from ", ETerrain[terrainKey], ETerrain[adjacentKey], stem);
         } else {
           transitionsOptimizer.get(terrainKey).set(adjacentKey, true);
         }
@@ -611,8 +611,8 @@ module WesnothTiles {
     if (lfb.builder === undefined)
       lfb.builder = IB_IMAGE_SINGLE;      
     if (lfb.flag === "transition") {
-      addToTransitionsTable(terrainList, adjacent);
-      addToTransitionsTable(adjacent, terrainList);
+      addToTransitionsTable(terrainList, adjacent, imageStem);
+      addToTransitionsTable(adjacent, terrainList, imageStem);
     }
     BORDER_COMPLETE_LFB(tgGroup, terrainList, adjacent, imageStem, lfb, grades);
   }
@@ -656,7 +656,7 @@ module WesnothTiles {
   }
 
   export var ANIMATED_WATER_15_TRANSITION = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, layer: number) => {
-    addToTransitionsTable(terrainList, adjacent);
+    addToTransitionsTable(terrainList, adjacent, imageStem);
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",

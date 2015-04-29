@@ -362,7 +362,7 @@ module WesnothTiles {
     TRANSITION_COMPLETE_LFB(this,
       getTerrainMap([ETerrain.HILLS_DESERT]), 
       swapTerrainTypes(getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS,
-        ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW])),      
+        ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW])),      
       "hills/desert", {layer: -184 }, 2);
 
     TRANSITION_COMPLETE_LFB(this,
@@ -422,26 +422,23 @@ module WesnothTiles {
 
     TRANSITION_COMPLETE_LFB(this,
       getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), 
-      getTerrainMap([ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.SWAMP_MUD,
-        ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW, ETerrain.MOUNTAIN_VOLCANO]), 
+      getTerrainMap([ETerrain.SWAMP_MUD,
+        ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW]), 
       "grass/leaf-litter", {layer: -270 }, 3);
 
     TRANSITION_COMPLETE_LFB(this,
       getTerrainMap([ETerrain.GRASS_GREEN]), 
-      getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE, 
-        ETerrain.WATER_OCEAN, ETerrain.MOUNTAIN_VOLCANO, ETerrain.SWAMP_MUD]), 
+      getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD]), 
       "grass/green-abrupt", {layer: -271 }, 1);
 
     TRANSITION_COMPLETE_LFB(this,
       getTerrainMap([ETerrain.GRASS_SEMI_DRY]), 
-      getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD,
-        ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO]), 
+      getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD]), 
       "grass/semi-dry-abrupt", { layer: -272 }, 1);
 
     TRANSITION_COMPLETE_LFB(this,
       getTerrainMap([ETerrain.GRASS_DRY]), 
-      getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD, 
-        ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO]), 
+      getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD]), 
       "grass/dry-abrupt", { layer: -273 }, 1);
 
     TRANSITION_COMPLETE_LFB(this,
@@ -452,10 +449,10 @@ module WesnothTiles {
     TRANSITION_COMPLETE_LFB(this,
       getTerrainMap([ETerrain.FROZEN_SNOW]), 
       swapTerrainTypes(getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.ABYSS,
-        ETerrain.FROZEN_SNOW, ETerrain.ABYSS, ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY,
+        ETerrain.FROZEN_SNOW, ETerrain.ABYSS, ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR,
         ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY,
         ETerrain.SWAMP_WATER, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW,
-        ETerrain.HILLS_DESERT])), 
+        ETerrain.HILLS_DESERT, ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.MOUNTAIN_VOLCANO])), 
       "frozen/snow", { layer: -281 }, 4);
 
     TRANSITION_COMPLETE_LFB(this,
@@ -528,7 +525,7 @@ module WesnothTiles {
 
     // invisible transition
     TRANSITION_COMPLETE_LFB(this,
-      getTerrainMap([ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.FROZEN_ICE]), 
+      getTerrainMap([ETerrain.FROZEN_ICE]), 
       getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER]), 
       "frozen/ice-to-water", { layer: -1001}, 4); 
 

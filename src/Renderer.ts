@@ -39,7 +39,7 @@ module WesnothTiles {
       private frames: number, 
       private duration:  number) {
 
-      if (name.match("grass/semi-dry-long")) {
+      if (name.match("frozen/ice-to-water")) {
         console.log("grass", name);
       }
 
