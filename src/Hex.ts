@@ -67,6 +67,7 @@ module WesnothTiles {
     VILLAGE_DWARVEN,
     VILLAGE_SWAMP,
     VILLAGE_COAST,
+    DESERT_PLANTS,
     OVERLAY_NONE
   }
 

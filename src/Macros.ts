@@ -2301,6 +2301,17 @@ module WesnothTiles {
       probability: 100,
       builder: IB_IMAGE_SINGLE
 
-    });    
+    });
   }
+
+  export var OVERLAY_RESTRICTED_PLFB = (tgGroup: TgGroup, overlayList: Map<ETerrain, boolean>, 
+    adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {    
+    GENERIC_RESTRICTED_PLFB(tgGroup, overlayList, adjacent, imageStem , {
+      layer: plfb.layer === undefined ? 0 : plfb.layer,
+      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
+      prob: plfb.prob === undefined ? 100 : plfb.prob,
+      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE : plfb.builder,
+    }, "");
+  }
+
 }

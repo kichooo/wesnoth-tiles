@@ -244,6 +244,18 @@ module WesnothTiles {
     TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_REGULAR]), "hills/regular", {}); // Hh
     TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_DRY]), "hills/dry", {}); // Hhd
     TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_DESERT]), "hills/desert", {}); // Hd
+
+
+
+    OVERLAY_RESTRICTED_PLFB(this, getTerrainMap([ETerrain.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]), 
+      "embellishments/desert-plant"  , {prob: 33});
+    OVERLAY_RESTRICTED_PLFB(this, getTerrainMap([ETerrain.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]), 
+      "embellishments/desert-plant1"  , {prob: 50});
+    OVERLAY_RESTRICTED_PLFB(this, getTerrainMap([ETerrain.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]), 
+      "embellishments/desert-plant2"  , {prob: 100});
+
+    OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.DESERT_PLANTS]), "embellishments/desert-plant", {});
+
     TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_SNOW]), "hills/snow", {}); // Ha
 
     TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.ABYSS]), "chasm/abyss", {}); // Ha
