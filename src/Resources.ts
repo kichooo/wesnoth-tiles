@@ -16,21 +16,21 @@ module WesnothTiles.Resources {
   var rotationToString = (rotation: number): string => {
     switch (rotation) {
       case 0:
-      return "s";
+        return "s";
       case 1:
-      return "sw";        
+        return "sw";
       case 2:
-      return "nw";
+        return "nw";
       case 3:
-      return "n";
+        return "n";
       case 4:
-      return "ne";                
+        return "ne";
       case 5:
-      return "se";
+        return "se";
 
       default:
-      console.error("Invalid rotation",rotation);
-      break;
+        console.error("Invalid rotation", rotation);
+        break;
     }
   }
 
@@ -38,7 +38,7 @@ module WesnothTiles.Resources {
   // export var hexResources = new Map<string, IHexResource>();
 
 
-// This class is responsible for loading of the graphics.
+  // This class is responsible for loading of the graphics.
   var atlases = new Map<string, HTMLElement>();
   export var definitions = new Map<string, SpriteDefinition>();
 
@@ -52,7 +52,7 @@ module WesnothTiles.Resources {
   var toAnimationString = (n: number): string => {
     if (n < 9) {
       return "-A0" + (n + 1);
-    } else { 
+    } else {
       return "-A" + (n + 1);
     }
   }
@@ -116,64 +116,64 @@ module WesnothTiles.Resources {
   //     hexResources.set(base, hr);
   //   }
 
-    var provideAtlas = (name: string): Promise<void> => {
-      var img = new Image();
-      var promises: Promise<void>[] = [];
-      promises.push(new Promise<void>((resolve, reject) => {
-        img.src = name + ".png";    
-        img.onload = () => {
-          if (atlases.has(name)) {
-            console.error("That atlas was already loaded!", name);            
-            return;
-          }          
-          atlases.set(name, img);
-          console.log("atlas loaded!!", name);
-          resolve();
+  var provideAtlas = (name: string): Promise<void> => {
+    var img = new Image();
+    var promises: Promise<void>[] = [];
+    promises.push(new Promise<void>((resolve, reject) => {
+      img.src = name + ".png";
+      img.onload = () => {
+        if (atlases.has(name)) {
+          console.error("That atlas was already loaded!", name);
+          return;
         }
-        img.onerror = () => {
-          reject();
-        };
-      }));
+        atlases.set(name, img);
+        console.log("atlas loaded!!", name);
+        resolve();
+      }
+      img.onerror = () => {
+        reject();
+      };
+    }));
 
-      promises.push(new Promise((resolve, reject) => {
-        var req = new XMLHttpRequest();
-        req.open('GET', name + ".json", true);
-        req.onreadystatechange = function (aEvt) {
-          if (req.readyState == 4) {
-           if(req.status == 200) {
+    promises.push(new Promise((resolve, reject) => {
+      var req = new XMLHttpRequest();
+      req.open('GET', name + ".json", true);
+      req.onreadystatechange = function(aEvt) {
+        if (req.readyState == 4) {
+          if (req.status == 200) {
             var frames: IFrames = JSON.parse(req.responseText);
             console.log(frames);
-            resolve(frames);              
-          }              
+            resolve(frames);
+          }
           else
-          reject();
+            reject();
         }
       };
       req.send(null);
 
 
-      }).then((frames: IFrames) => {
-        frames.frames.forEach((d: IDefinition) => {
-          var def = new SpriteDefinition({
-            point: {x: d.frame.x, y: d.frame.y},
-            size: {x: d.frame.w, y: d.frame.h}
-            }, {
-              point: {x: d.spriteSourceSize.x, y: d.spriteSourceSize.y},
-              size: {x: d.spriteSourceSize.w, y: d.spriteSourceSize.h}
-              }, { x: d.sourceSize.w, y: d.sourceSize.h}, img);
-          if (definitions.has(d.filename)) {
-            console.error("Frame name already included!", def);
-            return;
-          }
-          definitions.set(d.filename, def);
-          });
-        }));
+    }).then((frames: IFrames) => {
+      frames.frames.forEach((d: IDefinition) => {
+        var def = new SpriteDefinition({
+          point: { x: d.frame.x, y: d.frame.y },
+          size: { x: d.frame.w, y: d.frame.h }
+        }, {
+            point: { x: d.spriteSourceSize.x, y: d.spriteSourceSize.y },
+            size: { x: d.spriteSourceSize.w, y: d.spriteSourceSize.h }
+          }, { x: d.sourceSize.w, y: d.sourceSize.h }, img);
+        if (definitions.has(d.filename)) {
+          console.error("Frame name already included!", def);
+          return;
+        }
+        definitions.set(d.filename, def);
+      });
+    }));
 
     return Promise.all<void>(promises)
-      .then(() => {});
+      .then(() => { });
   }
 
-    // Will return promise when they are supported;) (by ArcticTypescript)
+  // Will return promise when they are supported;) (by ArcticTypescript)
   export var loadResources = (): Promise<void> => {
     var promises: Promise<void>[] = [];
     for (var i = 0; i < 2; i++) {
@@ -181,7 +181,7 @@ module WesnothTiles.Resources {
     }
 
     return Promise.all(promises).then(() => {
-      });
+    });
 
   }
 
@@ -197,7 +197,7 @@ module WesnothTiles.Resources {
     frame: IXYWH;
     spriteSourceSize: IXYWH;
     sourceSize: IWH;
-    pivot: IXY;  
+    pivot: IXY;
   }
 
   interface IXYWH {

@@ -12,7 +12,7 @@ module WesnothTiles {
     drawables: IDrawable[];
   }
 
-  interface Flags extends Map<string,  Map<string, boolean>> {};
+  interface Flags extends Map<string, Map<string, boolean>> { };
 
   var setFlags = (rot: number, rotations: string[], hexPos: HexPos,
     set_no_flags: string[], set_no_flags_tg: string[], flags: Flags) => {
@@ -30,7 +30,7 @@ module WesnothTiles {
       });
   }
 
-  var checkFlags = (rot: number, rotations: string[], hexPos: HexPos, 
+  var checkFlags = (rot: number, rotations: string[], hexPos: HexPos,
     set_no_flags: string[], set_no_flags_tg: string[],
     flags: Flags) => {
 
@@ -48,7 +48,7 @@ module WesnothTiles {
       set_no_flags_tg.forEach(flag => {
         if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
       });
-    return ok;    
+    return ok;
   }
 
   var rotatePos = (q: number, r: number, rot: number) => {
@@ -63,7 +63,7 @@ module WesnothTiles {
   var replaceRotation = (input: string, rot: number, rotations: string[]) => {
     if (rotations === undefined)
       return input;
-    return rotations === undefined ? input: input.replace("@R0", rotations[rot])
+    return rotations === undefined ? input : input.replace("@R0", rotations[rot])
       .replace("@R1", rotations[(rot + 1) % 6])
       .replace("@R2", rotations[(rot + 2) % 6])
       .replace("@R3", rotations[(rot + 3) % 6])
@@ -73,10 +73,10 @@ module WesnothTiles {
 
 
   var getImgName = (img: WMLImage, tg: WMLTerrainGraphics, rot: number, translatedPostfix: string) => {
-                
+
     var imgName: string;
     var num = img.variations.length;
-    for (;;) {
+    for (; ;) {
       num = Math.floor(Math.random() * num);
       var translatedName = tg.builder.toString(img.name, translatedPostfix);
       translatedName = translatedName.replace("@V", img.variations[num]);
@@ -94,7 +94,7 @@ module WesnothTiles {
 
   var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
     // console.log("Performing macro for rotation", dp.hex.toString(), rot);
-    var chance = Math.floor(Math.random()*101);
+    var chance = Math.floor(Math.random() * 101);
     if (chance > tg.probability)
       return;
     // we need to know coors of the leftmost hex.
@@ -121,7 +121,7 @@ module WesnothTiles {
 
         if (!checkFlags(rot, tg.rotations, hexPos,
           tile.set_no_flag, tg.set_no_flag, dp.flags))
-          return;          
+          return;
       }
 
       var drawables: IDrawable[] = [];
@@ -129,21 +129,21 @@ module WesnothTiles {
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
         var rotHex = rotatePos(tile.q, tile.r, rot);
-        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);        
+        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
         if (tile.images !== undefined) {
           for (var j = 0; j < tile.images.length; j++) {
             var img = tile.images[j];
 
-            var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
+            var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
 
             var imgName = getImgName(img, tg, rot, translatedPostfix);
             // console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
             var pos = {
-              x: (36 * 1.5) * hexPos.q, 
+              x: (36 * 1.5) * hexPos.q,
               y: 36 * (2 * hexPos.r + hexPos.q)
-            } 
+            }
 
             var newBase = img.base !== undefined ? {
               x: pos.x + img.base.x,
@@ -151,48 +151,48 @@ module WesnothTiles {
             } : undefined;            
             // console.log("Adding", imgName, img.name);
 
-            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer, newBase)); 
+            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer, newBase));
 
           }
-         
-        }              
+
+        }
       }
       if (tg.images !== undefined) {
         for (var j = 0; j < tg.images.length; j++) {
-            var img = tg.images[j];
+          var img = tg.images[j];
 
-            var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations): "";
+          var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
 
-            var imgName = getImgName(img, tg, rot, translatedPostfix);
-            // console.log("Name",imgName, img.name, translatedPostfix);
-            if (imgName === undefined)
-              return;
-            var hexQ = dp.hex.q;
-            var hexR = dp.hex.r;
-            var drawPos = {
-              x: (36 * 1.5) * hexQ - 36 + img.center.x, 
-              y: 36 * (2 * hexR + hexQ) - 36+ img.center.y
-            }
-
-            var newBase = img.base !== undefined ?{
-              x: drawPos.x,
-              y: drawPos.y
-            } : undefined;
-        
-            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase)); 
-
+          var imgName = getImgName(img, tg, rot, translatedPostfix);
+          // console.log("Name",imgName, img.name, translatedPostfix);
+          if (imgName === undefined)
+            return;
+          var hexQ = dp.hex.q;
+          var hexR = dp.hex.r;
+          var drawPos = {
+            x: (36 * 1.5) * hexQ - 36 + img.center.x,
+            y: 36 * (2 * hexR + hexQ) - 36 + img.center.y
           }
+
+          var newBase = img.base !== undefined ? {
+            x: drawPos.x,
+            y: drawPos.y
+          } : undefined;
+
+          drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase));
+
+        }
       }
 
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
         var rotHex = rotatePos(tile.q, tile.r, rot);
-        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);        
+        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
         setFlags(rot, tg.rotations, hexPos,
-          tile.set_no_flag, tg.set_no_flag, dp.flags);      
+          tile.set_no_flag, tg.set_no_flag, dp.flags);
       }
       dp.drawables.push.apply(dp.drawables, drawables);
-    }       
+    }
   }
 
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
@@ -203,12 +203,12 @@ module WesnothTiles {
     } else
       performRotatedTerrainGraphics(tg, dp);
   }
-  
+
   export var rebuild = (hexMap: HexMap) => {
 
-        
 
-    var flags = new Map<string,  Map<string, boolean>>();
+
+    var flags = new Map<string, Map<string, boolean>>();
 
 
     var drawables: IDrawable[] = [];
@@ -241,6 +241,6 @@ module WesnothTiles {
     }
 
     return drawables;
- }
+  }
 
 } 

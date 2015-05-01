@@ -99,10 +99,10 @@ module WesnothTiles {
   export var sumTerrainMaps = (map1: Map<ETerrain, boolean>, map2: Map<ETerrain, boolean>) => {
     var result = new Map<ETerrain, boolean>();
     map1.forEach((_, key) => {
-      result.set(key,true);
+      result.set(key, true);
     });
     map2.forEach((_, key) => {
-      result.set(key,true);
+      result.set(key, true);
     });
     return result;
   }
@@ -113,7 +113,7 @@ module WesnothTiles {
       super(q, r);
     }
 
-    
+
 
   }
 } 

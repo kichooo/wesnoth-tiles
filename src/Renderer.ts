@@ -9,7 +9,7 @@ module WesnothTiles {
   export interface IDrawable {
     draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number);
     layer?: number;
-    base?: IVector; 
+    base?: IVector;
   }
 
   export class StaticImage implements IDrawable {
@@ -31,13 +31,13 @@ module WesnothTiles {
 
   export class AnimatedImage implements IDrawable {
     private animTime = Date.now();
-    constructor(private x: number, 
-      private y: number, 
-      private name: string, 
+    constructor(private x: number,
+      private y: number,
+      private name: string,
       public layer: number,
       public base: IVector,
-      private frames: number, 
-      private duration:  number) {
+      private frames: number,
+      private duration: number) {
 
       if (name.match("frozen/ice-to-water")) {
         console.log("grass", name);
@@ -83,9 +83,9 @@ module WesnothTiles {
             return a.base.y - b.base.y;
           }
           if (b.base !== undefined) {
-            return a.layer < 0 ? -1: 1;
+            return a.layer < 0 ? -1 : 1;
           } else if (a.base !== undefined) {
-            return b.layer < 0 ? 1: -1;          
+            return b.layer < 0 ? 1 : -1;
           }
           return 0;
         }
@@ -126,9 +126,9 @@ module WesnothTiles {
       var diff = now - this.lastDraw;
       this.lastDraw = now;
       this.drawables.forEach(drawable => {
-        drawable.draw({                    
+        drawable.draw({
           x: Math.floor((this.canvas.width) / 2),
-          y: Math.floor((this.canvas.height) / 2),          
+          y: Math.floor((this.canvas.height) / 2),
         }, this.ctx, diff);
       });
 
@@ -138,7 +138,7 @@ module WesnothTiles {
       // this.ctx.rect(this.canvas.width / 2 - 4, this.canvas.height / 2 - 4,8,8);
       // this.ctx.stroke();
       
-// console.log(this.canvas.width, this.canvas.height);
+      // console.log(this.canvas.width, this.canvas.height);
       // for (var q = -20; q < 20; q++) { // very temporary...
       //   for (var r = -20; r < 20; r++) {
       //     var hex = this.drawMap.get(HexPos.toString(q, r));
@@ -156,7 +156,7 @@ module WesnothTiles {
       // }
     }
 
-    Resize(width: number, height: number): void {    
+    Resize(width: number, height: number): void {
       this.canvas.width = width;
       this.canvas.height = height;
     }

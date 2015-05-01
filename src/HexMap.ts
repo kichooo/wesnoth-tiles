@@ -6,7 +6,7 @@ module WesnothTiles {
 
     public tgGroup: TgGroup = new TgGroup();
     public hexes = new Map<string, Hex>();
-    
+
     constructor() {
 
     }
@@ -20,7 +20,7 @@ module WesnothTiles {
     }
 
 
-    addHex(hex: Hex) {      
+    addHex(hex: Hex) {
       this.addHexToTgs(hex)
       this.hexes.set(hex.toString(), hex);
 
