@@ -72,16 +72,11 @@ WML files with terrain definitions will be converted using short GO program.
 # current iteration (v0.4)
  - [x] implement gradual map edge fog of war
  - [x] cleanup atlas from not needed textures
- - [ ] typescript formatter
- - [ ] animated overlays - campfire and windmill.
+ - [x] typescript formatter
 
 # backlog list
- - typescript formatter
- - macros cleanup
  - introduce some automatic testing
  - introduce some way to test manually without changing app.js all the time. Editor, preset map buttons, better randomizers, etc.
- - overlays
- - cleanup texture atlases, we do not need most of the sprites from Wesnoth.
  - seedable randoms
 
 # license
