@@ -179,7 +179,7 @@ module WesnothTiles {
       postfix: "-@R0",
       layer: plfb.layer,
       center: { x: 36, y: 36 },
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+      variations: ["", "2"]
     }
 
     var tile1: WMLTile = {
@@ -215,7 +215,7 @@ module WesnothTiles {
       postfix: "-@R0-@R1-@R2-@R3-@R4-@R5",
       layer: plfb.layer,
       center: { x: 36, y: 36 },
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+      variations: ["", "2"]
     }
 
     var tile1: WMLTile = {
@@ -292,7 +292,7 @@ module WesnothTiles {
       postfix: "-@R0-@R1-@R2-@R3-@R4",
       layer: plfb.layer,
       center: { x: 36, y: 36 },
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+      variations: ["", "2"]
     }
 
     var tile1: WMLTile = {
@@ -361,7 +361,7 @@ module WesnothTiles {
       postfix: "-@R0-@R1-@R2-@R3",
       layer: plfb.layer,
       center: { x: 36, y: 36 },
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+      variations: ["", "2"]
     }
 
     var tile1: WMLTile = {
@@ -421,7 +421,7 @@ module WesnothTiles {
       postfix: "-@R0-@R1-@R2",
       layer: plfb.layer,
       center: { x: 36, y: 36 },
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+      variations: ["", "2"]
     }
 
     var tile1: WMLTile = {
@@ -473,7 +473,7 @@ module WesnothTiles {
       postfix: "-@R0-@R1",
       layer: plfb.layer,
       center: { x: 36, y: 36 },
-      variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+      variations: ["", "2"]
     }
 
     var tile1: WMLTile = {
