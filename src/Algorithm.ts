@@ -72,12 +72,12 @@ module WesnothTiles {
   }
 
 
-  var getImgName = (img: WMLImage, tg: WMLTerrainGraphics, rot: number, translatedPostfix: string) => {
+  var getImgName = (hex: Hex, img: WMLImage, tg: WMLTerrainGraphics, rot: number, translatedPostfix: string) => {
 
     var imgName: string;
     var num = img.variations.length;
     for (; ;) {
-      num = Math.floor(Math.random() * num);
+      num = hex.getRandom(0, num);
       var translatedName = tg.builder.toString(img.name, translatedPostfix);
       translatedName = translatedName.replace("@V", img.variations[num]);
       if (Resources.definitions.has(translatedName)) {
@@ -94,7 +94,7 @@ module WesnothTiles {
 
   var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
     // console.log("Performing macro for rotation", dp.hex.toString(), rot);
-    var chance = Math.floor(Math.random() * 101);
+    var chance = dp.hex.getRandom(0, 101);
     if (chance > tg.probability)
       return;
     // we need to know coors of the leftmost hex.
@@ -136,7 +136,7 @@ module WesnothTiles {
 
             var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
 
-            var imgName = getImgName(img, tg, rot, translatedPostfix);
+            var imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
             // console.log("Name",imgName, img.name, translatedPostfix);
             if (imgName === undefined)
               return;
@@ -163,7 +163,7 @@ module WesnothTiles {
 
           var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
 
-          var imgName = getImgName(img, tg, rot, translatedPostfix);
+          var imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
           // console.log("Name",imgName, img.name, translatedPostfix);
           if (imgName === undefined)
             return;

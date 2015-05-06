@@ -1,3 +1,4 @@
+/// <reference path="Utils.ts"/>
 /// <reference path="Hex.ts"/>
 /// <reference path="HexMap.ts"/>
 /// <reference path="Renderer.ts"/>
