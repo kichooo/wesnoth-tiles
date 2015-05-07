@@ -14,6 +14,9 @@ module WesnothTiles {
 
   export class StaticImage implements IDrawable {
     constructor(private x: number, private y: number, private name: string, public layer: number, public base: IVector) {
+      if (name.match("fog")) {
+        console.log("fog found! ", name);
+      }
     }
 
     draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {
@@ -38,11 +41,6 @@ module WesnothTiles {
       public base: IVector,
       private frames: number,
       private duration: number) {
-
-      if (name.match("frozen/ice-to-water")) {
-        console.log("grass", name);
-      }
-
     }
 
     draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {

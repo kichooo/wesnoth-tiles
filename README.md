@@ -70,10 +70,11 @@ WML files with terrain definitions will be converted using short GO program.
 - [x] ethereal abyss (chasm)
 
 # current iteration (v0.5)
- - seedable randoms
- - automatic testing of map drawables checksums
- - cleanup the structure, hide what should be hidden, show what should be visible outside.
- - create bower package
+ - [x] seedable randoms
+ - [ ] automatic testing of map drawables checksums
+ - [ ] cleanup the structure, hide what should be hidden, show what should be visible outside.
+ - [ ] create bower package
+ - [x] fog
 
 # backlog list
  - introduce some automatic testing

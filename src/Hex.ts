@@ -68,6 +68,8 @@ module WesnothTiles {
     VILLAGE_SWAMP,
     VILLAGE_COAST,
     DESERT_PLANTS,
+    FOG,
+    NO_FOG,
     OVERLAY_NONE
   }
 
@@ -75,6 +77,15 @@ module WesnothTiles {
   export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
     var swapped = new Map<ETerrain, boolean>();
     for (var i = 0; i < ETerrain.VOID; i++) {
+      if (!types.has(i))
+        swapped.set(i, true);
+    }
+    return swapped;
+  }
+
+  export var swapOverlayTypes = (types: Map<ETerrain, boolean>) => {
+    var swapped = new Map<ETerrain, boolean>();
+    for (var i = ETerrain.VOID + 1; i <= ETerrain.FOG; i++) {
       if (!types.has(i))
         swapped.set(i, true);
     }
@@ -110,8 +121,12 @@ module WesnothTiles {
   export class Hex extends HexPos {
     private hashesTaken = 0;
 
-    constructor(q: number, r: number, public terrain: ETerrain, public overlay: ETerrain = ETerrain.OVERLAY_NONE) {
+    constructor(q: number, r: number, public terrain: ETerrain, 
+      public overlay = ETerrain.OVERLAY_NONE, public fog = ETerrain.NO_FOG) {
       super(q, r);
+      if (q > 0) {
+        this.fog = ETerrain.FOG;
+      }
     }
 
     getRandom(from = 0, to?: number): number {

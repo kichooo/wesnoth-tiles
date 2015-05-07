@@ -640,7 +640,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "fog/fog-all",
+	"filename": "fog/fog-n-ne-se-s-sw-nw",
 	"frame": {"x":1507,"y":1086,"w":72,"h":72},
 	"rotated": false,
 	"trimmed": false,
@@ -703,7 +703,7 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
-	"filename": "fog/fog1",
+	"filename": "fog/fog",
 	"frame": {"x":1571,"y":794,"w":72,"h":72},
 	"rotated": false,
 	"trimmed": false,

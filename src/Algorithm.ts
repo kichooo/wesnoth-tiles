@@ -119,6 +119,10 @@ module WesnothTiles {
           return;
         }
 
+        if (tile.fog !== undefined && tile.fog !== hex.fog) {
+          return;
+        }
+
         if (!checkFlags(rot, tg.rotations, hexPos,
           tile.set_no_flag, tg.set_no_flag, dp.flags))
           return;

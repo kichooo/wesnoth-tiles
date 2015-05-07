@@ -102,13 +102,13 @@ module WesnothTiles {
 
       addForestMacro(this, ETerrain.MUSHROOMS, "forest/mushrooms");
 
-      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), "village/desert-oasis-1", { prob: 30 });
-      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), "village/desert-oasis-2", { prob: 43 });
-      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), "village/desert-oasis-3", { prob: 100 });
+      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), ETerrain.FOG, "village/desert-oasis-1", { prob: 30 });
+      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), ETerrain.FOG, "village/desert-oasis-2", { prob: 43 });
+      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), ETerrain.FOG, "village/desert-oasis-3", { prob: 100 });
 
-      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.DETRITUS]), "misc/detritus/detritusA", {});
-      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.TRASH]), "misc/detritus/trashA", {});
-      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.LITER]), "misc/detritus/liter", {});
+      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.DETRITUS]), ETerrain.FOG, "misc/detritus/detritusA", {});
+      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.TRASH]), ETerrain.FOG, "misc/detritus/trashA", {});
+      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.LITER]), ETerrain.FOG, "misc/detritus/liter", {});
 
       VOLCANO_2x2(this,
         getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
@@ -216,16 +216,16 @@ module WesnothTiles {
 
       NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_COAST]), "village/coast");
       OVERLAY_RANDOM_LFB(this, undefined,
-        getTerrainMap([ETerrain.FARM_VEGS]), "embellishments/farm-veg-spring", { layer: -81 });
+        getTerrainMap([ETerrain.FARM_VEGS]), ETerrain.FOG, "embellishments/farm-veg-spring", { layer: -81 });
 
       OVERLAY_RANDOM_LFB(this, undefined,
-        getTerrainMap([ETerrain.FLOWERS_MIXED]), "embellishments/flowers-mixed", { layer: -500 });
+        getTerrainMap([ETerrain.FLOWERS_MIXED]), ETerrain.FOG, "embellishments/flowers-mixed", { layer: -500 });
 
       OVERLAY_RANDOM_LFB(this, undefined,
-        getTerrainMap([ETerrain.RUBBLE]), "misc/rubble", { layer: -1 });
+        getTerrainMap([ETerrain.RUBBLE]), ETerrain.FOG, "misc/rubble", { layer: -1 });
 
       OVERLAY_RANDOM_LFB(this, undefined,
-        getTerrainMap([ETerrain.STONES_SMALL]), "embellishments/stones-small", {});    
+        getTerrainMap([ETerrain.STONES_SMALL]), ETerrain.FOG, "embellishments/stones-small", {});    
 
       // fillers for mountains
       TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "hills/regular", {});
@@ -254,7 +254,7 @@ module WesnothTiles {
       OVERLAY_RESTRICTED_PLFB(this, getTerrainMap([ETerrain.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
         "embellishments/desert-plant2", { prob: 100 });
 
-      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.DESERT_PLANTS]), "embellishments/desert-plant", {});
+      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.DESERT_PLANTS]), ETerrain.FOG, "embellishments/desert-plant", {});
 
       TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_SNOW]), "hills/snow", {}); // Ha
 
@@ -286,6 +286,13 @@ module WesnothTiles {
         builder: IB_ANIMATION_15
       }); // Wwt
 
+
+      OVERLAY_RANDOM_LFB(this, undefined, undefined, ETerrain.FOG, "fog/fog", { layer: 999, flag: "fog" });
+
+      FOG_TRANSITION_LFB(this,
+        ETerrain.FOG,
+        ETerrain.NO_FOG,        
+        "fog/fog", { layer: 999, flag: "fog" });
 
 
       // chasms transitions

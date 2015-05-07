@@ -78,6 +78,7 @@ module WesnothTiles {
     r: number;
     type?: Map<ETerrain, boolean>;
     overlay?: Map<ETerrain, boolean>;
+    fog?: ETerrain;
     images?: WMLImage[];
 
     anchor?: number;
@@ -105,7 +106,7 @@ module WesnothTiles {
     builder?: IBuilder;
   }
 
-  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: ETerrain, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
@@ -119,6 +120,7 @@ module WesnothTiles {
       r: 0,
       type: terrainList,
       overlay: overlayList,
+      fog: fog,
       set_no_flag: [plfb.flag]
     }
 
@@ -142,11 +144,11 @@ module WesnothTiles {
       plfb.flag = "base";
     if (plfb.builder === undefined)
       plfb.builder = IB_IMAGE_SINGLE;
-    GENERIC_SINGLE_PLFB(tgGroup, terrainList, undefined, imageStem, plfb);
+    GENERIC_SINGLE_PLFB(tgGroup, terrainList, undefined, undefined, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    GENERIC_SINGLE_PLFB(tgGroup, terrainList, overlayList, imageStem + "@V", {
+  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: ETerrain, imageStem: string, lfb: LFB) => {
+    GENERIC_SINGLE_PLFB(tgGroup, terrainList, overlayList, fog, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -154,8 +156,8 @@ module WesnothTiles {
     });
   }
 
-  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, overlayList, imageStem, {
+  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: ETerrain, imageStem: string, lfb: LFB) => {
+    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, overlayList, fog, imageStem, {
       layer: lfb.layer === undefined ? 0 : lfb.layer,
       flag: lfb.flag === undefined ? "overlay" : lfb.flag,
       builder: lfb.builder === undefined ? IB_IMAGE_SINGLE : lfb.builder,
@@ -169,11 +171,12 @@ module WesnothTiles {
       lfb.flag = "base";
     if (lfb.builder === undefined)
       lfb.builder = IB_IMAGE_SINGLE;
-    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, undefined, imageStem, lfb);
+    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, undefined, undefined, imageStem, lfb);
   }
 
 
-  var BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",
@@ -186,6 +189,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
+      fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0"]
     }
 
@@ -193,6 +197,7 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
@@ -209,7 +214,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED6_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED6_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4-@R5",
@@ -222,6 +228,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
+      fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4", plfb.flag + "-@R5"]
     }
 
@@ -229,6 +236,7 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
@@ -236,6 +244,7 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
@@ -243,6 +252,7 @@ module WesnothTiles {
       q: 1,
       r: 0,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R5"]
     }
 
@@ -250,6 +260,7 @@ module WesnothTiles {
       q: 0,
       r: 1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R0"]
     }
 
@@ -257,6 +268,7 @@ module WesnothTiles {
       q: -1,
       r: 1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R1"]
     }
 
@@ -264,6 +276,7 @@ module WesnothTiles {
       q: -1,
       r: 0,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R2"]
     }
 
@@ -286,7 +299,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED5_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED5_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4",
@@ -299,6 +313,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
+      fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4"]
     }
 
@@ -306,6 +321,7 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
@@ -313,6 +329,7 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
@@ -320,6 +337,7 @@ module WesnothTiles {
       q: 1,
       r: 0,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R5"]
     }
 
@@ -327,6 +345,7 @@ module WesnothTiles {
       q: 0,
       r: 1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R0"]
     }
 
@@ -334,6 +353,7 @@ module WesnothTiles {
       q: -1,
       r: 1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R1"]
     }
 
@@ -355,7 +375,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED4_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED4_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3",
@@ -368,6 +389,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
+      fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3"]
     }
 
@@ -375,6 +397,7 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
@@ -382,6 +405,7 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
@@ -389,6 +413,7 @@ module WesnothTiles {
       q: 1,
       r: 0,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R5"]
     }
 
@@ -396,6 +421,7 @@ module WesnothTiles {
       q: 0,
       r: 1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R0"]
     }
 
@@ -415,7 +441,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2",
@@ -428,6 +455,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
+      fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2"]
     }
 
@@ -435,6 +463,7 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
@@ -442,6 +471,7 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
@@ -449,6 +479,7 @@ module WesnothTiles {
       q: 1,
       r: 0,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R5"]
     }
 
@@ -467,7 +498,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1",
@@ -480,6 +512,7 @@ module WesnothTiles {
       q: 0,
       r: 0,
       type: adjacent,
+      fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1"]
     }
 
@@ -487,6 +520,7 @@ module WesnothTiles {
       q: 0,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
@@ -494,6 +528,7 @@ module WesnothTiles {
       q: 1,
       r: -1,
       type: terrainList,
+      fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
@@ -511,8 +546,9 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED6_PLFB(tgGroup, terrainList, adjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED6_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -520,8 +556,9 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED5_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED5_PLFB(tgGroup, terrainList, adjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED5_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED5_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -529,8 +566,9 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED4_PLFB(tgGroup, terrainList, adjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED4_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -538,8 +576,9 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED3_PLFB(tgGroup, terrainList, adjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED3_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -547,8 +586,9 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED2_PLFB(tgGroup, terrainList, adjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED2_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -556,8 +596,9 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED_PLFB(tgGroup, terrainList, adjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -565,20 +606,21 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, grades: number) => {
+  var BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB, grades: number) => {
     switch (grades) {
       case 6:
-        BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem, lfb);
+        BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 5:
-        BORDER_RESTRICTED5_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem, lfb);
+        BORDER_RESTRICTED5_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 4:
-        BORDER_RESTRICTED4_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem, lfb);
+        BORDER_RESTRICTED4_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 3:
-        BORDER_RESTRICTED3_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem, lfb);
+        BORDER_RESTRICTED3_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 2:
-        BORDER_RESTRICTED2_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem, lfb);
+        BORDER_RESTRICTED2_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 1:
-        BORDER_RESTRICTED_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem, lfb);
+        BORDER_RESTRICTED_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
     }
 
 
@@ -614,7 +656,17 @@ module WesnothTiles {
       addToTransitionsTable(terrainList, adjacent, imageStem);
       addToTransitionsTable(adjacent, terrainList, imageStem);
     }
-    BORDER_COMPLETE_LFB(tgGroup, terrainList, adjacent, imageStem, lfb, grades);
+    BORDER_COMPLETE_LFB(tgGroup, terrainList, undefined, adjacent, undefined, imageStem, lfb, grades);
+  }
+
+  export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: ETerrain, fogAdjacent: ETerrain, imageStem: string, lfb: LFB, grades = 6) => {
+    if (lfb.layer === undefined)
+      lfb.layer = -500;
+    if (lfb.flag === undefined)
+      lfb.flag = "transition";
+    if (lfb.builder === undefined)
+      lfb.builder = IB_IMAGE_SINGLE;    
+    BORDER_COMPLETE_LFB(tgGroup, undefined, fog, undefined, fogAdjacent, imageStem, lfb, grades);
   }
 
 
@@ -1024,7 +1076,7 @@ module WesnothTiles {
     GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "");
     GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "-@R0");
     GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "");
-    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, undefined, imageStem, lfb);
+    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, undefined, undefined, imageStem, lfb);
   }
 
   export var OVERLAY_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
@@ -1399,8 +1451,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    GENERIC_SINGLE_PLFB(tgGroup, terrainList, overlayList, imageStem, {
+  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: ETerrain, imageStem: string, plfb: PLFB) => {
+    GENERIC_SINGLE_PLFB(tgGroup, terrainList, overlayList, fog, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
