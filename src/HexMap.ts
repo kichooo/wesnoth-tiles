@@ -60,7 +60,7 @@ module WesnothTiles {
 
         if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
           return;
-
+        // console.log("Adding hex", tg.images[0].name);
         tg.hexes.set(hex.toString(), hex);
       });
     }

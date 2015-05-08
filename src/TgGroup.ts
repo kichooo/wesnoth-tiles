@@ -10,19 +10,27 @@ module WesnothTiles {
     return terrainList;
   }
 
-  var addSparseForestMacro = (tgGroup: TgGroup, overlay: ETerrain, imagestem: string) => {
+  var getOverlayMap = (terrains: EOverlay[]) => {
+    var terrainList = new Map<EOverlay, boolean>();
+    terrains.forEach(terrain => {
+      terrainList.set(terrain, true);
+    });
+    return terrainList;
+  }
+
+  var addSparseForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
     NEW_FOREST(tgGroup,
       getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
         ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC]),
-      getTerrainMap([overlay]),
+      getOverlayMap([overlay]),
       getTerrainMap([ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
         ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
       imagestem);
   }
 
-  var addForestMacro = (tgGroup: TgGroup, overlay: ETerrain, imagestem: string) => {
+  var addForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
     NEW_FOREST(tgGroup, undefined,
-      getTerrainMap([overlay]),
+      getOverlayMap([overlay]),
       getTerrainMap([ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
         ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
       imagestem);
@@ -56,59 +64,59 @@ module WesnothTiles {
           ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW, ETerrain.ABYSS]),
         "swamp/reed", { layer: -85, flag: "base2" });
 
-      addSparseForestMacro(this, ETerrain.WOODS_PINE, "forest/pine-sparse");
-      addForestMacro(this, ETerrain.WOODS_PINE, "forest/pine");
+      addSparseForestMacro(this, EOverlay.WOODS_PINE, "forest/pine-sparse");
+      addForestMacro(this, EOverlay.WOODS_PINE, "forest/pine");
 
-      addSparseForestMacro(this, ETerrain.SNOW_FOREST, "forest/snow-forest-sparse");
-      addForestMacro(this, ETerrain.SNOW_FOREST, "forest/snow-forest");
+      addSparseForestMacro(this, EOverlay.SNOW_FOREST, "forest/snow-forest-sparse");
+      addForestMacro(this, EOverlay.SNOW_FOREST, "forest/snow-forest");
 
-      addSparseForestMacro(this, ETerrain.JUNGLE, "forest/tropical/jungle-sparse");
-      addForestMacro(this, ETerrain.JUNGLE, "forest/tropical/jungle");
+      addSparseForestMacro(this, EOverlay.JUNGLE, "forest/tropical/jungle-sparse");
+      addForestMacro(this, EOverlay.JUNGLE, "forest/tropical/jungle");
 
-      addSparseForestMacro(this, ETerrain.PALM_DESERT, "forest/tropical/palm-desert-sparse");
-      addForestMacro(this, ETerrain.PALM_DESERT, "forest/tropical/palm-desert");
+      addSparseForestMacro(this, EOverlay.PALM_DESERT, "forest/tropical/palm-desert-sparse");
+      addForestMacro(this, EOverlay.PALM_DESERT, "forest/tropical/palm-desert");
 
-      addSparseForestMacro(this, ETerrain.PALM_DESERT, "forest/tropical/palm-desert-sparse");
-      addForestMacro(this, ETerrain.PALM_DESERT, "forest/tropical/palm-desert");
+      addSparseForestMacro(this, EOverlay.PALM_DESERT, "forest/tropical/palm-desert-sparse");
+      addForestMacro(this, EOverlay.PALM_DESERT, "forest/tropical/palm-desert");
 
-      addForestMacro(this, ETerrain.RAINFOREST, "forest/tropical/rainforest");
+      addForestMacro(this, EOverlay.RAINFOREST, "forest/tropical/rainforest");
 
-      addSparseForestMacro(this, ETerrain.SAVANNA, "forest/tropical/savanna-sparse");
-      addForestMacro(this, ETerrain.SAVANNA, "forest/tropical/savanna");
+      addSparseForestMacro(this, EOverlay.SAVANNA, "forest/tropical/savanna-sparse");
+      addForestMacro(this, EOverlay.SAVANNA, "forest/tropical/savanna");
 
-      addSparseForestMacro(this, ETerrain.DECIDUOUS_SUMMER, "forest/deciduous-summer-sparse");
-      addForestMacro(this, ETerrain.DECIDUOUS_SUMMER, "forest/deciduous-summer");
+      addSparseForestMacro(this, EOverlay.DECIDUOUS_SUMMER, "forest/deciduous-summer-sparse");
+      addForestMacro(this, EOverlay.DECIDUOUS_SUMMER, "forest/deciduous-summer");
 
-      addSparseForestMacro(this, ETerrain.DECIDUOUS_FALL, "forest/deciduous-fall-sparse");
-      addForestMacro(this, ETerrain.DECIDUOUS_FALL, "forest/deciduous-fall");
+      addSparseForestMacro(this, EOverlay.DECIDUOUS_FALL, "forest/deciduous-fall-sparse");
+      addForestMacro(this, EOverlay.DECIDUOUS_FALL, "forest/deciduous-fall");
 
-      addSparseForestMacro(this, ETerrain.DECIDUOUS_WINTER, "forest/deciduous-winter-sparse");
-      addForestMacro(this, ETerrain.DECIDUOUS_WINTER, "forest/deciduous-winter");
+      addSparseForestMacro(this, EOverlay.DECIDUOUS_WINTER, "forest/deciduous-winter-sparse");
+      addForestMacro(this, EOverlay.DECIDUOUS_WINTER, "forest/deciduous-winter");
 
-      addSparseForestMacro(this, ETerrain.DECIDUOUS_WINTER_SNOW, "forest/deciduous-winter-snow-sparse");
-      addForestMacro(this, ETerrain.DECIDUOUS_WINTER_SNOW, "forest/deciduous-winter-snow");
+      addSparseForestMacro(this, EOverlay.DECIDUOUS_WINTER_SNOW, "forest/deciduous-winter-snow-sparse");
+      addForestMacro(this, EOverlay.DECIDUOUS_WINTER_SNOW, "forest/deciduous-winter-snow");
 
-      addSparseForestMacro(this, ETerrain.MIXED_SUMMER, "forest/mixed-summer-sparse");
-      addForestMacro(this, ETerrain.MIXED_SUMMER, "forest/mixed-summer");
+      addSparseForestMacro(this, EOverlay.MIXED_SUMMER, "forest/mixed-summer-sparse");
+      addForestMacro(this, EOverlay.MIXED_SUMMER, "forest/mixed-summer");
 
-      addSparseForestMacro(this, ETerrain.MIXED_FALL, "forest/mixed-fall-sparse");
-      addForestMacro(this, ETerrain.MIXED_FALL, "forest/mixed-fall");
+      addSparseForestMacro(this, EOverlay.MIXED_FALL, "forest/mixed-fall-sparse");
+      addForestMacro(this, EOverlay.MIXED_FALL, "forest/mixed-fall");
 
-      addSparseForestMacro(this, ETerrain.MIXED_WINTER, "forest/mixed-winter-sparse");
-      addForestMacro(this, ETerrain.MIXED_WINTER, "forest/mixed-winter");
+      addSparseForestMacro(this, EOverlay.MIXED_WINTER, "forest/mixed-winter-sparse");
+      addForestMacro(this, EOverlay.MIXED_WINTER, "forest/mixed-winter");
 
-      addSparseForestMacro(this, ETerrain.MIXED_WINTER_SNOW, "forest/mixed-winter-snow-sparse");
-      addForestMacro(this, ETerrain.MIXED_WINTER_SNOW, "forest/mixed-winter-snow");
+      addSparseForestMacro(this, EOverlay.MIXED_WINTER_SNOW, "forest/mixed-winter-snow-sparse");
+      addForestMacro(this, EOverlay.MIXED_WINTER_SNOW, "forest/mixed-winter-snow");
 
-      addForestMacro(this, ETerrain.MUSHROOMS, "forest/mushrooms");
+      addForestMacro(this, EOverlay.MUSHROOMS, "forest/mushrooms");
 
-      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), undefined, "village/desert-oasis-1", { prob: 30 });
-      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), undefined, "village/desert-oasis-2", { prob: 43 });
-      OVERLAY_PLFB(this, undefined, getTerrainMap([ETerrain.OASIS]), undefined, "village/desert-oasis-3", { prob: 100 });
+      OVERLAY_PLFB(this, undefined, getOverlayMap([EOverlay.OASIS]), undefined, "village/desert-oasis-1", { prob: 30 });
+      OVERLAY_PLFB(this, undefined, getOverlayMap([EOverlay.OASIS]), undefined, "village/desert-oasis-2", { prob: 43 });
+      OVERLAY_PLFB(this, undefined, getOverlayMap([EOverlay.OASIS]), undefined, "village/desert-oasis-3", { prob: 100 });
 
-      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.DETRITUS]), undefined, "misc/detritus/detritusA", {});
-      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.TRASH]), undefined, "misc/detritus/trashA", {});
-      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.LITER]), undefined, "misc/detritus/liter", {});
+      OVERLAY_RANDOM_LFB(this, undefined, getOverlayMap([EOverlay.DETRITUS]), undefined, "misc/detritus/detritusA", {});
+      OVERLAY_RANDOM_LFB(this, undefined, getOverlayMap([EOverlay.TRASH]), undefined, "misc/detritus/trashA", {});
+      OVERLAY_RANDOM_LFB(this, undefined, getOverlayMap([EOverlay.LITER]), undefined, "misc/detritus/liter", {});
 
       VOLCANO_2x2(this,
         getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
@@ -178,54 +186,51 @@ module WesnothTiles {
 
       // villages
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), getTerrainMap([ETerrain.VILLAGE_HUMAN]), "village/human-hills");
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.VILLAGE_HUMAN]), "village/human-snow-hills");
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), getTerrainMap([ETerrain.VILLAGE_HUMAN_RUIN]), "village/human-hills-ruin");
+      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-hills");
+      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-snow-hills");
+      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), getOverlayMap([EOverlay.VILLAGE_HUMAN_RUIN]), "village/human-hills-ruin");
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE]), getTerrainMap([ETerrain.VILLAGE_HUMAN]), "village/human-snow");
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_HUMAN]), "village/human");
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_HUMAN_RUIN]), "village/human-cottage-ruin");
+      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-snow");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_RUIN]), "village/human-cottage-ruin");
 
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_HUMAN_CITY]), "village/human-city");
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.VILLAGE_HUMAN_CITY]), "village/human-city-snow");
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_HUMAN_CITY_RUIN]), "village/human-city-ruin");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY]), "village/human-city");
+      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY]), "village/human-city-snow");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY_RUIN]), "village/human-city-ruin");
 
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_TROPICAL]), "village/tropical-forest");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_TROPICAL]), "village/tropical-forest");
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.VILLAGE_HUT]), "village/hut-snow");
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_LOG_CABIN]), "village/log-cabin");
+      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUT]), "village/hut-snow");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_LOG_CABIN]), "village/log-cabin");
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.VILLAGE_HUT]), "village/hut-snow");
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_LOG_CABIN]), "village/log-cabin");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_CAMP]), "village/camp");
 
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_CAMP]), "village/camp");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_IGLOO]), "village/igloo");
 
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_IGLOO]), "village/igloo");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_ORC]), "village/orc");
 
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_ORC]), "village/orc");
+      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_ELVEN]), "village/elven-snow");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_ELVEN]), "village/elven");
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getTerrainMap([ETerrain.VILLAGE_ELVEN]), "village/elven-snow");
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_ELVEN]), "village/elven");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_DESERT]), "village/desert");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_DESERT_CAMP]), "village/desert-camp");
 
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_DESERT]), "village/desert");
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_DESERT_CAMP]), "village/desert-camp");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_DWARVEN]), "village/dwarven");
 
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_DWARVEN]), "village/dwarven");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_SWAMP]), "village/swampwater");
 
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_SWAMP]), "village/swampwater");
-
-      NEW_VILLAGE(this, undefined, getTerrainMap([ETerrain.VILLAGE_COAST]), "village/coast");
+      NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_COAST]), "village/coast");
       OVERLAY_RANDOM_LFB(this, undefined,
-        getTerrainMap([ETerrain.FARM_VEGS]), undefined, "embellishments/farm-veg-spring", { layer: -81 });
+        getOverlayMap([EOverlay.FARM_VEGS]), undefined, "embellishments/farm-veg-spring", { layer: -81 });
 
       OVERLAY_RANDOM_LFB(this, undefined,
-        getTerrainMap([ETerrain.FLOWERS_MIXED]), undefined, "embellishments/flowers-mixed", { layer: -500 });
+        getOverlayMap([EOverlay.FLOWERS_MIXED]), undefined, "embellishments/flowers-mixed", { layer: -500 });
 
       OVERLAY_RANDOM_LFB(this, undefined,
-        getTerrainMap([ETerrain.RUBBLE]), undefined, "misc/rubble", { layer: -1 });
+        getOverlayMap([EOverlay.RUBBLE]), undefined, "misc/rubble", { layer: -1 });
 
       OVERLAY_RANDOM_LFB(this, undefined,
-        getTerrainMap([ETerrain.STONES_SMALL]), undefined, "embellishments/stones-small", {});    
+        getOverlayMap([EOverlay.STONES_SMALL]), undefined, "embellishments/stones-small", {});    
 
       // fillers for mountains
       TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "hills/regular", {});
@@ -247,14 +252,14 @@ module WesnothTiles {
 
 
 
-      OVERLAY_RESTRICTED_PLFB(this, getTerrainMap([ETerrain.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
+      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
         "embellishments/desert-plant", { prob: 33 });
-      OVERLAY_RESTRICTED_PLFB(this, getTerrainMap([ETerrain.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
+      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
         "embellishments/desert-plant1", { prob: 50 });
-      OVERLAY_RESTRICTED_PLFB(this, getTerrainMap([ETerrain.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
+      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
         "embellishments/desert-plant2", { prob: 100 });
 
-      OVERLAY_RANDOM_LFB(this, undefined, getTerrainMap([ETerrain.DESERT_PLANTS]), undefined, "embellishments/desert-plant", {});
+      OVERLAY_RANDOM_LFB(this, undefined, getOverlayMap([EOverlay.DESERT_PLANTS]), undefined, "embellishments/desert-plant", {});
 
       TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_SNOW]), "hills/snow", {}); // Ha
 

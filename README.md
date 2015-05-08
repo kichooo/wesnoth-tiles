@@ -67,8 +67,8 @@ WML files with terrain definitions will be converted using short GO program.
  - [x] fog
  - [x] seedable randoms
  - [ ] cleanup the structure, hide what should be hidden, show what should be visible outside.
- - [ ] reintroduce Overlays.
- - [ ] change fog to boolean.
+ - [x] reintroduce Overlays.
+ - [x] change fog to boolean.
  - [ ] automatic testing of map drawables checksums
  - [ ] some better way to match terrains with macros, instead of having terrain, overlay and fog. 
  - [ ] create bower package

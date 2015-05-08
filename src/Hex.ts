@@ -4,31 +4,39 @@ module WesnothTiles {
   'use strict';
 
   export enum ETerrain {
-    MOUNTAIN_BASIC, // Mm 10  
-    FROZEN_SNOW, // Aa      
-    SAND_BEACH, // Ds  
-    FROZEN_ICE, // Ai      
-    GRASS_DRY, // 6
-    GRASS_GREEN, // 5
-    GRASS_SEMI_DRY, // 8
-    HILLS_DESERT, // 9            
-    GRASS_LEAF_LITTER, // 7
-    HILLS_REGULAR, // 2
-    MOUNTAIN_DRY, // 11
-    HILLS_DRY, // 3
-    MOUNTAIN_SNOW, // 12        
-    HILLS_SNOW, // 4        
-    SAND_DESERT, // Dd
-    MOUNTAIN_VOLCANO, // Mv
-    SWAMP_MUD, // Sm
-    SWAMP_WATER, // Ss
-    WATER_OCEAN, // Wo 
-    WATER_COAST_TROPICAL, // 1
-    ABYSS, // 1
-    VOID,
+    GRASS_GREEN, // Gg 0
+    GRASS_SEMI_DRY, // Ggd 1
+    GRASS_DRY, // Gd 2     
+    GRASS_LEAF_LITTER, // Gll 3
+
+    HILLS_REGULAR, // Hh 4
+    HILLS_DRY, // Hhd 5
+    HILLS_DESERT, // Hd 6      
+    HILLS_SNOW, // Ha 7    
 
 
-    WOODS_PINE,
+    MOUNTAIN_BASIC, // Mm 8
+    MOUNTAIN_DRY, // Md 9
+    MOUNTAIN_SNOW, // Ms 10 
+    MOUNTAIN_VOLCANO, // Mv 11
+
+    FROZEN_SNOW, // Aa 12
+    FROZEN_ICE, // Ai 13
+
+    SAND_BEACH, // Ds 14
+    SAND_DESERT, // Dd 15
+      
+    SWAMP_MUD, // Sm 16
+    SWAMP_WATER, // Ss 17
+      
+    WATER_OCEAN, // Wo 18
+    WATER_COAST_TROPICAL, // Ww 19
+      
+    ABYSS, // Qxua 20
+    VOID // Xv 21
+  }
+  export enum EOverlay {
+    WOODS_PINE = 22,
     SNOW_FOREST,
     JUNGLE,
     PALM_DESERT,
@@ -68,7 +76,7 @@ module WesnothTiles {
     VILLAGE_SWAMP,
     VILLAGE_COAST,
     DESERT_PLANTS,
-    OVERLAY_NONE
+    NONE
   }
 
 
@@ -97,10 +105,10 @@ module WesnothTiles {
     }
   }
 
-  // iterate terrains and overlays OVERLAY_NONE.
+  // iterate terrains and overlays without OVERLAY_NONE.
   export var iterateTerrainsAndOverlays = (callback: (ETerrain) => void) => {
 
-    for (var i = 0; i < ETerrain.OVERLAY_NONE; i++) {
+    for (var i = 0; i < EOverlay.NONE; i++) {
       callback(i);
     }
   }
@@ -119,12 +127,9 @@ module WesnothTiles {
   export class Hex extends HexPos {
     private hashesTaken = 0;
 
-    constructor(q: number, r: number, public terrain: ETerrain, 
-      public overlay = ETerrain.OVERLAY_NONE, public fog = false) {
+    constructor(q: number, r: number, public terrain: ETerrain,
+      public overlay = EOverlay.NONE, public fog = false) {
       super(q, r);
-      if (q > 0) {
-        this.fog = true;
-      }
     }
 
     getRandom(from = 0, to?: number): number {
