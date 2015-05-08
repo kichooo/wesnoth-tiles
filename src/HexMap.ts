@@ -25,7 +25,7 @@ module WesnothTiles {
       this.hexes.set(hex.toString(), hex);
 
 
-      // we also add 6 hexes around this hex, so that we are sure that we have a good fog of war.
+      // we also add 6 hexes around this hex, so that we are sure that everything is surrounded by void.
       this.setToVoidIfEmpty(hex.q + 1, hex.r);
       this.setToVoidIfEmpty(hex.q - 1, hex.r);
       this.setToVoidIfEmpty(hex.q, hex.r + 1);

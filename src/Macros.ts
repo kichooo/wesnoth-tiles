@@ -78,7 +78,7 @@ module WesnothTiles {
     r: number;
     type?: Map<ETerrain, boolean>;
     overlay?: Map<ETerrain, boolean>;
-    fog?: ETerrain;
+    fog?: boolean;
     images?: WMLImage[];
 
     anchor?: number;
@@ -106,7 +106,7 @@ module WesnothTiles {
     builder?: IBuilder;
   }
 
-  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: ETerrain, imageStem: string, plfb: PLFB) => {
+  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
@@ -147,7 +147,7 @@ module WesnothTiles {
     GENERIC_SINGLE_PLFB(tgGroup, terrainList, undefined, undefined, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: ETerrain, imageStem: string, lfb: LFB) => {
+  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: boolean, imageStem: string, lfb: LFB) => {
     GENERIC_SINGLE_PLFB(tgGroup, terrainList, overlayList, fog, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -156,7 +156,7 @@ module WesnothTiles {
     });
   }
 
-  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: ETerrain, imageStem: string, lfb: LFB) => {
+  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: boolean, imageStem: string, lfb: LFB) => {
     GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, overlayList, fog, imageStem, {
       layer: lfb.layer === undefined ? 0 : lfb.layer,
       flag: lfb.flag === undefined ? "overlay" : lfb.flag,
@@ -175,8 +175,8 @@ module WesnothTiles {
   }
 
 
-  var BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",
@@ -214,8 +214,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED6_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED6_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4-@R5",
@@ -299,8 +299,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED5_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED5_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4",
@@ -375,8 +375,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED4_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED4_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3",
@@ -441,8 +441,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2",
@@ -498,8 +498,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1",
@@ -546,8 +546,8 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+  var BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED6_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -556,8 +556,8 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED5_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+  var BORDER_RESTRICTED5_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED5_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -566,8 +566,8 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+  var BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED4_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -576,8 +576,8 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+  var BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED3_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -586,8 +586,8 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+  var BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED2_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -596,8 +596,8 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB) => {
+  var BORDER_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -606,8 +606,8 @@ module WesnothTiles {
     });
   }
 
-  var BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: ETerrain, 
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: ETerrain, imageStem: string, lfb: LFB, grades: number) => {
+  var BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean, 
+    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number) => {
     switch (grades) {
       case 6:
         BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
@@ -659,7 +659,7 @@ module WesnothTiles {
     BORDER_COMPLETE_LFB(tgGroup, terrainList, undefined, adjacent, undefined, imageStem, lfb, grades);
   }
 
-  export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: ETerrain, fogAdjacent: ETerrain, imageStem: string, lfb: LFB, grades = 6) => {
+  export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: boolean, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades = 6) => {
     if (lfb.layer === undefined)
       lfb.layer = -500;
     if (lfb.flag === undefined)
@@ -1451,7 +1451,7 @@ module WesnothTiles {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: ETerrain, imageStem: string, plfb: PLFB) => {
+  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<ETerrain, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
     GENERIC_SINGLE_PLFB(tgGroup, terrainList, overlayList, fog, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,

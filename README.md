@@ -23,12 +23,6 @@ Component will be written using Typescript, drawn on the Canvas. Gulp will take 
 Tiles will be uploaded as a sprite atlas, in default png format. 
 WML files with terrain definitions will be converted using short GO program.
 
-# plans
-1. Terrains (grass, hills mountains);
-2. Overlay objects (huts, windmills, flowers trees etc.);
-3. Create bower component.
-4. Easy usage.
-
 # supported terrains
 
 - [x] plains
@@ -70,16 +64,20 @@ WML files with terrain definitions will be converted using short GO program.
 - [x] ethereal abyss (chasm)
 
 # current iteration (v0.5)
- - [x] seedable randoms
- - [ ] automatic testing of map drawables checksums
- - [ ] cleanup the structure, hide what should be hidden, show what should be visible outside.
- - [ ] create bower package
  - [x] fog
+ - [x] seedable randoms
+ - [ ] cleanup the structure, hide what should be hidden, show what should be visible outside.
+ - [ ] reintroduce Overlays.
+ - [ ] change fog to boolean.
+ - [ ] automatic testing of map drawables checksums
+ - [ ] some better way to match terrains with macros, instead of having terrain, overlay and fog. 
+ - [ ] create bower package
+
+
 
 # backlog list
  - introduce some automatic testing
  - introduce some way to test manually without changing app.js all the time. Editor, preset map buttons, better randomizers, etc.
- - seedable randoms
  - bower_package
  - angular directive (?)
  - interfaces cleanup
