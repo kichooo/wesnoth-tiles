@@ -3,6 +3,7 @@ var gulp = require('gulp'),
   serve = require('gulp-serve'),
   concat = require('gulp-concat'),
   notify = require('gulp-notify')
+  merge = require('merge2');
 
 var tsProject = ts.createProject({
   declarationFiles: true,
@@ -12,16 +13,25 @@ var tsProject = ts.createProject({
 });
 
 gulp.task('scripts', function() {
-  return gulp.src('src/**/*.ts')
-    .pipe(ts(tsProject)).js
-    // .pipe(ts.filter(tsProject, { referencedFrom: ['references.ts'] }))
+  var streams = gulp.src('src/**/*.ts')
+    .pipe(ts(tsProject));
+
+  var jsStream = streams.js
     .pipe(concat('wesnoth-tiles.js'))
-    .pipe(gulp.dest("bin"))
-    .pipe(notify({
-      "message": "Typescript built succesfully.",
-      "onLast": true,
-      "time": 3000
-    }))
+    .pipe(gulp.dest("bin"));
+
+  var defStream = streams.dts
+    .pipe(concat('wesnoth-tiles.d.ts'))
+    .pipe(gulp.dest("bin"));    
+
+  return merge([jsStream, defStream])
+    .on("queueDrain", function() {
+      notify({
+        "message": "Typescript built succesfully.",
+        "onLast": true,
+        "time": 3000
+      })
+    })
     .on("error", notify.onError(function(error) {
       return "Failed to build typescript: " + error.message;
     }));
@@ -35,3 +45,5 @@ gulp.task('serve', serve({
   root: ['test', 'bin', 'tiles'],
   port: 8001,
 }));
+
+gulp.task("default", ["scripts"]);

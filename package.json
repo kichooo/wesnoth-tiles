@@ -9,5 +9,8 @@
     "gulp-typescript": "^2.2.1",
     "install": "^0.1.7",
     "npm": "^2.1.7"
+  },
+  "dependencies": {
+    "merge2": "^0.3.5"
   }
 }
