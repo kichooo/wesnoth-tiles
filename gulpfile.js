@@ -18,20 +18,18 @@ gulp.task('scripts', function() {
 
   var jsStream = streams.js
     .pipe(concat('wesnoth-tiles.js'))
-    .pipe(gulp.dest("bin"));
+    .pipe(gulp.dest("bin"))
+    .pipe(notify({
+      "message": "Typescript built succesfully.",
+      "onLast": true,
+      "time": 3000
+    }));
 
   var defStream = streams.dts
     .pipe(concat('wesnoth-tiles.d.ts'))
     .pipe(gulp.dest("bin"));    
 
   return merge([jsStream, defStream])
-    .on("queueDrain", function() {
-      notify({
-        "message": "Typescript built succesfully.",
-        "onLast": true,
-        "time": 3000
-      })
-    })
     .on("error", notify.onError(function(error) {
       return "Failed to build typescript: " + error.message;
     }));
