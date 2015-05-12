@@ -24,6 +24,7 @@ _testmain.go
 *.prof
 
 bin/*.js
+test/bin
 
 node_modules
 

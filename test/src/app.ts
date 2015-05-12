@@ -185,7 +185,7 @@ function loadCircle(map, terrain1, terrain2, overlay1, overlay2, x, y) {
 
 function start() {
   var timeStart = new Date();
-  var canvas = document.getElementById("map-canvas");
+  var canvas = <HTMLCanvasElement>document.getElementById("map-canvas");
   var renderer = new WesnothTiles.Renderer(canvas);
   renderer.load().then(function() {
 
@@ -205,7 +205,7 @@ function start() {
 
     var timeRebuildingStart = new Date();
     renderer.rebuild(map);
-    console.log("Rebuilding took  ", new Date() - timeRebuildingStart + "ms");
+    console.log("Rebuilding took  ", (new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
     renderer.Resize(window.innerWidth, window.innerHeight);
     var anim = function() {
       window.requestAnimationFrame(function() {
@@ -214,7 +214,7 @@ function start() {
       });
     };
     anim();
-    console.log("All took: ", new Date() - timeStart + "ms");
+    console.log("All took: ", (new Date().getTime() - timeStart.getTime()) + "ms");
   });
 
 }

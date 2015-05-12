@@ -48,8 +48,7 @@ gulp.task('app', ['scripts'], function() {
 });
 
 gulp.task('watch', ['app'], function() {
-  gulp.watch('src/**/*.ts', ['scripts']);
-  gulp.watch('test/src/**/*.ts', ['app']);
+  gulp.watch(['test/src/**/*.ts', 'src/**/*.ts'], ['app']);
 });
 
 gulp.task('serve', serve({
