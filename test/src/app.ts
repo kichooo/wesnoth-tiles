@@ -1,20 +1,20 @@
-/// <reference path="wesnoth-tiles.d.ts"/>
+var map = new WesnothTiles.HexMap();
 
-function loadRandomMap(map) {
+function loadRandomMap(): void {
   for (var i = -18; i < 18; i++)
     for (var j = -18; j < 18; j++) {
       map.addHex(new WesnothTiles.Hex(i, j, Math.floor(Math.random() * 21)));
     }
 }
 
-function loadRandomMapWithWoods(map) {
+function loadRandomMapWithWoods(): void {
   for (var i = -18; i < 18; i++)
     for (var j = -18; j < 18; j++) {
       map.addHex(new WesnothTiles.Hex(i, j, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.VOID + 1 + Math.floor(Math.random() * 20)));
     }
 }
 
-function loadChunksRandom(map) {
+function loadChunksRandom(): void {
   for (var i = -17; i < 17; i++)
     for (var j = -17; j < 17; j++) {
       map.addHex(new WesnothTiles.Hex(i, j, WesnothTiles.ETerrain.GRASS_GREEN));
@@ -34,7 +34,7 @@ function loadChunksRandom(map) {
   }
 }
 
-function loadRing(map, radius, terrain) {
+function loadRing(radius, terrain): void {
   for (var i = 0; i < radius; i++) {
     map.addHex(new WesnothTiles.Hex(2 + i, -radius - 1, terrain));
     map.addHex(new WesnothTiles.Hex(2 + radius, i - radius - 1, terrain));
@@ -56,10 +56,10 @@ function loadRing(map, radius, terrain) {
   map.addHex(new WesnothTiles.Hex(2, radius - 1, terrain));
 }
 
-function loadDisk(map) {
+function loadDisk(): void {
   // map.addHex(new WesnothTiles.Hex(0, 0, WesnothTiles.ETerrain.ABYSS));
-  loadRing(map, 5, WesnothTiles.ETerrain.ABYSS);
-  loadRing(map, 6, WesnothTiles.ETerrain.ABYSS);
+  loadRing(5, WesnothTiles.ETerrain.ABYSS);
+  loadRing(6, WesnothTiles.ETerrain.ABYSS);
 
   for (var i = 0; i < 5; i++) {
     map.addHex(new WesnothTiles.Hex(-6, i + 1, WesnothTiles.ETerrain.WATER_OCEAN));
@@ -188,8 +188,6 @@ function start() {
   var canvas = <HTMLCanvasElement>document.getElementById("map-canvas");
   var renderer = new WesnothTiles.Renderer(canvas);
   renderer.load().then(function() {
-
-    var map = new WesnothTiles.HexMap();
     // loadChunksRandom(map);
     // loadRandomMapWithWoods(map);
     // loadRandomMap(map);
@@ -199,7 +197,7 @@ function start() {
     // loadCircle(map, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL,
     //   WesnothTiles.EOverlay.NONE, WesnothTiles.EOverlay.NONE, 3, 0);
     // loadCircle(map, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.ABYSS, 2, -2);
-    loadDisk(map);
+    loadDisk();
 
 
 

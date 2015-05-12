@@ -1,11 +1,11 @@
 {
-    "compilerOptions": {
-        "out": "built/mycode.js",
-        "sourceMap": true,
-        "target": "es6"
-    },
-    "files": [
-        "src/references.ts",
-        "test/src/app.ts"
-    ]
+  "compilerOptions": {
+    "out": "built/mycode.js",
+    "sourceMap": true,
+    "target": "es6"
+  },
+  "files": [
+    "test/src/app.ts",
+    "src/references.ts"
+  ]
 }

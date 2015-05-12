@@ -3,18 +3,34 @@
 <head>
     <meta charset="utf-8"/>
     <title>map-wesnoth test.</title>
-</head>
-<body onload = "start();" 
-    style = "background-color:black;
-        overflow: hidden;
-        position: absolute;
-        margin: 0px;
-        top: 0px;
-        left: 0px;
-        right: 0px;
-        bottom: 0px;">
+    <style>
+    body {
+      background-color:black;
+      overflow: hidden;
+      position: absolute;
+      margin: 0px;
+      top: 0px;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+    }
 
-  <canvas id="map-canvas"></canvas>
+    canvas {
+      position: absolute;      
+    }
+    /*button: {
+      position: absolute;
+    }*/
+    </style>
+</head>
+<body onload = "start();">
+
+   <canvas id="map-canvas"></canvas>
+
+  <button onclick="loadDisk()">Load Disk</button>
+  <button onclick="loadRandomMap()">Load Random</button>
+  <button onclick="loadRandomMapWithWoods">Load Woods</button>
+
 
   <script src="wesnoth-tiles.js"></script>
   <script src="bin/app.js"></script>
