@@ -5,6 +5,7 @@
         "target": "es6"
     },
     "files": [
-        "src/references.ts"
+        "src/references.ts",
+        "test/src/app.ts"
     ]
 }

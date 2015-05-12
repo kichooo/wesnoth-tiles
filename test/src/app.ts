@@ -10,7 +10,7 @@ function loadRandomMap(map) {
 function loadRandomMapWithWoods(map) {
   for (var i = -18; i < 18; i++)
     for (var j = -18; j < 18; j++) {
-      map.addHex(new WesnothTiles.Hex(i, j, WesnothTiles.ETerrain.GRASS_SEMI_DRY, Math.floor(Math.random() * 20)));
+      map.addHex(new WesnothTiles.Hex(i, j, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.VOID + 1 + Math.floor(Math.random() * 20)));
     }
 }
 
