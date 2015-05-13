@@ -61,7 +61,7 @@ module WesnothTiles {
     }
   }
 
-  export class Renderer<HexType extends Hex> {
+  export class Renderer {
     private ctx: CanvasRenderingContext2D;
     // private drawMap = new Map<string,  HexToDraw>();
     private drawables: IDrawable[];

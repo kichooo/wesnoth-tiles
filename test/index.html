@@ -17,6 +17,7 @@
 
     canvas {
       position: absolute;      
+      /*z-index: 0;*/
     }
     /*button: {
       position: absolute;
@@ -25,12 +26,17 @@
 </head>
 <body onload = "start();">
 
-   <canvas id="map-canvas"></canvas>
 
-  <button onclick="loadDisk()">Load Disk</button>
-  <button onclick="loadRandomMap()">Load Random</button>
-  <button onclick="loadRandomMapWithWoods">Load Woods</button>
+  <canvas id="map-canvas">
+    
 
+  </canvas>
+
+  <div style="position:absolute"> 
+    <button type="button" onclick="loadDisk()">Load Disk</button>
+    <button type="button" onclick="loadRandomMap()">Load Random</button>
+    <button type="button" onclick="loadRandomMapWithWoods()">Load Woods</button>
+  </div>
 
   <script src="wesnoth-tiles.js"></script>
   <script src="bin/app.js"></script>

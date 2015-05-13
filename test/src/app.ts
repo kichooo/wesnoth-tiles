@@ -1,10 +1,12 @@
 var map = new WesnothTiles.HexMap();
+var renderer: WesnothTiles.Renderer;
 
 function loadRandomMap(): void {
   for (var i = -18; i < 18; i++)
     for (var j = -18; j < 18; j++) {
       map.addHex(new WesnothTiles.Hex(i, j, Math.floor(Math.random() * 21)));
     }
+  renderer.rebuild(map);
 }
 
 function loadRandomMapWithWoods(): void {
@@ -12,6 +14,7 @@ function loadRandomMapWithWoods(): void {
     for (var j = -18; j < 18; j++) {
       map.addHex(new WesnothTiles.Hex(i, j, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.VOID + 1 + Math.floor(Math.random() * 20)));
     }
+  renderer.rebuild(map);
 }
 
 function loadChunksRandom(): void {
@@ -32,6 +35,7 @@ function loadChunksRandom(): void {
     map.addHex(new WesnothTiles.Hex(x - 1, y + 1, terrainCode));
     map.addHex(new WesnothTiles.Hex(x - 1, y, terrainCode));
   }
+  renderer.rebuild(map);
 }
 
 function loadRing(radius, terrain): void {
@@ -171,6 +175,7 @@ function loadDisk(): void {
     map.addHex(new WesnothTiles.Hex(-2 - i, 4 + 1, WesnothTiles.ETerrain.WATER_OCEAN));
     map.addHex(new WesnothTiles.Hex(-1 - i, 4, WesnothTiles.ETerrain.WATER_OCEAN));
   }
+  renderer.rebuild(map);
 }
 
 function loadCircle(map, terrain1, terrain2, overlay1, overlay2, x, y) {
@@ -186,7 +191,7 @@ function loadCircle(map, terrain1, terrain2, overlay1, overlay2, x, y) {
 function start() {
   var timeStart = new Date();
   var canvas = <HTMLCanvasElement>document.getElementById("map-canvas");
-  var renderer = new WesnothTiles.Renderer(canvas);
+  renderer = new WesnothTiles.Renderer(canvas);
   renderer.load().then(function() {
     // loadChunksRandom(map);
     // loadRandomMapWithWoods(map);

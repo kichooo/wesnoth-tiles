@@ -219,7 +219,7 @@ declare module WesnothTiles {
         constructor(x: number, y: number, name: string, layer: number, base: IVector, frames: number, duration: number);
         draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number): void;
     }
-    class Renderer<HexType extends Hex> {
+    class Renderer {
         private canvas;
         private ctx;
         private drawables;
