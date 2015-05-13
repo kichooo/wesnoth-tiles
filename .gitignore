@@ -24,6 +24,8 @@ _testmain.go
 *.prof
 
 bin/*.js
+bin/wesnoth-tiles.d.ts
+
 test/bin
 test/src/wesnoth-tiles.d.ts
 
