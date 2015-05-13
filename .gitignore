@@ -25,6 +25,7 @@ _testmain.go
 
 bin/*.js
 test/bin
+test/src/wesnoth-tiles.d.ts
 
 node_modules
 
