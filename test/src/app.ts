@@ -3,7 +3,7 @@ import ETerrain = WesnothTiles.ETerrain;
 import EOverlay = WesnothTiles.EOverlay;
 
 var map = new WesnothTiles.HexMap();
-var renderer: WesnothTiles.Renderer;
+var renderer: WesnothTiles.TilesMap;
 
 function loadRandomMap(): void {
   for (var i = -18; i < 18; i++)
@@ -195,7 +195,7 @@ function loadCircle(map, terrain1, terrain2, overlay1, overlay2, x, y) {
 function start() {
   var timeStart = new Date();
   var canvas = <HTMLCanvasElement>document.getElementById("map-canvas");
-  renderer = new WesnothTiles.Renderer(canvas);
+  renderer = new WesnothTiles.TilesMap(canvas);
   renderer.load().then(function() {
     // loadChunksRandom(map);
     // loadRandomMapWithWoods(map);

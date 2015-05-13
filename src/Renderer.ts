@@ -61,16 +61,53 @@ module WesnothTiles {
     }
   }
 
-  export class Renderer {
+  export class TilesMap {
     private ctx: CanvasRenderingContext2D;
     // private drawMap = new Map<string,  HexToDraw>();
     private drawables: IDrawable[];
     private lastDraw: number = Date.now();
-
+    private hexMap = new HexMap();
 
 
     constructor(private canvas: HTMLCanvasElement) {
       this.ctx = this.canvas.getContext('2d');
+    }
+
+    // Sets given hex to specified terrain. If not specified, overlay does not change.
+    // A 'rebuild' call is needed to actually display the change.
+    setTerrain(q: number, r: number, terrain: ETerrain, overlay?: EOverlay) {
+      this.hexMap.addHex(new Hex(q, r, terrain, overlay))
+    }
+
+    // Unsets given hex. Overlay is cleared too.
+    // It is not an equivalent of setting terrain to Void.
+    // A 'rebuild' call is needed to actually display the change.
+    unsetTerrain(q: number, r: number) {
+
+    }
+
+    // Sets given hex to specified overlay. If hex does not exist,
+    // an error is thrown. To clear the overlay, one needs to set it to None.
+    // A 'rebuild' call is needed to actually display the change.
+    setOverlay(q: number, r: number, overlay: EOverlay) {
+      var hex = this.hexMap.getHexP(q, r);
+      if (hex === undefined)
+        throw new Error("Cannot set overlay for hex (" + q + "," + r + "). No hex present.");
+      hex.overlay = overlay;
+    }
+
+    // Sets the fog of war - usually meant to display hex which was once seen,
+    // but is no longer in the line of sight.
+    // A 'rebuild' call is needed to actually display the change.    
+    setFog(q: number, r: number) {
+
+    }
+
+    // Removes the fog of war - usually meant to display hex which was once seen,
+    // but is no longer in the line of sight.
+    // A 'rebuild' call is needed to actually display the change.
+    unsetFog(q: number, r: number) {
+
     }
 
     rebuild(hexMap: HexMap) {
