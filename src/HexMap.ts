@@ -19,6 +19,10 @@ module WesnothTiles {
       return this.hexes.get(HexPos.toString(q, r));
     }
 
+    removeHex(q: number, r: number): void {
+      this.hexes.delete(HexPos.toString(q, r));
+    }
+
 
     addHex(hex: Hex) {
       this.addHexToTgs(hex)

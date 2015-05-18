@@ -83,7 +83,7 @@ module WesnothTiles {
     // It is not an equivalent of setting terrain to Void.
     // A 'rebuild' call is needed to actually display the change.
     unsetTerrain(q: number, r: number) {
-
+      this.hexMap.removeHex(q, r);
     }
 
     // Sets given hex to specified overlay. If hex does not exist,
@@ -97,21 +97,27 @@ module WesnothTiles {
     }
 
     // Sets the fog of war - usually meant to display hex which was once seen,
-    // but is no longer in the line of sight.
+    // but is no longer in the line of sight. If no hex is present, thows an error.
     // A 'rebuild' call is needed to actually display the change.    
     setFog(q: number, r: number) {
-
+      var hex = this.hexMap.getHexP(q, r);
+      if (hex === undefined)
+        throw new Error("Cannot set fog for hex (" + q + "," + r + "). No hex present.");
+      hex.fog = true;
     }
 
     // Removes the fog of war - usually meant to display hex which was once seen,
-    // but is no longer in the line of sight.
+    // but is no longer in the line of sight. If no hex is present, thows an error.
     // A 'rebuild' call is needed to actually display the change.
     unsetFog(q: number, r: number) {
-
+      var hex = this.hexMap.getHexP(q, r);
+      if (hex === undefined)
+        throw new Error("Cannot unset fog for hex (" + q + "," + r + "). No hex present.");
+      hex.fog = false;
     }
 
-    rebuild(hexMap: HexMap) {
-      this.drawables = rebuild(hexMap);
+    rebuild() {
+      this.drawables = rebuild(this.hexMap);
       this.drawables.sort((a: IDrawable, b: IDrawable) => {
         if (a.layer === b.layer) {
           if (a.base !== undefined && b.base !== undefined) {
@@ -125,37 +131,11 @@ module WesnothTiles {
           return 0;
         }
         return a.layer - b.layer;        
-        // if (a.layer !== undefined && b.layer === undefined) {
-        //   return a.layer < 0 ? -1: 1;          
-        // }
-        // if (a.layer === undefined && b.layer !== undefined) {
-        //   return b.layer < 0 ? 1: -1;          
-        // }
-        // if (a.layer === undefined && b.layer === undefined) {
-        //   return a.base.y - b.base.y;
-        // }
-        // return a.layer - b.layer;
-        // if (a.base !== undefined && b.base !== undefined)
-        //   return a.base.y - b.base.y;
-        // if (a.base === undefined && b.base === undefined)
-        //   return a.layer - b.layer;
-        // if (a.base === undefined) {
-        //   return (a.layer > 0) ? 1 : -1;
-        // }
-        // return (b.layer > 0) ? -1 : 1;
-        // if (a.base !== undefined && b.layer!== undefined)
-        //   return a.base.y - b.base.y;
-        // if (a.base === undefined && b.base === undefined)
-        //   return a.layer - b.layer;
-        // if (a.base === undefined) {
-        //   return (a.layer >= 0) ? 1 : -1;
-        // }
-        // return (b.layer >= 0) ? -1 : 1;        
       });
     }
 
 
-    redraw(hexMap: HexMap): void {
+    redraw(): void {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       var now = Date.now();
       var diff = now - this.lastDraw;
