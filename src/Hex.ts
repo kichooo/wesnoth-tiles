@@ -79,51 +79,6 @@ module WesnothTiles {
     NONE
   }
 
-
-  export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
-    var swapped = new Map<ETerrain, boolean>();
-    for (var i = 0; i < ETerrain.VOID; i++) {
-      if (!types.has(i))
-        swapped.set(i, true);
-    }
-    return swapped;
-  }
-
-  // export var swapOverlayTypes = (types: Map<ETerrain, boolean>) => {
-  //   var swapped = new Map<ETerrain, boolean>();
-  //   for (var i = ETerrain.VOID + 1; i <= ETerrain.DESERT_PLANTS; i++) {
-  //     if (!types.has(i))
-  //       swapped.set(i, true);
-  //   }
-  //   return swapped;
-  // }
-
-  export var iterateTerrains = (callback: (ETerrain) => void) => {
-
-    for (var i = 0; i <= ETerrain.VOID; i++) {
-      callback(i);
-    }
-  }
-
-  // iterate terrains and overlays without OVERLAY_NONE.
-  export var iterateTerrainsAndOverlays = (callback: (ETerrain) => void) => {
-
-    for (var i = 0; i < EOverlay.NONE; i++) {
-      callback(i);
-    }
-  }
-
-  export var sumTerrainMaps = (map1: Map<ETerrain, boolean>, map2: Map<ETerrain, boolean>) => {
-    var result = new Map<ETerrain, boolean>();
-    map1.forEach((_, key) => {
-      result.set(key, true);
-    });
-    map2.forEach((_, key) => {
-      result.set(key, true);
-    });
-    return result;
-  }
-
   export class Hex extends HexPos {
     private hashesTaken = 0;
 

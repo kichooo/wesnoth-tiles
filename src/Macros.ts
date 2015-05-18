@@ -106,6 +106,17 @@ module WesnothTiles {
     builder?: IBuilder;
   }
 
+  var sumTerrainMaps = (map1: Map<ETerrain, boolean>, map2: Map<ETerrain, boolean>) => {
+    var result = new Map<ETerrain, boolean>();
+    map1.forEach((_, key) => {
+      result.set(key, true);
+    });
+    map2.forEach((_, key) => {
+      result.set(key, true);
+    });
+    return result;
+  }
+
   var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
