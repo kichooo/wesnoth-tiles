@@ -194,7 +194,7 @@ function start() {
   var timeStart = new Date();
   var canvas = <HTMLCanvasElement>document.getElementById("map-canvas");
   renderer = new WesnothTiles.TilesMap(canvas);
-  renderer.load().then(function() {
+  renderer.load().then(() => {
     // loadChunksRandom(map);
     // loadRandomMapWithWoods(map);
     // loadRandomMap(map);
@@ -213,7 +213,7 @@ function start() {
     console.log("Rebuilding took  ", (new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
     renderer.Resize(window.innerWidth, window.innerHeight);
     var anim = () => {
-      window.requestAnimationFrame(function() {
+      window.requestAnimationFrame(() => {
         renderer.redraw();
         anim();
       });

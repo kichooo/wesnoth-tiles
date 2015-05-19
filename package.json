@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "gulp-copy": "0.0.2",
+    "gulp-typescript": "^2.7.4",
     "merge2": "^0.3.5"
   }
 }

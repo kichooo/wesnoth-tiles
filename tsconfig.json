@@ -6,6 +6,6 @@
   },
   "files": [
     "test/src/app.ts",
-    "src/references.ts"
+    "src/_references.ts"
   ]
 }

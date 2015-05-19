@@ -11,26 +11,53 @@ var tsProject = ts.createProject({
   declarationFiles: true,
   noExternalResolve: false,
   sortOutput: true,
-  target: "ES5"
+  target: "ES6",
+  out: "dupa.js"
 });
 
 gulp.task('scripts', function() {
+  var tsStreams = gulp.src('src/**/*.ts')
+    .pipe(ts({
+      // noImplicitAny: true,
+      declarationFiles: true,
+      target: "ES5",
+      out: 'wesnoth-tiles.js'
+    }));
+
+  var jsStream = tsStreams.js
+    .pipe(gulp.dest("bin"))
+
+  var defStream = tsStreams.dts
+    // .pipe(concat('wesnoth-tiles.d.ts'))
+    .pipe(gulp.dest("bin"))
+
+  return merge([jsStream, defStream])
+    .on("error", notify.onError(function(error) {
+      return "Failed to build typescript: " + error.message;
+    }));
+
+  // return tsResult.js.pipe(gulp.dest('bin'));
+});
+
+gulp.task('scripts2', function() {
   var streams = gulp.src('src/**/*.ts')
     .pipe(ts(tsProject));
 
   var jsStream = streams.js
-    .pipe(concat('wesnoth-tiles.js'))
+    // .pipe(concat('wesnoth-tiles.js'))
     .pipe(gulp.dest("bin"))
-    .pipe(notify({
-      "message": "Typescript built succesfully.",
-      "onLast": true,
-      "time": 3000
-    }));
+    // .pipe(notify({
+    //   "message": "Typescript built succesfully.",
+    //   "onLast": true,
+    //   "time": 3000
+    // }));
 
   var defStream = streams.dts
-    .pipe(concat('wesnoth-tiles.d.ts'))    
+    // .pipe(concat('wesnoth-tiles.d.ts'))
     .pipe(gulp.dest("bin"))
-    .pipe(copy("test/src/", {prefix: 2}));    
+    // .pipe(copy("test/src/", {
+    //   prefix: 2
+    // }));
   return merge([jsStream, defStream])
     .on("error", notify.onError(function(error) {
       return "Failed to build typescript: " + error.message;

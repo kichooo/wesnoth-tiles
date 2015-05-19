@@ -1,6 +1,8 @@
-module WesnothTiles {
-  'use strict';
 
+
+
+module WesnothTiles {
+  'use strict';  
 
   export interface IBuilder {
     toDrawable(imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector): IDrawable;

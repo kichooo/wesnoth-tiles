@@ -1,7 +1,5 @@
 // Drawing algoritm. Pretty complicated, although much simplified compared to Wesnoth (which is much more powerful).
 
-/// <reference path="Macros.ts"/>
-
 module WesnothTiles {
   'use strict';
 
