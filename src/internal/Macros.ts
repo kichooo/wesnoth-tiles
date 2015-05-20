@@ -1,7 +1,4 @@
-
-
-
-module WesnothTiles {
+module WesnothTiles.Internal {
   'use strict';  
 
   export interface IBuilder {

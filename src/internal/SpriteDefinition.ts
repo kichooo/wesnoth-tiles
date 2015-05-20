@@ -1,4 +1,4 @@
-module WesnothTiles.Resources {
+module WesnothTiles.Internal {
   'use strict';
 
   export interface IFrame {

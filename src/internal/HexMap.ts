@@ -1,10 +1,10 @@
-module WesnothTiles {
+module WesnothTiles.Internal {
   'use strict';
 
   export class HexMap {
 
 
-    public tgGroup: TgGroup = new TgGroup();
+    public tgGroup = new Internal.TgGroup();
     public hexes = new Map<string, Hex>();
 
     constructor() {

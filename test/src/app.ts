@@ -1,4 +1,3 @@
-import Hex = WesnothTiles.Hex;
 import ETerrain = WesnothTiles.ETerrain;
 import EOverlay = WesnothTiles.EOverlay;
 

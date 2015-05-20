@@ -1,6 +1,6 @@
 // Drawing algoritm. Pretty complicated, although much simplified compared to Wesnoth (which is much more powerful).
 
-module WesnothTiles {
+module WesnothTiles.Internal {
   'use strict';
 
   interface IDrawParams {
@@ -78,7 +78,7 @@ module WesnothTiles {
       num = hex.getRandom(0, num);
       var translatedName = tg.builder.toString(img.name, translatedPostfix);
       translatedName = translatedName.replace("@V", img.variations[num]);
-      if (Resources.definitions.has(translatedName)) {
+      if (definitions.has(translatedName)) {
         imgName = img.name.replace("@V", img.variations[num]);
         break;
       }

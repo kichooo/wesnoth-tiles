@@ -1,4 +1,4 @@
-module WesnothTiles {
+module WesnothTiles.Internal {
   'use strict';
 
 

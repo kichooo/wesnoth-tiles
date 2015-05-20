@@ -4,7 +4,7 @@
 //   then(any): Promise;
 // }
 
-module WesnothTiles.Resources {
+module WesnothTiles.Internal {
   'use strict';
 
   // export interface IHexResource {
