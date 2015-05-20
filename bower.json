@@ -1,0 +1,35 @@
+{
+  "name": "wesnoth-tiles",
+  "version": "0.5.0",
+  "homepage": "https://github.com/kichooo/wesnoth-tiles",
+  "authors": [
+    "Krzysztof Burliński <krzysztof.burlinski@gmail.com>"
+  ],
+  "description": "Library which displays hexagonal graphics map on a html5 canvas. Port of Battle for Wesnoth beautiful graphcis system.",
+  "main": "bin/wesnoth-tiles.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "hex",
+    "hexagons",
+    "graphics",
+    "battle",
+    "wesnoth",
+    "canvas"
+  ],
+  "license": "GPL",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "gulpfile.js"
+    "packag.json"
+    "tsconfig.json"
+    "tsfmt.json"
+    "data"
+  ]
+}
