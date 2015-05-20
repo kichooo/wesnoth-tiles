@@ -4,6 +4,7 @@
 /// <reference path="internal/SpriteDefinition.ts"/>
 /// <reference path="internal/Resources.ts"/>
 /// <reference path="internal/Algorithm.ts"/>
+/// <reference path="internal/Macros.ts"/>
 /// <reference path="internal/TgGroup.ts"/>
 
 /// <reference path="TilesMap.ts"/>
