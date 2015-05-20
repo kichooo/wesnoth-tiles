@@ -1,6 +1,6 @@
 {
   "name": "wesnoth-tiles",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "homepage": "https://github.com/kichooo/wesnoth-tiles",
   "authors": [
     "Krzysztof Burliński <krzysztof.burlinski@gmail.com>"
@@ -26,10 +26,10 @@
     "test",
     "tests",
     "src",
-    "gulpfile.js"
-    "packag.json"
-    "tsconfig.json"
-    "tsfmt.json"
+    "gulpfile.js",
+    "packag.json",
+    "tsconfig.json",
+    "tsfmt.json",
     "data"
   ]
 }
