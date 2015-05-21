@@ -76,14 +76,13 @@ module WesnothTiles {
     NONE
   }
 
-
   export interface IVector {
     x: number;
     y: number;
   }
 
   export interface IDrawable {
-    draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number);
+    draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number);
     layer?: number;
     base?: IVector;
     toString(): string;
@@ -96,14 +95,14 @@ module WesnothTiles {
       }
     }
 
-    draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {
+    draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {
       var sprite = Internal.definitions.get(this.name);
       if (sprite === undefined) {
         console.error("Undefined sprite", this.name)
       }
       var pos: IVector = {
-        x: this.x + pos.x,
-        y: this.y + pos.y
+        x: this.x + x,
+        y: this.y + y
       }
       sprite.draw(pos, ctx);
     }
@@ -124,7 +123,7 @@ module WesnothTiles {
       private duration: number) {
     }
 
-    draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number) {
+    draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {
       this.animTime = (this.animTime + timePassed) % (this.frames * this.duration);
       var frame = 1 + Math.floor(this.animTime / this.duration);
       // console.log("frame",frame);
@@ -134,8 +133,8 @@ module WesnothTiles {
         console.error("Undefined sprite", this.name.replace("@A", frameString))
       }
       var pos: IVector = {
-        x: this.x + pos.x,
-        y: this.y + pos.y
+        x: this.x + x,
+        y: this.y + y
       }
 
       sprite.draw(pos, ctx);
@@ -239,10 +238,10 @@ module WesnothTiles {
       var diff = now - this.lastDraw;
       this.lastDraw = now;
       this.drawables.forEach(drawable => {
-        drawable.draw({
-          x: Math.floor((this.canvas.width) / 2),
-          y: Math.floor((this.canvas.height) / 2),
-        }, this.ctx, diff);
+        drawable.draw(
+          Math.floor((this.canvas.width) / 2),
+          Math.floor((this.canvas.height) / 2),
+          this.ctx, diff);
       });
 
       // this.ctx.beginPath();
