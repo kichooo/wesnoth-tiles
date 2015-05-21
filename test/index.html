@@ -19,6 +19,12 @@
       position: absolute;      
       /*z-index: 0;*/
     }
+
+    span {
+      font-size: 18px;
+      background-color: gray;
+      padding: 10px;
+    }
     /*button: {
       position: absolute;
     }*/
@@ -34,8 +40,15 @@
 
   <div style="position:absolute"> 
     <button type="button" onclick="loadDisk()">Load Disk</button>
+    <button type="button" onclick="loadTestMap()">Load Test Map</button>
     <button type="button" onclick="loadRandomMap()">Load Random</button>
     <button type="button" onclick="loadRandomMapWithWoods()">Load Woods</button>
+    <br>
+    <br>
+    <div id = "checksumBlock">
+      <span>Checksum: </span><span id="checksum"></span><span id="expected"></button>
+    </div>
+    
   </div>
 
   <script src="wesnoth-tiles.js"></script>

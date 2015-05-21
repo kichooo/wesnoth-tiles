@@ -71,7 +71,7 @@ WML files with terrain definitions will be converted using short GO program.
  - [x] change fog to boolean.
  - [ ] automatic testing of map drawables checksums
  - [ ] some better way to match terrains with macros, instead of having terrain, overlay and fog. 
- - [ ] create bower package
+ - [x] create bower package
 
 
 

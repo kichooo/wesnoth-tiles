@@ -86,6 +86,7 @@ module WesnothTiles {
     draw(pos: IVector, ctx: CanvasRenderingContext2D, timePassed: number);
     layer?: number;
     base?: IVector;
+    toString(): string;
   }
 
   export class StaticImage implements IDrawable {
@@ -105,6 +106,10 @@ module WesnothTiles {
         y: this.y + pos.y
       }
       sprite.draw(pos, ctx);
+    }
+
+    toString(): string {
+      return this.name + this.layer + ',' + this.x + ',' + this.y;
     }
   }
 
@@ -134,6 +139,10 @@ module WesnothTiles {
       }
 
       sprite.draw(pos, ctx);
+    }
+
+    toString(): string {
+      return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
     }
   }
 
@@ -192,6 +201,11 @@ module WesnothTiles {
       hex.fog = false;
     }
 
+    // Clears the map.
+    clear() {
+      this.hexMap.clear();
+    }
+
     rebuild() {
       this.drawables = Internal.rebuild(this.hexMap);
       this.drawables.sort((a: IDrawable, b: IDrawable) => {
@@ -210,6 +224,14 @@ module WesnothTiles {
       });
     }
 
+    getCheckSum(): string {
+      var checksum = 0;
+      this.drawables.forEach(drawable => {
+        checksum = Internal.murmurhash3(drawable.toString(), checksum);
+      });
+
+      return checksum.toString();
+    }
 
     redraw(): void {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
