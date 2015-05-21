@@ -9,7 +9,7 @@ module WesnothTiles.Internal {
   export var IB_IMAGE_SINGLE: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       // console.log("Adding " + imageStem + postfix);
-      return new StaticImage(
+      return new StaticDrawable(
         pos.x,
         pos.y,
         imageStem + postfix, layer, base
@@ -23,7 +23,7 @@ module WesnothTiles.Internal {
 
   export var IB_ANIMATION_15_SLOW: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      return new AnimatedImage(
+      return new AnimatedDrawable(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 15, 150
@@ -36,7 +36,7 @@ module WesnothTiles.Internal {
 
   export var IB_ANIMATION_15: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      return new AnimatedImage(
+      return new AnimatedDrawable(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 15, 110
@@ -49,7 +49,7 @@ module WesnothTiles.Internal {
 
   export var IB_ANIMATION_06: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      return new AnimatedImage(
+      return new AnimatedDrawable(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 6, 200

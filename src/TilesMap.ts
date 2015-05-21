@@ -76,10 +76,6 @@ module WesnothTiles {
     NONE
   }
 
-  
-
-    
-
   export class TilesMap {
     private ctx: CanvasRenderingContext2D;
     // private drawMap = new Map<string,  HexToDraw>();

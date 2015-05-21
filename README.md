@@ -66,7 +66,7 @@ WML files with terrain definitions will be converted using short GO program.
 # current iteration (v0.5)
  - [x] fog
  - [x] seedable randoms
- - [ ] cleanup the structure, hide what should be hidden, show what should be visible outside.
+ - [x] cleanup the structure, hide what should be hidden, show what should be visible outside.
  - [x] reintroduce Overlays.
  - [x] change fog to boolean.
  - [x] automatic testing of map drawables checksums

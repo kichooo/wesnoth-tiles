@@ -15,11 +15,8 @@ module WesnothTiles.Internal {
     toString(): string;
   }
 
-  export class StaticImage implements IDrawable {
+  export class StaticDrawable implements IDrawable {
     constructor(private x: number, private y: number, private name: string, public layer: number, public base: IVector) {
-      if (name.match("fog")) {
-        console.log("fog found! ", name);
-      }
     }
 
     draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {
@@ -27,11 +24,7 @@ module WesnothTiles.Internal {
       if (sprite === undefined) {
         console.error("Undefined sprite", this.name)
       }
-      var pos: IVector = {
-        x: this.x + x,
-        y: this.y + y
-      }
-      sprite.draw(pos, ctx);
+      sprite.draw(this.x + x, this.y + y, ctx);
     }
 
     toString(): string {
@@ -39,7 +32,7 @@ module WesnothTiles.Internal {
     }
   }
 
-  export class AnimatedImage implements IDrawable {
+  export class AnimatedDrawable implements IDrawable {
     private animTime = Date.now();
     constructor(private x: number,
       private y: number,
@@ -59,12 +52,8 @@ module WesnothTiles.Internal {
       if (sprite === undefined) {
         console.error("Undefined sprite", this.name.replace("@A", frameString))
       }
-      var pos: IVector = {
-        x: this.x + x,
-        y: this.y + y
-      }
 
-      sprite.draw(pos, ctx);
+      sprite.draw(this.x + x, this.y + y, ctx);
     }
 
     toString(): string {
