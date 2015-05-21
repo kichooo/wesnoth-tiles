@@ -1,4 +1,5 @@
 /// <reference path="internal/Utils.ts"/>
+/// <reference path="internal/Drawable.ts"/>
 /// <reference path="internal/Hex.ts"/>
 /// <reference path="internal/HexMap.ts"/>
 /// <reference path="internal/SpriteDefinition.ts"/>

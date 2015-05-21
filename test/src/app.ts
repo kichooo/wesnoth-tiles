@@ -237,7 +237,7 @@ function start() {
     var timeRebuildingStart = new Date();
     tilesMap.rebuild();
     console.log("Rebuilding took  ", (new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
-    tilesMap.Resize(window.innerWidth, window.innerHeight);
+    tilesMap.resize(window.innerWidth, window.innerHeight);
     var anim = () => {
       window.requestAnimationFrame(() => {
         tilesMap.redraw();

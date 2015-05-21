@@ -1892,28 +1892,6 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   } 
 
-  // export var DISABLE_BASE_TRANSITIONS = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>) => {
-  //   DISABLE_BASE_TRANSITIONS_F(terrainGraphics, terrainList, "transition");
-  // }
-
-  // export var DISABLE_BASE_TRANSITIONS_F = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, flag: string) => {
-  //   var terrainGraphic: WMLTerrainGraphics = {
-  //     tiles: [],
-  //     images: [],
-  //     probability: 100,
-  //     builder: IB_IMAGE_SINGLE
-  //   }
-
-  //   terrainGraphic.tiles.push({
-  //     q: 0,
-  //     r: 0,
-  //     type: terrainList,      
-  //     set_flag: [flag + "-n", flag + "-ne", flag + "-se", flag + "-s", flag + "-sw", flag + "-nw"]
-  //   });
-
-  //   tgGroup.addTg(terrainGraphic);
-  // }
-
   export var CORNER_PLFB_CONVEX = (tgGroup: TgGroup, terrainList1: Map<ETerrain, boolean>, adjacent1: Map<ETerrain, boolean>,
     adjacent2: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
  
