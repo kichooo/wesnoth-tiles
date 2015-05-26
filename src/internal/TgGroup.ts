@@ -18,6 +18,15 @@ module WesnothTiles.Internal {
     return terrainList;
   }
 
+  var swapTerrains = (terrains: ETerrain[]) => {
+    var terrainList: ETerrain[] = [];
+    for (var i = 0; i < ETerrain.VOID; i++) {
+      if (terrains.indexOf(i) === -1)
+        terrainList.push(i);
+    }
+    return terrainList;
+  }
+
   var addSparseForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
     NEW_FOREST(tgGroup,
       getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
@@ -319,14 +328,14 @@ module WesnothTiles.Internal {
 
       WALL_TRANSITION_PLFB(this,
         getTerrainMap([ETerrain.ABYSS]),
-        swapTerrainTypes(getTerrainMap([ETerrain.ABYSS])),
+        getTerrainMap(swapTerrains([ETerrain.ABYSS])),
         "chasm/regular", { layer: -90, flag: "ground" });          
 
       // transitions --------------------------
 
       TRANSITION_COMPLETE_LFB(this,
         getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO]),
-        swapTerrainTypes(getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_VOLCANO,
+        getTerrainMap(swapTerrains([ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_VOLCANO,
           ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD, ETerrain.ABYSS])),
         "mountains/dry", { layer: -166 }, 1);
 
@@ -373,28 +382,28 @@ module WesnothTiles.Internal {
 
       TRANSITION_COMPLETE_LFB(this,
         getTerrainMap([ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC]),
-        swapTerrainTypes(getTerrainMap([ETerrain.HILLS_REGULAR, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
+        getTerrainMap(swapTerrains([ETerrain.HILLS_REGULAR, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS, ETerrain.MOUNTAIN_BASIC,
           ETerrain.MOUNTAIN_VOLCANO, ETerrain.MOUNTAIN_DRY])),
         "hills/regular", { layer: -180 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
         getTerrainMap([ETerrain.HILLS_DRY]),
-        swapTerrainTypes(getTerrainMap([ETerrain.HILLS_DRY, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
+        getTerrainMap(swapTerrains([ETerrain.HILLS_DRY, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.MOUNTAIN_SNOW,
           ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW])),
         "hills/dry", { layer: -183 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
         getTerrainMap([ETerrain.HILLS_DESERT]),
-        swapTerrainTypes(getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS,
+        getTerrainMap(swapTerrains([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS,
           ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO, ETerrain.MOUNTAIN_SNOW,
           ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY])),
         "hills/desert", { layer: -184 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
         getTerrainMap([ETerrain.SWAMP_WATER]),
-        swapTerrainTypes(getTerrainMap([ETerrain.SWAMP_WATER,
+        getTerrainMap(swapTerrains([ETerrain.SWAMP_WATER,
           ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
           ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY,
           ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.ABYSS])),
@@ -475,7 +484,7 @@ module WesnothTiles.Internal {
 
       TRANSITION_COMPLETE_LFB(this,
         getTerrainMap([ETerrain.FROZEN_SNOW]),
-        swapTerrainTypes(getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.ABYSS,
+        getTerrainMap(swapTerrains([ETerrain.FROZEN_SNOW, ETerrain.ABYSS,
           ETerrain.FROZEN_SNOW, ETerrain.ABYSS, ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR,
           ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY,
           ETerrain.SWAMP_WATER, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW,
@@ -499,7 +508,7 @@ module WesnothTiles.Internal {
 
       TRANSITION_COMPLETE_LFB(this,
         getTerrainMap([ETerrain.SAND_BEACH]),
-        swapTerrainTypes(getTerrainMap([ETerrain.SAND_BEACH, ETerrain.HILLS_DRY,
+        getTerrainMap(swapTerrains([ETerrain.SAND_BEACH, ETerrain.HILLS_DRY,
           ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS, ETerrain.HILLS_DESERT,
           ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN,
@@ -509,7 +518,7 @@ module WesnothTiles.Internal {
 
       TRANSITION_COMPLETE_LFB(this,
         getTerrainMap([ETerrain.SAND_DESERT]),
-        swapTerrainTypes(getTerrainMap([ETerrain.SAND_DESERT,
+        getTerrainMap(swapTerrains([ETerrain.SAND_DESERT,
           ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS,
           ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW,
@@ -565,7 +574,7 @@ module WesnothTiles.Internal {
       NEW_BEACH(this,
         getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER,
           ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
-          ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO]),
+          ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO, ETerrain.VOID]),
         getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
         "flat/shore");
 
@@ -586,7 +595,7 @@ module WesnothTiles.Internal {
         "water/coast-tropical-long", -555);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.VOID]), swapTerrainTypes(getTerrainMap([])),
+        getTerrainMap([ETerrain.VOID]), getTerrainMap(swapTerrains([])),
         "void/void", { layer: 1000 }, 3);
       return TgGroup;
     }

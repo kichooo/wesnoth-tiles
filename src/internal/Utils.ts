@@ -68,6 +68,7 @@ module WesnothTiles.Internal {
 
   export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
     var swapped = new Map<ETerrain, boolean>();
+    // We skip the void
     for (var i = 0; i < ETerrain.VOID; i++) {
       if (!types.has(i))
         swapped.set(i, true);

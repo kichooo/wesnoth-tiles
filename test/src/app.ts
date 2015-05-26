@@ -11,11 +11,11 @@ function loadTestMap(): void {
 
   for (var i = -18; i < 18; i++)
     for (var j = -18; j < 18; j++) {
-      tilesMap.setTerrain(i, j, rng.nextRange(0, 21));
+      tilesMap.setTerrain(i, j, rng.nextRange(0, ETerrain.VOID + 1));
     }
   tilesMap.rebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 1572111070";
+  document.getElementById("expected").textContent = "expected: 999388252";
   document.getElementById("checksumBlock").style.display = 'block';
 }
 
@@ -221,6 +221,7 @@ function start() {
   var canvas = <HTMLCanvasElement>document.getElementById("map-canvas");
   tilesMap = new WesnothTiles.TilesMap(canvas);
   tilesMap.load().then(() => {
+    var timeRebuildingStart = new Date();
     // loadChunksRandom(map);
     // loadRandomMapWithWoods(map);
     // loadRandomMap(map);
@@ -234,8 +235,8 @@ function start() {
 
 
 
-    var timeRebuildingStart = new Date();
-    tilesMap.rebuild();
+    
+    // tilesMap.rebuild();
     console.log("Rebuilding took  ", (new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
     tilesMap.resize(window.innerWidth, window.innerHeight);
     var anim = () => {

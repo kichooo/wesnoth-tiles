@@ -60,7 +60,6 @@ module WesnothTiles.Internal {
     }
   }
 
-
   export interface WMLImage {
     name: string;
     layer: number;
@@ -183,7 +182,6 @@ module WesnothTiles.Internal {
       lfb.builder = IB_IMAGE_SINGLE;
     GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, undefined, undefined, imageStem, lfb);
   }
-
 
   var BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
     adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
