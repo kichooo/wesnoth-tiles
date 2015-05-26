@@ -15,7 +15,7 @@ function loadTestMap(): void {
     }
   tilesMap.rebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 3092537142";
+  document.getElementById("expected").textContent = "expected: 1572111070";
   document.getElementById("checksumBlock").style.display = 'block';
 }
 
@@ -202,7 +202,7 @@ function loadDisk(): void {
   }
   tilesMap.rebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 1457651321";
+  document.getElementById("expected").textContent = "expected: 2820975486";
   document.getElementById("checksumBlock").style.display = 'block'
 }
 
