@@ -504,7 +504,7 @@ module WesnothTiles.Internal {
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS, ETerrain.HILLS_DESERT,
           ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN,
           ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC,
-          ETerrain.FROZEN_SNOW, ETerrain.SWAMP_MUD, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO])),
+          ETerrain.FROZEN_SNOW, ETerrain.SWAMP_MUD])),
         "sand/beach", { layer: -510 }, 6);
 
       TRANSITION_COMPLETE_LFB(this,
@@ -515,7 +515,7 @@ module WesnothTiles.Internal {
           ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW,
           ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT,
           ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER,
-          ETerrain.SWAMP_MUD, ETerrain.SAND_BEACH, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO])),
+          ETerrain.SWAMP_MUD, ETerrain.SAND_BEACH])),
         "sand/desert", { layer: -510 }, 6);
 
       TRANSITION_COMPLETE_LFB(this,
