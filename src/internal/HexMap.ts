@@ -23,19 +23,27 @@ module WesnothTiles.Internal {
       this.hexes.delete(HexPos.toString(q, r));
     }
 
+    setTerrain(q: number, r: number, terrain: ETerrain, overlay = EOverlay.NONE, fog = false): void {
+      var hex = this.getHexP(q, r);
+      if (hex === undefined) {
+        hex = new Hex(q, r, terrain);
+        this.hexes.set(hex.toString(), hex);
+      }
 
-    addHex(hex: Hex) {
-      this.addHexToTgs(hex)
-      this.hexes.set(hex.toString(), hex);
-
+      hex.terrain = terrain;
+      hex.overlay = overlay;
+      hex.fog = fog;
 
       // we also add 6 hexes around this hex, so that we are sure that everything is surrounded by void.
-      this.setToVoidIfEmpty(hex.q + 1, hex.r);
-      this.setToVoidIfEmpty(hex.q - 1, hex.r);
-      this.setToVoidIfEmpty(hex.q, hex.r + 1);
-      this.setToVoidIfEmpty(hex.q, hex.r - 1);
-      this.setToVoidIfEmpty(hex.q + 1, hex.r - 1);
-      this.setToVoidIfEmpty(hex.q - 1, hex.r + 1);
+      this.setToVoidIfEmpty(q + 1, r);
+      this.setToVoidIfEmpty(q - 1, r);
+      this.setToVoidIfEmpty(q, r + 1);
+      this.setToVoidIfEmpty(q, r - 1);
+      this.setToVoidIfEmpty(q + 1, r - 1);
+      this.setToVoidIfEmpty(q - 1, r + 1);
+
+      
+      this.addHexToTgs(hex);      
     }
 
     // This method checks if hex has some value, and sets to void otherwise.
@@ -51,8 +59,7 @@ module WesnothTiles.Internal {
       if (this.hexes.has(hex.toString())) {
         var key = hex.toString();
         this.tgGroup.tgs.forEach(tg => {
-          if (tg.hexes.has)
-            tg.hexes.delete(key);
+          tg.hexes.delete(key);
         });
       }
 
@@ -61,12 +68,11 @@ module WesnothTiles.Internal {
         var tile = tg.tiles[0];
         if (tile.type !== undefined && !tile.type.has(hex.terrain))
           return;
-
         if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
           return;
         // console.log("Adding hex", tg.images[0].name);
         tg.hexes.set(hex.toString(), hex);
-      });
+      }); 
     }
 
     iterate(func: (hex: Hex) => void) {
@@ -75,6 +81,9 @@ module WesnothTiles.Internal {
 
     clear() {
       this.hexes.clear();
+      this.tgGroup.tgs.forEach(tg => {
+        tg.hexes.clear();
+      });
     }
 
   }

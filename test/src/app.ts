@@ -11,7 +11,19 @@ function loadTestMap(): void {
 
   for (var i = -18; i < 18; i++)
     for (var j = -18; j < 18; j++) {
-      tilesMap.setTerrain(i, j, rng.nextRange(0, ETerrain.VOID + 1));
+      var terrain = rng.nextRange(0, ETerrain.VOID + 1);
+      var overlay = EOverlay.NONE;
+      
+      if (terrain === ETerrain.GRASS_LEAF_LITTER)
+        overlay = rng.nextRange(EOverlay.WOODS_PINE, EOverlay.MUSHROOMS);
+        if ((terrain === ETerrain.GRASS_GREEN
+          || terrain === ETerrain.GRASS_DRY
+          || terrain === ETerrain.SAND_DESERT
+          || terrain === ETerrain.GRASS_SEMI_DRY
+          || terrain === ETerrain.FROZEN_SNOW)
+          && rng.nextRange(0, 3) === 0)
+          overlay = rng.nextRange(EOverlay.MUSHROOMS, EOverlay.NONE + 1);
+      tilesMap.setTerrain(i, j, terrain, overlay);
     }
   tilesMap.rebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();

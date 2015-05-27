@@ -637,16 +637,16 @@ module WesnothTiles.Internal {
   export var transitionsOptimizer = new Map<ETerrain, Map<ETerrain, boolean>>();
 
   export var addToTransitionsTable = (terrains: ETerrain[], adjacent: ETerrain[], stem: string) => {
-    terrains.forEach((_0, terrainKey) => {
+    terrains.forEach(terrain => {
 
-      if (!transitionsOptimizer.has(terrainKey)) {
-        transitionsOptimizer.set(terrainKey, new Map<ETerrain, boolean>());
+      if (!transitionsOptimizer.has(terrain)) {
+        transitionsOptimizer.set(terrain, new Map<ETerrain, boolean>());
       }
-      adjacent.forEach((_1, adjacentKey) => {
-        if (transitionsOptimizer.get(terrainKey).has(adjacentKey)) {
-          console.log("Duplicate transnition from ", ETerrain[terrainKey], ETerrain[adjacentKey], stem);
+      adjacent.forEach((adjacent) => {
+        if (transitionsOptimizer.get(terrain).has(adjacent)) {
+          console.log("Duplicate transnition from ", ETerrain[terrain], ETerrain[adjacent], stem);
         } else {
-          transitionsOptimizer.get(terrainKey).set(adjacentKey, true);
+          transitionsOptimizer.get(terrain).set(adjacent, true);
         }
       });
     });
