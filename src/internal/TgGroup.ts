@@ -1,15 +1,6 @@
 module WesnothTiles.Internal {
   'use strict';
 
-
-  var getTerrainMap = (terrains: ETerrain[]) => {
-    var terrainList = new Map<ETerrain, boolean>();
-    terrains.forEach(terrain => {
-      terrainList.set(terrain, true);
-    });
-    return terrainList;
-  }
-
   var getOverlayMap = (terrains: EOverlay[]) => {
     var terrainList = new Map<EOverlay, boolean>();
     terrains.forEach(terrain => {
@@ -18,7 +9,7 @@ module WesnothTiles.Internal {
     return terrainList;
   }
 
-  var swapTerrains = (terrains: ETerrain[]) => {
+  export var swapTerrains = (terrains: ETerrain[]) => {
     var terrainList: ETerrain[] = [];
     for (var i = 0; i < ETerrain.VOID; i++) {
       if (terrains.indexOf(i) === -1)
@@ -29,19 +20,19 @@ module WesnothTiles.Internal {
 
   var addSparseForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
     NEW_FOREST(tgGroup,
-      getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
-        ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC]),
+      [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
+        ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC],
       getOverlayMap([overlay]),
-      getTerrainMap([ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
-        ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
+      [ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
+        ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO],
       imagestem);
   }
 
   var addForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
     NEW_FOREST(tgGroup, undefined,
       getOverlayMap([overlay]),
-      getTerrainMap([ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
-        ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
+      [ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
+        ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO],
       imagestem);
   }
 
@@ -67,10 +58,10 @@ module WesnothTiles.Internal {
     }
 
     private populateTgs() {
-      OVERLAY_COMPLETE_LFB(this, getTerrainMap([ETerrain.SWAMP_WATER]),
-        getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
+      OVERLAY_COMPLETE_LFB(this, [ETerrain.SWAMP_WATER],
+        [ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
           ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_SNOW,
-          ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW, ETerrain.ABYSS]),
+          ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW, ETerrain.ABYSS],
         "swamp/reed", { layer: -85, flag: "base2" });
 
       addSparseForestMacro(this, EOverlay.WOODS_PINE, "forest/pine-sparse");
@@ -128,88 +119,88 @@ module WesnothTiles.Internal {
       OVERLAY_RANDOM_LFB(this, undefined, getOverlayMap([EOverlay.LITER]), undefined, "misc/detritus/liter", {});
 
       VOLCANO_2x2(this,
-        getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
-        getTerrainMap([ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY]),
+        [ETerrain.MOUNTAIN_VOLCANO],
+        [ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY],
         "mountains/volcano6", "base2");
 
       OVERLAY_RESTRICTED3_PLFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
+        [ETerrain.MOUNTAIN_BASIC],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS],
         "mountains/basic-castle-n", { flag: "base2" });
       OVERLAY_ROTATION_RESTRICTED2_PLFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
+        [ETerrain.MOUNTAIN_BASIC],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS],
         "mountains/basic-castle", { flag: "base2" });
       OVERLAY_RESTRICTED2_PLFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
-        getTerrainMap([ETerrain.ABYSS]),
+        [ETerrain.MOUNTAIN_BASIC],
+        [ETerrain.ABYSS],
         "mountains/basic-castle-n", { flag: "base2" });
       OVERLAY_ROTATION_RESTRICTED_PLFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
+        [ETerrain.MOUNTAIN_BASIC],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS],
         "mountains/basic-castle", { flag: "base2" });
 
-      MOUNTAINS_2x4_NW_SE(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range3", "base2", 18); // Mm    
-      MOUNTAINS_2x4_SW_NE(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range4", "base2", 26); // Mm    
-      MOUNTAINS_1x3_NW_SE(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range1", "base2", 20); // Mm    
-      MOUNTAINS_1x3_SW_NE(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic_range2", "base2", 20); // Mm    
-      MOUNTAINS_2x2(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic5", "base2", 40); // Mm    
-      MOUNTAINS_2x2(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic6", "base2", 30); // Mm    
+      MOUNTAINS_2x4_NW_SE(this, [ETerrain.MOUNTAIN_BASIC], "mountains/basic_range3", "base2", 18); // Mm    
+      MOUNTAINS_2x4_SW_NE(this, [ETerrain.MOUNTAIN_BASIC], "mountains/basic_range4", "base2", 26); // Mm    
+      MOUNTAINS_1x3_NW_SE(this, [ETerrain.MOUNTAIN_BASIC], "mountains/basic_range1", "base2", 20); // Mm    
+      MOUNTAINS_1x3_SW_NE(this, [ETerrain.MOUNTAIN_BASIC], "mountains/basic_range2", "base2", 20); // Mm    
+      MOUNTAINS_2x2(this, [ETerrain.MOUNTAIN_BASIC], "mountains/basic5", "base2", 40); // Mm    
+      MOUNTAINS_2x2(this, [ETerrain.MOUNTAIN_BASIC], "mountains/basic6", "base2", 30); // Mm    
 
-      MOUNTAIN_SINGLE_RANDOM(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "mountains/basic", "base2"); // Mm
+      MOUNTAIN_SINGLE_RANDOM(this, [ETerrain.MOUNTAIN_BASIC], "mountains/basic", "base2"); // Mm
 
       OVERLAY_RESTRICTED3_PLFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_DRY]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
+        [ETerrain.MOUNTAIN_DRY],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS],
         "mountains/dry-castle-n", { flag: "base2" });
       OVERLAY_ROTATION_RESTRICTED2_PLFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_DRY]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
+        [ETerrain.MOUNTAIN_DRY],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS],
         "mountains/dry-castle", { flag: "base2" });
       OVERLAY_RESTRICTED2_PLFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_DRY]),
-        getTerrainMap([ETerrain.ABYSS]),
+        [ETerrain.MOUNTAIN_DRY],
+        [ETerrain.ABYSS],
         "mountains/dry-castle-n", { flag: "base2" });
       OVERLAY_ROTATION_RESTRICTED_PLFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_DRY]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS]),
+        [ETerrain.MOUNTAIN_DRY],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS],
         "mountains/dry-castle", { flag: "base2" });
 
-      MOUNTAINS_2x4_NW_SE(this, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range3", "base2", 18); // Md    
-      MOUNTAINS_2x4_SW_NE(this, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range4", "base2", 26); // Md    
-      MOUNTAINS_1x3_NW_SE(this, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range1", "base2", 20); // Md
-      MOUNTAINS_1x3_SW_NE(this, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry_range2", "base2", 20); // Md       
-      MOUNTAINS_2x2(this, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry5", "base2", 40); // Md
-      MOUNTAINS_2x2(this, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry6", "base2", 30); // Md
+      MOUNTAINS_2x4_NW_SE(this, [ETerrain.MOUNTAIN_DRY], "mountains/dry_range3", "base2", 18); // Md    
+      MOUNTAINS_2x4_SW_NE(this, [ETerrain.MOUNTAIN_DRY], "mountains/dry_range4", "base2", 26); // Md    
+      MOUNTAINS_1x3_NW_SE(this, [ETerrain.MOUNTAIN_DRY], "mountains/dry_range1", "base2", 20); // Md
+      MOUNTAINS_1x3_SW_NE(this, [ETerrain.MOUNTAIN_DRY], "mountains/dry_range2", "base2", 20); // Md       
+      MOUNTAINS_2x2(this, [ETerrain.MOUNTAIN_DRY], "mountains/dry5", "base2", 40); // Md
+      MOUNTAINS_2x2(this, [ETerrain.MOUNTAIN_DRY], "mountains/dry6", "base2", 30); // Md
 
-      MOUNTAIN_SINGLE_RANDOM(this, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "mountains/dry", "base2"); // Md
+      MOUNTAIN_SINGLE_RANDOM(this, [ETerrain.MOUNTAIN_DRY], "mountains/dry", "base2"); // Md
 
 
       OVERLAY_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_VOLCANO]),
-        getTerrainMap([ETerrain.ABYSS]), "mountains/volcano", { flag: "base2" }); // Mv
+        [ETerrain.MOUNTAIN_VOLCANO],
+        [ETerrain.ABYSS], "mountains/volcano", { flag: "base2" }); // Mv
 
-      MOUNTAINS_2x2(this, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow5", "base2", 15); // Ms
-      MOUNTAINS_2x2(this, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow6", "base2", 20); // Ms
-      MOUNTAIN_SINGLE_RANDOM(this, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "mountains/snow", "base2"); // Ms
+      MOUNTAINS_2x2(this, [ETerrain.MOUNTAIN_SNOW], "mountains/snow5", "base2", 15); // Ms
+      MOUNTAINS_2x2(this, [ETerrain.MOUNTAIN_SNOW], "mountains/snow6", "base2", 20); // Ms
+      MOUNTAIN_SINGLE_RANDOM(this, [ETerrain.MOUNTAIN_SNOW], "mountains/snow", "base2"); // Ms
 
       // villages
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-hills");
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-snow-hills");
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]), getOverlayMap([EOverlay.VILLAGE_HUMAN_RUIN]), "village/human-hills-ruin");
+      NEW_VILLAGE(this, [ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR], getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-hills");
+      NEW_VILLAGE(this, [ETerrain.HILLS_SNOW], getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-snow-hills");
+      NEW_VILLAGE(this, [ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR], getOverlayMap([EOverlay.VILLAGE_HUMAN_RUIN]), "village/human-hills-ruin");
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE]), getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-snow");
+      NEW_VILLAGE(this, [ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE], getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human-snow");
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN]), "village/human");
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_RUIN]), "village/human-cottage-ruin");
 
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY]), "village/human-city");
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY]), "village/human-city-snow");
+      NEW_VILLAGE(this, [ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW], getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY]), "village/human-city-snow");
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_HUMAN_CITY_RUIN]), "village/human-city-ruin");
 
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_TROPICAL]), "village/tropical-forest");
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_HUT]), "village/hut-snow");
+      NEW_VILLAGE(this, [ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW], getOverlayMap([EOverlay.VILLAGE_HUT]), "village/hut-snow");
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_LOG_CABIN]), "village/log-cabin");
 
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_CAMP]), "village/camp");
@@ -218,7 +209,7 @@ module WesnothTiles.Internal {
 
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_ORC]), "village/orc");
 
-      NEW_VILLAGE(this, getTerrainMap([ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW]), getOverlayMap([EOverlay.VILLAGE_ELVEN]), "village/elven-snow");
+      NEW_VILLAGE(this, [ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.HILLS_SNOW], getOverlayMap([EOverlay.VILLAGE_ELVEN]), "village/elven-snow");
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_ELVEN]), "village/elven");
 
       NEW_VILLAGE(this, undefined, getOverlayMap([EOverlay.VILLAGE_DESERT]), "village/desert");
@@ -242,61 +233,61 @@ module WesnothTiles.Internal {
         getOverlayMap([EOverlay.STONES_SMALL]), undefined, "embellishments/stones-small", {});    
 
       // fillers for mountains
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.MOUNTAIN_BASIC]), "hills/regular", {});
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.MOUNTAIN_DRY]), "hills/dry", {});
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.MOUNTAIN_SNOW]), "hills/snow", {});
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.MOUNTAIN_BASIC], "hills/regular", {});
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.MOUNTAIN_DRY], "hills/dry", {});
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.MOUNTAIN_SNOW], "hills/snow", {});
 
 
-      TERRAIN_BASE_PLFB(this, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", { prob: 20 });
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.GRASS_GREEN]), "grass/green", {});
-      TERRAIN_BASE_PLFB(this, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", { prob: 25 });
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.GRASS_DRY]), "grass/dry", {});
-      TERRAIN_BASE_PLFB(this, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", { prob: 25 });
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.GRASS_SEMI_DRY]), "grass/semi-dry", {});
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), "grass/leaf-litter", {});
+      TERRAIN_BASE_PLFB(this, [ETerrain.GRASS_GREEN], "grass/green", { prob: 20 });
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.GRASS_GREEN], "grass/green", {});
+      TERRAIN_BASE_PLFB(this, [ETerrain.GRASS_DRY], "grass/dry", { prob: 25 });
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.GRASS_DRY], "grass/dry", {});
+      TERRAIN_BASE_PLFB(this, [ETerrain.GRASS_SEMI_DRY], "grass/semi-dry", { prob: 25 });
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.GRASS_SEMI_DRY], "grass/semi-dry", {});
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.GRASS_LEAF_LITTER], "grass/leaf-litter", {});
 
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_REGULAR]), "hills/regular", {}); // Hh
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_DRY]), "hills/dry", {}); // Hhd
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_DESERT]), "hills/desert", {}); // Hd
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.HILLS_REGULAR], "hills/regular", {}); // Hh
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.HILLS_DRY], "hills/dry", {}); // Hhd
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.HILLS_DESERT], "hills/desert", {}); // Hd
 
 
 
-      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
+      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), [ETerrain.ABYSS],
         "embellishments/desert-plant", { prob: 33 });
-      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
+      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), [ETerrain.ABYSS],
         "embellishments/desert-plant1", { prob: 50 });
-      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), getTerrainMap([ETerrain.ABYSS]),
+      OVERLAY_RESTRICTED_PLFB(this, getOverlayMap([EOverlay.DESERT_PLANTS]), [ETerrain.ABYSS],
         "embellishments/desert-plant2", { prob: 100 });
 
       OVERLAY_RANDOM_LFB(this, undefined, getOverlayMap([EOverlay.DESERT_PLANTS]), undefined, "embellishments/desert-plant", {});
 
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.HILLS_SNOW]), "hills/snow", {}); // Ha
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.HILLS_SNOW], "hills/snow", {}); // Ha
 
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.ABYSS]), "chasm/abyss", {}); // Ha
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.ABYSS], "chasm/abyss", {}); // Ha
 
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.SAND_DESERT]), "sand/desert", {}); // Hhd
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.SAND_BEACH]), "sand/beach", {}); // Hhd
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.SAND_DESERT], "sand/desert", {}); // Hhd
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.SAND_BEACH], "sand/beach", {}); // Hhd
 
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.FROZEN_SNOW]), "frozen/snow", {}); // Aa
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_SNOW], "frozen/snow", {}); // Aa
 
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice2", { prob: 10 }); // Ai
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice3", { prob: 11 }); // Ai
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice5", { prob: 13 }); // Ai
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice6", { prob: 14 }); // Ai
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice4", { prob: 42 }); // Ai
-      TERRAIN_BASE_PLFB(this, getTerrainMap([ETerrain.FROZEN_ICE]), "frozen/ice", {}); // Hhd
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice2", { prob: 10 }); // Ai
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice3", { prob: 11 }); // Ai
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice5", { prob: 13 }); // Ai
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice6", { prob: 14 }); // Ai
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice4", { prob: 42 }); // Ai
+      TERRAIN_BASE_PLFB(this, [ETerrain.FROZEN_ICE], "frozen/ice", {}); // Hhd
 
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.SWAMP_MUD]), "swamp/mud", {}); // Sm
-      TERRAIN_BASE_PLFB(this, getTerrainMap([ETerrain.SWAMP_WATER]), "swamp/water-plant@V", { prob: 33 }); // Sm
-      TERRAIN_BASE_RANDOM_LFB(this, getTerrainMap([ETerrain.SWAMP_WATER]), "swamp/water", {}); // Sm
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.SWAMP_MUD], "swamp/mud", {}); // Sm
+      TERRAIN_BASE_PLFB(this, [ETerrain.SWAMP_WATER], "swamp/water-plant@V", { prob: 33 }); // Sm
+      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.SWAMP_WATER], "swamp/water", {}); // Sm
 
-      TERRAIN_BASE_PLFB(this, getTerrainMap([ETerrain.VOID]), "void/void", { layer: 1000 });
+      TERRAIN_BASE_PLFB(this, [ETerrain.VOID], "void/void", { layer: 1000 });
 
-      TERRAIN_BASE_SINGLEHEX_PLFB(this, getTerrainMap([ETerrain.WATER_OCEAN]), "water/ocean", {
+      TERRAIN_BASE_SINGLEHEX_PLFB(this, [ETerrain.WATER_OCEAN], "water/ocean", {
         builder: IB_ANIMATION_15_SLOW
       }); // Wo
 
-      TERRAIN_BASE_SINGLEHEX_PLFB(this, getTerrainMap([ETerrain.WATER_COAST_TROPICAL]), "water/coast-tropical", {
+      TERRAIN_BASE_SINGLEHEX_PLFB(this, [ETerrain.WATER_COAST_TROPICAL], "water/coast-tropical", {
         builder: IB_ANIMATION_15
       }); // Wwt
 
@@ -312,290 +303,289 @@ module WesnothTiles.Internal {
       // chasms transitions
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.ABYSS]),
-        getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO]),
+        [ETerrain.ABYSS],
+        [ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO],
         "mountains/blend-from-chasm", { layer: 2, flag: "transition3" }, 1);
 
       WALL_TRANSITION_PLFB(this,
-        getTerrainMap([ETerrain.ABYSS]),
-        getTerrainMap([ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW]),
+        [ETerrain.ABYSS],
+        [ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW],
         "chasm/regular-snow", { layer: -90, flag: "ground" });
 
       WALL_TRANSITION_PLFB(this,
-        getTerrainMap([ETerrain.ABYSS]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD]),
+        [ETerrain.ABYSS],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD],
         "chasm/water", { layer: -90, flag: "ground" });
 
       WALL_TRANSITION_PLFB(this,
-        getTerrainMap([ETerrain.ABYSS]),
-        getTerrainMap(swapTerrains([ETerrain.ABYSS])),
+        [ETerrain.ABYSS],
+        swapTerrains([ETerrain.ABYSS]),
         "chasm/regular", { layer: -90, flag: "ground" });          
 
       // transitions --------------------------
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO]),
-        getTerrainMap(swapTerrains([ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_VOLCANO,
-          ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD, ETerrain.ABYSS])),
+        [ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO],
+        swapTerrains([ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_VOLCANO,
+          ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD, ETerrain.ABYSS]),
         "mountains/dry", { layer: -166 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW,
-          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
-        getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
+        [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW,
+          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
+        [ETerrain.MOUNTAIN_BASIC],
         "mountains/blend-from-dry", { layer: 0, flag: "inside" }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY,
-          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH]),
-        getTerrainMap([ETerrain.MOUNTAIN_SNOW]),
+        [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY,
+          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
+        [ETerrain.MOUNTAIN_SNOW],
         "mountains/blend-from-dry", { layer: 0, flag: "inside" }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_BASIC]),
-        getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW,
-          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
+        [ETerrain.MOUNTAIN_BASIC],
+        [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW,
+          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
         "hills/dry", { layer: -166 }, 2)
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.MOUNTAIN_SNOW]),
-        getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY,
-          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH]),
+        [ETerrain.MOUNTAIN_SNOW],
+        [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY,
+          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
         "hills/dry", { layer: -166 }, 2)
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW]),
-        getTerrainMap([ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR]),
+        [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW],
+        [ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR],
         "hills/snow-to-hills", { layer: -170 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD]),
+        [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD],
         "hills/snow-to-water", { layer: -171 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW]),
-        getTerrainMap([
-          ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER,
-          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
+        [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW],
+        [ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER,
+          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
         "hills/snow", { layer: -172 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC]),
-        getTerrainMap(swapTerrains([ETerrain.HILLS_REGULAR, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
+        [ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC],
+        swapTerrains([ETerrain.HILLS_REGULAR, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS, ETerrain.MOUNTAIN_BASIC,
-          ETerrain.MOUNTAIN_VOLCANO, ETerrain.MOUNTAIN_DRY])),
+          ETerrain.MOUNTAIN_VOLCANO, ETerrain.MOUNTAIN_DRY]),
         "hills/regular", { layer: -180 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_DRY]),
-        getTerrainMap(swapTerrains([ETerrain.HILLS_DRY, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
+        [ETerrain.HILLS_DRY],
+        swapTerrains([ETerrain.HILLS_DRY, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.MOUNTAIN_SNOW,
-          ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW])),
+          ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW]),
         "hills/dry", { layer: -183 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_DESERT]),
-        getTerrainMap(swapTerrains([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS,
+        [ETerrain.HILLS_DESERT],
+        swapTerrains([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS,
           ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO, ETerrain.MOUNTAIN_SNOW,
-          ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY])),
+          ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY]),
         "hills/desert", { layer: -184 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.SWAMP_WATER]),
-        getTerrainMap(swapTerrains([ETerrain.SWAMP_WATER,
+        [ETerrain.SWAMP_WATER],
+        swapTerrains([ETerrain.SWAMP_WATER,
           ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
           ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY,
-          ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.ABYSS])),
+          ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.ABYSS]),
         "swamp/water", { layer: -230 }, 3);
 
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_SEMI_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]),
+        [ETerrain.GRASS_SEMI_DRY], [ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER],
         "grass/semi-dry-long", { flag: "inside", layer: -250 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_GREEN]), getTerrainMap([ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER]),
+        [ETerrain.GRASS_GREEN], [ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER],
         "grass/green-long", { flag: "inside", layer: -251 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_DRY]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER]),
+        [ETerrain.GRASS_DRY], [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER],
         "grass/dry-long", { flag: "inside", layer: -252 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_LEAF_LITTER]), getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]),
+        [ETerrain.GRASS_LEAF_LITTER], [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY],
         "grass/leaf-litter-long", { flag: "inside", layer: -253 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_LEAF_LITTER]),
-        getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY]),
+        [ETerrain.GRASS_LEAF_LITTER],
+        [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY],
         "grass/leaf-litter-long", { layer: -254 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_DRY]),
-        getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY]),
+        [ETerrain.GRASS_DRY],
+        [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY],
         "grass/dry-long", { layer: -255 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_GREEN]),
-        getTerrainMap([ETerrain.GRASS_SEMI_DRY]),
+        [ETerrain.GRASS_GREEN],
+        [ETerrain.GRASS_SEMI_DRY],
         "grass/green-long", { layer: -256 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_SEMI_DRY]),
-        getTerrainMap([ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW]),
+        [ETerrain.GRASS_SEMI_DRY],
+        [ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW],
         "grass/semi-dry-medium", { layer: -260 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_GREEN]),
-        getTerrainMap([ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW]),
+        [ETerrain.GRASS_GREEN],
+        [ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW],
         "grass/green-medium", { layer: -261 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_DRY]),
-        getTerrainMap([ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW]),
+        [ETerrain.GRASS_DRY],
+        [ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW],
         "grass/dry-medium", { layer: -262 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_LEAF_LITTER]),
-        getTerrainMap([ETerrain.SWAMP_MUD,
-          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW]),
+        [ETerrain.GRASS_LEAF_LITTER],
+        [ETerrain.SWAMP_MUD,
+          ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW],
         "grass/leaf-litter", { layer: -270 }, 3);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_GREEN]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD]),
+        [ETerrain.GRASS_GREEN],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD],
         "grass/green-abrupt", { layer: -271 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_SEMI_DRY]),
-        getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD]),
+        [ETerrain.GRASS_SEMI_DRY],
+        [ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD],
         "grass/semi-dry-abrupt", { layer: -272 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_DRY]),
-        getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD]),
+        [ETerrain.GRASS_DRY],
+        [ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD],
         "grass/dry-abrupt", { layer: -273 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.FROZEN_SNOW]),
-        getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.SWAMP_WATER]),
+        [ETerrain.FROZEN_SNOW],
+        [ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.SWAMP_WATER],
         "frozen/snow-to-water", { layer: -280 }, 4);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.FROZEN_SNOW]),
-        getTerrainMap(swapTerrains([ETerrain.FROZEN_SNOW, ETerrain.ABYSS,
+        [ETerrain.FROZEN_SNOW],
+        swapTerrains([ETerrain.FROZEN_SNOW, ETerrain.ABYSS,
           ETerrain.FROZEN_SNOW, ETerrain.ABYSS, ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR,
           ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY,
           ETerrain.SWAMP_WATER, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW,
-          ETerrain.HILLS_DESERT, ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.MOUNTAIN_VOLCANO])),
+          ETerrain.HILLS_DESERT, ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.MOUNTAIN_VOLCANO]),
         "frozen/snow", { layer: -281 }, 4);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE]),
-        getTerrainMap([ETerrain.GRASS_LEAF_LITTER]),
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE],
+        [ETerrain.GRASS_LEAF_LITTER],
         "flat/bank", { layer: -300 }, 1);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.SWAMP_MUD]),
-        getTerrainMap([ETerrain.SAND_BEACH, ETerrain.SAND_DESERT]),
+        [ETerrain.SWAMP_MUD],
+        [ETerrain.SAND_BEACH, ETerrain.SAND_DESERT],
         "swamp/mud-to-land", { layer: -310 }, 1);
 
       NEW_WAVES(this,
-        getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.SAND_DESERT, ETerrain.SAND_BEACH]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+        [ETerrain.HILLS_DESERT, ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL],
         -499, "water/waves");
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.SAND_BEACH]),
-        getTerrainMap(swapTerrains([ETerrain.SAND_BEACH, ETerrain.HILLS_DRY,
+        [ETerrain.SAND_BEACH],
+        swapTerrains([ETerrain.SAND_BEACH, ETerrain.HILLS_DRY,
           ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS, ETerrain.HILLS_DESERT,
           ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN,
           ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC,
-          ETerrain.FROZEN_SNOW, ETerrain.SWAMP_MUD])),
+          ETerrain.FROZEN_SNOW, ETerrain.SWAMP_MUD]),
         "sand/beach", { layer: -510 }, 6);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.SAND_DESERT]),
-        getTerrainMap(swapTerrains([ETerrain.SAND_DESERT,
+        [ETerrain.SAND_DESERT],
+        swapTerrains([ETerrain.SAND_DESERT,
           ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS,
           ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW,
           ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT,
           ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER,
-          ETerrain.SWAMP_MUD, ETerrain.SAND_BEACH])),
+          ETerrain.SWAMP_MUD, ETerrain.SAND_BEACH]),
         "sand/desert", { layer: -510 }, 6);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
-          ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER]),
+        [ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
+          ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER],
         "hills/regular-to-water", { layer: -482, flag: "non_submerged" }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
-          ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER]),
+        [ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
+          ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER],
         "hills/dry-to-water", { layer: -482, flag: "non_submerged" }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE]),
+        [ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE],
         "flat/bank-to-ice", { layer: -483, flag: "non_submerged" }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
-        getTerrainMap([ETerrain.SAND_DESERT, ETerrain.SAND_BEACH]),
+        [ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
+        [ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
         "frozen/ice", { layer: -485, flag: "non_submerged" }, 4);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER]),
+        [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER],
         "frozen/ice", { layer: -485, flag: "non_submerged" }, 4);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER]),
+        [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER],
         "frozen/ice-to-water", { layer: -505, flag: "submerged" }, 4); 
 
       // invisible transition
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.FROZEN_ICE]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER]),
+        [ETerrain.FROZEN_ICE],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER],
         "frozen/ice-to-water", { layer: -1001 }, 4);
 
       NEW_BEACH(this,
-        getTerrainMap([ETerrain.HILLS_DESERT, ETerrain.SAND_DESERT, ETerrain.SAND_BEACH]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+        [ETerrain.HILLS_DESERT, ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL],
         "sand/shore");
 
 
       NEW_BEACH(this,
-        getTerrainMap([ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER,
+        [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER,
           ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
-          ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO, ETerrain.VOID]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL]),
+          ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO, ETerrain.VOID],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL],
         "flat/shore");
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.SWAMP_MUD]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER]),
+        [ETerrain.SWAMP_MUD],
+        [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER],
         "swamp/mud-long", { layer: -556, flag: "transition3" }, 1);
 
 
       ANIMATED_WATER_15_TRANSITION(this,
-        getTerrainMap([ETerrain.WATER_OCEAN]),
-        getTerrainMap([ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_MUD]),
+        [ETerrain.WATER_OCEAN],
+        [ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_MUD],
         "water/ocean-blend", -550);
 
       ANIMATED_WATER_15_TRANSITION(this,
-        getTerrainMap([ETerrain.WATER_COAST_TROPICAL]),
-        getTerrainMap([ETerrain.WATER_OCEAN, ETerrain.SWAMP_MUD]),
+        [ETerrain.WATER_COAST_TROPICAL],
+        [ETerrain.WATER_OCEAN, ETerrain.SWAMP_MUD],
         "water/coast-tropical-long", -555);
 
       TRANSITION_COMPLETE_LFB(this,
-        getTerrainMap([ETerrain.VOID]), getTerrainMap(swapTerrains([])),
+        [ETerrain.VOID], swapTerrains([]),
         "void/void", { layer: 1000 }, 3);
       return TgGroup;
     }

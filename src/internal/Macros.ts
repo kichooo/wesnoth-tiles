@@ -1,6 +1,17 @@
 module WesnothTiles.Internal {
   'use strict';  
 
+  var getTerrainMap = (terrains: ETerrain[]) => {
+    if (terrains === undefined)
+      return undefined;
+    var terrainList = new Map<ETerrain, boolean>();
+    terrains.forEach(terrain => {
+      terrainList.set(terrain, true);
+    });
+    return terrainList;
+  }
+
+
   export interface IBuilder {
     toDrawable(imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector): IDrawable;
     toString(imageStem: string, postfix?: string): string;
@@ -104,18 +115,7 @@ module WesnothTiles.Internal {
     builder?: IBuilder;
   }
 
-  var sumTerrainMaps = (map1: Map<ETerrain, boolean>, map2: Map<ETerrain, boolean>) => {
-    var result = new Map<ETerrain, boolean>();
-    map1.forEach((_, key) => {
-      result.set(key, true);
-    });
-    map2.forEach((_, key) => {
-      result.set(key, true);
-    });
-    return result;
-  }
-
-  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
+  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
@@ -127,7 +127,7 @@ module WesnothTiles.Internal {
     var tile: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       overlay: overlayList,
       fog: fog,
       set_no_flag: [plfb.flag]
@@ -144,7 +144,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var TERRAIN_BASE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  export var TERRAIN_BASE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
     if (plfb.prob === undefined)
       plfb.prob = 100;
     if (plfb.layer === undefined)
@@ -153,11 +153,11 @@ module WesnothTiles.Internal {
       plfb.flag = "base";
     if (plfb.builder === undefined)
       plfb.builder = IB_IMAGE_SINGLE;
-    GENERIC_SINGLE_PLFB(tgGroup, terrainList, undefined, undefined, imageStem, plfb);
+    GENERIC_SINGLE_PLFB(tgGroup, terrains, undefined, undefined, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, lfb: LFB) => {
-    GENERIC_SINGLE_PLFB(tgGroup, terrainList, overlayList, fog, imageStem + "@V", {
+  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, lfb: LFB) => {
+    GENERIC_SINGLE_PLFB(tgGroup, terrains, overlayList, fog, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -165,26 +165,26 @@ module WesnothTiles.Internal {
     });
   }
 
-  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, lfb: LFB) => {
-    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, overlayList, fog, imageStem, {
+  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, lfb: LFB) => {
+    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, overlayList, fog, imageStem, {
       layer: lfb.layer === undefined ? 0 : lfb.layer,
       flag: lfb.flag === undefined ? "overlay" : lfb.flag,
       builder: lfb.builder === undefined ? IB_IMAGE_SINGLE : lfb.builder,
     });
   }
 
-  export var TERRAIN_BASE_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
+  export var TERRAIN_BASE_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, lfb: LFB) => {
     if (lfb.layer === undefined)
       lfb.layer = -1000;
     if (lfb.flag === undefined)
       lfb.flag = "base";
     if (lfb.builder === undefined)
       lfb.builder = IB_IMAGE_SINGLE;
-    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, undefined, undefined, imageStem, lfb);
+    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, undefined, undefined, imageStem, lfb);
   }
 
-  var BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",
@@ -196,7 +196,7 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0"]
     }
@@ -204,7 +204,7 @@ module WesnothTiles.Internal {
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
@@ -222,8 +222,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED6_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED6_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4-@R5",
@@ -235,7 +235,7 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4", plfb.flag + "-@R5"]
     }
@@ -243,7 +243,7 @@ module WesnothTiles.Internal {
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
@@ -251,7 +251,7 @@ module WesnothTiles.Internal {
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
@@ -259,7 +259,7 @@ module WesnothTiles.Internal {
     var tile4: WMLTile = {
       q: 1,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R5"]
     }
@@ -267,7 +267,7 @@ module WesnothTiles.Internal {
     var tile5: WMLTile = {
       q: 0,
       r: 1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R0"]
     }
@@ -275,7 +275,7 @@ module WesnothTiles.Internal {
     var tile6: WMLTile = {
       q: -1,
       r: 1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R1"]
     }
@@ -283,7 +283,7 @@ module WesnothTiles.Internal {
     var tile7: WMLTile = {
       q: -1,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R2"]
     }
@@ -307,8 +307,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED5_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED5_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4",
@@ -320,7 +320,7 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4"]
     }
@@ -328,7 +328,7 @@ module WesnothTiles.Internal {
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
@@ -336,7 +336,7 @@ module WesnothTiles.Internal {
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
@@ -344,7 +344,7 @@ module WesnothTiles.Internal {
     var tile4: WMLTile = {
       q: 1,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R5"]
     }
@@ -352,7 +352,7 @@ module WesnothTiles.Internal {
     var tile5: WMLTile = {
       q: 0,
       r: 1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R0"]
     }
@@ -360,7 +360,7 @@ module WesnothTiles.Internal {
     var tile6: WMLTile = {
       q: -1,
       r: 1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R1"]
     }
@@ -383,8 +383,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED4_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED4_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3",
@@ -396,7 +396,7 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3"]
     }
@@ -404,7 +404,7 @@ module WesnothTiles.Internal {
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
@@ -412,7 +412,7 @@ module WesnothTiles.Internal {
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
@@ -420,7 +420,7 @@ module WesnothTiles.Internal {
     var tile4: WMLTile = {
       q: 1,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R5"]
     }
@@ -428,7 +428,7 @@ module WesnothTiles.Internal {
     var tile5: WMLTile = {
       q: 0,
       r: 1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R0"]
     }
@@ -449,8 +449,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2",
@@ -462,7 +462,7 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2"]
     }
@@ -470,7 +470,7 @@ module WesnothTiles.Internal {
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
@@ -478,7 +478,7 @@ module WesnothTiles.Internal {
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
@@ -486,7 +486,7 @@ module WesnothTiles.Internal {
     var tile4: WMLTile = {
       q: 1,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R5"]
     }
@@ -506,8 +506,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
+  var BORDER_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1",
@@ -519,7 +519,7 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       fog: fogAdjacent,
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1"]
     }
@@ -527,7 +527,7 @@ module WesnothTiles.Internal {
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R3"]
     }
@@ -535,7 +535,7 @@ module WesnothTiles.Internal {
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       fog: fog,
       set_no_flag: [plfb.flag + "-@R4"]
     }
@@ -554,9 +554,9 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED6_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED6_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -564,9 +564,9 @@ module WesnothTiles.Internal {
     });
   }
 
-  var BORDER_RESTRICTED5_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED5_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED5_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED5_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -574,9 +574,9 @@ module WesnothTiles.Internal {
     });
   }
 
-  var BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED4_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED4_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -584,9 +584,9 @@ module WesnothTiles.Internal {
     });
   }
 
-  var BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED3_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED3_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -594,9 +594,9 @@ module WesnothTiles.Internal {
     });
   }
 
-  var BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED2_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED2_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -604,9 +604,9 @@ module WesnothTiles.Internal {
     });
   }
 
-  var BORDER_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED_PLFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem + "@V", {
+  var BORDER_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
+    BORDER_RESTRICTED_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -614,21 +614,21 @@ module WesnothTiles.Internal {
     });
   }
 
-  var BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, fog: boolean,
-    adjacent: Map<ETerrain, boolean>, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number) => {
+  var BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number) => {
     switch (grades) {
       case 6:
-        BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
+        BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 5:
-        BORDER_RESTRICTED5_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
+        BORDER_RESTRICTED5_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 4:
-        BORDER_RESTRICTED4_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
+        BORDER_RESTRICTED4_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 3:
-        BORDER_RESTRICTED3_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
+        BORDER_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 2:
-        BORDER_RESTRICTED2_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
+        BORDER_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
       case 1:
-        BORDER_RESTRICTED_RANDOM_LFB(tgGroup, terrainList, fog, adjacent, fogAdjacent, imageStem, lfb);
+        BORDER_RESTRICTED_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
     }
 
 
@@ -636,8 +636,8 @@ module WesnothTiles.Internal {
 
   export var transitionsOptimizer = new Map<ETerrain, Map<ETerrain, boolean>>();
 
-  export var addToTransitionsTable = (terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, stem: string) => {
-    terrainList.forEach((_0, terrainKey) => {
+  export var addToTransitionsTable = (terrains: ETerrain[], adjacent: ETerrain[], stem: string) => {
+    terrains.forEach((_0, terrainKey) => {
 
       if (!transitionsOptimizer.has(terrainKey)) {
         transitionsOptimizer.set(terrainKey, new Map<ETerrain, boolean>());
@@ -653,7 +653,7 @@ module WesnothTiles.Internal {
   }
 
   // grades is used by BORDER_COMPLETE, to filter out not needed macros.
-  export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, grades = 6) => {
+  export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, grades = 6) => {
     if (lfb.layer === undefined)
       lfb.layer = -500;
     if (lfb.flag === undefined)
@@ -661,10 +661,10 @@ module WesnothTiles.Internal {
     if (lfb.builder === undefined)
       lfb.builder = IB_IMAGE_SINGLE;
     if (lfb.flag === "transition") {
-      addToTransitionsTable(terrainList, adjacent, imageStem);
-      addToTransitionsTable(adjacent, terrainList, imageStem);
+      addToTransitionsTable(terrains, adjacent, imageStem);
+      addToTransitionsTable(adjacent, terrains, imageStem);
     }
-    BORDER_COMPLETE_LFB(tgGroup, terrainList, undefined, adjacent, undefined, imageStem, lfb, grades);
+    BORDER_COMPLETE_LFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, lfb, grades);
   }
 
   export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: boolean, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades = 6) => {
@@ -678,7 +678,7 @@ module WesnothTiles.Internal {
   }
 
 
-  var GENERIC_SINGLEHEX_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  var GENERIC_SINGLEHEX_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
@@ -688,7 +688,7 @@ module WesnothTiles.Internal {
     var tile: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       images: [img],
       set_no_flag: [plfb.flag]
     }
@@ -703,7 +703,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var TERRAIN_BASE_SINGLEHEX_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  export var TERRAIN_BASE_SINGLEHEX_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
     if (plfb.prob === undefined)
       plfb.prob = 100;
     if (plfb.layer === undefined)
@@ -712,11 +712,11 @@ module WesnothTiles.Internal {
       plfb.flag = "base";
     if (plfb.builder === undefined)
       plfb.builder = IB_IMAGE_SINGLE;
-    GENERIC_SINGLEHEX_PLFB(tgGroup, terrainList, imageStem, plfb);
+    GENERIC_SINGLEHEX_PLFB(tgGroup, terrains, imageStem, plfb);
   }
 
-  export var ANIMATED_WATER_15_TRANSITION = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, layer: number) => {
-    addToTransitionsTable(terrainList, adjacent, imageStem);
+  export var ANIMATED_WATER_15_TRANSITION = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, layer: number) => {
+    addToTransitionsTable(terrains, adjacent, imageStem);
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",
@@ -727,7 +727,7 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       images: [img],
       set_no_flag: ["transition-@R0"]
     }
@@ -735,7 +735,7 @@ module WesnothTiles.Internal {
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -750,7 +750,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var NEW_BEACH = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string) => {
+  export var NEW_BEACH = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string) => {
     var concave_img1: WMLImage = {
       name: imageStem + "-concave",
       postfix: "-@R0-@R5",
@@ -770,21 +770,21 @@ module WesnothTiles.Internal {
     var concave_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
     var concave_tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: ["beach-@R2-@R3"]
     }
 
     var concave_tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: ["beach-@R4-@R3"]
     }
 
@@ -821,21 +821,21 @@ module WesnothTiles.Internal {
     var convex0_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
     var convex0_tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R2-@R3"]
     }
 
     var convex0_tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R4-@R3"]
     }
 
@@ -863,21 +863,21 @@ module WesnothTiles.Internal {
     var convex1_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: ["beach-@R0-@R5"]
     }
 
     var convex1_tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R2-@R3"]
     }
 
     var convex1_tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: swapTerrainTypes(sumTerrainMaps(adjacent, terrainList)),
+      type: getTerrainMap(swapTerrains(adjacent.concat(terrains))),
     }
 
     var convex1_terrainGraphic: WMLTerrainGraphics = {
@@ -905,7 +905,7 @@ module WesnothTiles.Internal {
     var convex2_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
 
       set_no_flag: ["beach-@R0-@R1"]
     }
@@ -913,13 +913,13 @@ module WesnothTiles.Internal {
     var convex2_tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: swapTerrainTypes(sumTerrainMaps(adjacent, terrainList)),
+      type: getTerrainMap(swapTerrains(adjacent.concat(terrains))),
     }
 
     var convex2_tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R4-@R3"]
     }
 
@@ -937,7 +937,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(convex2_terrainGraphic);
   }
 
-  export var NEW_WAVES = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, layer: number, imageStem: string) => {
+  export var NEW_WAVES = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], layer: number, imageStem: string) => {
     var convex_img1: WMLImage = {
       name: imageStem + "-convex",
       postfix: "-@R0",
@@ -949,21 +949,21 @@ module WesnothTiles.Internal {
     var convex_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: ["waves-@R0"]
     }
 
     var convex_tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: ["waves-@R2"]
     }
 
     var convex_tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: ["waves-@R4"]
     }
 
@@ -992,21 +992,21 @@ module WesnothTiles.Internal {
     var concave_tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: ["waves-@R0"]
     }
 
     var concave_tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: ["waves-@R2"]
     }
 
     var concave_tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: ["waves-@R4"]
     }
 
@@ -1025,7 +1025,7 @@ module WesnothTiles.Internal {
 
   }
 
-  export var MOUNTAIN_SINGLE = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, prob: number, flag: string) => {
+  export var MOUNTAIN_SINGLE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, prob: number, flag: string) => {
     var img: WMLImage = {
       name: imageStem,
       base: { x: 90 - 54, y: 107 - 72 },
@@ -1037,7 +1037,7 @@ module WesnothTiles.Internal {
     var tile: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: [flag]
     }
 
@@ -1050,8 +1050,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var GENERIC_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, rotation: string) => {
-    GENERIC_RESTRICTED3_PLFB(tgGroup, terrainList, adjacent, imageStem + "@V", {
+  var GENERIC_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem + "@V", {
       layer: lfb.layer,
       prob: 100,
       flag: lfb.flag,
@@ -1059,8 +1059,8 @@ module WesnothTiles.Internal {
     }, rotation);
   }
 
-  var GENERIC_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, rotation: string) => {
-    GENERIC_RESTRICTED2_PLFB(tgGroup, terrainList, adjacent, imageStem + "@V", {
+  var GENERIC_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem + "@V", {
       layer: lfb.layer,
       prob: 100,
       flag: lfb.flag,
@@ -1068,8 +1068,8 @@ module WesnothTiles.Internal {
     }, rotation);
   }
 
-  var GENERIC_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB, rotation: string) => {
-    GENERIC_RESTRICTED_PLFB(tgGroup, terrainList, undefined, adjacent, undefined, imageStem + "@V", {
+  var GENERIC_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED_PLFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem + "@V", {
       layer: lfb.layer,
       prob: 100,
       flag: lfb.flag,
@@ -1077,29 +1077,29 @@ module WesnothTiles.Internal {
     }, rotation);
   }
 
-  var GENERIC_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "-@R0-@R1-@R2");
-    GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "");
-    GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "-@R0-@R1");
-    GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "");
-    GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "-@R0");
-    GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrainList, adjacent, imageStem + "-small", lfb, "");
-    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrainList, undefined, undefined, imageStem, lfb);
+  var GENERIC_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
+    GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0-@R1-@R2");
+    GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
+    GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0-@R1");
+    GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
+    GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0");
+    GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
+    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, undefined, undefined, imageStem, lfb);
   }
 
-  export var OVERLAY_COMPLETE_LFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, lfb: LFB) => {
-    GENERIC_COMPLETE_LFB(tgGroup, terrainList, adjacent, imageStem, {
+  export var OVERLAY_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
+    GENERIC_COMPLETE_LFB(tgGroup, terrains, adjacent, imageStem, {
       layer: lfb.layer === undefined ? 0 : lfb.layer,
       flag: lfb.flag === undefined ? "overlay" : lfb.flag,
       builder: lfb.builder === undefined ? IB_IMAGE_SINGLE : lfb.builder,
     });
   }
 
-  export var MOUNTAIN_SINGLE_RANDOM = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string) => {
-    MOUNTAIN_SINGLE(tgGroup, terrainList, imageStem + "@V", 100, flag);
+  export var MOUNTAIN_SINGLE_RANDOM = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string) => {
+    MOUNTAIN_SINGLE(tgGroup, terrains, imageStem + "@V", 100, flag);
   }
 
-  var GENERIC_RESTRICTED3_N_NE_SE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+  var GENERIC_RESTRICTED3_N_NE_SE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1112,26 +1112,26 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile4: WMLTile = {
       q: 1,
       r: 0,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -1150,7 +1150,7 @@ module WesnothTiles.Internal {
 
   }
 
-  var GENERIC_RESTRICTED3_N_NE_S_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+  var GENERIC_RESTRICTED3_N_NE_S_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1163,26 +1163,26 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile4: WMLTile = {
       q: 0,
       r: 1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -1201,7 +1201,7 @@ module WesnothTiles.Internal {
 
   }
 
-  var GENERIC_RESTRICTED3_N_NE_SW_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+  var GENERIC_RESTRICTED3_N_NE_SW_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1214,26 +1214,26 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile4: WMLTile = {
       q: -1,
       r: 1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -1251,7 +1251,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var GENERIC_RESTRICTED3_N_SE_SW_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+  var GENERIC_RESTRICTED3_N_SE_SW_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1264,26 +1264,26 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: 0,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile4: WMLTile = {
       q: -1,
       r: 1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -1301,16 +1301,16 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var GENERIC_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
-    GENERIC_RESTRICTED3_N_NE_SE_PLFB(tgGroup, terrainList, adjacent, imageStem, plfb, rotation);
-    GENERIC_RESTRICTED3_N_NE_S_PLFB(tgGroup, terrainList, adjacent, imageStem, plfb, rotation);
-    GENERIC_RESTRICTED3_N_NE_SW_PLFB(tgGroup, terrainList, adjacent, imageStem, plfb, rotation);
-    GENERIC_RESTRICTED3_N_SE_SW_PLFB(tgGroup, terrainList, adjacent, imageStem, plfb, rotation);
+  var GENERIC_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    GENERIC_RESTRICTED3_N_NE_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_NE_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_NE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_SE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
   }
 
 
-  export var OVERLAY_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    GENERIC_RESTRICTED2_PLFB(tgGroup, terrainList, adjacent, imageStem, {
+  export var OVERLAY_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+    GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
@@ -1318,8 +1318,8 @@ module WesnothTiles.Internal {
     }, "");
   }
 
-  export var OVERLAY_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    GENERIC_RESTRICTED3_PLFB(tgGroup, terrainList, adjacent, imageStem, {
+  export var OVERLAY_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+    GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
@@ -1327,7 +1327,7 @@ module WesnothTiles.Internal {
     }, "");
   }
 
-  var GENERIC_RESTRICTED2_N_NE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+  var GENERIC_RESTRICTED2_N_NE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1340,20 +1340,20 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile3: WMLTile = {
       q: 1,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -1371,7 +1371,7 @@ module WesnothTiles.Internal {
 
   }
 
-  var GENERIC_RESTRICTED2_N_SE_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+  var GENERIC_RESTRICTED2_N_SE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1384,21 +1384,21 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
 
     var tile3: WMLTile = {
       q: 1,
       r: 0,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -1416,7 +1416,7 @@ module WesnothTiles.Internal {
 
   }
 
-  var GENERIC_RESTRICTED2_N_S_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+  var GENERIC_RESTRICTED2_N_S_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1429,20 +1429,20 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var tile3: WMLTile = {
       q: 0,
       r: 1,
-      type: adjacent
+      type: getTerrainMap(adjacent)
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
@@ -1459,8 +1459,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
-    GENERIC_SINGLE_PLFB(tgGroup, terrainList, overlayList, fog, imageStem, {
+  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
+    GENERIC_SINGLE_PLFB(tgGroup, terrains, overlayList, fog, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
@@ -1468,14 +1468,14 @@ module WesnothTiles.Internal {
     });
   }
 
-  var GENERIC_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
-    GENERIC_RESTRICTED2_N_NE_PLFB(tgGroup, terrainList, adjacent, imageStem, plfb, rotation);
-    GENERIC_RESTRICTED2_N_SE_PLFB(tgGroup, terrainList, adjacent, imageStem, plfb, rotation);
-    GENERIC_RESTRICTED2_N_S_PLFB(tgGroup, terrainList, adjacent, imageStem, plfb, rotation);
+  var GENERIC_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    GENERIC_RESTRICTED2_N_NE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED2_N_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED2_N_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
   }
 
-  export var OVERLAY_ROTATION_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    GENERIC_RESTRICTED2_PLFB(tgGroup, terrainList, adjacent, imageStem, {
+  export var OVERLAY_ROTATION_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+    GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
@@ -1483,8 +1483,8 @@ module WesnothTiles.Internal {
     }, "-@R0-@R1");
   }
 
-  var GENERIC_RESTRICTED_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlays: Map<EOverlay, boolean>,
-    adjacent: Map<ETerrain, boolean>, adjacentOverlays: Map<EOverlay, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+  var GENERIC_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: Map<EOverlay, boolean>,
+    adjacent: ETerrain[], adjacentOverlays: Map<EOverlay, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1497,7 +1497,7 @@ module WesnothTiles.Internal {
     var tile1: WMLTile = {
       q: 0,
       r: 0,
-      type: terrainList,
+      type: getTerrainMap(terrains),
       overlay: overlays,
       set_no_flag: [plfb.flag]
     }
@@ -1505,7 +1505,7 @@ module WesnothTiles.Internal {
     var tile2: WMLTile = {
       q: 0,
       r: -1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       overlay: adjacentOverlays,
     }
 
@@ -1522,8 +1522,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var OVERLAY_ROTATION_RESTRICTED_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
-    GENERIC_RESTRICTED_PLFB(tgGroup, terrainList, undefined, adjacent, undefined, imageStem, {
+  export var OVERLAY_ROTATION_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+    GENERIC_RESTRICTED_PLFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
@@ -1531,7 +1531,7 @@ module WesnothTiles.Internal {
     }, "-@R0");
   }
 
-  export var MOUNTAINS_2x4_NW_SE = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+  export var MOUNTAINS_2x4_NW_SE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
     var center = { x: 198 - 54, y: 180 - 108 }
     var img1: WMLImage = {
       name: imageStem + "_1",
@@ -1589,13 +1589,13 @@ module WesnothTiles.Internal {
       terrainGraphic.tiles.push({
         q: i,
         r: 0,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: [flag]
       });
       terrainGraphic.tiles.push({
         q: i + 1,
         r: -1,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: [flag]
       });
     }
@@ -1603,7 +1603,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var MOUNTAINS_1x3_NW_SE = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+  export var MOUNTAINS_1x3_NW_SE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
     var center = { x: 144 - 54, y: 162 - 108 }
     var img1: WMLImage = {
       name: imageStem + "_1",
@@ -1643,7 +1643,7 @@ module WesnothTiles.Internal {
       terrainGraphic.tiles.push({
         q: i,
         r: 0,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: [flag]
       });
     }
@@ -1651,7 +1651,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var MOUNTAINS_2x4_SW_NE = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+  export var MOUNTAINS_2x4_SW_NE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
     var center = { x: 198 - 216, y: 180 - 72 }
     var img1: WMLImage = {
       name: imageStem + "_1",
@@ -1709,13 +1709,13 @@ module WesnothTiles.Internal {
       terrainGraphic.tiles.push({
         q: -i,
         r: i,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: [flag]
       });
       terrainGraphic.tiles.push({
         q: 1 - i,
         r: i,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: [flag]
       });
     }
@@ -1723,7 +1723,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var MOUNTAINS_1x3_SW_NE = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+  export var MOUNTAINS_1x3_SW_NE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
     var center = { x: 144 - 162, y: 162 - 108 }
     var img1: WMLImage = {
       name: imageStem + "_1",
@@ -1763,7 +1763,7 @@ module WesnothTiles.Internal {
       terrainGraphic.tiles.push({
         q: -i,
         r: i,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: [flag]
       });
     }
@@ -1771,7 +1771,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var MOUNTAINS_2x2 = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, imageStem: string, flag: string, prob: number) => {
+  export var MOUNTAINS_2x2 = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
     var center = { x: 144 - 108, y: 144 - 72 }
     var img1: WMLImage = {
       name: imageStem + "_1",
@@ -1811,13 +1811,13 @@ module WesnothTiles.Internal {
       terrainGraphic.tiles.push({
         q: -i,
         r: i,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: [flag]
       });
       terrainGraphic.tiles.push({
         q: 1 - i,
         r: i,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: [flag]
       });
     }
@@ -1825,7 +1825,7 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var VOLCANO_2x2 = (tgGroup: TgGroup, volcano: Map<ETerrain, boolean>, adjacent: Map<ETerrain, boolean>, imageStem: string, flag: string) => {
+  export var VOLCANO_2x2 = (tgGroup: TgGroup, volcano: ETerrain[], adjacent: ETerrain[], imageStem: string, flag: string) => {
     var center = { x: 144 - 108, y: 144 - 72 }
     var img1: WMLImage = {
       name: imageStem + "_1",
@@ -1864,51 +1864,51 @@ module WesnothTiles.Internal {
     terrainGraphic.tiles.push({
       q: 0,
       r: 0,
-      type: volcano,
+      type: getTerrainMap(volcano),
       set_no_flag: [flag]
     });
     terrainGraphic.tiles.push({
       q: 1,
       r: 0,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: [flag]
     });
 
     terrainGraphic.tiles.push({
       q: -1,
       r: 1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: [flag]
     });
     terrainGraphic.tiles.push({
       q: 0,
       r: 1,
-      type: adjacent,
+      type: getTerrainMap(adjacent),
       set_no_flag: [flag]
     });
 
     tgGroup.addTg(terrainGraphic);
   } 
 
-  export var CORNER_PLFB_CONVEX = (tgGroup: TgGroup, terrainList1: Map<ETerrain, boolean>, adjacent1: Map<ETerrain, boolean>,
-    adjacent2: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  export var CORNER_PLFB_CONVEX = (tgGroup: TgGroup, terrains1: ETerrain[], adjacent1: ETerrain[],
+    adjacent2: ETerrain[], imageStem: string, plfb: PLFB) => {
  
     // 0 ["tr", "r", "br", "bl", "l", "tl"]
     tgGroup.addTg({
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-tr"]
       }, {
           q: 0,
           r: -1,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-br"]
         }, {
           q: 1,
           r: -1,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-l"]
         }
       ],
@@ -1928,17 +1928,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-r"]
       }, {
           q: 1,
           r: -1,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-bl"]
         }, {
           q: 1,
           r: 0,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-tl"]
         }
       ],
@@ -1958,17 +1958,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-br"]
       }, {
           q: 1,
           r: 0,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-l"]
         }, {
           q: 0,
           r: 1,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-tr"]
         }
       ],
@@ -1988,17 +1988,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-bl"]
       }, {
           q: 0,
           r: 1,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-tl"]
         }, {
           q: -1,
           r: 1,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-r"]
         }
       ],
@@ -2018,17 +2018,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-l"]
       }, {
           q: -1,
           r: 1,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-tr"]
         }, {
           q: -1,
           r: 0,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-br"]
         }
       ],
@@ -2048,17 +2048,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-tl"]
       }, {
           q: -1,
           r: 0,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-r"]
         }, {
           q: 0,
           r: -1,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-bl"]
         }
       ],
@@ -2074,25 +2074,25 @@ module WesnothTiles.Internal {
     });
   }
 
-  export var CORNER_PLFB_CONCAVE = (tgGroup: TgGroup, terrainList1: Map<ETerrain, boolean>, adjacent1: Map<ETerrain, boolean>,
-    adjacent2: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  export var CORNER_PLFB_CONCAVE = (tgGroup: TgGroup, terrains1: ETerrain[], adjacent1: ETerrain[],
+    adjacent2: ETerrain[], imageStem: string, plfb: PLFB) => {
  
     // 0 ["tr", "r", "br", "bl", "l", "tl"]
     tgGroup.addTg({
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-tr"]
       }, {
           q: 0,
           r: -1,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-br"]
         }, {
           q: 1,
           r: -1,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-l"]
         }
       ],
@@ -2112,17 +2112,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-r"]
       }, {
           q: 1,
           r: -1,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-bl"]
         }, {
           q: 1,
           r: 0,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-tl"]
         }
       ],
@@ -2142,17 +2142,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-br"]
       }, {
           q: 1,
           r: 0,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-l"]
         }, {
           q: 0,
           r: 1,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-tr"]
         }
       ],
@@ -2172,17 +2172,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-bl"]
       }, {
           q: 0,
           r: 1,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-tl"]
         }, {
           q: -1,
           r: 1,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-r"]
         }
       ],
@@ -2202,17 +2202,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-l"]
       }, {
           q: -1,
           r: 1,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-tr"]
         }, {
           q: -1,
           r: 0,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-br"]
         }
       ],
@@ -2232,17 +2232,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: terrainList1,
+        type: getTerrainMap(terrains1),
         set_no_flag: [plfb.flag + "-tl"]
       }, {
           q: -1,
           r: 0,
-          type: adjacent1,
+          type: getTerrainMap(adjacent1),
           set_no_flag: [plfb.flag + "-r"]
         }, {
           q: 0,
           r: -1,
-          type: adjacent2,
+          type: getTerrainMap(adjacent2),
           set_no_flag: [plfb.flag + "-bl"]
         }
       ],
@@ -2258,8 +2258,8 @@ module WesnothTiles.Internal {
     });
   }
 
-  export var WALL_TRANSITION_PLFB = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>,
-    adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+  export var WALL_TRANSITION_PLFB = (tgGroup: TgGroup, terrains: ETerrain[],
+    adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     if (plfb.layer === undefined)
       plfb.layer = 0;
     if (plfb.flag === undefined)
@@ -2268,23 +2268,23 @@ module WesnothTiles.Internal {
       plfb.builder = IB_IMAGE_SINGLE;
     if (plfb.prob === undefined)
       plfb.prob = 100;
-    CORNER_PLFB_CONVEX(tgGroup, terrainList, adjacent, adjacent, imageStem + "-convex", plfb);
-    CORNER_PLFB_CONCAVE(tgGroup, adjacent, terrainList, terrainList, imageStem + "-concave", plfb);
+    CORNER_PLFB_CONVEX(tgGroup, terrains, adjacent, adjacent, imageStem + "-convex", plfb);
+    CORNER_PLFB_CONCAVE(tgGroup, adjacent, terrains, terrains, imageStem + "-concave", plfb);
   }
 
-  export var NEW_FOREST = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>,
-    adjacent: Map<ETerrain, boolean>, imageStem: string) => {
+  export var NEW_FOREST = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>,
+    adjacent: ETerrain[], imageStem: string) => {
     tgGroup.addTg({
       tiles: [{
         q: 0,
         r: 0,
         overlay: overlayList,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: ["overlay"]
       }, {
           q: 0,
           r: -1,
-          type: adjacent
+          type: getTerrainMap(adjacent)
         }
       ],
       images: [{
@@ -2305,7 +2305,7 @@ module WesnothTiles.Internal {
         q: 0,
         r: 0,
         overlay: overlayList,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: ["overlay"]
       }],
       images: [{
@@ -2320,7 +2320,7 @@ module WesnothTiles.Internal {
       builder: IB_IMAGE_SINGLE
     });
   }
-  export var NEW_VILLAGE = (tgGroup: TgGroup, terrainList: Map<ETerrain, boolean>, overlayList: Map<EOverlay, boolean>,
+  export var NEW_VILLAGE = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>,
     imageStem: string) => {
 
     tgGroup.addTg({
@@ -2328,7 +2328,7 @@ module WesnothTiles.Internal {
         q: 0,
         r: 0,
         overlay: overlayList,
-        type: terrainList,
+        type: getTerrainMap(terrains),
         set_no_flag: ["village"]
       }],
       images: [{
@@ -2346,7 +2346,7 @@ module WesnothTiles.Internal {
   }
 
   export var OVERLAY_RESTRICTED_PLFB = (tgGroup: TgGroup, overlayList: Map<EOverlay, boolean>,
-    adjacent: Map<ETerrain, boolean>, imageStem: string, plfb: PLFB) => {
+    adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     GENERIC_RESTRICTED_PLFB(tgGroup, undefined, overlayList, adjacent, undefined, imageStem, {
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
