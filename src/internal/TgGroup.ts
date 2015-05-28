@@ -387,8 +387,7 @@ module WesnothTiles.Internal {
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_DESERT],
         swapTerrains([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS,
-          ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO, ETerrain.MOUNTAIN_SNOW,
-          ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY]),
+          ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY]),
         "hills/desert", { layer: -184 }, 2);
 
       TRANSITION_COMPLETE_LFB(this,
