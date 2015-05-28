@@ -1,14 +1,6 @@
 module WesnothTiles.Internal {
   'use strict';
 
-  var getOverlayMap = (terrains: EOverlay[]) => {
-    var terrainList = new Map<EOverlay, boolean>();
-    terrains.forEach(terrain => {
-      terrainList.set(terrain, true);
-    });
-    return terrainList;
-  }
-
   export var swapTerrains = (terrains: ETerrain[]) => {
     var terrainList: ETerrain[] = [];
     for (var i = 0; i < ETerrain.VOID; i++) {

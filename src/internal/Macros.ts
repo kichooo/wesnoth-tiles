@@ -1,11 +1,11 @@
 module WesnothTiles.Internal {
   'use strict';  
 
-  var getTerrainMap = (terrains: number[]): Map<number, boolean> => {
+  var getTerrainMap = (terrains: EOverlay[] | ETerrain[]): Map<number, boolean> => {
     if (terrains === undefined)
       return undefined;
     var terrainList = new Map<number, boolean>();
-    terrains.forEach(terrain => {
+    (<number[]>terrains).forEach(terrain => {
       terrainList.set(terrain, true);
     });
     return terrainList;
@@ -1484,7 +1484,7 @@ module WesnothTiles.Internal {
   }
 
   var GENERIC_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
-    adjacent: ETerrain[], adjacentOverlays: Map<EOverlay, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
+    adjacent: ETerrain[], adjacentOverlays: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1506,7 +1506,7 @@ module WesnothTiles.Internal {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent),
-      overlay: adjacentOverlays,
+      overlay: getTerrainMap(adjacentOverlays),
     }
 
     var terrainGraphic: WMLTerrainGraphics = {
