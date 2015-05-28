@@ -1,10 +1,10 @@
 module WesnothTiles.Internal {
   'use strict';  
 
-  var getTerrainMap = (terrains: ETerrain[]) => {
+  var getTerrainMap = (terrains: number[]): Map<number, boolean> => {
     if (terrains === undefined)
       return undefined;
-    var terrainList = new Map<ETerrain, boolean>();
+    var terrainList = new Map<number, boolean>();
     terrains.forEach(terrain => {
       terrainList.set(terrain, true);
     });
@@ -115,7 +115,7 @@ module WesnothTiles.Internal {
     builder?: IBuilder;
   }
 
-  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
+  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, plfb: PLFB) => {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
@@ -128,7 +128,7 @@ module WesnothTiles.Internal {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
-      overlay: overlayList,
+      overlay: getTerrainMap(overlays),
       fog: fog,
       set_no_flag: [plfb.flag]
     }
@@ -156,8 +156,8 @@ module WesnothTiles.Internal {
     GENERIC_SINGLE_PLFB(tgGroup, terrains, undefined, undefined, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, lfb: LFB) => {
-    GENERIC_SINGLE_PLFB(tgGroup, terrains, overlayList, fog, imageStem + "@V", {
+  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, lfb: LFB) => {
+    GENERIC_SINGLE_PLFB(tgGroup, terrains, overlays, fog, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -165,8 +165,8 @@ module WesnothTiles.Internal {
     });
   }
 
-  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, lfb: LFB) => {
-    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, overlayList, fog, imageStem, {
+  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, lfb: LFB) => {
+    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, overlays, fog, imageStem, {
       layer: lfb.layer === undefined ? 0 : lfb.layer,
       flag: lfb.flag === undefined ? "overlay" : lfb.flag,
       builder: lfb.builder === undefined ? IB_IMAGE_SINGLE : lfb.builder,
@@ -1459,8 +1459,8 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>, fog: boolean, imageStem: string, plfb: PLFB) => {
-    GENERIC_SINGLE_PLFB(tgGroup, terrains, overlayList, fog, imageStem, {
+  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, plfb: PLFB) => {
+    GENERIC_SINGLE_PLFB(tgGroup, terrains, overlays, fog, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
@@ -1483,7 +1483,7 @@ module WesnothTiles.Internal {
     }, "-@R0-@R1");
   }
 
-  var GENERIC_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: Map<EOverlay, boolean>,
+  var GENERIC_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
     adjacent: ETerrain[], adjacentOverlays: Map<EOverlay, boolean>, imageStem: string, plfb: PLFB, rotation: string) => {
     var img: WMLImage = {
       name: imageStem,
@@ -1498,7 +1498,7 @@ module WesnothTiles.Internal {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
-      overlay: overlays,
+      overlay: getTerrainMap(overlays),
       set_no_flag: [plfb.flag]
     }
 
@@ -2272,13 +2272,13 @@ module WesnothTiles.Internal {
     CORNER_PLFB_CONCAVE(tgGroup, adjacent, terrains, terrains, imageStem + "-concave", plfb);
   }
 
-  export var NEW_FOREST = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>,
+  export var NEW_FOREST = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
     adjacent: ETerrain[], imageStem: string) => {
     tgGroup.addTg({
       tiles: [{
         q: 0,
         r: 0,
-        overlay: overlayList,
+        overlay: getTerrainMap(overlays),
         type: getTerrainMap(terrains),
         set_no_flag: ["overlay"]
       }, {
@@ -2304,7 +2304,7 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        overlay: overlayList,
+        overlay: getTerrainMap(overlays),
         type: getTerrainMap(terrains),
         set_no_flag: ["overlay"]
       }],
@@ -2320,14 +2320,14 @@ module WesnothTiles.Internal {
       builder: IB_IMAGE_SINGLE
     });
   }
-  export var NEW_VILLAGE = (tgGroup: TgGroup, terrains: ETerrain[], overlayList: Map<EOverlay, boolean>,
+  export var NEW_VILLAGE = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
     imageStem: string) => {
 
     tgGroup.addTg({
       tiles: [{
         q: 0,
         r: 0,
-        overlay: overlayList,
+        overlay: getTerrainMap(overlays),
         type: getTerrainMap(terrains),
         set_no_flag: ["village"]
       }],
@@ -2345,9 +2345,9 @@ module WesnothTiles.Internal {
     });
   }
 
-  export var OVERLAY_RESTRICTED_PLFB = (tgGroup: TgGroup, overlayList: Map<EOverlay, boolean>,
+  export var OVERLAY_RESTRICTED_PLFB = (tgGroup: TgGroup, overlays: EOverlay[],
     adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
-    GENERIC_RESTRICTED_PLFB(tgGroup, undefined, overlayList, adjacent, undefined, imageStem, {
+    GENERIC_RESTRICTED_PLFB(tgGroup, undefined, overlays, adjacent, undefined, imageStem, {
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
       prob: plfb.prob === undefined ? 100 : plfb.prob,
