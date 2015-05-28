@@ -63,16 +63,10 @@ WML files with terrain definitions will be converted using short GO program.
  -  [x] remains
 - [x] ethereal abyss (chasm)
 
-# current iteration (v0.5)
- - [x] fog
- - [x] seedable randoms
- - [x] cleanup the structure, hide what should be hidden, show what should be visible outside.
- - [x] reintroduce Overlays.
- - [x] change fog to boolean.
- - [x] automatic testing of map drawables checksums
- - [x] some better way to match terrains with macros, instead of having terrain, overlay and fog. 
- - [x] create bower package
-
+# current iteration (v0.6)
+ - [ ] some better way to match terrains with macros, instead of having terrain, overlay and fog. 
+ - [ ] automatic tests of the checksums
+ - [ ] reconsider fast map redraw/reload 
 
 
 # backlog list
