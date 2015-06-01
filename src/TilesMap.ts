@@ -134,11 +134,33 @@ module WesnothTiles {
     // Clears the map.
     clear() {
       this.hexMap.clear();
-    }
+    }    
 
-    rebuild() {
-      this.drawables = Internal.rebuild(this.hexMap);
-      this.drawables.sort((a: Internal.IDrawable, b: Internal.IDrawable) => {
+    private sortFuncForChecksum = (a: Internal.IDrawable, b: Internal.IDrawable) => {
+        if (a.layer === b.layer) {
+          if (a.base !== undefined && b.base !== undefined) {
+            if (a.base.y === b.base.y) {
+              if (a.y === b.y)
+                return (a.x - b.x)
+              return a.y - b.y; 
+            }
+
+            return a.base.y - b.base.y;
+          }
+          if (b.base !== undefined) {
+            return a.layer < 0 ? -1 : 1;
+          } else if (a.base !== undefined) {
+            return b.layer < 0 ? 1 : -1;
+          }
+          if (a.y === b.y)
+            return (a.x - b.x)
+          return a.y - b.y; 
+        }
+        return a.layer - b.layer;        
+      };
+
+
+    private sortFunc = (a: Internal.IDrawable, b: Internal.IDrawable) => {
         if (a.layer === b.layer) {
           if (a.base !== undefined && b.base !== undefined) {
             return a.base.y - b.base.y;
@@ -151,11 +173,16 @@ module WesnothTiles {
           return 0;
         }
         return a.layer - b.layer;        
-      });
+      };
+
+    rebuild() {
+      this.drawables = Internal.rebuild(this.hexMap);
+      this.drawables.sort(this.sortFunc);
     }
 
     getCheckSum(): string {
       var checksum = 0;
+      this.drawables.sort(this.sortFuncForChecksum);
       this.drawables.forEach(drawable => {
         checksum = Internal.murmurhash3(drawable.toString(), checksum);
       });

@@ -31,6 +31,18 @@ function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'block';
 }
 
+function loadSingleCircle(): void {
+  document.getElementById("checksumBlock").style.display = 'none'
+  tilesMap.clear();
+
+  loadCircle(ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, EOverlay.NONE, EOverlay.NONE, 0, 0);
+
+  tilesMap.rebuild();
+  document.getElementById("checksum").textContent = tilesMap.getCheckSum();
+  document.getElementById("expected").textContent = "expected: none";
+  document.getElementById("checksumBlock").style.display = 'block';
+}
+
 function loadRandomMap(): void {
   document.getElementById("checksumBlock").style.display = 'none'
   tilesMap.clear();
@@ -101,6 +113,7 @@ function loadDisk(): void {
   tilesMap.clear();
   loadRing(5, ETerrain.ABYSS);
   loadRing(6, ETerrain.ABYSS);
+  // loadRing(7, ETerrain.VOID);
 
   for (var i = 0; i < 5; i++) {
     tilesMap.setTerrain(-6, i + 1, ETerrain.WATER_OCEAN);
@@ -218,7 +231,7 @@ function loadDisk(): void {
   document.getElementById("checksumBlock").style.display = 'block'
 }
 
-function loadCircle(map, terrain1, terrain2, overlay1, overlay2, x, y) {
+function loadCircle(terrain1, terrain2, overlay1, overlay2, x, y) {
   tilesMap.setTerrain(x, y, terrain1, overlay1);
   tilesMap.setTerrain(x, y - 1, terrain2, overlay2);
   tilesMap.setTerrain(x + 1, y - 1, terrain2, overlay2);
@@ -244,7 +257,7 @@ function start() {
     //   EOverlay.NONE, EOverlay.NONE, 3, 0);
     // loadCircle(map, ETerrain.GRASS_GREEN, ETerrain.ABYSS, 2, -2);
     loadDisk();
-
+    // loadSingleCircle();
 
 
     

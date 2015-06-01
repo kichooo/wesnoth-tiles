@@ -13,13 +13,13 @@ module WesnothTiles.Internal {
     layer?: number;
     base?: IVector;
     toString(): string;
+    x: number;
+    y: number;
   }
 
   export class StaticDrawable implements IDrawable {
-    constructor(private x: number, private y: number, private name: string, public layer: number, public base: IVector) {
-      if (name.match("chasm/regular")){
-        console.log("found chasm");
-      }
+    constructor(public x: number, public y: number, private name: string, public layer: number, public base: IVector) {
+      console.log(name);
     }
 
     draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {
@@ -37,13 +37,14 @@ module WesnothTiles.Internal {
 
   export class AnimatedDrawable implements IDrawable {
     private animTime = Date.now();
-    constructor(private x: number,
-      private y: number,
+    constructor(public x: number,
+      public y: number,
       private name: string,
       public layer: number,
       public base: IVector,
       private frames: number,
       private duration: number) {
+      console.log(name);
     }
 
     draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {
