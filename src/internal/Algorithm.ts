@@ -230,24 +230,10 @@ module WesnothTiles.Internal {
     // console.log("Macros count: ", terrainGraphics.length + " macros.");
 
     hexMap.tgGroup.tgs.forEach(tg => {
-      var dupa: Hex[] = [];
       tg.hexes.forEach(hex => {
-        dupa.push(hex);
-      });
-
-      var sorted = dupa.sort((a: Hex, b: Hex) =>{
-        if (a.q === b.q)
-          return a.r - b.r;
-        return a.q - b.q;
-      });
-      sorted.forEach(hex => {
         dp.hex = hex;
         performTerrainGraphics(tg, dp);
       });
-      // tg.hexes.forEach(hex => {
-      //   dp.hex = hex;
-      //   performTerrainGraphics(tg, dp);
-      // });
     });
 
     var sum = 0;

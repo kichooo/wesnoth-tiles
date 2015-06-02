@@ -11,6 +11,7 @@ module WesnothTiles.Internal {
   export interface IDrawable {
     draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number);
     layer?: number;
+    name: string;
     base?: IVector;
     toString(): string;
     x: number;
@@ -18,8 +19,7 @@ module WesnothTiles.Internal {
   }
 
   export class StaticDrawable implements IDrawable {
-    constructor(public x: number, public y: number, private name: string, public layer: number, public base: IVector) {
-      console.log(name);
+    constructor(public x: number, public y: number, public name: string, public layer: number, public base: IVector) {
     }
 
     draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {
@@ -39,12 +39,11 @@ module WesnothTiles.Internal {
     private animTime = Date.now();
     constructor(public x: number,
       public y: number,
-      private name: string,
+      public name: string,
       public layer: number,
       public base: IVector,
       private frames: number,
       private duration: number) {
-      console.log(name);
     }
 
     draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {

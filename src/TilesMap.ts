@@ -140,11 +140,8 @@ module WesnothTiles {
         if (a.layer === b.layer) {
           if (a.base !== undefined && b.base !== undefined) {
             if (a.base.y === b.base.y) {
-              if (a.y === b.y)
-                return (a.x - b.x)
-              return a.y - b.y; 
+              return a.toString() < b.toString() ? -1: 1; 
             }
-
             return a.base.y - b.base.y;
           }
           if (b.base !== undefined) {
@@ -152,9 +149,7 @@ module WesnothTiles {
           } else if (a.base !== undefined) {
             return b.layer < 0 ? 1 : -1;
           }
-          if (a.y === b.y)
-            return (a.x - b.x)
-          return a.y - b.y; 
+          return a.toString() < b.toString() ? -1: 1;
         }
         return a.layer - b.layer;        
       };
@@ -182,6 +177,8 @@ module WesnothTiles {
 
     getCheckSum(): string {
       var checksum = 0;
+
+
       this.drawables.sort(this.sortFuncForChecksum);
       this.drawables.forEach(drawable => {
         checksum = Internal.murmurhash3(drawable.toString(), checksum);

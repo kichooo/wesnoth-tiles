@@ -27,7 +27,7 @@ function loadTestMap(): void {
     }
   tilesMap.rebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 3339309276";
+  document.getElementById("expected").textContent = "expected: 482756063";
   document.getElementById("checksumBlock").style.display = 'block';
 }
 
@@ -35,7 +35,7 @@ function loadSingleCircle(): void {
   document.getElementById("checksumBlock").style.display = 'none'
   tilesMap.clear();
 
-  loadCircle(ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, EOverlay.NONE, EOverlay.NONE, 0, 0);
+  loadCircle(ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);
 
   tilesMap.rebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
@@ -227,7 +227,7 @@ function loadDisk(): void {
   }
   tilesMap.rebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 119582705";
+  document.getElementById("expected").textContent = "expected: 1042028984";
   document.getElementById("checksumBlock").style.display = 'block'
 }
 
