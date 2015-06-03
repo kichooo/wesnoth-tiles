@@ -23,11 +23,13 @@ function loadTestMap(): void {
           || terrain === ETerrain.FROZEN_SNOW)
           && rng.nextRange(0, 3) === 0)
           overlay = rng.nextRange(EOverlay.MUSHROOMS, EOverlay.NONE + 1);
-      tilesMap.setTerrain(i, j, terrain, overlay);
+      tilesMap.setTerrain(i, j, terrain, overlay);    
     }
-  tilesMap.rebuild();
+  var duration = timedRebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 1612997356";
+  document.getElementById("expected").textContent = "expected: 1568081850";
+  document.getElementById("duration").textContent = duration.toString();
+
   document.getElementById("checksumBlock").style.display = 'block';
 }
 
@@ -50,7 +52,6 @@ function loadRandomMap(): void {
     for (var j = -18; j < 18; j++) {
       tilesMap.setTerrain(i, j, Math.floor(Math.random() * 21));
     }
-  tilesMap.rebuild();
 }
 
 function loadRandomMapWithWoods(): void {
@@ -113,7 +114,7 @@ function loadDisk(): void {
   tilesMap.clear();
   loadRing(5, ETerrain.ABYSS);
   loadRing(6, ETerrain.ABYSS);
-  // loadRing(7, ETerrain.VOID);
+  loadRing(7, ETerrain.VOID);
 
   for (var i = 0; i < 5; i++) {
     tilesMap.setTerrain(-6, i + 1, ETerrain.WATER_OCEAN);
@@ -227,8 +228,14 @@ function loadDisk(): void {
   }
   tilesMap.rebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 2967514964";
+  document.getElementById("expected").textContent = "expected: 1648426121";
   document.getElementById("checksumBlock").style.display = 'block'
+}
+
+function timedRebuild(): number {
+  var timeRebuildingStart = new Date();
+  tilesMap.rebuild();
+  return new Date().getTime() - timeRebuildingStart.getTime();
 }
 
 function loadCircle(terrain1, terrain2, overlay1, overlay2, x, y) {
@@ -246,7 +253,6 @@ function start() {
   var canvas = <HTMLCanvasElement>document.getElementById("map-canvas");
   tilesMap = new WesnothTiles.TilesMap(canvas);
   tilesMap.load().then(() => {
-    var timeRebuildingStart = new Date();
     // loadChunksRandom(map);
     // loadRandomMapWithWoods(map);
     // loadRandomMap(map);
@@ -261,7 +267,6 @@ function start() {
 
 
     
-    // tilesMap.rebuild();
     console.log("Rebuilding took  ", (new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
     tilesMap.resize(window.innerWidth, window.innerHeight);
     var anim = () => {
@@ -271,7 +276,6 @@ function start() {
       });
     };
     anim();
-    console.log("All took: ", (new Date().getTime() - timeStart.getTime()) + "ms");
   });
 
 }

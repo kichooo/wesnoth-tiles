@@ -35,15 +35,18 @@ module WesnothTiles.Internal {
       hex.fog = fog;
 
       // we also add 6 hexes around this hex, so that we are sure that everything is surrounded by void.
-      this.setToVoidIfEmpty(q + 1, r);
-      this.setToVoidIfEmpty(q - 1, r);
-      this.setToVoidIfEmpty(q, r + 1);
-      this.setToVoidIfEmpty(q, r - 1);
-      this.setToVoidIfEmpty(q + 1, r - 1);
-      this.setToVoidIfEmpty(q - 1, r + 1);
+      // this.setToVoidIfEmpty(q + 1, r);
+      // this.setToVoidIfEmpty(q - 1, r);
+      // this.setToVoidIfEmpty(q, r + 1);
+      // this.setToVoidIfEmpty(q, r - 1);
+      // this.setToVoidIfEmpty(q + 1, r - 1);
+      // this.setToVoidIfEmpty(q - 1, r + 1);
 
       
       this.addHexToTgs(hex);      
+      this.iterateNeighbours(hex.q, hex.r, h => {
+        this.addHexToTgs(h);
+      })
     }
 
     // This method checks if hex has some value, and sets to void otherwise.
@@ -70,13 +73,42 @@ module WesnothTiles.Internal {
           return;
         if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
           return;
-        // console.log("Adding hex", tg.images[0].name);
+
+        if (tg.transition !== undefined) {
+          // this is a transition macro - we need to check if we have at least one proper neighbour.
+          var found = false;
+          this.iterateNeighbours(hex.q, hex.r, hex => {
+            if (tg.transition.has(hex.terrain)) {              
+              found = true;
+            }
+          });
+          if (!found) {
+            return;
+          }
+        }
         tg.hexes.set(hex.toString(), hex);
-      }); 
+      });
+
+
+
+
     }
 
-    iterate(func: (hex: Hex) => void) {
-      this.hexes.forEach(func);
+    iterate(callback: (hex: Hex) => void) {
+      this.hexes.forEach(callback);
+    }
+
+    iterateNeighbours(q: number, r: number, callback: (hex: Hex) => void) {
+      var func = (hex: Hex) => {
+        if (hex !== undefined)
+          callback(hex);
+      }
+      func(this.getHexP(q + 1, r));
+      func(this.getHexP(q - 1, r));
+      func(this.getHexP(q, r + 1));
+      func(this.getHexP(q, r - 1));
+      func(this.getHexP(q + 1, r - 1));
+      func(this.getHexP(q - 1, r + 1));
     }
 
     clear() {

@@ -103,7 +103,7 @@ module WesnothTiles.Internal {
     rotations?: string[];
 
     builder: IBuilder;
-    transition?: ETerrain[];
+    transition?: Map<ETerrain, boolean>;
   }
 
   export interface PLFB extends LFB {
@@ -218,7 +218,7 @@ module WesnothTiles.Internal {
       images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: terrains,
+      transition: getTerrainMap(terrains),
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -304,7 +304,7 @@ module WesnothTiles.Internal {
       set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: terrains,      
+      transition: getTerrainMap(terrains),      
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -381,7 +381,7 @@ module WesnothTiles.Internal {
       set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: terrains,      
+      transition: getTerrainMap(terrains),      
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -448,7 +448,7 @@ module WesnothTiles.Internal {
       images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: terrains,      
+      transition: getTerrainMap(terrains),      
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -506,7 +506,7 @@ module WesnothTiles.Internal {
       images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: terrains,      
+      transition: getTerrainMap(terrains),      
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -555,7 +555,7 @@ module WesnothTiles.Internal {
       images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: terrains,      
+      transition: getTerrainMap(terrains),      
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);

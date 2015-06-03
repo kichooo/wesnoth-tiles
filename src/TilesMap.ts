@@ -178,12 +178,14 @@ module WesnothTiles {
     getCheckSum(): string {
       var checksum = 0;
 
-
+      // var dupa = "";
       this.drawables.sort(this.sortFuncForChecksum);
       this.drawables.forEach(drawable => {
         checksum = Internal.murmurhash3(drawable.toString(), checksum);
+        // dupa = dupa + drawable.toString() + ";";
       });
 
+      // console.log(dupa);
       return checksum.toString();
     }
 
