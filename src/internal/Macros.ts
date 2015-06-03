@@ -103,6 +103,7 @@ module WesnothTiles.Internal {
     rotations?: string[];
 
     builder: IBuilder;
+    transitionNumber?: number;
     transition?: Map<ETerrain, boolean>;
   }
 
@@ -218,6 +219,7 @@ module WesnothTiles.Internal {
       images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
+      transitionNumber: 1,
       transition: getTerrainMap(terrains),
       builder: plfb.builder
     }
@@ -304,84 +306,8 @@ module WesnothTiles.Internal {
       set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: getTerrainMap(terrains),      
-      builder: plfb.builder
-    }
-    tgGroup.addTg(terrainGraphic);
-  }
-
-  var BORDER_RESTRICTED5_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
-    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
-      name: imageStem,
-      postfix: "-@R0-@R1-@R2-@R3-@R4",
-      layer: plfb.layer,
-      center: { x: 36, y: 36 },
-      variations: ["", "2"]
-    }
-
-    var tile1: WMLTile = {
-      q: 0,
-      r: 0,
-      type: getTerrainMap(adjacent),
-      fog: fogAdjacent,
-      set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4"]
-    }
-
-    var tile2: WMLTile = {
-      q: 0,
-      r: -1,
-      type: getTerrainMap(terrains),
-      fog: fog,
-      set_no_flag: [plfb.flag + "-@R3"]
-    }
-
-    var tile3: WMLTile = {
-      q: 1,
-      r: -1,
-      type: getTerrainMap(terrains),
-      fog: fog,
-      set_no_flag: [plfb.flag + "-@R4"]
-    }
-
-    var tile4: WMLTile = {
-      q: 1,
-      r: 0,
-      type: getTerrainMap(terrains),
-      fog: fog,
-      set_no_flag: [plfb.flag + "-@R5"]
-    }
-
-    var tile5: WMLTile = {
-      q: 0,
-      r: 1,
-      type: getTerrainMap(terrains),
-      fog: fog,
-      set_no_flag: [plfb.flag + "-@R0"]
-    }
-
-    var tile6: WMLTile = {
-      q: -1,
-      r: 1,
-      type: getTerrainMap(terrains),
-      fog: fog,
-      set_no_flag: [plfb.flag + "-@R1"]
-    }
-
-    var terrainGraphic: WMLTerrainGraphics = {
-      tiles: [
-        tile1,
-        tile2,
-        tile3,
-        tile4,
-        tile5,
-        tile6
-      ],
-      images: [img],
-      set_no_flag: [],
-      probability: plfb.prob,
-      rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: getTerrainMap(terrains),      
+      transition: getTerrainMap(terrains),
+      transitionNumber: 6,
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -448,7 +374,8 @@ module WesnothTiles.Internal {
       images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: getTerrainMap(terrains),      
+      transition: getTerrainMap(terrains),
+      transitionNumber: 4,
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -506,7 +433,8 @@ module WesnothTiles.Internal {
       images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: getTerrainMap(terrains),      
+      transition: getTerrainMap(terrains),
+      transitionNumber: 3,
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -555,7 +483,8 @@ module WesnothTiles.Internal {
       images: [img],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      transition: getTerrainMap(terrains),      
+      transition: getTerrainMap(terrains),
+      transitionNumber: 2,   
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -564,16 +493,6 @@ module WesnothTiles.Internal {
   var BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED6_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
-      prob: 100,
-      layer: lfb.layer,
-      flag: lfb.flag,
-      builder: lfb.builder
-    });
-  }
-
-  var BORDER_RESTRICTED5_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
-    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
-    BORDER_RESTRICTED5_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
       flag: lfb.flag,
@@ -622,21 +541,27 @@ module WesnothTiles.Internal {
   }
 
   var BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
-    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number) => {
-    switch (grades) {
+    adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number[]) => {
+    grades.forEach(grade => {
+      switch (grade) {
       case 6:
         BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
-      case 5:
-        BORDER_RESTRICTED5_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+        break;
+      // 5 borders transition was nowhere used, thus got removed.
       case 4:
         BORDER_RESTRICTED4_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+        break;
       case 3:
         BORDER_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+        break;
       case 2:
         BORDER_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+        break;
       case 1:
         BORDER_RESTRICTED_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
-    }
+        break;
+      }
+    });    
 
 
   }
@@ -660,7 +585,7 @@ module WesnothTiles.Internal {
   }
 
   // grades is used by BORDER_COMPLETE, to filter out not needed macros.
-  export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, grades = 6) => {
+  export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, grades = [1, 2, 3, 4, 5, 6]) => {
     if (lfb.layer === undefined)
       lfb.layer = -500;
     if (lfb.flag === undefined)
@@ -674,7 +599,7 @@ module WesnothTiles.Internal {
     BORDER_COMPLETE_LFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, lfb, grades);
   }
 
-  export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: boolean, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades = 6) => {
+  export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: boolean, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades = [1, 2, 3, 4, 5, 6]) => {
     if (lfb.layer === undefined)
       lfb.layer = -500;
     if (lfb.flag === undefined)

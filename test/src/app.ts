@@ -226,9 +226,10 @@ function loadDisk(): void {
     tilesMap.setTerrain(-2 - i, 4 + 1, ETerrain.WATER_OCEAN);
     tilesMap.setTerrain(-1 - i, 4, ETerrain.WATER_OCEAN);
   }
-  tilesMap.rebuild();
+  var duration = timedRebuild();  
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
   document.getElementById("expected").textContent = "expected: 1648426121";
+  document.getElementById("duration").textContent = duration.toString();
   document.getElementById("checksumBlock").style.display = 'block'
 }
 
@@ -266,8 +267,6 @@ function start() {
     // loadSingleCircle();
 
 
-    
-    console.log("Rebuilding took  ", (new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
     tilesMap.resize(window.innerWidth, window.innerHeight);
     var anim = () => {
       window.requestAnimationFrame(() => {

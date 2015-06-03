@@ -297,7 +297,7 @@ module WesnothTiles.Internal {
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.ABYSS],
         [ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_VOLCANO],
-        "mountains/blend-from-chasm", { layer: 2, flag: "transition3" }, 1);
+        "mountains/blend-from-chasm", { layer: 2, flag: "transition3" }, [1]);
 
       WALL_TRANSITION_PLFB(this,
         [ETerrain.ABYSS],
@@ -320,67 +320,67 @@ module WesnothTiles.Internal {
         [ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO],
         swapTerrains([ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_VOLCANO,
           ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD, ETerrain.ABYSS]),
-        "mountains/dry", { layer: -166 }, 1);
+        "mountains/dry", { layer: -166 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW,
           ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
         [ETerrain.MOUNTAIN_BASIC],
-        "mountains/blend-from-dry", { layer: 0, flag: "inside" }, 1);
+        "mountains/blend-from-dry", { layer: 0, flag: "inside" }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY,
           ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
         [ETerrain.MOUNTAIN_SNOW],
-        "mountains/blend-from-dry", { layer: 0, flag: "inside" }, 1);
+        "mountains/blend-from-dry", { layer: 0, flag: "inside" }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.MOUNTAIN_BASIC],
         [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.HILLS_SNOW,
           ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
-        "hills/dry", { layer: -166 }, 2)
+        "hills/dry", { layer: -166 }, [1, 2])
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.MOUNTAIN_SNOW],
         [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY,
           ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
-        "hills/dry", { layer: -166 }, 2)
+        "hills/dry", { layer: -166 }, [1, 2])
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW],
         [ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR],
-        "hills/snow-to-hills", { layer: -170 }, 2);
+        "hills/snow-to-hills", { layer: -170 }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER, ETerrain.SWAMP_MUD],
-        "hills/snow-to-water", { layer: -171 }, 2);
+        "hills/snow-to-water", { layer: -171 }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW],
         [ETerrain.HILLS_DESERT, ETerrain.GRASS_DRY, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER,
           ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
-        "hills/snow", { layer: -172 }, 2);
+        "hills/snow", { layer: -172 }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC],
         swapTerrains([ETerrain.HILLS_REGULAR, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.ABYSS, ETerrain.MOUNTAIN_BASIC,
           ETerrain.MOUNTAIN_VOLCANO, ETerrain.MOUNTAIN_DRY]),
-        "hills/regular", { layer: -180 }, 2);
+        "hills/regular", { layer: -180 }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_DRY],
         swapTerrains([ETerrain.HILLS_DRY, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER, ETerrain.MOUNTAIN_SNOW,
           ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW]),
-        "hills/dry", { layer: -183 }, 2);
+        "hills/dry", { layer: -183 }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_DESERT],
         swapTerrains([ETerrain.HILLS_DESERT, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.ABYSS,
           ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY]),
-        "hills/desert", { layer: -184 }, 2);
+        "hills/desert", { layer: -184 }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.SWAMP_WATER],
@@ -388,80 +388,80 @@ module WesnothTiles.Internal {
           ETerrain.HILLS_DESERT, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
           ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_DRY,
           ETerrain.FROZEN_SNOW, ETerrain.FROZEN_ICE, ETerrain.ABYSS]),
-        "swamp/water", { layer: -230 }, 3);
+        "swamp/water", { layer: -230 }, [1, 2, 3]);
 
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_SEMI_DRY], [ETerrain.GRASS_GREEN, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER],
-        "grass/semi-dry-long", { flag: "inside", layer: -250 }, 1);
+        "grass/semi-dry-long", { flag: "inside", layer: -250 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_GREEN], [ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_LEAF_LITTER],
-        "grass/green-long", { flag: "inside", layer: -251 }, 1);
+        "grass/green-long", { flag: "inside", layer: -251 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_DRY], [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_LEAF_LITTER],
-        "grass/dry-long", { flag: "inside", layer: -252 }, 1);
+        "grass/dry-long", { flag: "inside", layer: -252 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_LEAF_LITTER], [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY],
-        "grass/leaf-litter-long", { flag: "inside", layer: -253 }, 1);
+        "grass/leaf-litter-long", { flag: "inside", layer: -253 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_LEAF_LITTER],
         [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY],
-        "grass/leaf-litter-long", { layer: -254 }, 1);
+        "grass/leaf-litter-long", { layer: -254 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_DRY],
         [ETerrain.GRASS_GREEN, ETerrain.GRASS_SEMI_DRY],
-        "grass/dry-long", { layer: -255 }, 1);
+        "grass/dry-long", { layer: -255 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_GREEN],
         [ETerrain.GRASS_SEMI_DRY],
-        "grass/green-long", { layer: -256 }, 1);
+        "grass/green-long", { layer: -256 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_SEMI_DRY],
         [ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW],
-        "grass/semi-dry-medium", { layer: -260 }, 1);
+        "grass/semi-dry-medium", { layer: -260 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_GREEN],
         [ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW],
-        "grass/green-medium", { layer: -261 }, 1);
+        "grass/green-medium", { layer: -261 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_DRY],
         [ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW],
-        "grass/dry-medium", { layer: -262 }, 1);
+        "grass/dry-medium", { layer: -262 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_LEAF_LITTER],
         [ETerrain.SWAMP_MUD,
           ETerrain.SAND_DESERT, ETerrain.SAND_BEACH, ETerrain.FROZEN_SNOW],
-        "grass/leaf-litter", { layer: -270 }, 3);
+        "grass/leaf-litter", { layer: -270 }, [1, 2, 3]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_GREEN],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD],
-        "grass/green-abrupt", { layer: -271 }, 1);
+        "grass/green-abrupt", { layer: -271 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_SEMI_DRY],
         [ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD],
-        "grass/semi-dry-abrupt", { layer: -272 }, 1);
+        "grass/semi-dry-abrupt", { layer: -272 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_DRY],
         [ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.FROZEN_ICE, ETerrain.SWAMP_MUD],
-        "grass/dry-abrupt", { layer: -273 }, 1);
+        "grass/dry-abrupt", { layer: -273 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.FROZEN_SNOW],
         [ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.SWAMP_WATER],
-        "frozen/snow-to-water", { layer: -280 }, 4);
+        "frozen/snow-to-water", { layer: -280 }, [1, 2, 3, 4]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.FROZEN_SNOW],
@@ -470,17 +470,17 @@ module WesnothTiles.Internal {
           ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY,
           ETerrain.SWAMP_WATER, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW,
           ETerrain.HILLS_DESERT, ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.MOUNTAIN_VOLCANO]),
-        "frozen/snow", { layer: -281 }, 4);
+        "frozen/snow", { layer: -281 }, [1, 2, 3, 4]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE],
         [ETerrain.GRASS_LEAF_LITTER],
-        "flat/bank", { layer: -300 }, 1);
+        "flat/bank", { layer: -300 }, [1]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.SWAMP_MUD],
         [ETerrain.SAND_BEACH, ETerrain.SAND_DESERT],
-        "swamp/mud-to-land", { layer: -310 }, 1);
+        "swamp/mud-to-land", { layer: -310 }, [1]);
 
       NEW_WAVES(this,
         [ETerrain.HILLS_DESERT, ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
@@ -495,7 +495,7 @@ module WesnothTiles.Internal {
           ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN,
           ETerrain.MOUNTAIN_BASIC, ETerrain.MOUNTAIN_SNOW, ETerrain.HILLS_SNOW, ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC,
           ETerrain.FROZEN_SNOW, ETerrain.SWAMP_MUD]),
-        "sand/beach", { layer: -510 }, 6);
+        "sand/beach", { layer: -510 }, [1, 2, 3, 4, 6]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.SAND_DESERT],
@@ -506,45 +506,45 @@ module WesnothTiles.Internal {
           ETerrain.HILLS_REGULAR, ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT,
           ETerrain.GRASS_SEMI_DRY, ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER,
           ETerrain.SWAMP_MUD, ETerrain.SAND_BEACH]),
-        "sand/desert", { layer: -510 }, 6);
+        "sand/desert", { layer: -510 }, [1, 2, 3, 4, 6]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_REGULAR, ETerrain.MOUNTAIN_BASIC],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER],
-        "hills/regular-to-water", { layer: -482, flag: "non_submerged" }, 2);
+        "hills/regular-to-water", { layer: -482, flag: "non_submerged" }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_DRY, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_VOLCANO],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
           ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER],
-        "hills/dry-to-water", { layer: -482, flag: "non_submerged" }, 2);
+        "hills/dry-to-water", { layer: -482, flag: "non_submerged" }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE],
-        "flat/bank-to-ice", { layer: -483, flag: "non_submerged" }, 2);
+        "flat/bank-to-ice", { layer: -483, flag: "non_submerged" }, [1, 2]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
         [ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
-        "frozen/ice", { layer: -485, flag: "non_submerged" }, 4);
+        "frozen/ice", { layer: -485, flag: "non_submerged" }, [1, 2, 3, 4]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER],
-        "frozen/ice", { layer: -485, flag: "non_submerged" }, 4);
+        "frozen/ice", { layer: -485, flag: "non_submerged" }, [1, 2, 3, 4]);
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW, ETerrain.FROZEN_ICE, ETerrain.FROZEN_SNOW],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_MUD, ETerrain.SWAMP_WATER],
-        "frozen/ice-to-water", { layer: -505, flag: "submerged" }, 4); 
+        "frozen/ice-to-water", { layer: -505, flag: "submerged" }, [1, 2, 3, 4]); 
 
       // invisible transition
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.FROZEN_ICE],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER],
-        "frozen/ice-to-water", { layer: -1001 }, 4);
+        "frozen/ice-to-water", { layer: -1001 }, [1, 2, 3, 4]);
 
       NEW_BEACH(this,
         [ETerrain.HILLS_DESERT, ETerrain.SAND_DESERT, ETerrain.SAND_BEACH],
@@ -562,7 +562,7 @@ module WesnothTiles.Internal {
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.SWAMP_MUD],
         [ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.SWAMP_WATER],
-        "swamp/mud-long", { layer: -556, flag: "transition3" }, 1);
+        "swamp/mud-long", { layer: -556, flag: "transition3" }, [1]);
 
 
       ANIMATED_WATER_15_TRANSITION(this,
@@ -577,7 +577,7 @@ module WesnothTiles.Internal {
 
       TRANSITION_COMPLETE_LFB(this,
         [ETerrain.VOID], swapTerrains([]),
-        "void/void", { layer: 1000 }, 3);
+        "void/void", { layer: 1000 }, [1, 2, 3]);
       return TgGroup;
     }
 

@@ -207,13 +207,6 @@ module WesnothTiles.Internal {
   }
 
   export var rebuild = (hexMap: HexMap) => {
-    var voids = 0;
-    hexMap.iterate(hex => {
-      if (hex.terrain === ETerrain.VOID)
-        voids++;
-    });
-
-    console.log("void:", voids);
 
     var flags = new Map<string, Map<string, boolean>>();
 
@@ -226,8 +219,6 @@ module WesnothTiles.Internal {
       flags: flags,
       drawables: drawables
     }
-
-    // console.log("Macros count: ", terrainGraphics.length + " macros.");
 
     hexMap.tgGroup.tgs.forEach(tg => {
       tg.hexes.forEach(hex => {

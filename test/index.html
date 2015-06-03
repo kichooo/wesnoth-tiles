@@ -21,13 +21,15 @@
     }
 
     span {
-      font-size: 18px;
+      font-size: 20px;      
+      padding: 10px;
+    }
+
+    #checksumBlock {
       background-color: gray;
       padding: 10px;
     }
-    /*button: {
-      position: absolute;
-    }*/
+
     </style>
 </head>
 <body onload = "start();">
@@ -47,7 +49,7 @@
     <br>
     <br>
     <div id = "checksumBlock">
-      <span>Checksum: </span><span id="checksum"></span><span id="expected"></button>
+      <span>Checksum: </span><span id="checksum"></span><span id="expected"></span>
       <br>
       <span>Duration: </span><span id="duration"></span><span>ms</span>
     </div>

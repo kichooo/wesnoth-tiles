@@ -66,6 +66,14 @@ module WesnothTiles.Internal {
         });
       }
 
+      var neighboursMap = new Map<ETerrain, number>();
+      this.iterateNeighbours(hex.q, hex.r, hex => {
+        if (!neighboursMap.has(hex.terrain))
+          neighboursMap.set(hex.terrain, 1);
+        else 
+          neighboursMap.set(hex.terrain, neighboursMap.get(hex.terrain) + 1);
+      });
+
       // iterate through all the macros and check which of them applies here.      
       this.tgGroup.tgs.forEach(tg => {
         var tile = tg.tiles[0];
@@ -76,15 +84,26 @@ module WesnothTiles.Internal {
 
         if (tg.transition !== undefined) {
           // this is a transition macro - we need to check if we have at least one proper neighbour.
+          // var found = false;
+          // this.iterateNeighbours(hex.q, hex.r, hex => {
+          //   if (tg.transition.has(hex.terrain)) {              
+          //     found = true;
+          //   }
+          // });
+          // if (!found) {
+          //   return;
+          // }
+
+
           var found = false;
-          this.iterateNeighbours(hex.q, hex.r, hex => {
-            if (tg.transition.has(hex.terrain)) {              
+          neighboursMap.forEach((value: number, key: ETerrain) => {
+            if (value >= tg.transitionNumber && tg.transition.has(key))
               found = true;
-            }
           });
           if (!found) {
-            return;
+            return;          
           }
+
         }
         tg.hexes.set(hex.toString(), hex);
       });
