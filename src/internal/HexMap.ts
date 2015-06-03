@@ -35,12 +35,12 @@ module WesnothTiles.Internal {
       hex.fog = fog;
 
       // we also add 6 hexes around this hex, so that we are sure that everything is surrounded by void.
-      // this.setToVoidIfEmpty(q + 1, r);
-      // this.setToVoidIfEmpty(q - 1, r);
-      // this.setToVoidIfEmpty(q, r + 1);
-      // this.setToVoidIfEmpty(q, r - 1);
-      // this.setToVoidIfEmpty(q + 1, r - 1);
-      // this.setToVoidIfEmpty(q - 1, r + 1);
+      this.setToVoidIfEmpty(q + 1, r);
+      this.setToVoidIfEmpty(q - 1, r);
+      this.setToVoidIfEmpty(q, r + 1);
+      this.setToVoidIfEmpty(q, r - 1);
+      this.setToVoidIfEmpty(q + 1, r - 1);
+      this.setToVoidIfEmpty(q - 1, r + 1);
 
       
       this.addHexToTgs(hex);      
