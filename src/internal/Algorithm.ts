@@ -229,13 +229,16 @@ module WesnothTiles.Internal {
 
     var sum = 0;
     var count = 0;
+    var transitionCount = 0;
     hexMap.tgGroup.tgs.forEach(tg => {
       sum += tg.hexes.size;
       count++;
+      if (tg.transition !== undefined)
+        transitionCount++;
     });
 
     if (count > 0) {
-      console.log("Tgs stats: count: " + count + ", percentage of hexes per tg: " + 100 * sum / count / hexMap.hexes.size);
+      console.log("Tgs stats: transition/total: " + transitionCount + "/" + count + ", percentage of hexes per tg: " + 100 * sum / count / hexMap.hexes.size);
     }
 
     return drawables;

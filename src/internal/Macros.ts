@@ -677,7 +677,9 @@ module WesnothTiles.Internal {
       ],
       probability: 100,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
-      builder: IB_ANIMATION_15_SLOW
+      builder: IB_ANIMATION_15_SLOW,
+      transition: getTerrainMap(terrains),
+      transitionNumber: 1
     }
     tgGroup.addTg(terrainGraphic);
   }

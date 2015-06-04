@@ -84,14 +84,45 @@ module WesnothTiles.Internal {
       }      
     }
 
-    private addHexToTgs(hex: Hex): void {
-      var neighboursMap = new Map<ETerrain, number>();
-      this.iterateNeighbours(hex.q, hex.r, hex => {
-        if (!neighboursMap.has(hex.terrain))
-          neighboursMap.set(hex.terrain, 1);
-        else 
-          neighboursMap.set(hex.terrain, neighboursMap.get(hex.terrain) + 1);
+    private getNeighboursStreaksMap(hex: Hex): Map<ETerrain, number> {
+      var bestStreaksMap = new Map<ETerrain, number>();
+      var currentStreakMap = new Map<ETerrain, number>();
+
+      this.iterateNeighboursDouble(hex.q, hex.r, terrain => {
+        // stop current streaks.
+        currentStreakMap.forEach((val, key) => {
+          if (key !== terrain) {
+            currentStreakMap.set(key, 0);
+          }
+        });
+        var newValue: number;
+        if (!currentStreakMap.has(hex.terrain))
+          newValue = 1;
+        else
+          newValue = currentStreakMap.get(hex.terrain) + 1;
+        currentStreakMap.set(hex.terrain, newValue);
+        var currentStreak = bestStreaksMap.has(terrain) ?
+          bestStreaksMap.get(terrain) : 0;
+        if (newValue > currentStreak)
+          bestStreaksMap.set(terrain, newValue);
       });
+
+      return bestStreaksMap;
+    }
+
+    private addHexToTgs(hex: Hex): void {
+
+      // for transition macros, try to catch longest sequences of the same neighbour type
+      // in a row. That way we can filter out transition macros of higher grades.
+
+      // var neighboursMap = new Map<ETerrain, number>();
+      var neighboursMap = this.getNeighboursStreaksMap(hex);
+      // this.iterateNeighbours(hex.q, hex.r, hex => {
+      //   if (!neighboursMap.has(hex.terrain))
+      //     neighboursMap.set(hex.terrain, 1);
+      //   else 
+      //     neighboursMap.set(hex.terrain, neighboursMap.get(hex.terrain) + 1);
+      // });
 
       // iterate through all the macros and check which of them applies here.      
       this.tgGroup.tgs.forEach(tg => {
@@ -136,17 +167,42 @@ module WesnothTiles.Internal {
       this.hexes.forEach(callback);
     }
 
-    iterateNeighbours(q: number, r: number, callback: (hex: Hex) => void) {
+    private iterateNeighbours(q: number, r: number, callback: (hex: Hex) => void) {
       var func = (hex: Hex) => {
         if (hex !== undefined)
           callback(hex);
       }
+
       func(this.getHexP(q + 1, r));
       func(this.getHexP(q - 1, r));
       func(this.getHexP(q, r + 1));
       func(this.getHexP(q, r - 1));
       func(this.getHexP(q + 1, r - 1));
       func(this.getHexP(q - 1, r + 1));
+    }
+
+    // This function is for optimization purposes.
+    private iterateNeighboursDouble(q: number, r: number, callback: (terrain: ETerrain) => void) {
+      var func = (hex: Hex) => {
+        if (hex !== undefined)
+          callback(hex.terrain);
+        else
+          callback(undefined);
+      }
+
+      func(this.getHexP(q, r - 1));
+      func(this.getHexP(q + 1, r - 1));
+      func(this.getHexP(q + 1, r));
+      func(this.getHexP(q, r + 1));
+      func(this.getHexP(q - 1, r + 1));
+      func(this.getHexP(q - 1, r));
+      
+      // We do not need to make the fifth and sixth call in the repeat round.
+      // They wouldm't be needed under even most unlucky circumtances
+      func(this.getHexP(q, r - 1));
+      func(this.getHexP(q + 1, r - 1));
+      func(this.getHexP(q + 1, r));
+      func(this.getHexP(q, r + 1));
     }
 
     clear() {

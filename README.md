@@ -75,11 +75,9 @@ WML files with terrain definitions will be converted using short GO program.
 
 # backlog list
  - introduce some automatic testing
- - introduce some way to test manually without changing app.js all the time. Editor, preset map buttons, better randomizers, etc.
- - bower_package
  - angular directive (?)
- - interfaces cleanup
  - multiple maps
+ - promising api - progress reports, thread offloading etc.
 # license
 
 GPL. See LICENSE file in the root of the repository.
