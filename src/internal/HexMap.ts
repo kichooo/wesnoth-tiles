@@ -4,8 +4,10 @@ module WesnothTiles.Internal {
   export class HexMap {
 
 
-    public tgGroup = new Internal.TgGroup();
-    public hexes = new Map<string, Hex>();
+    tgGroup = new Internal.TgGroup();
+    hexes = new Map<string, Hex>();
+
+    private loadingMode = false;
 
     constructor() {
 
@@ -34,20 +36,35 @@ module WesnothTiles.Internal {
       hex.overlay = overlay;
       hex.fog = fog;
 
-      // we also add 6 hexes around this hex, so that we are sure that everything is surrounded by void.
-      // this.setToVoidIfEmpty(q + 1, r);
-      // this.setToVoidIfEmpty(q - 1, r);
-      // this.setToVoidIfEmpty(q, r + 1);
-      // this.setToVoidIfEmpty(q, r - 1);
-      // this.setToVoidIfEmpty(q + 1, r - 1);
-      // this.setToVoidIfEmpty(q - 1, r + 1);
-
-      
-      this.addHexToTgs(hex);      
-      this.iterateNeighbours(hex.q, hex.r, h => {
-        this.addHexToTgs(h);
-      })
+      if (!this.loadingMode) {
+        this.removeHexFromTgs(hex);
+        this.addHexToTgs(hex);      
+        this.iterateNeighbours(hex.q, hex.r, h => {
+          this.removeHexFromTgs(h);
+          this.addHexToTgs(h);
+        });
+      }     
     }
+
+    setLoadingMode(): void {
+      this.loadingMode = true;
+
+      // remove all currently loaded Tgs.
+      this.tgGroup.tgs.forEach(tg => {
+        tg.hexes.clear();
+      });
+    }
+
+    unsetLoadingMode(): void {
+      if (!this.loadingMode)
+        return;
+
+      this.loadingMode = false;
+      this.iterate(h => {
+        this.addHexToTgs(h);
+      });
+    }
+
 
     // This method checks if hex has some value, and sets to void otherwise.
     private setToVoidIfEmpty(q: number, r: number) {
@@ -58,14 +75,16 @@ module WesnothTiles.Internal {
       }
     }
 
-    private addHexToTgs(hex: Hex) {
+    private removeHexFromTgs(hex: Hex): void {
       if (this.hexes.has(hex.toString())) {
         var key = hex.toString();
         this.tgGroup.tgs.forEach(tg => {          
           tg.hexes.delete(key);
         });
-      }
+      }      
+    }
 
+    private addHexToTgs(hex: Hex): void {
       var neighboursMap = new Map<ETerrain, number>();
       this.iterateNeighbours(hex.q, hex.r, hex => {
         if (!neighboursMap.has(hex.terrain))

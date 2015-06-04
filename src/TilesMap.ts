@@ -88,6 +88,17 @@ module WesnothTiles {
       this.ctx = <any>this.canvas.getContext('2d');
     }
 
+    // Goes into loading mode - setting terrains is faster. This is the prefereable
+    // method of modifying terrains if more then few terrains at once are changed.
+    // This mode is being unset by first call to Rebuild or UnsetLoadingMode.
+    setLoadingMode(): void {
+      this.hexMap.setLoadingMode();
+    }
+
+    unsetLoadingMode(): void {
+      this.hexMap.unsetLoadingMode();
+    }
+
     // Sets given hex to specified terrain. If not specified, overlay does not change.
     // A 'rebuild' call is needed to actually display the change.
     setTerrain(q: number, r: number, terrain: ETerrain, overlay = EOverlay.NONE, fog = false) {
@@ -171,6 +182,7 @@ module WesnothTiles {
       };
 
     rebuild() {
+      this.hexMap.unsetLoadingMode();
       this.drawables = Internal.rebuild(this.hexMap);
       this.drawables.sort(this.sortFunc);
     }

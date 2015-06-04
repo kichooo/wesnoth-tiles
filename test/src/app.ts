@@ -5,8 +5,9 @@ var tilesMap: WesnothTiles.TilesMap;
 
 function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
-
+  var timeRebuildingStart = new Date();
   tilesMap.clear();
+  tilesMap.setLoadingMode();
   var rng = new Rng(1337);
 
   for (var i = -18; i < 18; i++)
@@ -27,10 +28,12 @@ function loadTestMap(): void {
     }
   var duration = timedRebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 1568081850";
+  document.getElementById("expected").textContent = "expected: 2309706844";
   document.getElementById("duration").textContent = duration.toString();
 
   document.getElementById("checksumBlock").style.display = 'block';
+
+  console.log("whole took", (new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
 }
 
 function loadSingleCircle(): void {
@@ -109,9 +112,11 @@ function loadRing(radius, terrain): void {
   tilesMap.setTerrain(2, radius - 1, terrain);
 }
 
-function loadDisk(): void {
+function loadDisk(): void {  
   document.getElementById("checksumBlock").style.display = 'none'
   tilesMap.clear();
+  var timeRebuildingStart = new Date();
+  tilesMap.setLoadingMode();
   loadRing(5, ETerrain.ABYSS);
   loadRing(6, ETerrain.ABYSS);
   loadRing(7, ETerrain.VOID);
@@ -226,9 +231,12 @@ function loadDisk(): void {
     tilesMap.setTerrain(-2 - i, 4 + 1, ETerrain.WATER_OCEAN);
     tilesMap.setTerrain(-1 - i, 4, ETerrain.WATER_OCEAN);
   }
-  var duration = timedRebuild();  
+  var duration = timedRebuild();
+
+  console.log("whole took", (new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
+
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 1648426121";
+  document.getElementById("expected").textContent = "expected: 2200860578";
   document.getElementById("duration").textContent = duration.toString();
   document.getElementById("checksumBlock").style.display = 'block'
 }
