@@ -730,6 +730,8 @@ module WesnothTiles.Internal {
       ],
       images: [concave_img1, concave_img2],
       probability: 100,
+      transition: getTerrainMap(terrains),
+      transitionNumber: 2,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],
       builder: IB_IMAGE_SINGLE
     }
@@ -781,6 +783,8 @@ module WesnothTiles.Internal {
       ],
       images: [convex0_img1, convex0_img2],
       probability: 100,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],
       builder: IB_IMAGE_SINGLE
     }
@@ -820,6 +824,8 @@ module WesnothTiles.Internal {
         convex1_tile2,
         convex1_tile3
       ],
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 1,
       images: [convex1_img1],
       probability: 100,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],
@@ -865,6 +871,8 @@ module WesnothTiles.Internal {
       ],
       images: [convex2_img1],
       probability: 100,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 1,
       rotations: ["tr", "r", "br", "bl", "l", "tl"],
       builder: IB_IMAGE_SINGLE
     }

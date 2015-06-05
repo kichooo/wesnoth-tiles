@@ -96,17 +96,16 @@ module WesnothTiles.Internal {
           }
         });
         var newValue: number;
-        if (!currentStreakMap.has(hex.terrain))
+        if (!currentStreakMap.has(terrain))
           newValue = 1;
         else
-          newValue = currentStreakMap.get(hex.terrain) + 1;
-        currentStreakMap.set(hex.terrain, newValue);
+          newValue = currentStreakMap.get(terrain) + 1;
+        currentStreakMap.set(terrain, newValue);
         var currentStreak = bestStreaksMap.has(terrain) ?
           bestStreaksMap.get(terrain) : 0;
         if (newValue > currentStreak)
           bestStreaksMap.set(terrain, newValue);
-      });
-
+      });      
       return bestStreaksMap;
     }
 
