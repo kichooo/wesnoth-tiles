@@ -95,15 +95,17 @@ module WesnothTiles.Internal {
             currentStreakMap.set(key, 0);
           }
         });
+        if (terrain === undefined)
+          return;
         var newValue: number;
         if (!currentStreakMap.has(terrain))
           newValue = 1;
         else
-          newValue = currentStreakMap.get(terrain) + 1;
+          newValue = (currentStreakMap.get(terrain) + 1) % 6;
         currentStreakMap.set(terrain, newValue);
-        var currentStreak = bestStreaksMap.has(terrain) ?
+        var bestStreak = bestStreaksMap.has(terrain) ?
           bestStreaksMap.get(terrain) : 0;
-        if (newValue > currentStreak)
+        if (newValue > bestStreak)
           bestStreaksMap.set(terrain, newValue);
       });      
       return bestStreaksMap;
@@ -148,12 +150,12 @@ module WesnothTiles.Internal {
           // }
 
 
-          var found = false;
+          var found = 0;
           neighboursMap.forEach((value: number, key: ETerrain) => {
-            if (value >= tg.transitionNumber && tg.transition.has(key))
-              found = true;
+            if (tg.transition.has(key))
+              found += value;
           });
-          if (!found) {
+          if (found < tg.transitionNumber) {
             return;          
           }
 

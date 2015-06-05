@@ -1832,25 +1832,24 @@ module WesnothTiles.Internal {
     tgGroup.addTg(terrainGraphic);
   } 
 
-  export var CORNER_PLFB_CONVEX = (tgGroup: TgGroup, terrains1: ETerrain[], adjacent1: ETerrain[],
-    adjacent2: ETerrain[], imageStem: string, plfb: PLFB) => {
+  var CORNER_PLFB_CONVEX = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
  
     // 0 ["tr", "r", "br", "bl", "l", "tl"]
     tgGroup.addTg({
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-tr"]
       }, {
           q: 0,
           r: -1,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-br"]
         }, {
           q: 1,
           r: -1,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-l"]
         }
       ],
@@ -1861,8 +1860,8 @@ module WesnothTiles.Internal {
         center: { x: 72 - 9, y: 0 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -1872,17 +1871,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-r"]
       }, {
           q: 1,
           r: -1,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-bl"]
         }, {
           q: 1,
           r: 0,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-tl"]
         }
       ],
@@ -1893,8 +1892,8 @@ module WesnothTiles.Internal {
         center: { x: 72 - 9, y: 18 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -1904,17 +1903,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-br"]
       }, {
           q: 1,
           r: 0,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-l"]
         }, {
           q: 0,
           r: 1,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-tr"]
         }
       ],
@@ -1925,8 +1924,8 @@ module WesnothTiles.Internal {
         center: { x: 54, y: 54 + 9 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -1936,17 +1935,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-bl"]
       }, {
           q: 0,
           r: 1,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-tl"]
         }, {
           q: -1,
           r: 1,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-r"]
         }
       ],
@@ -1957,8 +1956,8 @@ module WesnothTiles.Internal {
         center: { x: 0, y: 36 + 9 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -1968,17 +1967,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-l"]
       }, {
           q: -1,
           r: 1,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-tr"]
         }, {
           q: -1,
           r: 0,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-br"]
         }
       ],
@@ -1989,8 +1988,8 @@ module WesnothTiles.Internal {
         center: { x: 0, y: 27 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2000,17 +1999,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-tl"]
       }, {
           q: -1,
           r: 0,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-r"]
         }, {
           q: 0,
           r: -1,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-bl"]
         }
       ],
@@ -2021,32 +2020,32 @@ module WesnothTiles.Internal {
         center: { x: 9, y: -18 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
   }
 
-  export var CORNER_PLFB_CONCAVE = (tgGroup: TgGroup, terrains1: ETerrain[], adjacent1: ETerrain[],
-    adjacent2: ETerrain[], imageStem: string, plfb: PLFB) => {
+  var CORNER_PLFB_CONCAVE = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], 
+    imageStem: string, plfb: PLFB) => {
  
     // 0 ["tr", "r", "br", "bl", "l", "tl"]
     tgGroup.addTg({
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-tr"]
       }, {
           q: 0,
           r: -1,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-br"]
         }, {
           q: 1,
           r: -1,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-l"]
         }
       ],
@@ -2057,8 +2056,8 @@ module WesnothTiles.Internal {
         center: { x: 72 - 9, y: 0 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2068,17 +2067,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-r"]
       }, {
           q: 1,
           r: -1,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-bl"]
         }, {
           q: 1,
           r: 0,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-tl"]
         }
       ],
@@ -2089,8 +2088,8 @@ module WesnothTiles.Internal {
         center: { x: 72 - 9, y: 18 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2100,17 +2099,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-br"]
       }, {
           q: 1,
           r: 0,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-l"]
         }, {
           q: 0,
           r: 1,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-tr"]
         }
       ],
@@ -2121,8 +2120,8 @@ module WesnothTiles.Internal {
         center: { x: 54 + 9, y: 54 + 9 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2132,17 +2131,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-bl"]
       }, {
           q: 0,
           r: 1,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-tl"]
         }, {
           q: -1,
           r: 1,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-r"]
         }
       ],
@@ -2153,8 +2152,8 @@ module WesnothTiles.Internal {
         center: { x: 9, y: 36 + 9 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2164,17 +2163,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-l"]
       }, {
           q: -1,
           r: 1,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-tr"]
         }, {
           q: -1,
           r: 0,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-br"]
         }
       ],
@@ -2185,8 +2184,8 @@ module WesnothTiles.Internal {
         center: { x: 9, y: 36 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2196,17 +2195,17 @@ module WesnothTiles.Internal {
       tiles: [{
         q: 0,
         r: 0,
-        type: getTerrainMap(terrains1),
+        type: getTerrainMap(terrains),
         set_no_flag: [plfb.flag + "-tl"]
       }, {
           q: -1,
           r: 0,
-          type: getTerrainMap(adjacent1),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-r"]
         }, {
           q: 0,
           r: -1,
-          type: getTerrainMap(adjacent2),
+          type: getTerrainMap(adjacent),
           set_no_flag: [plfb.flag + "-bl"]
         }
       ],
@@ -2217,8 +2216,8 @@ module WesnothTiles.Internal {
         center: { x: 9, y: -18 },
         variations: [""]
       }],
-      transition: getTerrainMap(adjacent1),
-      transitionNumber: 1,
+      transition: getTerrainMap(adjacent),
+      transitionNumber: 2,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2234,8 +2233,8 @@ module WesnothTiles.Internal {
       plfb.builder = IB_IMAGE_SINGLE;
     if (plfb.prob === undefined)
       plfb.prob = 100;
-    CORNER_PLFB_CONVEX(tgGroup, terrains, adjacent, adjacent, imageStem + "-convex", plfb);
-    CORNER_PLFB_CONCAVE(tgGroup, adjacent, terrains, terrains, imageStem + "-concave", plfb);
+    CORNER_PLFB_CONVEX(tgGroup, terrains, adjacent, imageStem + "-convex", plfb);
+    CORNER_PLFB_CONCAVE(tgGroup, adjacent, terrains, imageStem + "-concave", plfb);
   }
 
   export var NEW_FOREST = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
