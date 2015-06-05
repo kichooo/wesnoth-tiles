@@ -228,17 +228,32 @@ module WesnothTiles.Internal {
     });
 
     var sum = 0;
+    var sumTransition = 0;
     var count = 0;
+    var winner: WMLTerrainGraphics;
+    var winnerScore = 0;
     var transitionCount = 0;
     hexMap.tgGroup.tgs.forEach(tg => {
       sum += tg.hexes.size;
       count++;
-      if (tg.transition !== undefined)
+      if (tg.hexes.size > winnerScore) {
+        winner = tg;
+        winnerScore = tg.hexes.size;
+      }
+      if (tg.transition !== undefined) {
+
         transitionCount++;
+        sumTransition += tg.hexes.size;
+      }
     });
 
+    console.log("Winner!", winner, winnerScore);
+
     if (count > 0) {
-      console.log("Tgs stats: transition/total: " + transitionCount + "/" + count + ", percentage of hexes per tg: " + 100 * sum / count / hexMap.hexes.size);
+      console.log("Tgs stats: transition/total: "
+        + transitionCount + "/" + count
+        + ", percentage of hexes per tg: " + 100 * sum / count / hexMap.hexes.size
+        + ", tgs per hex: ", sum / hexMap.hexes.size + "/" + sumTransition / hexMap.hexes.size);
     }
 
     return drawables;

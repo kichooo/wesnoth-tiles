@@ -132,6 +132,10 @@ module WesnothTiles.Internal {
         if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
           return;
 
+        if (tile.fog !== undefined && !hex.fog)
+          return;
+
+
         if (tg.transition !== undefined) {
           // this is a transition macro - we need to check if we have at least one proper neighbour.
           // var found = false;

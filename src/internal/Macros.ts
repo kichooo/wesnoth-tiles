@@ -1853,6 +1853,8 @@ module WesnothTiles.Internal {
         center: { x: 72 - 9, y: 0 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -1883,6 +1885,8 @@ module WesnothTiles.Internal {
         center: { x: 72 - 9, y: 18 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -1913,6 +1917,8 @@ module WesnothTiles.Internal {
         center: { x: 54, y: 54 + 9 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -1943,6 +1949,8 @@ module WesnothTiles.Internal {
         center: { x: 0, y: 36 + 9 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -1973,6 +1981,8 @@ module WesnothTiles.Internal {
         center: { x: 0, y: 27 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2003,6 +2013,8 @@ module WesnothTiles.Internal {
         center: { x: 9, y: -18 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2037,6 +2049,8 @@ module WesnothTiles.Internal {
         center: { x: 72 - 9, y: 0 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2067,6 +2081,8 @@ module WesnothTiles.Internal {
         center: { x: 72 - 9, y: 18 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2097,6 +2113,8 @@ module WesnothTiles.Internal {
         center: { x: 54 + 9, y: 54 + 9 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2127,6 +2145,8 @@ module WesnothTiles.Internal {
         center: { x: 9, y: 36 + 9 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2157,6 +2177,8 @@ module WesnothTiles.Internal {
         center: { x: 9, y: 36 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
@@ -2187,6 +2209,8 @@ module WesnothTiles.Internal {
         center: { x: 9, y: -18 },
         variations: [""]
       }],
+      transition: getTerrainMap(adjacent1),
+      transitionNumber: 1,
       probability: plfb.prob,
       builder: plfb.builder
     });
