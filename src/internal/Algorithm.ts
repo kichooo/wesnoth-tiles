@@ -13,7 +13,7 @@ module WesnothTiles.Internal {
   interface Flags extends Map<string, Map<string, boolean>> { };
 
   var setFlags = (rot: number, rotations: string[], hexPos: HexPos,
-    set_no_flags: string[], set_no_flags_tg: string[], flags: Flags) => {
+    set_no_flags: string[], flags: Flags) => {
 
     var hexFlags = flags.get(hexPos.toString());
 
@@ -22,14 +22,10 @@ module WesnothTiles.Internal {
         // console.log("Setting flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
         hexFlags.set(replaceRotation(flag, rot, rotations), true);
       });
-    if (set_no_flags_tg !== undefined)
-      set_no_flags_tg.forEach(flag => {
-        hexFlags.set(replaceRotation(flag, rot, rotations), true);
-      });
   }
 
   var checkFlags = (rot: number, rotations: string[], hexPos: HexPos,
-    set_no_flags: string[], set_no_flags_tg: string[],
+    set_no_flags: string[],
     flags: Flags) => {
 
     var hexFlags = flags.get(hexPos.toString());
@@ -40,10 +36,6 @@ module WesnothTiles.Internal {
     if (set_no_flags !== undefined)
       set_no_flags.forEach(flag => {
         // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
-        if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
-      });
-    if (set_no_flags_tg !== undefined)
-      set_no_flags_tg.forEach(flag => {
         if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
       });
     return ok;
@@ -122,7 +114,7 @@ module WesnothTiles.Internal {
         }
 
         if (!checkFlags(rot, tg.rotations, hexPos,
-          tile.set_no_flag, tg.set_no_flag, dp.flags))
+          tile.set_no_flag, dp.flags))
           return;
       }
 
@@ -191,7 +183,7 @@ module WesnothTiles.Internal {
         var rotHex = rotatePos(tile.q, tile.r, rot);
         var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
         setFlags(rot, tg.rotations, hexPos,
-          tile.set_no_flag, tg.set_no_flag, dp.flags);
+          tile.set_no_flag, dp.flags);
       }
       dp.drawables.push.apply(dp.drawables, drawables);
     }

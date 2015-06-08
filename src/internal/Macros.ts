@@ -82,7 +82,6 @@ module WesnothTiles.Internal {
 
   export interface WMLTile {
     set_no_flag?: string[];
-
     q: number;
     r: number;
     type?: Map<ETerrain, boolean>;
@@ -96,7 +95,6 @@ module WesnothTiles.Internal {
 
   export interface WMLTerrainGraphics {
     tiles: WMLTile[];
-    set_no_flag?: string[];
     images?: WMLImage[];
     probability?: number;
     hexes?: Map<string, Hex>;
@@ -303,7 +301,6 @@ module WesnothTiles.Internal {
         tile7
       ],
       images: [img],
-      set_no_flag: [],
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       transition: getTerrainMap(terrains),
