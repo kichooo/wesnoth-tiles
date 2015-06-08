@@ -60,5 +60,5 @@ module WesnothTiles.Internal {
     toString(): string {
       return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
     }
-   }
+  }
 }  

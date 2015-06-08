@@ -38,12 +38,12 @@ module WesnothTiles.Internal {
 
       if (!this.loadingMode) {
         this.removeHexFromTgs(hex);
-        this.addHexToTgs(hex);      
+        this.addHexToTgs(hex);
         this.iterateNeighbours(hex.q, hex.r, h => {
           this.removeHexFromTgs(h);
           this.addHexToTgs(h);
         });
-      }     
+      }
     }
 
     setLoadingMode(): void {
@@ -78,10 +78,10 @@ module WesnothTiles.Internal {
     private removeHexFromTgs(hex: Hex): void {
       if (this.hexes.has(hex.toString())) {
         var key = hex.toString();
-        this.tgGroup.tgs.forEach(tg => {          
+        this.tgGroup.tgs.forEach(tg => {
           tg.hexes.delete(key);
         });
-      }      
+      }
     }
 
     private getNeighboursStreaksMap(hex: Hex): Map<ETerrain, number> {
@@ -107,7 +107,7 @@ module WesnothTiles.Internal {
           bestStreaksMap.get(terrain) : 0;
         if (newValue > bestStreak)
           bestStreaksMap.set(terrain, newValue);
-      });      
+      });
       return bestStreaksMap;
     }
 
@@ -156,7 +156,7 @@ module WesnothTiles.Internal {
               found += value;
           });
           if (found < tg.transitionNumber) {
-            return;          
+            return;
           }
 
         }

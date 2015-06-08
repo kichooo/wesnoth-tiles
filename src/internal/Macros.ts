@@ -1,7 +1,7 @@
 module WesnothTiles.Internal {
-  'use strict';  
+  'use strict';
 
-  var getTerrainMap = (terrains: EOverlay[] | ETerrain[]): Map<number, boolean> => {
+  var getTerrainMap = (terrains: EOverlay[]| ETerrain[]): Map<number, boolean> => {
     if (terrains === undefined)
       return undefined;
     var terrainList = new Map<number, boolean>();
@@ -484,7 +484,7 @@ module WesnothTiles.Internal {
       probability: plfb.prob,
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       transition: getTerrainMap(terrains),
-      transitionNumber: 2,   
+      transitionNumber: 2,
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
@@ -544,24 +544,24 @@ module WesnothTiles.Internal {
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number[]) => {
     grades.forEach(grade => {
       switch (grade) {
-      case 6:
-        BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
-        break;
-      // 5 borders transition was nowhere used, thus got removed.
-      case 4:
-        BORDER_RESTRICTED4_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
-        break;
-      case 3:
-        BORDER_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
-        break;
-      case 2:
-        BORDER_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
-        break;
-      case 1:
-        BORDER_RESTRICTED_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
-        break;
+        case 6:
+          BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+          break;
+        // 5 borders transition was nowhere used, thus got removed.
+        case 4:
+          BORDER_RESTRICTED4_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+          break;
+        case 3:
+          BORDER_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+          break;
+        case 2:
+          BORDER_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+          break;
+        case 1:
+          BORDER_RESTRICTED_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
+          break;
       }
-    });    
+    });
 
 
   }
@@ -1830,7 +1830,7 @@ module WesnothTiles.Internal {
     });
 
     tgGroup.addTg(terrainGraphic);
-  } 
+  }
 
   var CORNER_PLFB_CONVEX = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
  
@@ -2027,7 +2027,7 @@ module WesnothTiles.Internal {
     });
   }
 
-  var CORNER_PLFB_CONCAVE = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], 
+  var CORNER_PLFB_CONCAVE = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[],
     imageStem: string, plfb: PLFB) => {
  
     // 0 ["tr", "r", "br", "bl", "l", "tl"]

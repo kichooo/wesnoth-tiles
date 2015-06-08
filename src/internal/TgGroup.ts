@@ -288,7 +288,7 @@ module WesnothTiles.Internal {
 
       FOG_TRANSITION_LFB(this,
         true,
-        false,        
+        false,
         "fog/fog", { layer: 999, flag: "fog" });
 
 
