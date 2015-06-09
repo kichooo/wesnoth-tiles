@@ -5,7 +5,7 @@ module WesnothTiles.Internal {
 
 
     tgGroup = new Internal.TgGroup();
-    hexes = new Map<string, Hex>();
+    hexes = new Map<number, Map<number, Hex>>();
 
     private loadingMode = false;
 
@@ -13,23 +13,28 @@ module WesnothTiles.Internal {
 
     }
 
-    getHex(pos: HexPos): Hex {
-      return this.hexes.get(pos.toString());
-    }
-
     getHexP(q: number, r: number): Hex {
-      return this.hexes.get(HexPos.toString(q, r));
+      var map = this.hexes.get(q);
+      return (map !== undefined) ? map.get(r) : undefined;
     }
 
     removeHex(q: number, r: number): void {
-      this.hexes.delete(HexPos.toString(q, r));
+      var map = this.hexes.get(q);
+      if (map !== undefined)
+        map.delete(r);
     }
 
     setTerrain(q: number, r: number, terrain: ETerrain, overlay = EOverlay.NONE, fog = false): void {
-      var hex = this.getHexP(q, r);
+      var map = this.hexes.get(q);
+      if (map === undefined) {
+        map = new Map<number, Hex>();
+        this.hexes.set(q, map);
+      }
+
+      var hex = map.get(r);
       if (hex === undefined) {
         hex = new Hex(q, r, terrain);
-        this.hexes.set(hex.toString(), hex);
+        map.set(r, hex);
       }
 
       hex.terrain = terrain;
@@ -65,23 +70,11 @@ module WesnothTiles.Internal {
       });
     }
 
-
-    // This method checks if hex has some value, and sets to void otherwise.
-    private setToVoidIfEmpty(q: number, r: number) {
-      if (this.getHexP(q, r) === undefined) {
-        var voidHex = new Hex(q, r, ETerrain.VOID);
-        this.addHexToTgs(voidHex);
-        this.hexes.set(voidHex.toString(), voidHex);
-      }
-    }
-
     private removeHexFromTgs(hex: Hex): void {
-      if (this.hexes.has(hex.toString())) {
-        var key = hex.toString();
-        this.tgGroup.tgs.forEach(tg => {
-          tg.hexes.delete(key);
-        });
-      }
+      var key = hex.toString();
+      this.tgGroup.tgs.forEach(tg => {
+        tg.hexes.delete(key);
+      });
     }
 
     private getNeighboursStreaksMap(hex: Hex): Map<ETerrain, number> {
@@ -169,7 +162,11 @@ module WesnothTiles.Internal {
     }
 
     iterate(callback: (hex: Hex) => void) {
-      this.hexes.forEach(callback);
+      this.hexes.forEach(map => {
+        map.forEach(hex => {
+          callback(hex);
+        })
+      });
     }
 
     private iterateNeighbours(q: number, r: number, callback: (hex: Hex) => void) {
@@ -203,7 +200,7 @@ module WesnothTiles.Internal {
       func(this.getHexP(q - 1, r));
       
       // We do not need to make the fifth and sixth call in the repeat round.
-      // They wouldm't be needed under even most unlucky circumtances
+      // They wouldn't be needed under even most unlucky circumtances
       func(this.getHexP(q, r - 1));
       func(this.getHexP(q + 1, r - 1));
       func(this.getHexP(q + 1, r));

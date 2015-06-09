@@ -68,6 +68,7 @@ WML files with terrain definitions will be converted using short GO program.
  - [ ] automatic tests of the checksums
  - [x] reconsider fast map redraw/reload 
  - [ ] Try to find few more not needed tg groups. 
+ - [ ] Refactor HexMap so that it doesn't use strings as keys.
 
 # next iteration (v0.7)
  - [ ] api stabilizing

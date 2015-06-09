@@ -6,29 +6,22 @@ module WesnothTiles.Internal {
   interface IDrawParams {
     hex: Hex;
     hexMap: HexMap;
-    flags: Flags;
     drawables: IDrawable[];
   }
 
-  interface Flags extends Map<string, Map<string, boolean>> { };
+  var setFlags = (rot: number, rotations: string[],
+    set_no_flags: string[], flags: Map<string, boolean>) => {
 
-  var setFlags = (rot: number, rotations: string[], hexPos: HexPos,
-    set_no_flags: string[], flags: Flags) => {
-
-    var hexFlags = flags.get(hexPos.toString());
 
     if (set_no_flags !== undefined)
       set_no_flags.forEach(flag => {
         // console.log("Setting flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
-        hexFlags.set(replaceRotation(flag, rot, rotations), true);
+        flags.set(replaceRotation(flag, rot, rotations), true);
       });
   }
 
-  var checkFlags = (rot: number, rotations: string[], hexPos: HexPos,
-    set_no_flags: string[],
-    flags: Flags) => {
-
-    var hexFlags = flags.get(hexPos.toString());
+  var checkFlags = (rot: number, rotations: string[], 
+    set_no_flags: string[], flags: Map<string, boolean>) => {
 
     var ok = true;
 
@@ -36,7 +29,7 @@ module WesnothTiles.Internal {
     if (set_no_flags !== undefined)
       set_no_flags.forEach(flag => {
         // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
-        if (hexFlags.has(replaceRotation(flag, rot, rotations))) ok = false;
+        if (flags.has(replaceRotation(flag, rot, rotations))) ok = false;
       });
     return ok;
   }
@@ -92,14 +85,12 @@ module WesnothTiles.Internal {
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
         var rotHex = rotatePos(tile.q, tile.r, rot);
-        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
-        var hex = dp.hexMap.getHex(hexPos);
+        var hexPosQ = dp.hex.q + rotHex.q;
+        var hexPosR = dp.hex.r + rotHex.r;
+        var hex = dp.hexMap.getHexP(hexPosQ, hexPosR);
 
         if (hex === undefined)
-          return;
-
-        if (!dp.flags.has(hexPos.toString()))
-          dp.flags.set(hexPos.toString(), new Map<string, boolean>());
+          return;        
 
         if (tile.type !== undefined && !tile.type.has(hex.terrain)) {
           return;
@@ -113,8 +104,8 @@ module WesnothTiles.Internal {
           return;
         }
 
-        if (!checkFlags(rot, tg.rotations, hexPos,
-          tile.set_no_flag, dp.flags))
+        if (!checkFlags(rot, tg.rotations, 
+          tile.set_no_flag, hex.flags))
           return;
       }
 
@@ -123,7 +114,8 @@ module WesnothTiles.Internal {
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
         var rotHex = rotatePos(tile.q, tile.r, rot);
-        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
+        var hexPosQ = dp.hex.q + rotHex.q;
+        var hexPosR = dp.hex.r + rotHex.r;
         if (tile.images !== undefined) {
           for (var j = 0; j < tile.images.length; j++) {
             var img = tile.images[j];
@@ -135,8 +127,8 @@ module WesnothTiles.Internal {
             if (imgName === undefined)
               return;
             var pos = {
-              x: (36 * 1.5) * hexPos.q,
-              y: 36 * (2 * hexPos.r + hexPos.q)
+              x: (36 * 1.5) * hexPosQ,
+              y: 36 * (2 * hexPosR + hexPosQ)
             }
 
             var newBase = img.base !== undefined ? {
@@ -161,11 +153,9 @@ module WesnothTiles.Internal {
           // console.log("Name",imgName, img.name, translatedPostfix);
           if (imgName === undefined)
             return;
-          var hexQ = dp.hex.q;
-          var hexR = dp.hex.r;
           var drawPos = {
-            x: (36 * 1.5) * hexQ - 36 + img.center.x,
-            y: 36 * (2 * hexR + hexQ) - 36 + img.center.y
+            x: (36 * 1.5) * dp.hex.q - 36 + img.center.x,
+            y: 36 * (2 * dp.hex.r + dp.hex.q) - 36 + img.center.y
           }
 
           var newBase = img.base !== undefined ? {
@@ -181,9 +171,9 @@ module WesnothTiles.Internal {
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
         var rotHex = rotatePos(tile.q, tile.r, rot);
-        var hexPos = new HexPos(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
-        setFlags(rot, tg.rotations, hexPos,
-          tile.set_no_flag, dp.flags);
+        var rotatedHex = dp.hexMap.getHexP(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
+        setFlags(rot, tg.rotations,
+          tile.set_no_flag, rotatedHex.flags);
       }
       dp.drawables.push.apply(dp.drawables, drawables);
     }
@@ -200,7 +190,6 @@ module WesnothTiles.Internal {
 
   export var rebuild = (hexMap: HexMap) => {
 
-    var flags = new Map<string, Map<string, boolean>>();
 
 
     var drawables: IDrawable[] = [];
@@ -208,7 +197,6 @@ module WesnothTiles.Internal {
     var dp: IDrawParams = {
       hex: null,
       hexMap: hexMap,
-      flags: flags,
       drawables: drawables
     }
 
