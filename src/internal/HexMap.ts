@@ -71,7 +71,7 @@ module WesnothTiles.Internal {
     }
 
     private removeHexFromTgs(hex: Hex): void {
-      var key = hex.toString();
+      var key = hex.str;
       this.tgGroup.tgs.forEach(tg => {
         tg.hexes.delete(key);
       });
@@ -153,7 +153,7 @@ module WesnothTiles.Internal {
           }
 
         }
-        tg.hexes.set(hex.toString(), hex);
+        tg.hexes.set(hex.str, hex);
       });
 
 

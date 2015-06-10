@@ -3,9 +3,7 @@ import EOverlay = WesnothTiles.EOverlay;
 
 var tilesMap: WesnothTiles.TilesMap;
 
-function loadTestMap(): void {
-  document.getElementById("checksumBlock").style.display = 'none';
-  var timeRebuildingStart = new Date();
+function createTestMap() {
   tilesMap.clear();
   tilesMap.setLoadingMode();
   var rng = new Rng(1337);
@@ -26,6 +24,12 @@ function loadTestMap(): void {
         overlay = rng.nextRange(EOverlay.MUSHROOMS, EOverlay.NONE + 1);
       tilesMap.setTerrain(i, j, terrain, overlay);
     }
+}
+
+function loadTestMap(): void {
+  document.getElementById("checksumBlock").style.display = 'none';
+  var timeRebuildingStart = new Date();
+  createTestMap();
   var duration = timedRebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
   document.getElementById("expected").textContent = "expected: 3198867259";
@@ -46,6 +50,25 @@ function loadSingleCircle(): void {
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
   document.getElementById("expected").textContent = "expected: none";
   document.getElementById("checksumBlock").style.display = 'block';
+}
+
+function benchmark(): void {
+  document.getElementById("checksumBlock").style.display = 'none';
+  var timer = new Date();
+  createTestMap();
+  for (var i = 0; i < 40; i++) {
+    tilesMap.rebuild();    
+  }
+
+  var duration = (new Date().getTime() - timer.getTime()) / 40;
+
+  document.getElementById("checksum").textContent = tilesMap.getCheckSum();
+  document.getElementById("expected").textContent = "expected: 3198867259";
+  document.getElementById("duration").textContent = duration.toString();
+
+  document.getElementById("checksumBlock").style.display = 'block';
+
+  
 }
 
 function loadRandomMap(): void {

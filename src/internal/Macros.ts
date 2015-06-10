@@ -80,7 +80,7 @@ module WesnothTiles.Internal {
     center?: IVector;
   }
 
-  export interface WMLTile {
+  export interface WMLTile extends IHexPos {
     set_no_flag?: string[];
     q: number;
     r: number;

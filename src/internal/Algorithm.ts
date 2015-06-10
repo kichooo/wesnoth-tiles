@@ -22,25 +22,55 @@ module WesnothTiles.Internal {
 
   var checkFlags = (rot: number, rotations: string[], 
     set_no_flags: string[], flags: Map<string, boolean>) => {
-
-    var ok = true;
-
-    // Check if all needed set_no_flags are in place      
+    // Check if all needed set_no_flags are in place
     if (set_no_flags !== undefined)
-      set_no_flags.forEach(flag => {
-        // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
-        if (flags.has(replaceRotation(flag, rot, rotations))) ok = false;
-      });
-    return ok;
+      for (var i = 0; i < set_no_flags.length; i++)
+        if (flags.has(replaceRotation(set_no_flags[i], rot, rotations))) return false;
+    // if (set_no_flags !== undefined)
+    //   set_no_flags.forEach(flag => {
+    //     // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
+    //     if (flags.has(replaceRotation(flag, rot, rotations))) ok = false;
+    //   });
+    return true;
   }
 
-  var rotatePos = (q: number, r: number, rot: number) => {
-    var result = [0, 0, 0];
+  var getRotatedPos = (pos: IHexPos, rot: number): IHexPos => {
+    if (rot === 0)
+      return pos;
+    return rotationsMap.get(rot).get(pos.q).get(pos.r);
+  }
 
-    result[(6 - rot) % 3] = rot % 2 === 0 ? q : -q;
-    result[(7 - rot) % 3] = rot % 2 === 0 ? r : -r;
-    result[(8 - rot) % 3] = rot % 2 === 0 ? -q - r : q + r;
-    return new HexPos(result[0], result[1]);
+  // var rotatePos = (q: number, r: number, rot: number) => {
+  //   // Only WmlTiles with rotation 0 can have q or r higher than 1 (or lower than -1),
+  //   // This is why our rotationsMap supports only these values.
+  //   if (rot === 0)
+  //     return new HexPos(q, r);
+  //   var v = rotationsMap.get(rot).get(q).get(r);
+  //   var result = [0, 0, 0];
+  //   result[(6 - rot) % 3] = rot % 2 === 0 ? q : -q;
+  //   result[(7 - rot) % 3] = rot % 2 === 0 ? r : -r;
+  //   result[(8 - rot) % 3] = rot % 2 === 0 ? -q - r : q + r;
+  //   return v;
+  // }
+
+  var rotationsMap = new Map<number, Map<number, Map<number, HexPos>>>();
+
+  export var prepareRotations = () => {
+    for (var rot = 0; rot < 6; rot++) {
+      var rotMap = new Map<number, Map<number, HexPos>>();
+      rotationsMap.set(rot, rotMap);
+      for (var q = -1; q <= 1; q++) {
+        var iMap = new Map<number, HexPos>();
+        rotMap.set(q, iMap);
+        for (var r = -1; r <= 1; r++) {
+          var result = [0, 0, 0];
+          result[(6 - rot) % 3] = rot % 2 === 0 ? q : -q;
+          result[(7 - rot) % 3] = rot % 2 === 0 ? r : -r;
+          result[(8 - rot) % 3] = rot % 2 === 0 ? -q - r : q + r;
+          iMap.set(r, new HexPos(result[0], result[1]));
+        }        
+      }
+    }
   }
 
   var replaceRotation = (input: string, rot: number, rotations: string[]) => {
@@ -84,7 +114,7 @@ module WesnothTiles.Internal {
     if (tg.tiles !== undefined) {
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
-        var rotHex = rotatePos(tile.q, tile.r, rot);
+        var rotHex = getRotatedPos(tile, rot);
         var hexPosQ = dp.hex.q + rotHex.q;
         var hexPosR = dp.hex.r + rotHex.r;
         var hex = dp.hexMap.getHexP(hexPosQ, hexPosR);
@@ -113,9 +143,9 @@ module WesnothTiles.Internal {
 
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
-        var rotHex = rotatePos(tile.q, tile.r, rot);
+        var rotHex = getRotatedPos(tile, rot);
         var hexPosQ = dp.hex.q + rotHex.q;
-        var hexPosR = dp.hex.r + rotHex.r;
+        var hexPosR = dp.hex.r + rotHex.r
         if (tile.images !== undefined) {
           for (var j = 0; j < tile.images.length; j++) {
             var img = tile.images[j];
@@ -170,8 +200,13 @@ module WesnothTiles.Internal {
 
       for (var i = 0; i < tg.tiles.length; i++) {
         var tile = tg.tiles[i];
-        var rotHex = rotatePos(tile.q, tile.r, rot);
-        var rotatedHex = dp.hexMap.getHexP(dp.hex.q + rotHex.q, dp.hex.r + rotHex.r);
+
+        var rotHex = getRotatedPos(tile, rot);
+
+        var rotatedHex = dp.hexMap.getHexP(
+          dp.hex.q + rotHex.q,
+          dp.hex.r + rotHex.r);
+
         setFlags(rot, tg.rotations,
           tile.set_no_flag, rotatedHex.flags);
       }
@@ -189,8 +224,12 @@ module WesnothTiles.Internal {
   }
 
   export var rebuild = (hexMap: HexMap) => {
+    prepareRotations();
+    // clear old flags.
 
-
+    hexMap.iterate(h => {
+      h.flags.clear();
+    })
 
     var drawables: IDrawable[] = [];
 
