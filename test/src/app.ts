@@ -32,7 +32,7 @@ function loadTestMap(): void {
   createTestMap();
   var duration = timedRebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 3198867259";
+  document.getElementById("expected").textContent = "expected: 3643646740";
   document.getElementById("duration").textContent = duration.toString();
 
   document.getElementById("checksumBlock").style.display = 'block';
@@ -63,7 +63,7 @@ function benchmark(): void {
   var duration = (new Date().getTime() - timer.getTime()) / 40;
 
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 3198867259";
+  document.getElementById("expected").textContent = "expected: 3643646740";
   document.getElementById("duration").textContent = duration.toString();
 
   document.getElementById("checksumBlock").style.display = 'block';
@@ -266,7 +266,7 @@ function loadDisk(): void {
   console.log("whole took",(new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
 
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 3989320950";
+  document.getElementById("expected").textContent = "expected: 18469171";
   document.getElementById("duration").textContent = duration.toString();
   document.getElementById("checksumBlock").style.display = 'block'
 }

@@ -95,7 +95,7 @@ module WesnothTiles.Internal {
   export interface WMLTerrainGraphics {
     tiles: WMLTile[];
     images: WMLImage[];
-    probability?: number;
+    probability: number;
     hexes?: Map<string, Hex>;
     rotations?: string[];
 

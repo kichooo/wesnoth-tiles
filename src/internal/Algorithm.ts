@@ -97,9 +97,7 @@ module WesnothTiles.Internal {
   }
 
   var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
-    // console.log("Performing macro for rotation", dp.hex.toString(), rot);
-    var chance = dp.hex.getRandom(0, 101);
-    if (chance > tg.probability)
+    if (tg.probability !== 100 && dp.hex.getRandom(0, 101) > tg.probability)
       return;
     // we need to know coors of the leftmost hex.
     for (var i = 0; i < tg.tiles.length; i++) {
