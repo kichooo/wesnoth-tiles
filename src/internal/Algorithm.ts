@@ -131,29 +131,27 @@ module WesnothTiles.Internal {
 
     var drawables: IDrawable[] = [];
 
-    if (tg.images !== undefined) {
-      for (var j = 0; j < tg.images.length; j++) {
-        var img = tg.images[j];
+    for (var j = 0; j < tg.images.length; j++) {
+      var img = tg.images[j];
 
-        var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
+      var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
 
-        var imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
-        // console.log("Name",imgName, img.name, translatedPostfix);
-        if (imgName === undefined)
-          return;
-        var drawPos = {
-          x: (36 * 1.5) * dp.hex.q - 36 + img.center.x,
-          y: 36 * (2 * dp.hex.r + dp.hex.q) - 36 + img.center.y
-        }
-
-        var newBase = img.base !== undefined ? {
-          x: drawPos.x,
-          y: drawPos.y
-        } : undefined;
-
-        drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase));
-
+      var imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
+      // console.log("Name",imgName, img.name, translatedPostfix);
+      if (imgName === undefined)
+        return;
+      var drawPos = {
+        x: (36 * 1.5) * dp.hex.q - 36 + img.center.x,
+        y: 36 * (2 * dp.hex.r + dp.hex.q) - 36 + img.center.y
       }
+
+      var newBase = img.base !== undefined ? {
+        x: drawPos.x,
+        y: drawPos.y
+      } : undefined;
+
+      drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase));
+
     }
 
     for (var i = 0; i < tg.tiles.length; i++) {

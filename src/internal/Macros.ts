@@ -617,7 +617,7 @@ module WesnothTiles.Internal {
     var tile: WMLTile = {
       q: 0,
       r: 0,
-      type: getTerrainMap(terrains),      
+      type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
