@@ -15,7 +15,7 @@ module WesnothTiles.Internal {
     constructor(public q: number, public r: number) {
       this.str = q + "," + r;
     }
-    
+
     static toString(q: number, r: number) {
       return q + "," + r;
     }

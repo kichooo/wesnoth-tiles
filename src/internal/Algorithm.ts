@@ -16,7 +16,7 @@ module WesnothTiles.Internal {
         flags.set(replaceRotation(set_no_flags[i], rot, rotations), true);
   }
 
-  var checkFlags = (rot: number, rotations: string[], 
+  var checkFlags = (rot: number, rotations: string[],
     set_no_flags: string[], flags: Map<string, boolean>) => {
 
     if (set_no_flags !== undefined)
@@ -59,7 +59,7 @@ module WesnothTiles.Internal {
           result[(7 - rot) % 3] = rot % 2 === 0 ? r : -r;
           result[(8 - rot) % 3] = rot % 2 === 0 ? -q - r : q + r;
           iMap.set(r, new HexPos(result[0], result[1]));
-        }        
+        }
       }
     }
   }
@@ -102,71 +102,43 @@ module WesnothTiles.Internal {
     if (chance > tg.probability)
       return;
     // we need to know coors of the leftmost hex.
-    if (tg.tiles !== undefined) {
-      for (var i = 0; i < tg.tiles.length; i++) {
-        var tile = tg.tiles[i];
-        var rotHex = getRotatedPos(tile, rot);
-        var hexPosQ = dp.hex.q + rotHex.q;
-        var hexPosR = dp.hex.r + rotHex.r;
-        var hex = dp.hexMap.getHexP(hexPosQ, hexPosR);
+    for (var i = 0; i < tg.tiles.length; i++) {
+      var tile = tg.tiles[i];
+      var rotHex = getRotatedPos(tile, rot);
+      var hexPosQ = dp.hex.q + rotHex.q;
+      var hexPosR = dp.hex.r + rotHex.r;
+      var hex = dp.hexMap.getHexP(hexPosQ, hexPosR);
 
-        if (hex === undefined)
-          return;        
+      if (hex === undefined)
+        return;
 
-        if (tile.type !== undefined && !tile.type.has(hex.terrain)) {
-          return;
-        }
-
-        if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay)) {
-          return;
-        }
-
-        if (tile.fog !== undefined && tile.fog !== hex.fog) {
-          return;
-        }
-
-        if (!checkFlags(rot, tg.rotations, 
-          tile.set_no_flag, hex.flags))
-          return;
+      if (tile.type !== undefined && !tile.type.has(hex.terrain)) {
+        return;
       }
 
-      var drawables: IDrawable[] = [];
-
-      for (var i = 0; i < tg.tiles.length; i++) {
-        var tile = tg.tiles[i];
-        var rotHex = getRotatedPos(tile, rot);
-        var hexPosQ = dp.hex.q + rotHex.q;
-        var hexPosR = dp.hex.r + rotHex.r
-        if (tile.images !== undefined) {
-          for (var j = 0; j < tile.images.length; j++) {
-            var img = tile.images[j];
-
-            var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
-
-            var imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
-            // console.log("Name",imgName, img.name, translatedPostfix);
-            if (imgName === undefined)
-              return;
-            var pos = {
-              x: (36 * 1.5) * hexPosQ,
-              y: 36 * (2 * hexPosR + hexPosQ)
-            }
-
-            var newBase = img.base !== undefined ? {
-              x: pos.x + img.base.x,
-              y: pos.y + img.base.y
-            } : undefined;            
-            // console.log("Adding", imgName, img.name);
-
-            drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer, newBase));
-
-          }
-
-        }
+      if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay)) {
+        return;
       }
-      if (tg.images !== undefined) {
-        for (var j = 0; j < tg.images.length; j++) {
-          var img = tg.images[j];
+
+      if (tile.fog !== undefined && tile.fog !== hex.fog) {
+        return;
+      }
+
+      if (!checkFlags(rot, tg.rotations,
+        tile.set_no_flag, hex.flags))
+        return;
+    }
+
+    var drawables: IDrawable[] = [];
+
+    for (var i = 0; i < tg.tiles.length; i++) {
+      var tile = tg.tiles[i];
+      var rotHex = getRotatedPos(tile, rot);
+      var hexPosQ = dp.hex.q + rotHex.q;
+      var hexPosR = dp.hex.r + rotHex.r
+      if (tile.images !== undefined) {
+        for (var j = 0; j < tile.images.length; j++) {
+          var img = tile.images[j];
 
           var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
 
@@ -174,35 +146,61 @@ module WesnothTiles.Internal {
           // console.log("Name",imgName, img.name, translatedPostfix);
           if (imgName === undefined)
             return;
-          var drawPos = {
-            x: (36 * 1.5) * dp.hex.q - 36 + img.center.x,
-            y: 36 * (2 * dp.hex.r + dp.hex.q) - 36 + img.center.y
+          var pos = {
+            x: (36 * 1.5) * hexPosQ,
+            y: 36 * (2 * hexPosR + hexPosQ)
           }
 
           var newBase = img.base !== undefined ? {
-            x: drawPos.x,
-            y: drawPos.y
-          } : undefined;
+            x: pos.x + img.base.x,
+            y: pos.y + img.base.y
+          } : undefined;            
+          // console.log("Adding", imgName, img.name);
 
-          drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase));
+          drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer, newBase));
 
         }
+
       }
-
-      for (var i = 0; i < tg.tiles.length; i++) {
-        var tile = tg.tiles[i];
-
-        var rotHex = getRotatedPos(tile, rot);
-
-        var rotatedHex = dp.hexMap.getHexP(
-          dp.hex.q + rotHex.q,
-          dp.hex.r + rotHex.r);
-
-        setFlags(rot, tg.rotations,
-          tile.set_no_flag, rotatedHex.flags);
-      }
-      dp.drawables.push.apply(dp.drawables, drawables);
     }
+    if (tg.images !== undefined) {
+      for (var j = 0; j < tg.images.length; j++) {
+        var img = tg.images[j];
+
+        var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
+
+        var imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
+        // console.log("Name",imgName, img.name, translatedPostfix);
+        if (imgName === undefined)
+          return;
+        var drawPos = {
+          x: (36 * 1.5) * dp.hex.q - 36 + img.center.x,
+          y: 36 * (2 * dp.hex.r + dp.hex.q) - 36 + img.center.y
+        }
+
+        var newBase = img.base !== undefined ? {
+          x: drawPos.x,
+          y: drawPos.y
+        } : undefined;
+
+        drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase));
+
+      }
+    }
+
+    for (var i = 0; i < tg.tiles.length; i++) {
+      var tile = tg.tiles[i];
+
+      var rotHex = getRotatedPos(tile, rot);
+
+      var rotatedHex = dp.hexMap.getHexP(
+        dp.hex.q + rotHex.q,
+        dp.hex.r + rotHex.r);
+
+      setFlags(rot, tg.rotations,
+        tile.set_no_flag, rotatedHex.flags);
+    }
+    dp.drawables.push.apply(dp.drawables, drawables);
   }
 
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
