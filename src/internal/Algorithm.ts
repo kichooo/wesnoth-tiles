@@ -131,38 +131,6 @@ module WesnothTiles.Internal {
 
     var drawables: IDrawable[] = [];
 
-    for (var i = 0; i < tg.tiles.length; i++) {
-      var tile = tg.tiles[i];
-      var rotHex = getRotatedPos(tile, rot);
-      var hexPosQ = dp.hex.q + rotHex.q;
-      var hexPosR = dp.hex.r + rotHex.r
-      if (tile.images !== undefined) {
-        for (var j = 0; j < tile.images.length; j++) {
-          var img = tile.images[j];
-
-          var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
-
-          var imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
-          // console.log("Name",imgName, img.name, translatedPostfix);
-          if (imgName === undefined)
-            return;
-          var pos = {
-            x: (36 * 1.5) * hexPosQ,
-            y: 36 * (2 * hexPosR + hexPosQ)
-          }
-
-          var newBase = img.base !== undefined ? {
-            x: pos.x + img.base.x,
-            y: pos.y + img.base.y
-          } : undefined;            
-          // console.log("Adding", imgName, img.name);
-
-          drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, pos, img.layer, newBase));
-
-        }
-
-      }
-    }
     if (tg.images !== undefined) {
       for (var j = 0; j < tg.images.length; j++) {
         var img = tg.images[j];

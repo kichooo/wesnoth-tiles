@@ -87,7 +87,6 @@ module WesnothTiles.Internal {
     type?: Map<ETerrain, boolean>;
     overlay?: Map<EOverlay, boolean>;
     fog?: boolean;
-    images?: WMLImage[];
 
     anchor?: number;
   }
@@ -95,7 +94,7 @@ module WesnothTiles.Internal {
 
   export interface WMLTerrainGraphics {
     tiles: WMLTile[];
-    images?: WMLImage[];
+    images: WMLImage[];
     probability?: number;
     hexes?: Map<string, Hex>;
     rotations?: string[];
@@ -611,14 +610,14 @@ module WesnothTiles.Internal {
     var img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
+      center: { x: 36, y: 36 },
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
     var tile: WMLTile = {
       q: 0,
       r: 0,
-      type: getTerrainMap(terrains),
-      images: [img],
+      type: getTerrainMap(terrains),      
       set_no_flag: [plfb.flag]
     }
 
@@ -626,6 +625,7 @@ module WesnothTiles.Internal {
       tiles: [
         tile
       ],
+      images: [img],
       probability: plfb.prob,
       builder: plfb.builder
     }
@@ -650,14 +650,14 @@ module WesnothTiles.Internal {
       name: imageStem,
       postfix: "-@R0",
       layer: layer,
+      center: { x: 36, y: 36 },
       variations: [""]
     }
-
     var tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
-      images: [img],
+
       set_no_flag: ["transition-@R0"]
     }
 
@@ -673,6 +673,7 @@ module WesnothTiles.Internal {
         tile2
       ],
       probability: 100,
+      images: [img],
       rotations: ["n", "ne", "se", "s", "sw", "nw"],
       builder: IB_ANIMATION_15_SLOW,
       transition: getTerrainMap(terrains),
