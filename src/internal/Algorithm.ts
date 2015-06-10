@@ -11,26 +11,17 @@ module WesnothTiles.Internal {
 
   var setFlags = (rot: number, rotations: string[],
     set_no_flags: string[], flags: Map<string, boolean>) => {
-
-
     if (set_no_flags !== undefined)
-      set_no_flags.forEach(flag => {
-        // console.log("Setting flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
-        flags.set(replaceRotation(flag, rot, rotations), true);
-      });
+      for (var i = 0; i < set_no_flags.length; i++)
+        flags.set(replaceRotation(set_no_flags[i], rot, rotations), true);
   }
 
   var checkFlags = (rot: number, rotations: string[], 
     set_no_flags: string[], flags: Map<string, boolean>) => {
-    // Check if all needed set_no_flags are in place
+
     if (set_no_flags !== undefined)
       for (var i = 0; i < set_no_flags.length; i++)
         if (flags.has(replaceRotation(set_no_flags[i], rot, rotations))) return false;
-    // if (set_no_flags !== undefined)
-    //   set_no_flags.forEach(flag => {
-    //     // console.log("Checking for flag", flag, replaceRotation(flag, rot, rotations), hexPos.toString());
-    //     if (flags.has(replaceRotation(flag, rot, rotations))) ok = false;
-    //   });
     return true;
   }
 
