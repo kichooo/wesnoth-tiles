@@ -32,7 +32,7 @@ function loadTestMap(): void {
   createTestMap();
   var duration = timedRebuild();
   document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-  document.getElementById("expected").textContent = "expected: 3643646740";
+  document.getElementById("expected").textContent = "expected: 1386360853";
   document.getElementById("duration").textContent = duration.toString();
 
   document.getElementById("checksumBlock").style.display = 'block';
