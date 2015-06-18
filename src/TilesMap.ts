@@ -79,7 +79,7 @@ module WesnothTiles {
   export class TilesMap {
     private ctx: CanvasRenderingContext2D;
     // private drawMap = new Map<string,  HexToDraw>();
-    private drawables: Internal.IDrawable[];
+    private drawables: Internal.IDrawable[] = [];
     private lastDraw: number = Date.now();
     private hexMap = new Internal.HexMap();
 
@@ -181,10 +181,16 @@ module WesnothTiles {
       return a.layer - b.layer;
     };
 
-    rebuild() {
-      this.hexMap.unsetLoadingMode();
-      this.drawables = Internal.rebuild(this.hexMap);
-      this.drawables.sort(this.sortFunc);
+    rebuild(): Promise<void> {
+      var p = new Promise<void>((resolve, reject) => {
+        window.setTimeout(() => {
+          this.hexMap.unsetLoadingMode();
+          this.drawables = Internal.rebuild(this.hexMap);
+          this.drawables.sort(this.sortFunc);
+          resolve();
+        });
+      });
+      return p;   
     }
 
     getCheckSum(): string {
