@@ -138,7 +138,7 @@ function loadChunksRandom(): void {
     tilesMap.setTerrain(x - 1, y + 1, terrainCode);
     tilesMap.setTerrain(x - 1, y, terrainCode);
   }
-  tilesMap.rebuild(() => {
+  tilesMap.rebuild(). then(() => {
     redraw = true;
   });
 }
