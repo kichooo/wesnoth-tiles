@@ -1,3 +1,5 @@
+/// <reference path="wesnoth-tiles.d.ts"/>
+
 import ETerrain = WesnothTiles.ETerrain;
 import EOverlay = WesnothTiles.EOverlay;
 
@@ -329,7 +331,7 @@ function start() {
     // loadCircle(map, ETerrain.GRASS_GREEN, ETerrain.ABYSS, 2, -2);
     loadDisk();
     // loadSingleCircle();
-
+console.log("Creating web worker");
 
     tilesMap.resize(window.innerWidth, window.innerHeight);
     var anim = () => {
@@ -341,6 +343,15 @@ function start() {
       });
     };
     anim();
+      
+    var webWorker = new Worker("worker.js");
+
+    webWorker.onmessage = (obj) => {
+      console.log("returned", obj);
+    }
+    webWorker.postMessage("dupa");
+    // created web worker.
+    console.log("Created web worker");
   });
 
 }

@@ -6,12 +6,30 @@ var gulp = require('gulp'),
   copy = require('gulp-copy'),
   merge = require('merge2');
 
+
+gulp.task('worker', function() {
+
+  var tsStreams = gulp.src(['src/worker/**/*.ts'])
+    .pipe(ts({
+      // noImplicitAny: true,
+      noLib: true,
+      declarationFiles: false,
+      target: "ES6",
+      out: 'worker.js'
+    }));
+
+  var jsStream = tsStreams.js
+    .pipe(gulp.dest("bin"))
+
+  return jsStream;
+});
+
 gulp.task('scripts', function() {
-  var tsStreams = gulp.src('src/**/*.ts')
+  var tsStreams = gulp.src(['src/main**/*.ts'])
     .pipe(ts({
       // noImplicitAny: true,
       declarationFiles: true,
-      target: "ES5",
+      target: "ES6",
       out: 'wesnoth-tiles.js'
     }));
 
@@ -35,11 +53,11 @@ gulp.task('scripts', function() {
     }));
 });
 
-gulp.task('app', ['scripts'], function() {
+gulp.task('app', ['scripts', 'worker'], function() {
   var streams = gulp.src('test/src/**/*.ts')
     .pipe(ts({
       declarationFiles: false,
-      target: "ES5",
+      target: "ES6",
       out: 'app.js'
     }));
 
