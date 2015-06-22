@@ -346,11 +346,14 @@ function start() {
     var webWorker = new Worker("worker.js");
 
     webWorker.onmessage = (obj) => {
-      console.log("returned", obj);
+      console.log("returned", obj.data);
     }
-    webWorker.postMessage({jeb: 100});
-    // created web worker.
-    console.log("Created web worker");
+    webWorker.postMessage(
+      {
+        id: 1,
+        func: "testCall",
+        data: 100
+      });
   });
 
 }

@@ -4,25 +4,55 @@ module WesnothTiles.Worker {
   'use strict';
 
 
+  export interface IWorkerOrder {
+    // name of the function to execute.
+    func: string; 
+    // request id - unique for each call.
+    id: number; 
+    // additional parameters
+    data?: Object; 
+  }
+
+  export interface IWorkerResponse {
+    // request id - unique for each call - the same as in the WorkerOrder.
+    id: number; 
+    // response data.
+    data?: Object;
+    error?: string;
+  }
+
+  export interface ITileChange {
+    q: number;
+    r: number;
+  }
+
+  export class Worker {
+    constructor() {
+      onmessage = (oEvent: MessageEvent) => {
+          var order: WesnothTiles.Worker.IWorkerOrder = oEvent.data;
+
+          var func = this[order.func];          
+          var result = func(order.data); 
+          var response: IWorkerResponse = {
+            id: order.id,
+            data: result,           
+          }
+
+          postMessage(response);
+      }
+    }
+
+    testCall = (jeb: number) => {
+      jeb += 25;
+      return jeb;
+    }
+
+    setTiles = () => {
+
+    }
 
 
+  }
 }
 
-
-
-    // var WorkerThread = (function () {
-    //     function WorkerThread() {
-    //     }
-    //     return WorkerThread;
-    // })();
-    // self.onmessage = function (e) {
-    //     console.log("client received message = " + e.data);
-    //     var mc = new myClass.MyClass();
-    //     console.log("worker thread toUpper = " + mc.toUpper("dave"));
-    //     self.postMessage("from client");
-    // };
-
-onmessage = function (oEvent) {
-  oEvent.data.jeb += 23;
-  postMessage(oEvent.data);
-};
+var worker = new WesnothTiles.Worker.Worker();
