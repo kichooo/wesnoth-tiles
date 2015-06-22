@@ -21,8 +21,8 @@ module WesnothTiles.Worker {
     //     console.log("worker thread toUpper = " + mc.toUpper("dave"));
     //     self.postMessage("from client");
     // };
-    
+
 onmessage = function (oEvent) {
-  oEvent.data.jeb = 123
-  postMessage(oEvent);
+  oEvent.data.jeb += 23;
+  postMessage(oEvent.data);
 };

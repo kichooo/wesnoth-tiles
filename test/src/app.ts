@@ -331,7 +331,6 @@ function start() {
     // loadCircle(map, ETerrain.GRASS_GREEN, ETerrain.ABYSS, 2, -2);
     loadDisk();
     // loadSingleCircle();
-console.log("Creating web worker");
 
     tilesMap.resize(window.innerWidth, window.innerHeight);
     var anim = () => {
@@ -349,7 +348,7 @@ console.log("Creating web worker");
     webWorker.onmessage = (obj) => {
       console.log("returned", obj);
     }
-    webWorker.postMessage("dupa");
+    webWorker.postMessage({jeb: 100});
     // created web worker.
     console.log("Created web worker");
   });
