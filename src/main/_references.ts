@@ -1,3 +1,5 @@
+/// <reference path="../common/interfaces.ts"/>
+
 /// <reference path="internal/Utils.ts"/>
 /// <reference path="internal/Drawable.ts"/>
 /// <reference path="internal/Hex.ts"/>
@@ -7,5 +9,6 @@
 /// <reference path="internal/Algorithm.ts"/>
 /// <reference path="internal/Macros.ts"/>
 /// <reference path="internal/TgGroup.ts"/>
+/// <reference path="internal/WorkerCommander.ts"/>
 
 /// <reference path="TilesMap.ts"/>

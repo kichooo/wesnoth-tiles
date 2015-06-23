@@ -83,6 +83,9 @@ module WesnothTiles {
     private lastDraw: number = Date.now();
     private hexMap = new Internal.HexMap();
 
+    private worker: Worker;
+
+    private workerId = 0;
 
     constructor(private canvas: HTMLCanvasElement) {
       this.ctx = <any>this.canvas.getContext('2d');
@@ -248,8 +251,16 @@ module WesnothTiles {
       this.canvas.height = height;
     }
 
+    setTiles(changes: Internal.ITileChange[] | Internal.ITileChange): Promise<void> {
+      var tileChanges = <Internal.ITileChange[]>((changes.constructor === Array) 
+        ? changes : [changes]);
+
+      return <Promise<void>><any>Internal.sendCommand("setTiles", tileChanges);
+    }    
 
     load(): Promise<void> {
+      Internal.loadWorker();
+      this.setTiles([]);
       return Internal.loadResources();
     }
 

@@ -66,9 +66,11 @@ WML files with terrain definitions will be converted using short GO program.
 # current iteration (v0.6)
  - [ ] some better way to match terrains with macros, instead of having terrain, overlay and fog. 
  - [ ] automatic tests of the checksums
- - [x] reconsider fast map redraw/reload 
  - [ ] Try to find few more not needed tg groups. 
  - [ ] Refactor HexMap so that it doesn't use strings as keys.
+ - [ ] Webworker
+ - [ ] Promising api to for terrain change rebuilding etc,
+ - [ ] 
 
 # next iteration (v0.7)
  - [ ] api stabilizing

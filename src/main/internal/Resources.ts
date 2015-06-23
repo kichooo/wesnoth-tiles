@@ -1,44 +1,7 @@
-// declare class Promise {
-//   static all: any;
-//   constructor(func: (resolve: any, reject: any) => void);
-//   then(any): Promise;
-// }
-
 module WesnothTiles.Internal {
   'use strict';
 
-  // export interface IHexResource {
-  //   variations: IAnimationDef[];
-  // }
-
-  
-
-  var rotationToString = (rotation: number): string => {
-    switch (rotation) {
-      case 0:
-        return "s";
-      case 1:
-        return "sw";
-      case 2:
-        return "nw";
-      case 3:
-        return "n";
-      case 4:
-        return "ne";
-      case 5:
-        return "se";
-
-      default:
-        console.error("Invalid rotation", rotation);
-        break;
-    }
-  }
-
-
-  // export var hexResources = new Map<string, IHexResource>();
-
-
-  // This class is responsible for loading of the graphics.
+  // This file is responsible for loading of the graphics.
   var atlases = new Map<string, HTMLElement>();
   export var definitions = new Map<string, SpriteDefinition>();
 

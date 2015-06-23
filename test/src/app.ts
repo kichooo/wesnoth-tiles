@@ -342,18 +342,6 @@ function start() {
       });
     };
     anim();
-      
-    var webWorker = new Worker("worker.js");
-
-    webWorker.onmessage = (obj) => {
-      console.log("returned", obj.data);
-    }
-    webWorker.postMessage(
-      {
-        id: 1,
-        func: "testCall",
-        data: 100
-      });
   });
 
 }
