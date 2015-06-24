@@ -1,87 +1,12 @@
 module WesnothTiles {
   'use strict';
 
-  export enum ETerrain {
-    GRASS_GREEN, // Gg 0
-    GRASS_SEMI_DRY, // Ggd 1
-    GRASS_DRY, // Gd 2     
-    GRASS_LEAF_LITTER, // Gll 3
-
-    HILLS_REGULAR, // Hh 4
-    HILLS_DRY, // Hhd 5
-    HILLS_DESERT, // Hd 6      
-    HILLS_SNOW, // Ha 7    
-
-    MOUNTAIN_BASIC, // Mm 8
-    MOUNTAIN_DRY, // Md 9
-    MOUNTAIN_SNOW, // Ms 10 
-    MOUNTAIN_VOLCANO, // Mv 11
-
-    FROZEN_SNOW, // Aa 12
-    FROZEN_ICE, // Ai 13
-
-    SAND_BEACH, // Ds 14
-    SAND_DESERT, // Dd 15
-      
-    SWAMP_MUD, // Sm 16
-    SWAMP_WATER, // Ss 17
-      
-    WATER_OCEAN, // Wo 18
-    WATER_COAST_TROPICAL, // Ww 19
-      
-    ABYSS, // Qxua 20
-    VOID // Xv 21
-  }
-  export enum EOverlay {
-    WOODS_PINE = 22,
-    SNOW_FOREST,
-    JUNGLE,
-    PALM_DESERT,
-    RAINFOREST,
-    SAVANNA,
-    DECIDUOUS_SUMMER,
-    DECIDUOUS_FALL,
-    DECIDUOUS_WINTER,
-    DECIDUOUS_WINTER_SNOW,
-    MIXED_SUMMER,
-    MIXED_FALL,
-    MIXED_WINTER,
-    MIXED_WINTER_SNOW,
-    MUSHROOMS,
-    FARM_VEGS,
-    FLOWERS_MIXED,
-    RUBBLE,
-    STONES_SMALL,
-    OASIS,
-    DETRITUS,
-    LITER,
-    TRASH,
-    VILLAGE_HUMAN,
-    VILLAGE_HUMAN_RUIN,
-    VILLAGE_HUMAN_CITY,
-    VILLAGE_HUMAN_CITY_RUIN,
-    VILLAGE_TROPICAL,
-    VILLAGE_HUT,
-    VILLAGE_LOG_CABIN,
-    VILLAGE_CAMP,
-    VILLAGE_IGLOO,
-    VILLAGE_ORC,
-    VILLAGE_ELVEN,
-    VILLAGE_DESERT,
-    VILLAGE_DESERT_CAMP,
-    VILLAGE_DWARVEN,
-    VILLAGE_SWAMP,
-    VILLAGE_COAST,
-    DESERT_PLANTS,
-    NONE
-  }
-
   export class TilesMap {
     private ctx: CanvasRenderingContext2D;
     // private drawMap = new Map<string,  HexToDraw>();
     private drawables: Internal.IDrawable[] = [];
     private lastDraw: number = Date.now();
-    private hexMap = new Internal.HexMap();
+    // private hexMap = new Internal.HexMap();
 
     private worker: Worker;
 
@@ -95,24 +20,31 @@ module WesnothTiles {
     // method of modifying terrains if more then few terrains at once are changed.
     // This mode is being unset by first call to Rebuild or UnsetLoadingMode.
     setLoadingMode(): void {
-      this.hexMap.setLoadingMode();
+      // this.hexMap.setLoadingMode();
     }
 
     unsetLoadingMode(): void {
-      this.hexMap.unsetLoadingMode();
+      // this.hexMap.unsetLoadingMode();
     }
 
     // Sets given hex to specified terrain. If not specified, overlay does not change.
     // A 'rebuild' call is needed to actually display the change.
     setTerrain(q: number, r: number, terrain: ETerrain, overlay = EOverlay.NONE, fog = false) {
-      this.hexMap.setTerrain(q, r, terrain, overlay, fog);
+      this.setTiles({
+        q: q,
+        r: r,
+        terrain: terrain,
+        overlay: overlay,
+        fog: fog
+      });
+      // this.hexMap.setTerrain(q, r, terrain, overlay, fog);
     }
 
     // Unsets given hex. Overlay is cleared too.
     // It is not an equivalent of setting terrain to Void.
     // A 'rebuild' call is needed to actually display the change.
     unsetTerrain(q: number, r: number) {
-      this.hexMap.removeHex(q, r);
+      // this.hexMap.removeHex(q, r);
     }
 
     // Sets given hex to specified overlay. If hex does not exist,
@@ -147,7 +79,7 @@ module WesnothTiles {
 
     // Clears the map.
     clear() {
-      this.hexMap.clear();
+      // this.hexMap.clear();
     }
 
     private sortFuncForChecksum = (a: Internal.IDrawable, b: Internal.IDrawable) => {
@@ -185,15 +117,16 @@ module WesnothTiles {
     };
 
     rebuild(): Promise<void> {
-      var p = new Promise<void>((resolve, reject) => {
-        window.setTimeout(() => {
-          this.hexMap.unsetLoadingMode();
-          this.drawables = Internal.rebuild(this.hexMap);
-          this.drawables.sort(this.sortFunc);
-          resolve();
-        });
-      });
-      return p;   
+      return <Promise<void>><any>Internal.sendCommand("rebuild");
+      // var p = new Promise<void>((resolve, reject) => {
+      //   window.setTimeout(() => {
+      //     // this.hexMap.unsetLoadingMode();
+      //     // this.drawables = Internal.rebuild(this.hexMap);
+      //     // this.drawables.sort(this.sortFunc);
+      //     resolve();
+      //   });
+      // });
+      // return p;   
     }
 
     getCheckSum(): string {
