@@ -5,6 +5,7 @@ module WesnothTiles.Internal {
   var atlases = new Map<string, HTMLElement>();
   export var definitions = new Map<string, SpriteDefinition>();
 
+
   var provideAtlas = (name: string): Promise<void> => {
     var img = new Image();
     var promises: Promise<void>[] = [];

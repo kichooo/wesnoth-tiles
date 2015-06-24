@@ -254,14 +254,22 @@ module WesnothTiles {
     setTiles(changes: Internal.ITileChange[] | Internal.ITileChange): Promise<void> {
       var tileChanges = <Internal.ITileChange[]>((changes.constructor === Array) 
         ? changes : [changes]);
-
       return <Promise<void>><any>Internal.sendCommand("setTiles", tileChanges);
-    }    
+    }
 
     load(): Promise<void> {
       Internal.loadWorker();
-      this.setTiles([]);
-      return Internal.loadResources();
+      return Internal.loadResources().then(() => {
+        // console.log(Internal.definitions.);
+        var keys: string[] = [];
+        Internal.definitions.forEach((val, key) => {
+          keys.push(key);
+        }); 
+        return <Promise<void>><any>Internal.sendCommand(
+          "init", 
+          keys
+        );
+      });
     }
 
   }

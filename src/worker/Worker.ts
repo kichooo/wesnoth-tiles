@@ -4,6 +4,8 @@ module WesnothTiles.Worker {
   'use strict';
 
   export class Worker {
+    private spriteNames = new Set<string>();
+
     constructor() {
       onmessage = (oEvent: MessageEvent) => {
           var order: Internal.IWorkerOrder = oEvent.data;
@@ -28,8 +30,8 @@ module WesnothTiles.Worker {
       console.log("Setting tiles in worker");
     }
 
-    load = () => {
-      
+    init = (definitions: string[]) => {
+      definitions.forEach(spriteName => this.spriteNames.add(spriteName));
     }
 
   }
