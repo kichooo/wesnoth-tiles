@@ -28,6 +28,26 @@ module WesnothTiles.Internal {
     overlay?: EOverlay;
     fog?: boolean;
   }
+  export interface IVector {
+    x: number;
+    y: number;
+  }
+
+
+  export class Drawable {
+    constructor(public x: number,
+      public y: number,
+      public name: string,
+      public layer: number,
+      public base: IVector,
+      public frames: number,
+      public duration: number) {
+    }
+
+    toString(): string {
+      return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
+    }    
+  }
 }
 
 module WesnothTiles {

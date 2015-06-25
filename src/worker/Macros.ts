@@ -13,14 +13,14 @@ module WesnothTiles.Worker {
 
 
   export interface IBuilder {
-    toDrawable(imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector): Drawable;
+    toDrawable(imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector): Internal.Drawable;
     toString(imageStem: string, postfix?: string): string;
   }
   // image builders.
   export var IB_IMAGE_SINGLE: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
+    toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
       // console.log("Adding " + imageStem + postfix);
-      return new Drawable(
+      return new Internal.Drawable(
         pos.x,
         pos.y,
         imageStem + postfix, layer, base, 1, 1000 // TODO change me to undefined, i am not needed.
@@ -33,8 +33,8 @@ module WesnothTiles.Worker {
   }
 
   export var IB_ANIMATION_15_SLOW: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      return new Drawable(
+    toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
+      return new Internal.Drawable(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 15, 150
@@ -46,8 +46,8 @@ module WesnothTiles.Worker {
   }
 
   export var IB_ANIMATION_15: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      return new Drawable(
+    toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
+      return new Internal.Drawable(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 15, 110
@@ -59,8 +59,8 @@ module WesnothTiles.Worker {
   }
 
   export var IB_ANIMATION_06: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
-      return new Drawable(
+    toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
+      return new Internal.Drawable(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 6, 200
@@ -76,8 +76,8 @@ module WesnothTiles.Worker {
     layer: number;
     variations: string[];
     postfix?: string;
-    base?: IVector;
-    center?: IVector;
+    base?: Internal.IVector;
+    center?: Internal.IVector;
   }
 
   export interface WMLTile extends IHexPos {

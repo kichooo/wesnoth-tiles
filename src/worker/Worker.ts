@@ -21,34 +21,34 @@ module WesnothTiles.Worker {
       }
     }
 
-    testCall = (jeb: number) => {
+    testCall = (jeb: number): number => {
       jeb += 25;
       return jeb;
     }
 
-    setTiles = (tileChanges: Internal.ITileChange[]) => {
+    setTiles = (tileChanges: Internal.ITileChange[]): void => {
       tileChanges.forEach(change => {
           hexMap.setTerrain(change.q, change.r, change.terrain, change.overlay, change.fog);
       });
 
     }
 
-    init = (definitions: string[]) => {
+    init = (definitions: string[]): void => {
       definitions.forEach(spriteName => spriteNames.add(spriteName));
       hexMap = new HexMap();
     }
 
-    rebuild = () => {
+    rebuild = (): Internal.Drawable[] => {
       console.log("Rebuilding in worker");
       hexMap.unsetLoadingMode();
       var drawables = rebuild(hexMap);
       drawables.sort(sortFunc);
-      console.log("Rebuild done!", drawables);
+      return drawables;
     }
 
   }
 
-  var sortFunc = (a: Drawable, b: Drawable) => {
+  var sortFunc = (a: Internal.Drawable, b: Internal.Drawable) => {
       if (a.layer === b.layer) {
         if (a.base !== undefined && b.base !== undefined) {
           return a.base.y - b.base.y;

@@ -3,11 +3,6 @@
 module WesnothTiles.Internal {
   'use strict';
 
-  export interface IVector {
-    x: number;
-    y: number;
-  }
-
   export interface IDrawable {
     draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number);
     layer?: number;

@@ -3,11 +3,6 @@
 module WesnothTiles.Worker {
   'use strict';
 
-  export interface IVector {
-    x: number;
-    y: number;
-  }
-
   // export interface IDrawable {
   //   draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number);
   //   layer?: number;
@@ -60,20 +55,5 @@ module WesnothTiles.Worker {
   //   toString(): string {
   //     return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
   //   }
-  // }
-
-  export class Drawable {
-    constructor(public x: number,
-      public y: number,
-      public name: string,
-      public layer: number,
-      public base: IVector,
-      private frames: number,
-      private duration: number) {
-    }
-
-    toString(): string {
-      return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
-    }    
-  }  
+  // }  
 }  

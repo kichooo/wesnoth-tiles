@@ -6,7 +6,7 @@ module WesnothTiles.Worker {
   interface IDrawParams {
     hex: Hex;
     hexMap: HexMap;
-    drawables: Drawable[];
+    drawables: Internal.Drawable[];
   }
 
   var setFlags = (rot: number, rotations: string[],
@@ -127,7 +127,7 @@ module WesnothTiles.Worker {
         return;
     }
 
-    var drawables: Drawable[] = [];
+    var drawables: Internal.Drawable[] = [];
 
     for (var j = 0; j < tg.images.length; j++) {
       var img = tg.images[j];
@@ -176,7 +176,7 @@ module WesnothTiles.Worker {
       performRotatedTerrainGraphics(tg, dp);
   }
 
-  export var rebuild = (hexMap: HexMap) => {
+  export var rebuild = (hexMap: HexMap): Internal.Drawable[] => {
     prepareRotations();
     // clear old flags.
 
@@ -184,7 +184,7 @@ module WesnothTiles.Worker {
       h.flags.clear();
     })
 
-    var drawables: Drawable[] = [];
+    var drawables: Internal.Drawable[] = [];
 
     var dp: IDrawParams = {
       hex: null,

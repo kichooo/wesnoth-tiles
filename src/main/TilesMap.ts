@@ -117,7 +117,20 @@ module WesnothTiles {
     };
 
     rebuild(): Promise<void> {
-      return <Promise<void>><any>Internal.sendCommand("rebuild");
+      return this.rebuildMap().then(drawables => {
+        this.drawables = [];
+        drawables.forEach(drawable => {
+          this.drawables.push(new Internal.AnimatedDrawable(
+            drawable.x, drawable.y, drawable.name, drawable.layer,
+            drawable.base, drawable.frames, drawable.duration));
+        });
+
+        console.log(this.drawables);
+      });
+    }  
+
+    private rebuildMap(): Promise<Internal.Drawable[]> {
+      return <Promise<Internal.Drawable[]>><any>Internal.sendCommand("rebuild");
       // var p = new Promise<void>((resolve, reject) => {
       //   window.setTimeout(() => {
       //     // this.hexMap.unsetLoadingMode();
