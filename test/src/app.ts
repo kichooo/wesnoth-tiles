@@ -9,7 +9,7 @@ var redraw = false;
 function createTestMap(): Promise<void> {
   return tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
     var rng = new Rng(1337);
-
+    var tiles: WesnothTiles.ITileChange[] = [];
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
         var terrain = rng.nextRange(0, ETerrain.VOID + 1);
@@ -24,26 +24,34 @@ function createTestMap(): Promise<void> {
           || terrain === ETerrain.FROZEN_SNOW)
           && rng.nextRange(0, 3) === 0)
           overlay = rng.nextRange(EOverlay.MUSHROOMS, EOverlay.NONE + 1);
-        tilesMap.setTerrain(i, j, terrain, overlay);
+        tiles.push({
+          q: i,
+          r: j,
+          terrain: terrain,
+          overlay: overlay
+        });
       }
+    return tilesMap.setTiles(tiles);
   });
 }
 
 function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   redraw = false;
-  var timeRebuildingStart = new Date();
-  createTestMap();
-  timedRebuild().then(duration => {
-    document.getElementById("checksum").textContent = tilesMap.getCheckSum();
-    document.getElementById("expected").textContent = "expected: 1386360853";
-    document.getElementById("duration").textContent = duration.toString();
 
-    document.getElementById("checksumBlock").style.display = 'block';
-    redraw = true;
-    console.log("whole took",(new Date().getTime() - timeRebuildingStart.getTime()) + "ms");  
+  tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
+    var timeRebuildingStart = new Date();
+    
+    createTestMap().then(() => timedRebuild()).then(duration => {
+      document.getElementById("checksum").textContent = tilesMap.getCheckSum();
+      document.getElementById("expected").textContent = "expected: 1386360853";
+      document.getElementById("duration").textContent = duration.toString();
+
+      document.getElementById("checksumBlock").style.display = 'block';
+      redraw = true;
+      console.log("whole took",(new Date().getTime() - timeRebuildingStart.getTime()) + "ms");  
+    });
   });
-  
 }
 
 function loadSingleCircle(): void {

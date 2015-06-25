@@ -198,8 +198,8 @@ module WesnothTiles {
       this.canvas.height = height;
     }
 
-    setTiles(changes: Internal.ITileChange[] | Internal.ITileChange): Promise<void> {
-      var tileChanges = <Internal.ITileChange[]>((changes.constructor === Array) 
+    setTiles(changes: ITileChange[] | ITileChange): Promise<void> {      
+      var tileChanges = <ITileChange[]>((changes.constructor === Array) 
         ? changes : [changes]);
       return <Promise<void>><any>Internal.sendCommand("setTiles", tileChanges);
     }

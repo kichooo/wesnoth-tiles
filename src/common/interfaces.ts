@@ -21,13 +21,6 @@ module WesnothTiles.Internal {
     error?: string;
   }
 
-  export interface ITileChange {
-    q: number;
-    r: number;
-    terrain?: ETerrain;
-    overlay?: EOverlay;
-    fog?: boolean;
-  }
   export interface IVector {
     x: number;
     y: number;
@@ -124,6 +117,14 @@ module WesnothTiles {
     VILLAGE_COAST,
     DESERT_PLANTS,
     NONE
+  }
+
+  export interface ITileChange {
+    q: number;
+    r: number;
+    terrain?: ETerrain;
+    overlay?: EOverlay;
+    fog?: boolean;
   }
 
 }

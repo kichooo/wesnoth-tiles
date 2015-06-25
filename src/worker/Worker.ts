@@ -26,11 +26,10 @@ module WesnothTiles.Worker {
       return jeb;
     }
 
-    setTiles = (tileChanges: Internal.ITileChange[]): void => {
+    setTiles = (tileChanges: ITileChange[]): void => {
       tileChanges.forEach(change => {
           hexMap.setTerrain(change.q, change.r, change.terrain, change.overlay, change.fog);
       });
-
     }
 
     init = (definitions: string[]): void => {
