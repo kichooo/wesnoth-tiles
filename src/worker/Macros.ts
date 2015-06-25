@@ -23,7 +23,7 @@ module WesnothTiles.Worker {
       return new Internal.Drawable(
         pos.x,
         pos.y,
-        imageStem + postfix, layer, base, 1, 1000 // TODO change me to undefined, i am not needed.
+        imageStem + postfix, layer, base, undefined, undefined // TODO change me to undefined, i am not needed.
         )
     },
 
