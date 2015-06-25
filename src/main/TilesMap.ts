@@ -19,8 +19,8 @@ module WesnothTiles {
     // Goes into loading mode - setting terrains is faster. This is the prefereable
     // method of modifying terrains if more then few terrains at once are changed.
     // This mode is being unset by first call to Rebuild or UnsetLoadingMode.
-    setLoadingMode(): void {
-      // this.hexMap.setLoadingMode();
+    setLoadingMode(): Promise<void> {
+      return <Promise<void>><any>Internal.sendCommand("setLoadingMode");
     }
 
     unsetLoadingMode(): void {
@@ -78,7 +78,8 @@ module WesnothTiles {
     // }
 
     // Clears the map.
-    clear() {
+    clear(): Promise<void> {
+      return <Promise<void>><any>Internal.sendCommand("clear");
       // this.hexMap.clear();
     }
 

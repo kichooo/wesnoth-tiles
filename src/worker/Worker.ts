@@ -46,6 +46,13 @@ module WesnothTiles.Worker {
       return drawables;
     }
 
+    clear = (): void => {
+      hexMap.clear();
+    }
+
+    setLoadingMode = (): void => {
+      hexMap.setLoadingMode();
+    }
   }
 
   var sortFunc = (a: Internal.Drawable, b: Internal.Drawable) => {
