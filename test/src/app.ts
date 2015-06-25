@@ -37,8 +37,6 @@ function createTestMap(): Promise<void> {
 
 function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
-  redraw = false;
-
   tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
     var timeRebuildingStart = new Date();
     
@@ -48,24 +46,20 @@ function loadTestMap(): void {
       document.getElementById("duration").textContent = duration.toString();
 
       document.getElementById("checksumBlock").style.display = 'block';
-      redraw = true;
       console.log("whole took",(new Date().getTime() - timeRebuildingStart.getTime()) + "ms");  
     });
   });
 }
 
 function loadSingleCircle(): void {
-  document.getElementById("checksumBlock").style.display = 'none'
-  redraw = false;
-  tilesMap.clear();
+  document.getElementById("checksumBlock").style.display = 'none';
 
-  loadCircle(ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);
-
-  tilesMap.rebuild().then(() => {
+  tilesMap.clear().then(() => {
+    loadCircle(ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);  
+  }).then(() => tilesMap.rebuild()).then(() => {
     document.getElementById("checksum").textContent = tilesMap.getCheckSum();
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("checksumBlock").style.display = 'block';  
-    redraw = true;
   });
   
 }
@@ -74,14 +68,13 @@ function benchmark(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   redraw = false;
   var timer = new Date();
-  createTestMap();
-  var promise: Promise<void> = tilesMap.rebuild();
-  for (var i = 0; i < 39; i++) {
-    promise = promise.then(() => { return tilesMap.rebuild(); });
-    
-  }
-
-  promise.then(() => {
+  createTestMap().then(() => {
+    var promise: Promise<void> = tilesMap.rebuild();
+    for (var i = 0; i < 39; i++) {
+      promise = promise.then(() => { return tilesMap.rebuild(); });
+    }    
+    return promise;  
+  }).then(() => {
     var duration = (new Date().getTime() - timer.getTime()) / 40;
 
     document.getElementById("checksum").textContent = tilesMap.getCheckSum();
@@ -91,7 +84,7 @@ function benchmark(): void {
     document.getElementById("checksumBlock").style.display = 'block';
 
     redraw = true;
-  });  
+  });
 }
 
 function loadRandomMap(): void {
@@ -117,14 +110,21 @@ function loadRandomMap(): void {
 function loadRandomMapWithWoods(): void {
   document.getElementById("checksumBlock").style.display = 'none'
   redraw = false;
-  tilesMap.clear();
-  for (var i = -18; i < 18; i++)
-    for (var j = -18; j < 18; j++) {
-      tilesMap.setTerrain(i, j, ETerrain.GRASS_SEMI_DRY, ETerrain.VOID + 1 + Math.floor(Math.random() * 14));
-    }
-  tilesMap.rebuild().then(() => {
+  tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
+    var tiles: WesnothTiles.ITileChange[] = [];
+    for (var i = -18; i < 18; i++)
+      for (var j = -18; j < 18; j++) {
+        tiles.push({
+          q: i,
+          r: j,
+          terrain: ETerrain.GRASS_SEMI_DRY,
+          overlay: ETerrain.VOID + 1 + Math.floor(Math.random() * 14)
+        });
+      }
+    return tilesMap.setTiles(tiles);
+  }).then(() => tilesMap.rebuild().then(() => {
     redraw = true;
-  });
+  }));
 }
 
 function loadChunksRandom(): void {

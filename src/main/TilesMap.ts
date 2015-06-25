@@ -168,29 +168,6 @@ module WesnothTiles {
           Math.floor((this.canvas.height) / 2),
           this.ctx, diff);
       });
-
-      // this.ctx.beginPath();
-      // this.ctx.lineWidth = 4;
-      // this.ctx.strokeStyle = "green";
-      // this.ctx.rect(this.canvas.width / 2 - 4, this.canvas.height / 2 - 4,8,8);
-      // this.ctx.stroke();
-      
-      // console.log(this.canvas.width, this.canvas.height);
-      // for (var q = -20; q < 20; q++) { // very temporary...
-      //   for (var r = -20; r < 20; r++) {
-      //     var hex = this.drawMap.get(HexPos.toString(q, r));
-      //       for (var i = 0; i < hex.sprites.length; i++) {
-      //         var sprite = hex.sprites[i];
-      //         if (sprite.animation === null || sprite.animation === undefined) {
-      //           console.error("Invalid sprite!", sprite);
-      //           return;
-      //         }
-      //         sprite.animation.frames[sprite.frame].draw(, this.ctx);
-      //         sprite.frame = (sprite.frame + 1) % sprite.animation.frames.length;
-      //         // sprite.frame = Math.min(sprite.animation.frames.length - 1, 3);
-      //       }          
-      //   }
-      // }
     }
 
     resize(width: number, height: number): void {
