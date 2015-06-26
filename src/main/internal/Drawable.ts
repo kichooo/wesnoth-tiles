@@ -3,34 +3,7 @@
 module WesnothTiles.Internal {
   'use strict';
 
-  export interface IDrawable {
-    draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number);
-    layer?: number;
-    name: string;
-    base?: IVector;
-    toString(): string;
-    x: number;
-    y: number;
-  }
-
-  export class StaticDrawable implements IDrawable {
-    constructor(public x: number, public y: number, public name: string, public layer: number, public base: IVector) {
-    }
-
-    draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {
-      var sprite = definitions.get(this.name);
-      if (sprite === undefined) {
-        console.error("Undefined sprite", this.name)
-      }
-      sprite.draw(this.x + x, this.y + y, ctx);
-    }
-
-    toString(): string {
-      return this.name + this.layer + ',' + this.x + ',' + this.y;
-    }
-  }
-
-  export class AnimatedDrawable implements IDrawable {
+  export class AnimatedDrawable {
     private animTime = Date.now();
     constructor(public x: number,
       public y: number,

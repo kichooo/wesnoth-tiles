@@ -4,7 +4,7 @@ module WesnothTiles {
   export class TilesMap {
     private ctx: CanvasRenderingContext2D;
     // private drawMap = new Map<string,  HexToDraw>();
-    private drawables: Internal.IDrawable[] = [];
+    private drawables: Internal.AnimatedDrawable[] = [];
     private lastDraw: number = Date.now();
     // private hexMap = new Internal.HexMap();
 
@@ -83,7 +83,7 @@ module WesnothTiles {
       // this.hexMap.clear();
     }
 
-    private sortFunc = (a: Internal.IDrawable, b: Internal.IDrawable) => {
+    private sortFunc = (a: Internal.AnimatedDrawable, b: Internal.AnimatedDrawable) => {
       if (a.layer === b.layer) {
         if (a.base !== undefined && b.base !== undefined) {
           return a.base.y - b.base.y;
