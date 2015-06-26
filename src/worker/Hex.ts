@@ -19,5 +19,10 @@ module WesnothTiles.Worker {
       return from + murmurhash3(this.str, this.hashesTaken) % to;
     }
 
+    reset(): void {
+      this.flags.clear();
+      this.hashesTaken = 0;
+    }
+
   }
 } 

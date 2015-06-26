@@ -180,9 +180,7 @@ module WesnothTiles.Worker {
     prepareRotations();
     // clear old flags.
 
-    hexMap.iterate(h => {
-      h.flags.clear();
-    })
+    hexMap.iterate(h => h.reset());
 
     var drawables: Internal.Drawable[] = [];
 

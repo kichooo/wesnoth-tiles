@@ -41,7 +41,9 @@ function loadTestMap(): void {
     var timeRebuildingStart = new Date();
     
     createTestMap().then(() => timedRebuild()).then(duration => {
-      document.getElementById("checksum").textContent = tilesMap.getCheckSum();
+      document.getElementById("checksum").textContent = "";
+      tilesMap.getCheckSum()
+        .then(checksum => document.getElementById("checksum").textContent = checksum);
       document.getElementById("expected").textContent = "expected: 1386360853";
       document.getElementById("duration").textContent = duration.toString();
 
@@ -57,7 +59,9 @@ function loadSingleCircle(): void {
   tilesMap.clear().then(() => {
     loadCircle(ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);  
   }).then(() => tilesMap.rebuild()).then(() => {
-    document.getElementById("checksum").textContent = tilesMap.getCheckSum();
+    document.getElementById("checksum").textContent = "";
+    tilesMap.getCheckSum()
+      .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("checksumBlock").style.display = 'block';  
   });
@@ -76,8 +80,9 @@ function benchmark(): void {
     return promise;  
   }).then(() => {
     var duration = (new Date().getTime() - timer.getTime()) / 40;
-
-    document.getElementById("checksum").textContent = tilesMap.getCheckSum();
+    document.getElementById("checksum").textContent = "";
+    tilesMap.getCheckSum()
+      .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: 3643646740";
     document.getElementById("duration").textContent = duration.toString();
 
@@ -98,7 +103,9 @@ function loadRandomMap(): void {
     }
 
   timedRebuild().then(duration => {
-    document.getElementById("checksum").textContent = tilesMap.getCheckSum();
+    document.getElementById("checksum").textContent = "";
+    tilesMap.getCheckSum()
+     .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("duration").textContent = duration.toString();
 
@@ -297,8 +304,9 @@ function loadDisk(): void {
     var duration = timedRebuild().then(duration => {
       redraw = true;
       console.log("whole took",(new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
-
-      document.getElementById("checksum").textContent = tilesMap.getCheckSum();
+      document.getElementById("checksum").textContent = "";
+      tilesMap.getCheckSum()
+        .then(checksum => document.getElementById("checksum").textContent = checksum);
       document.getElementById("expected").textContent = "expected: 18469171";
       document.getElementById("duration").textContent = duration.toString();
       document.getElementById("checksumBlock").style.display = 'block'

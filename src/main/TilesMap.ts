@@ -83,25 +83,6 @@ module WesnothTiles {
       // this.hexMap.clear();
     }
 
-    private sortFuncForChecksum = (a: Internal.IDrawable, b: Internal.IDrawable) => {
-      if (a.layer === b.layer) {
-        if (a.base !== undefined && b.base !== undefined) {
-          if (a.base.y === b.base.y) {
-            return a.toString() < b.toString() ? -1 : 1;
-          }
-          return a.base.y - b.base.y;
-        }
-        if (b.base !== undefined) {
-          return a.layer < 0 ? -1 : 1;
-        } else if (a.base !== undefined) {
-          return b.layer < 0 ? 1 : -1;
-        }
-        return a.toString() < b.toString() ? -1 : 1;
-      }
-      return a.layer - b.layer;
-    };
-
-
     private sortFunc = (a: Internal.IDrawable, b: Internal.IDrawable) => {
       if (a.layer === b.layer) {
         if (a.base !== undefined && b.base !== undefined) {
@@ -143,18 +124,9 @@ module WesnothTiles {
       // return p;   
     }
 
-    getCheckSum(): string {
-      var checksum = 0;
-
-      // var dupa = "";
-      this.drawables.sort(this.sortFuncForChecksum);
-      this.drawables.forEach(drawable => {
-        checksum = Internal.murmurhash3(drawable.toString(), checksum);
-        // dupa = dupa + drawable.toString() + ";";
-      });
-
-      // console.log(dupa);
-      return checksum.toString();
+    // Rebuilds, then calculates the checksum. Build results are discarded.
+    getCheckSum(): Promise<string> {
+      return <Promise<string>><any>Internal.sendCommand("getChecksum");
     }
 
     redraw(): void {

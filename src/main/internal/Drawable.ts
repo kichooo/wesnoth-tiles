@@ -59,12 +59,5 @@ module WesnothTiles.Internal {
       }
       sprite.draw(this.x + x, this.y + y, ctx);
     }
-
-    toString(): string {
-      if (this.duration === undefined)
-        return this.name + this.layer + ',' + this.x + ',' + this.y;
-      else 
-        return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
-    }
   }
 }  

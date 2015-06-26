@@ -38,7 +38,10 @@ module WesnothTiles.Internal {
     }
 
     toString(): string {
-      return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
+      if (this.duration === undefined)
+        return this.name + this.layer + ',' + this.x + ',' + this.y;
+      else 
+        return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
     }    
   }
 }
