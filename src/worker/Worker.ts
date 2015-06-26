@@ -3,6 +3,8 @@
 module WesnothTiles.Worker {
   'use strict';
 
+  export var spriteNames = new Set<string>();
+  
   var hexMap: HexMap;
 
   export class Worker {
@@ -50,14 +52,11 @@ module WesnothTiles.Worker {
 
       var checksum = 0;
 
-      // var dupa = "";
       drawables.sort(sortFuncForChecksum);
       drawables.forEach(drawable => {
         checksum = murmurhash3(drawable.toString(), checksum);
-        // dupa = dupa + drawable.toString() + ";";
       });
 
-      // console.log(dupa);
       return checksum.toString();
     }
 
