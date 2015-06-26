@@ -10,7 +10,7 @@ module WesnothTiles.Internal {
     // request id - unique for each call.
     id: number; 
     // additional parameters
-    data?: Object; 
+    data?: Object;
   }
 
   export interface IWorkerResponse {
@@ -40,9 +40,9 @@ module WesnothTiles.Internal {
     toString(): string {
       if (this.duration === undefined)
         return this.name + this.layer + ',' + this.x + ',' + this.y;
-      else 
+      else
         return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
-    }    
+    }
   }
 }
 

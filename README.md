@@ -64,13 +64,12 @@ WML files with terrain definitions will be converted using short GO program.
 - [x] ethereal abyss (chasm)
 
 # current iteration (v0.6)
- - [ ] some better way to match terrains with macros, instead of having terrain, overlay and fog. 
- - [ ] automatic tests of the checksums
- - [ ] Try to find few more not needed tg groups. 
- - [ ] Refactor HexMap so that it doesn't use strings as keys.
- - [ ] Webworker
- - [ ] Promising api to for terrain change rebuilding etc,
- - [ ] 
+ - [x] some better way to match terrains with macros, instead of having terrain, overlay and fog. 
+ - [x] automatic tests of the checksums
+ - [x] Try to find few more not needed tg groups. 
+ - [x] Refactor HexMap so that it doesn't use strings as keys.
+ - [x] Webworker
+ - [x] Promising api to for terrain change rebuilding etc,
 
 # next iteration (v0.7)
  - [ ] api stabilizing

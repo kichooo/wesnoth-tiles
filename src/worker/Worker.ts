@@ -4,7 +4,7 @@ module WesnothTiles.Worker {
   'use strict';
 
   export var spriteNames = new Set<string>();
-  
+
   var hexMap: HexMap;
 
   export class Worker {
@@ -70,37 +70,37 @@ module WesnothTiles.Worker {
   }
 
   var sortFunc = (a: Internal.Drawable, b: Internal.Drawable) => {
-      if (a.layer === b.layer) {
-        if (a.base !== undefined && b.base !== undefined) {
-          return a.base.y - b.base.y;
-        }
-        if (b.base !== undefined) {
-          return a.layer < 0 ? -1 : 1;
-        } else if (a.base !== undefined) {
-          return b.layer < 0 ? 1 : -1;
-        }
-        return 0;
+    if (a.layer === b.layer) {
+      if (a.base !== undefined && b.base !== undefined) {
+        return a.base.y - b.base.y;
       }
-      return a.layer - b.layer;
-    };
+      if (b.base !== undefined) {
+        return a.layer < 0 ? -1 : 1;
+      } else if (a.base !== undefined) {
+        return b.layer < 0 ? 1 : -1;
+      }
+      return 0;
+    }
+    return a.layer - b.layer;
+  };
 
-    var sortFuncForChecksum = (a: Internal.Drawable, b: Internal.Drawable) => {
-      if (a.layer === b.layer) {
-        if (a.base !== undefined && b.base !== undefined) {
-          if (a.base.y === b.base.y) {
-            return a.toString() < b.toString() ? -1 : 1;
-          }
-          return a.base.y - b.base.y;
+  var sortFuncForChecksum = (a: Internal.Drawable, b: Internal.Drawable) => {
+    if (a.layer === b.layer) {
+      if (a.base !== undefined && b.base !== undefined) {
+        if (a.base.y === b.base.y) {
+          return a.toString() < b.toString() ? -1 : 1;
         }
-        if (b.base !== undefined) {
-          return a.layer < 0 ? -1 : 1;
-        } else if (a.base !== undefined) {
-          return b.layer < 0 ? 1 : -1;
-        }
-        return a.toString() < b.toString() ? -1 : 1;
+        return a.base.y - b.base.y;
       }
-      return a.layer - b.layer;
-    };    
+      if (b.base !== undefined) {
+        return a.layer < 0 ? -1 : 1;
+      } else if (a.base !== undefined) {
+        return b.layer < 0 ? 1 : -1;
+      }
+      return a.toString() < b.toString() ? -1 : 1;
+    }
+    return a.layer - b.layer;
+  };
 
 }
 

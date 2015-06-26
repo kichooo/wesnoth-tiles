@@ -562,24 +562,6 @@ module WesnothTiles.Worker {
 
   }
 
-  export var transitionsOptimizer = new Map<ETerrain, Map<ETerrain, boolean>>();
-
-  export var addToTransitionsTable = (terrains: ETerrain[], adjacent: ETerrain[], stem: string) => {
-    terrains.forEach(terrain => {
-
-      if (!transitionsOptimizer.has(terrain)) {
-        transitionsOptimizer.set(terrain, new Map<ETerrain, boolean>());
-      }
-      adjacent.forEach((adjacent) => {
-        if (transitionsOptimizer.get(terrain).has(adjacent)) {
-          console.log("Duplicate transnition from ", ETerrain[terrain], ETerrain[adjacent], stem);
-        } else {
-          transitionsOptimizer.get(terrain).set(adjacent, true);
-        }
-      });
-    });
-  }
-
   // grades is used by BORDER_COMPLETE, to filter out not needed macros.
   export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, grades = [1, 2, 3, 4, 5, 6]) => {
     if (lfb.layer === undefined)
@@ -588,10 +570,6 @@ module WesnothTiles.Worker {
       lfb.flag = "transition";
     if (lfb.builder === undefined)
       lfb.builder = IB_IMAGE_SINGLE;
-    if (lfb.flag === "transition") {
-      addToTransitionsTable(terrains, adjacent, imageStem);
-      addToTransitionsTable(adjacent, terrains, imageStem);
-    }
     BORDER_COMPLETE_LFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, lfb, grades);
   }
 
@@ -645,7 +623,6 @@ module WesnothTiles.Worker {
   }
 
   export var ANIMATED_WATER_15_TRANSITION = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, layer: number) => {
-    addToTransitionsTable(terrains, adjacent, imageStem);
     var img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",

@@ -109,7 +109,7 @@ module WesnothTiles {
 
         console.log(this.drawables);
       });
-    }  
+    }
 
     private rebuildMap(): Promise<Internal.Drawable[]> {
       return <Promise<Internal.Drawable[]>><any>Internal.sendCommand("rebuild");
@@ -147,8 +147,8 @@ module WesnothTiles {
       this.canvas.height = height;
     }
 
-    setTiles(changes: ITileChange[] | ITileChange): Promise<void> {      
-      var tileChanges = <ITileChange[]>((changes.constructor === Array) 
+    setTiles(changes: ITileChange[]| ITileChange): Promise<void> {
+      var tileChanges = <ITileChange[]>((changes.constructor === Array)
         ? changes : [changes]);
       return <Promise<void>><any>Internal.sendCommand("setTiles", tileChanges);
     }
@@ -160,11 +160,11 @@ module WesnothTiles {
         var keys: string[] = [];
         Internal.definitions.forEach((val, key) => {
           keys.push(key);
-        }); 
+        });
         return <Promise<void>><any>Internal.sendCommand(
-          "init", 
+          "init",
           keys
-        );
+          );
       });
     }
 

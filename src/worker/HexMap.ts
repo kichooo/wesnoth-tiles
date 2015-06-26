@@ -125,24 +125,9 @@ module WesnothTiles.Worker {
           return;
         if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
           return;
-
         if (tile.fog !== undefined && !hex.fog)
           return;
-
-
         if (tg.transition !== undefined) {
-          // this is a transition macro - we need to check if we have at least one proper neighbour.
-          // var found = false;
-          // this.iterateNeighbours(hex.q, hex.r, hex => {
-          //   if (tg.transition.has(hex.terrain)) {              
-          //     found = true;
-          //   }
-          // });
-          // if (!found) {
-          //   return;
-          // }
-
-
           var found = 0;
           neighboursMap.forEach((value: number, key: ETerrain) => {
             if (tg.transition.has(key))

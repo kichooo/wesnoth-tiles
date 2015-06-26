@@ -6,7 +6,7 @@ module WesnothTiles.Internal {
 
   'use strict';
   var id = 0;
-  var deferreds = new Map <number, IDeferred>();
+  var deferreds = new Map<number, IDeferred>();
   var worker: Worker;
 
   export var loadWorker = () => {
@@ -18,11 +18,11 @@ module WesnothTiles.Internal {
         deferreds.get(response.id).resolve(response.data);
         deferreds.delete(response.id);
       }
-      
+
     }
   }
 
-  export var sendCommand = (commandName: string, params?: Object): Promise<Object> => {          
+  export var sendCommand = (commandName: string, params?: Object): Promise<Object> => {
     return new Promise<Object>((resolve, reject) => {
       deferreds.set(id, {
         resolve: resolve,
@@ -35,5 +35,5 @@ module WesnothTiles.Internal {
       });
       id++;
     });
-    }
+  }
 }
