@@ -2,7 +2,6 @@
 
 /// <reference path="definitions/lib.webworker.d.ts"/>
 /// <reference path="Hex.ts"/>
-/// <reference path="HexPos.ts"/>
 /// <reference path="HexMap.ts"/>
 /// <reference path="Macros.ts"/>
 /// <reference path="TgGroup.ts"/>

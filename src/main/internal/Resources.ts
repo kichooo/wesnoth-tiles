@@ -1,7 +1,7 @@
 module WesnothTiles.Internal {
   'use strict';
 
-  // This file is responsible for loading of the graphics.
+  // This file is responsible for the loading of the graphics.
   var atlases = new Map<string, HTMLElement>();
   export var definitions = new Map<string, SpriteDefinition>();
 

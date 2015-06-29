@@ -31,34 +31,21 @@ module WesnothTiles.Worker {
     return rotationsMap.get(rot).get(pos.q).get(pos.r);
   }
 
-  // var rotatePos = (q: number, r: number, rot: number) => {
-  //   // Only WmlTiles with rotation 0 can have q or r higher than 1 (or lower than -1),
-  //   // This is why our rotationsMap supports only these values.
-  //   if (rot === 0)
-  //     return new HexPos(q, r);
-  //   var v = rotationsMap.get(rot).get(q).get(r);
-  //   var result = [0, 0, 0];
-  //   result[(6 - rot) % 3] = rot % 2 === 0 ? q : -q;
-  //   result[(7 - rot) % 3] = rot % 2 === 0 ? r : -r;
-  //   result[(8 - rot) % 3] = rot % 2 === 0 ? -q - r : q + r;
-  //   return v;
-  // }
-
-  var rotationsMap = new Map<number, Map<number, Map<number, HexPos>>>();
+  var rotationsMap = new Map<number, Map<number, Map<number, IHexPos>>>();
 
   export var prepareRotations = () => {
     for (var rot = 0; rot < 6; rot++) {
-      var rotMap = new Map<number, Map<number, HexPos>>();
+      var rotMap = new Map<number, Map<number, IHexPos>>();
       rotationsMap.set(rot, rotMap);
       for (var q = -1; q <= 1; q++) {
-        var iMap = new Map<number, HexPos>();
+        var iMap = new Map<number, IHexPos>();
         rotMap.set(q, iMap);
         for (var r = -1; r <= 1; r++) {
           var result = [0, 0, 0];
           result[(6 - rot) % 3] = rot % 2 === 0 ? q : -q;
           result[(7 - rot) % 3] = rot % 2 === 0 ? r : -r;
           result[(8 - rot) % 3] = rot % 2 === 0 ? -q - r : q + r;
-          iMap.set(r, new HexPos(result[0], result[1]));
+          iMap.set(r, { q: result[0], r: result[1] });
         }
       }
     }
