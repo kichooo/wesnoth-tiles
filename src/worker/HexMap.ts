@@ -24,17 +24,29 @@ module WesnothTiles.Worker {
         map.delete(r);
     }
 
+    removeTerrain(q: number, r: number): void {
+      var row = this.hexes.get(q);
+      if (row === undefined) {
+        return;
+      }
+      var hex = row.get(r);
+      if (hex !== undefined) {
+        this.removeHexFromTgs(hex);
+        row.delete(r);
+      }
+    }
+
     setTerrain(q: number, r: number, terrain: ETerrain, overlay = EOverlay.NONE, fog = false): void {
-      var map = this.hexes.get(q);
-      if (map === undefined) {
-        map = new Map<number, Hex>();
-        this.hexes.set(q, map);
+      var row = this.hexes.get(q);
+      if (row === undefined) {
+        row = new Map<number, Hex>();
+        this.hexes.set(q, row);
       }
 
-      var hex = map.get(r);
+      var hex = row.get(r);
       if (hex === undefined) {
         hex = new Hex(q, r, terrain);
-        map.set(r, hex);
+        row.set(r, hex);
       }
 
       hex.terrain = terrain;
@@ -140,9 +152,6 @@ module WesnothTiles.Worker {
         }
         tg.hexes.set(hex.str, hex);
       });
-
-
-
 
     }
 

@@ -130,4 +130,9 @@ module WesnothTiles {
     fog?: boolean;
   }
 
+  export interface ISetTerrainBundle {
+    tileChanges: ITileChange[];
+    loadingMode: boolean;
+  }
+
 }

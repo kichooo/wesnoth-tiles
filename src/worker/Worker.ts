@@ -28,9 +28,15 @@ module WesnothTiles.Worker {
       return jeb;
     }
 
-    setTiles = (tileChanges: ITileChange[]): void => {
-      tileChanges.forEach(change => {
+    setTiles = (bundle: ISetTerrainBundle): void => {
+      if (bundle.loadingMode)
+        hexMap.setLoadingMode();
+      bundle.tileChanges.forEach(change => {
+        if (change.terrain === undefined || change.terrain === null) {
+          hexMap.removeTerrain(change.q, change.r);
+        }
         hexMap.setTerrain(change.q, change.r, change.terrain, change.overlay, change.fog);
+        hexMap.unsetLoadingMode();
       });
     }
 
@@ -40,7 +46,6 @@ module WesnothTiles.Worker {
     }
 
     rebuild = (): Internal.Drawable[]=> {
-      console.log("Rebuilding in worker");
       hexMap.unsetLoadingMode();
       var drawables = rebuild(hexMap);
       drawables.sort(sortFunc);

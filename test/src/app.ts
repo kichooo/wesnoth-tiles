@@ -7,9 +7,10 @@ var tilesMap: WesnothTiles.TilesMap;
 var redraw = false;
 
 function createTestMap(): Promise<void> {
-  return tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
+  return tilesMap.clear().then(() => {
+    var mapBuilder = tilesMap.loadingMode();
     var rng = new Rng(1337);
-    var tiles: WesnothTiles.ITileChange[] = [];
+
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
         var terrain = rng.nextRange(0, ETerrain.VOID + 1);
@@ -24,23 +25,44 @@ function createTestMap(): Promise<void> {
           || terrain === ETerrain.FROZEN_SNOW)
           && rng.nextRange(0, 3) === 0)
           overlay = rng.nextRange(EOverlay.MUSHROOMS, EOverlay.NONE + 1);
-        tiles.push({
-          q: i,
-          r: j,
-          terrain: terrain,
-          overlay: overlay
-        });
+        mapBuilder = mapBuilder.setTile(i, j, terrain, overlay);
       }
-    return tilesMap.setTiles(tiles);
+    return mapBuilder.promise();  
   });
+
+  // return tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
+  //   var rng = new Rng(1337);
+  //   var tiles: WesnothTiles.ITileChange[] = [];
+  //   for (var i = -18; i < 18; i++)
+  //     for (var j = -18; j < 18; j++) {
+  //       var terrain = rng.nextRange(0, ETerrain.VOID + 1);
+  //       var overlay = EOverlay.NONE;
+
+  //       if (terrain === ETerrain.GRASS_LEAF_LITTER)
+  //         overlay = rng.nextRange(EOverlay.WOODS_PINE, EOverlay.MUSHROOMS);
+  //       if ((terrain === ETerrain.GRASS_GREEN
+  //         || terrain === ETerrain.GRASS_DRY
+  //         || terrain === ETerrain.SAND_DESERT
+  //         || terrain === ETerrain.GRASS_SEMI_DRY
+  //         || terrain === ETerrain.FROZEN_SNOW)
+  //         && rng.nextRange(0, 3) === 0)
+  //         overlay = rng.nextRange(EOverlay.MUSHROOMS, EOverlay.NONE + 1);
+  //       tiles.push({
+  //         q: i,
+  //         r: j,
+  //         terrain: terrain,
+  //         overlay: overlay
+  //       });
+  //     }
+  //   return tilesMap.setTiles(tiles);
+  // });
 }
 
 function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
-  tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
-    var timeRebuildingStart = new Date();
-    
-    createTestMap().then(() => timedRebuild()).then(duration => {
+  var timeRebuildingStart = new Date();
+  createTestMap().then(() => {    
+    return timedRebuild().then(duration => {
       document.getElementById("checksum").textContent = "";
       tilesMap.getCheckSum()
         .then(checksum => document.getElementById("checksum").textContent = checksum);
@@ -160,148 +182,147 @@ function loadChunksRandom(): void {
   });
 }
 
-function loadRing(radius, terrain): void {
+function loadRing(mapBuilder: WesnothTiles.MapBuilder, radius, terrain): WesnothTiles.MapBuilder {
   for (var i = 0; i < radius; i++) {
-    tilesMap.setTerrain(2 + i, -radius - 1, terrain);
-    tilesMap.setTerrain(2 + radius, i - radius - 1, terrain);
-    tilesMap.setTerrain(2 + radius - i, i - 1, terrain);
-    tilesMap.setTerrain(-2 - i, radius + 1, terrain);
-    tilesMap.setTerrain(-2 - radius, radius - i + 1, terrain);
-    tilesMap.setTerrain(-2 + i - radius, -i + 1, terrain);
+    mapBuilder = mapBuilder.setTile(2 + i, -radius - 1, terrain)
+      .setTile(2 + radius, i - radius - 1, terrain)
+      .setTile(2 + radius - i, i - 1, terrain)
+      .setTile(-2 - i, radius + 1, terrain)
+      .setTile(-2 - radius, radius - i + 1, terrain)
+      .setTile(-2 + i - radius, -i + 1, terrain);
   }
 
   // tilesMap.setTerrain(1, -radius - 1, terrain));
-  tilesMap.setTerrain(1, -radius, terrain);
-  tilesMap.setTerrain(0, -radius, terrain);
-  tilesMap.setTerrain(-1, -radius + 1, terrain);
-  tilesMap.setTerrain(-2, -radius + 1, terrain);
-
-  tilesMap.setTerrain(-1, radius, terrain);
-  tilesMap.setTerrain(0, radius, terrain);
-  tilesMap.setTerrain(1, radius - 1, terrain);
-  tilesMap.setTerrain(2, radius - 1, terrain);
+  return mapBuilder.setTile(1, -radius, terrain)
+    .setTile(0, -radius, terrain)
+    .setTile(-1, -radius + 1, terrain)
+    .setTile(-2, -radius + 1, terrain)
+    .setTile(-1, radius, terrain)
+    .setTile(0, radius, terrain)
+    .setTile(1, radius - 1, terrain)
+    .setTile(2, radius - 1, terrain);
 }
 
 function loadDisk(): void {
   redraw = false;
   document.getElementById("checksumBlock").style.display = 'none';
   var timeRebuildingStart = new Date();
-  tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
-    loadRing(5, ETerrain.ABYSS);
-    loadRing(6, ETerrain.ABYSS);
-    loadRing(7, ETerrain.VOID);
+  tilesMap.clear().then(() => {
+    var mapBuilder = tilesMap.loadingMode();
+    mapBuilder = loadRing(mapBuilder, 5, ETerrain.ABYSS);
+    mapBuilder = loadRing(mapBuilder, 6, ETerrain.ABYSS);
+    mapBuilder = loadRing(mapBuilder, 7, ETerrain.VOID);
 
     for (var i = 0; i < 5; i++) {
-      tilesMap.setTerrain(-6, i + 1, ETerrain.WATER_OCEAN);
-      tilesMap.setTerrain(-5, i, ETerrain.WATER_OCEAN);
-
-      tilesMap.setTerrain(-4, i - 1, ETerrain.SAND_BEACH);
-      // tilesMap.setTerrain(2 + i, -radius - 2, ETerrain.MOUNTAIN_SNOW);
+      mapBuilder = mapBuilder.setTile(-6, i + 1, ETerrain.WATER_OCEAN)
+        .setTile(-5, i, ETerrain.WATER_OCEAN)
+        .setTile(-4, i - 1, ETerrain.SAND_BEACH);
     }
 
 
-    tilesMap.setTerrain(5, -5, ETerrain.GRASS_DRY);
-    tilesMap.setTerrain(4, -5, ETerrain.GRASS_DRY, EOverlay.TRASH);
-    tilesMap.setTerrain(3, -5, ETerrain.GRASS_DRY, EOverlay.VILLAGE_ORC);
-    tilesMap.setTerrain(2, -5, ETerrain.GRASS_DRY);
-    tilesMap.setTerrain(4, -4, ETerrain.HILLS_DRY);
+    mapBuilder = mapBuilder.setTile(5, -5, ETerrain.GRASS_DRY)
+      .setTile(4, -5, ETerrain.GRASS_DRY, EOverlay.TRASH)
+      .setTile(3, -5, ETerrain.GRASS_DRY, EOverlay.VILLAGE_ORC)
+      .setTile(2, -5, ETerrain.GRASS_DRY)
+      .setTile(4, -4, ETerrain.HILLS_DRY)
 
-    tilesMap.setTerrain(3, -4, ETerrain.SWAMP_MUD);
-    tilesMap.setTerrain(2, -4, ETerrain.SWAMP_MUD);
-    tilesMap.setTerrain(1, -4, ETerrain.SWAMP_MUD);
+      .setTile(3, -4, ETerrain.SWAMP_MUD)
+      .setTile(2, -4, ETerrain.SWAMP_MUD)
+      .setTile(1, -4, ETerrain.SWAMP_MUD)
 
-    tilesMap.setTerrain(1, -3, ETerrain.MOUNTAIN_DRY);
-    tilesMap.setTerrain(2, -3, ETerrain.SWAMP_MUD);
+      .setTile(1, -3, ETerrain.MOUNTAIN_DRY)
+      .setTile(2, -3, ETerrain.SWAMP_MUD)
 
-    tilesMap.setTerrain(0, -2, ETerrain.MOUNTAIN_DRY);
-
-
-    tilesMap.setTerrain(3, -3, ETerrain.HILLS_DRY);
-
-    tilesMap.setTerrain(6, -5, ETerrain.GRASS_DRY);
-    tilesMap.setTerrain(6, -4, ETerrain.FROZEN_SNOW);
-    tilesMap.setTerrain(6, -3, ETerrain.HILLS_SNOW, EOverlay.SNOW_FOREST);
-    tilesMap.setTerrain(6, -2, ETerrain.FROZEN_SNOW, EOverlay.SNOW_FOREST);
-    tilesMap.setTerrain(6, -1, ETerrain.FROZEN_SNOW, EOverlay.SNOW_FOREST);
-
-    tilesMap.setTerrain(4, -1, ETerrain.MOUNTAIN_SNOW);
-    tilesMap.setTerrain(3, -1, ETerrain.MOUNTAIN_SNOW);
-    tilesMap.setTerrain(4, -2, ETerrain.MOUNTAIN_SNOW);
-    tilesMap.setTerrain(5, -2, ETerrain.MOUNTAIN_SNOW);
-    tilesMap.setTerrain(2, 0, ETerrain.MOUNTAIN_SNOW);
-    tilesMap.setTerrain(3, 0, ETerrain.MOUNTAIN_SNOW);
-    tilesMap.setTerrain(5, -3, ETerrain.HILLS_SNOW);
-    tilesMap.setTerrain(4, -3, ETerrain.HILLS_DRY);
-    tilesMap.setTerrain(5, -4, ETerrain.GRASS_DRY);
-
-    tilesMap.setTerrain(5, -1, ETerrain.FROZEN_SNOW, EOverlay.SNOW_FOREST);
-    tilesMap.setTerrain(5, 0, ETerrain.FROZEN_SNOW);
-
-    tilesMap.setTerrain(4, 0, ETerrain.FROZEN_SNOW, EOverlay.VILLAGE_HUMAN);
-    tilesMap.setTerrain(4, 1, ETerrain.FROZEN_SNOW);
-
-    tilesMap.setTerrain(3, 1, ETerrain.FROZEN_ICE);
-    tilesMap.setTerrain(3, 2, ETerrain.FROZEN_ICE);
-
-    tilesMap.setTerrain(2, 1, ETerrain.FROZEN_ICE);
-    tilesMap.setTerrain(2, 2, ETerrain.FROZEN_ICE);
-    tilesMap.setTerrain(2, 3, ETerrain.FROZEN_ICE);
-
-    tilesMap.setTerrain(1, 2, ETerrain.FROZEN_ICE);
-    tilesMap.setTerrain(1, 3, ETerrain.FROZEN_ICE);
-
-    tilesMap.setTerrain(0, 3, ETerrain.WATER_OCEAN);
-    tilesMap.setTerrain(0, 4, ETerrain.WATER_OCEAN);
-
-    tilesMap.setTerrain(-3, 2, ETerrain.GRASS_GREEN);
-    tilesMap.setTerrain(-3, 3, ETerrain.GRASS_GREEN);
-    tilesMap.setTerrain(-3, 1, ETerrain.GRASS_SEMI_DRY);
-    tilesMap.setTerrain(-3, 0, ETerrain.GRASS_DRY, EOverlay.DETRITUS);
-    tilesMap.setTerrain(-3, -1, ETerrain.SAND_DESERT, EOverlay.OASIS);
-    tilesMap.setTerrain(-3, -2, ETerrain.HILLS_DESERT, EOverlay.PALM_DESERT);
-
-    tilesMap.setTerrain(-2, 2, ETerrain.GRASS_GREEN, EOverlay.WOODS_PINE);
-    tilesMap.setTerrain(-2, 3, ETerrain.GRASS_GREEN);
-    tilesMap.setTerrain(-2, 1, ETerrain.GRASS_SEMI_DRY, EOverlay.WOODS_PINE);
-    tilesMap.setTerrain(-2, 0, ETerrain.GRASS_DRY, EOverlay.LITER);
-    tilesMap.setTerrain(-2, -1, ETerrain.SAND_DESERT, EOverlay.DESERT_PLANTS);
-    tilesMap.setTerrain(-2, -2, ETerrain.SAND_DESERT, EOverlay.PALM_DESERT);
-    tilesMap.setTerrain(-2, -3, ETerrain.HILLS_DESERT, EOverlay.VILLAGE_DESERT);
-
-    tilesMap.setTerrain(-1, -3, ETerrain.HILLS_DESERT);
-    tilesMap.setTerrain(-1, -2, ETerrain.MOUNTAIN_DRY);
-
-    tilesMap.setTerrain(-1, 3, ETerrain.WATER_OCEAN);
-    tilesMap.setTerrain(-1, 1, ETerrain.GRASS_SEMI_DRY, EOverlay.WOODS_PINE);
-    tilesMap.setTerrain(-1, 2, ETerrain.GRASS_SEMI_DRY, EOverlay.VILLAGE_ELVEN);
-
-    tilesMap.setTerrain(0, 1, ETerrain.MOUNTAIN_BASIC);
-    tilesMap.setTerrain(0, 2, ETerrain.HILLS_REGULAR);
-
-    tilesMap.setTerrain(1, 1, ETerrain.FROZEN_SNOW);
-
-    tilesMap.setTerrain(2, -1, ETerrain.MOUNTAIN_BASIC);
-    tilesMap.setTerrain(3, -2, ETerrain.MOUNTAIN_BASIC);
-    tilesMap.setTerrain(1, 0, ETerrain.MOUNTAIN_BASIC);
-
-    tilesMap.setTerrain(1, -1, ETerrain.SWAMP_WATER);
-    tilesMap.setTerrain(2, -2, ETerrain.SWAMP_WATER, EOverlay.VILLAGE_SWAMP);
-    tilesMap.setTerrain(1, -2, ETerrain.SWAMP_WATER);
-    tilesMap.setTerrain(0, 0, ETerrain.SWAMP_WATER);
+      .setTile(0, -2, ETerrain.MOUNTAIN_DRY)
 
 
-    tilesMap.setTerrain(-1, 0, ETerrain.WATER_COAST_TROPICAL, EOverlay.VILLAGE_COAST);
-    tilesMap.setTerrain(-1, -1, ETerrain.WATER_COAST_TROPICAL);
-    tilesMap.setTerrain(0, -1, ETerrain.WATER_COAST_TROPICAL);
+      .setTile(3, -3, ETerrain.HILLS_DRY)
 
-    tilesMap.setTerrain(0, -3, ETerrain.MOUNTAIN_VOLCANO);
-    tilesMap.setTerrain(0, -4, ETerrain.SAND_DESERT);
+      .setTile(6, -5, ETerrain.GRASS_DRY)
+      .setTile(6, -4, ETerrain.FROZEN_SNOW)
+      .setTile(6, -3, ETerrain.HILLS_SNOW, EOverlay.SNOW_FOREST)
+      .setTile(6, -2, ETerrain.FROZEN_SNOW, EOverlay.SNOW_FOREST)
+      .setTile(6, -1, ETerrain.FROZEN_SNOW, EOverlay.SNOW_FOREST)
+
+      .setTile(4, -1, ETerrain.MOUNTAIN_SNOW)
+      .setTile(3, -1, ETerrain.MOUNTAIN_SNOW)
+      .setTile(4, -2, ETerrain.MOUNTAIN_SNOW)
+      .setTile(5, -2, ETerrain.MOUNTAIN_SNOW)
+      .setTile(2, 0, ETerrain.MOUNTAIN_SNOW)
+      .setTile(3, 0, ETerrain.MOUNTAIN_SNOW)
+      .setTile(5, -3, ETerrain.HILLS_SNOW)
+      .setTile(4, -3, ETerrain.HILLS_DRY)
+      .setTile(5, -4, ETerrain.GRASS_DRY)
+
+      .setTile(5, -1, ETerrain.FROZEN_SNOW, EOverlay.SNOW_FOREST)
+      .setTile(5, 0, ETerrain.FROZEN_SNOW)
+
+      .setTile(4, 0, ETerrain.FROZEN_SNOW, EOverlay.VILLAGE_HUMAN)
+      .setTile(4, 1, ETerrain.FROZEN_SNOW)
+
+      .setTile(3, 1, ETerrain.FROZEN_ICE)
+      .setTile(3, 2, ETerrain.FROZEN_ICE)
+
+      .setTile(2, 1, ETerrain.FROZEN_ICE)
+      .setTile(2, 2, ETerrain.FROZEN_ICE)
+      .setTile(2, 3, ETerrain.FROZEN_ICE)
+
+      .setTile(1, 2, ETerrain.FROZEN_ICE)
+      .setTile(1, 3, ETerrain.FROZEN_ICE)
+
+      .setTile(0, 3, ETerrain.WATER_OCEAN)
+      .setTile(0, 4, ETerrain.WATER_OCEAN)
+
+      .setTile(-3, 2, ETerrain.GRASS_GREEN)
+      .setTile(-3, 3, ETerrain.GRASS_GREEN)
+      .setTile(-3, 1, ETerrain.GRASS_SEMI_DRY)
+      .setTile(-3, 0, ETerrain.GRASS_DRY, EOverlay.DETRITUS)
+      .setTile(-3, -1, ETerrain.SAND_DESERT, EOverlay.OASIS)
+      .setTile(-3, -2, ETerrain.HILLS_DESERT, EOverlay.PALM_DESERT)
+
+      .setTile(-2, 2, ETerrain.GRASS_GREEN, EOverlay.WOODS_PINE)
+      .setTile(-2, 3, ETerrain.GRASS_GREEN)
+      .setTile(-2, 1, ETerrain.GRASS_SEMI_DRY, EOverlay.WOODS_PINE)
+      .setTile(-2, 0, ETerrain.GRASS_DRY, EOverlay.LITER)
+      .setTile(-2, -1, ETerrain.SAND_DESERT, EOverlay.DESERT_PLANTS)
+      .setTile(-2, -2, ETerrain.SAND_DESERT, EOverlay.PALM_DESERT)
+      .setTile(-2, -3, ETerrain.HILLS_DESERT, EOverlay.VILLAGE_DESERT)
+
+      .setTile(-1, -3, ETerrain.HILLS_DESERT)
+      .setTile(-1, -2, ETerrain.MOUNTAIN_DRY)
+
+      .setTile(-1, 3, ETerrain.WATER_OCEAN)
+      .setTile(-1, 1, ETerrain.GRASS_SEMI_DRY, EOverlay.WOODS_PINE)
+      .setTile(-1, 2, ETerrain.GRASS_SEMI_DRY, EOverlay.VILLAGE_ELVEN)
+
+      .setTile(0, 1, ETerrain.MOUNTAIN_BASIC)
+      .setTile(0, 2, ETerrain.HILLS_REGULAR)
+
+      .setTile(1, 1, ETerrain.FROZEN_SNOW)
+
+      .setTile(2, -1, ETerrain.MOUNTAIN_BASIC)
+      .setTile(3, -2, ETerrain.MOUNTAIN_BASIC)
+      .setTile(1, 0, ETerrain.MOUNTAIN_BASIC)
+
+      .setTile(1, -1, ETerrain.SWAMP_WATER)
+      .setTile(2, -2, ETerrain.SWAMP_WATER, EOverlay.VILLAGE_SWAMP)
+      .setTile(1, -2, ETerrain.SWAMP_WATER)
+      .setTile(0, 0, ETerrain.SWAMP_WATER)
+
+
+      .setTile(-1, 0, ETerrain.WATER_COAST_TROPICAL, EOverlay.VILLAGE_COAST)
+      .setTile(-1, -1, ETerrain.WATER_COAST_TROPICAL)
+      .setTile(0, -1, ETerrain.WATER_COAST_TROPICAL)
+
+      .setTile(0, -3, ETerrain.MOUNTAIN_VOLCANO)
+      .setTile(0, -4, ETerrain.SAND_DESERT);
 
     for (var i = 0; i < 4; i++) {
-      tilesMap.setTerrain(-2 - i, 4 + 1, ETerrain.WATER_OCEAN);
-      tilesMap.setTerrain(-1 - i, 4, ETerrain.WATER_OCEAN);
+      mapBuilder = mapBuilder.setTile(-2 - i, 4 + 1, ETerrain.WATER_OCEAN)
+        .setTile(-1 - i, 4, ETerrain.WATER_OCEAN);
     }
-    var duration = timedRebuild().then(duration => {
+    return mapBuilder.promise();
+  }).then(() => timedRebuild()).then(duration => {
       redraw = true;
       console.log("whole took",(new Date().getTime() - timeRebuildingStart.getTime()) + "ms");
       document.getElementById("checksum").textContent = "";
@@ -310,8 +331,7 @@ function loadDisk(): void {
       document.getElementById("expected").textContent = "expected: 18469171";
       document.getElementById("duration").textContent = duration.toString();
       document.getElementById("checksumBlock").style.display = 'block'
-    });  
-  });
+    });  ;
   
   
 }

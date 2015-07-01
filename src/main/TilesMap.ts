@@ -1,6 +1,30 @@
 module WesnothTiles {
   'use strict';
 
+  export class MapBuilder {
+    private tileChanges: ITileChange[] = [];
+
+    constructor(private loadingMode = false) {      
+    }
+
+    setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
+      this.tileChanges.push({q: q, r: r, terrain: terrain, overlay: overlay, fog: fog})
+      return this;
+    }
+
+    unsetTile(q: number, r: number): MapBuilder {
+      // We messages sent to the worker just have terrain as undefined.
+      return this.setTile(q, r);
+    }
+
+    promise() {
+      return <Promise<void>><any>Internal.sendCommand("setTiles", {
+        loadingMode: this.loadingMode,
+        tileChanges: this.tileChanges
+      });      
+    }
+  }
+
   export class TilesMap {
     private ctx: CanvasRenderingContext2D;
     // private drawMap = new Map<string,  HexToDraw>();
@@ -25,6 +49,10 @@ module WesnothTiles {
 
     unsetLoadingMode(): void {
       // this.hexMap.unsetLoadingMode();
+    }
+
+    loadingMode(): MapBuilder {
+      return new MapBuilder(true);
     }
 
     // Sets given hex to specified terrain. If not specified, overlay does not change.
@@ -147,7 +175,17 @@ module WesnothTiles {
       this.canvas.height = height;
     }
 
+    setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
+      return new MapBuilder().setTile(q, r, terrain, overlay, fog);
+    }
+
+    unsetTile(q: number, r: number): MapBuilder {
+      // We messages sent to the worker just have terrain as undefined.
+      return new MapBuilder().unsetTile(q, r);
+    }
+
     setTiles(changes: ITileChange[]| ITileChange): Promise<void> {
+
       var tileChanges = <ITileChange[]>((changes.constructor === Array)
         ? changes : [changes]);
       return <Promise<void>><any>Internal.sendCommand("setTiles", tileChanges);
