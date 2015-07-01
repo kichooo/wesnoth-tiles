@@ -4,7 +4,7 @@ module WesnothTiles {
   export class MapBuilder {
     private tileChanges: Internal.ITileChange[] = [];
 
-    constructor(private loadingMode = false) {
+    constructor(private map: string, private loadingMode) {
     }
 
     setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
@@ -20,7 +20,8 @@ module WesnothTiles {
     promise() {
       return <Promise<void>><any>Internal.sendCommand("setTiles", {
         loadingMode: this.loadingMode,
-        tileChanges: this.tileChanges
+        tileChanges: this.tileChanges,
+        map: this.map
       });
     }
   }
@@ -40,16 +41,9 @@ module WesnothTiles {
       this.ctx = <any>this.canvas.getContext('2d');
     }
 
-    // Goes into loading mode - setting terrains is faster. This is the prefereable
-    // method of modifying terrains if more then few terrains at once are changed.
-    // This mode is being unset by first call to Rebuild or UnsetLoadingMode.
-    loadingMode(): MapBuilder {
-      return new MapBuilder(true);
-    }
-
     // Clears the map.
-    clear(): Promise<void> {
-      return <Promise<void>><any>Internal.sendCommand("clear");
+    clear(map = "default"): Promise<void> {
+      return <Promise<void>><any>Internal.sendCommand("clear", map);
       // this.hexMap.clear();
     }
 
@@ -68,8 +62,8 @@ module WesnothTiles {
       return a.layer - b.layer;
     };
 
-    rebuild(): Promise<void> {
-      return this.rebuildMap().then(drawables => {
+    rebuild(map = "default"): Promise<void> {
+      return this.rebuildMap(map).then(drawables => {
         this.drawables = [];
         drawables.forEach(drawable => {
           this.drawables.push(new Internal.AnimatedDrawable(
@@ -79,8 +73,8 @@ module WesnothTiles {
       });
     }
 
-    private rebuildMap(): Promise<Internal.Drawable[]> {
-      return <Promise<Internal.Drawable[]>><any>Internal.sendCommand("rebuild");
+    private rebuildMap(map: string): Promise<Internal.Drawable[]> {
+      return <Promise<Internal.Drawable[]>><any>Internal.sendCommand("rebuild", map);
       // var p = new Promise<void>((resolve, reject) => {
       //   window.setTimeout(() => {
       //     // this.hexMap.unsetLoadingMode();
@@ -93,8 +87,8 @@ module WesnothTiles {
     }
 
     // Rebuilds, then calculates the checksum. Build results are discarded.
-    getCheckSum(): Promise<string> {
-      return <Promise<string>><any>Internal.sendCommand("getChecksum");
+    getCheckSum(map = "default"): Promise<string> {
+      return <Promise<string>><any>Internal.sendCommand("getChecksum", map);
     }
 
     redraw(): void {
@@ -115,16 +109,24 @@ module WesnothTiles {
       this.canvas.height = height;
     }
 
-    setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
-      return new MapBuilder().setTile(q, r, terrain, overlay, fog);
-    }
+    // setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
+    //   return new MapBuilder().setTile(q, r, terrain, overlay, fog);
+    // }
 
 
-    // Unsets given hex. Overlay is cleared too.
-    // It is not an equivalent of setting terrain to Void.
-    // A 'rebuild' call is needed to actually display the change.
-    unsetTile(q: number, r: number): MapBuilder {
-      return new MapBuilder().unsetTile(q, r);
+    // // Unsets given hex. Overlay is cleared too.
+    // // It is not an equivalent of setting terrain to Void.
+    // // A 'rebuild' call is needed to actually display the change.
+    // unsetTile(q: number, r: number): MapBuilder {
+    //   return new MapBuilder().unsetTile(q, r);
+    // }
+
+
+    // Goes into loading mode - setting terrains is faster. This is the prefereable
+    // method of modifying terrains if more then few terrains at once are changed.
+    // This mode is being unset by first call to Rebuild or UnsetLoadingMode.
+    getBuilder(map = "default", loadingMode = false): MapBuilder {
+      return new MapBuilder(map, loadingMode);
     }
 
     load(): Promise<void> {

@@ -64,10 +64,10 @@ WML files with terrain definitions will be converted using short GO program.
 - [x] ethereal abyss (chasm)
 
 # current iteration (v0.7)
- - [ ] Stabilize api
- - [ ] Code clenaup.
+ - [x] Stabilize api
+ - [x] Code clenaup.
  - [ ] Multiple maps
- - [ ] Removing tiles.
+ - [x] Removing tiles.
 
 # backlog list
  - introduce some automatic testing

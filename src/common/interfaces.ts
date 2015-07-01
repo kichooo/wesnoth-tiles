@@ -14,6 +14,7 @@ module WesnothTiles.Internal {
   export interface ISetTerrainBundle {
     tileChanges: ITileChange[];
     loadingMode: boolean;
+    map: string;
   }
 
   export interface IWorkerOrder {

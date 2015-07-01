@@ -8,7 +8,7 @@ var redraw = true;
 
 function createTestMap(): Promise<void> {
   return tilesMap.clear().then(() => {
-    var mapBuilder = tilesMap.loadingMode();
+    var mapBuilder = tilesMap.getBuilder("test", true);
     var rng = new Rng(1337);
 
     for (var i = -18; i < 18; i++)
@@ -61,9 +61,9 @@ function createTestMap(): Promise<void> {
 function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
-  createTestMap().then(() => tilesMap.rebuild()).then(() => {
+  createTestMap().then(() => tilesMap.rebuild("test")).then(() => {
       document.getElementById("checksum").textContent = "";
-      tilesMap.getCheckSum()
+      tilesMap.getCheckSum("test")
         .then(checksum => document.getElementById("checksum").textContent = checksum);
       document.getElementById("expected").textContent = "expected: 1386360853";
       document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
@@ -76,12 +76,12 @@ function loadSingleCircle(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
   tilesMap.clear().then(() => {
-    var builder = tilesMap.loadingMode();
+    var builder = tilesMap.getBuilder("test", true);
     builder = loadCircle(builder, ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);
     return builder.promise();
-  }).then(() => tilesMap.rebuild()).then(() => {
+  }).then(() => tilesMap.rebuild("test")).then(() => {
     document.getElementById("checksum").textContent = "";
-    tilesMap.getCheckSum()
+    tilesMap.getCheckSum("test")
       .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
@@ -95,15 +95,15 @@ function benchmark(): void {
   redraw = false;
   var timer = new Date();
   createTestMap().then(() => {
-    var promise: Promise<void> = tilesMap.rebuild();
+    var promise: Promise<void> = tilesMap.rebuild("test");
     for (var i = 0; i < 39; i++) {
-      promise = promise.then(() => { return tilesMap.rebuild(); });
+      promise = promise.then(() => { return tilesMap.rebuild("test"); });
     }    
     return promise;  
   }).then(() => {
     var duration = (new Date().getTime() - timer.getTime()) / 40;
     document.getElementById("checksum").textContent = "";
-    tilesMap.getCheckSum()
+    tilesMap.getCheckSum("test")
       .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: 3643646740";
     document.getElementById("duration").textContent = duration.toString();
@@ -116,32 +116,31 @@ function benchmark(): void {
 
 function loadRandomMap(): void {
   document.getElementById("checksumBlock").style.display = 'none'
-  redraw = false;
-  tilesMap.clear();
   var start = new Date();
-  var builder = tilesMap.loadingMode();
-  for (var i = -18; i < 18; i++)
-    for (var j = -18; j < 18; j++) {
-      builder = builder.setTile(i, j, Math.floor(Math.random() * 22));
-    }
-
-  builder.promise().then(() => tilesMap.rebuild()).then(() => {
+  tilesMap.clear("test").then(() => {
+    var builder = tilesMap.getBuilder("test", true);
+    for (var i = -18; i < 18; i++)
+      for (var j = -18; j < 18; j++) {
+        builder = builder.setTile(i, j, Math.floor(Math.random() * 22));
+      }
+    return builder.promise();
+  })
+    .then(() => tilesMap.rebuild("test")).then(() => {
     document.getElementById("checksum").textContent = "";
-    tilesMap.getCheckSum()
+    tilesMap.getCheckSum("test")
      .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
 
     document.getElementById("checksumBlock").style.display = 'block';
   });
-  redraw = true;
 }
 
 function loadRandomMapWithWoods(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
-  tilesMap.clear().then(() => {
-    var builder = tilesMap.loadingMode();
+  tilesMap.clear("test").then(() => {
+    var builder = tilesMap.getBuilder("default", true);
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
         builder = builder.setTile(i, j, ETerrain.GRASS_SEMI_DRY, ETerrain.VOID + 1 + Math.floor(Math.random() * 14));
@@ -208,7 +207,7 @@ function loadDisk(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
   tilesMap.clear().then(() => {
-    var mapBuilder = tilesMap.loadingMode();
+    var mapBuilder = tilesMap.getBuilder("test", true);
     mapBuilder = loadRing(mapBuilder, 5, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 6, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 7, ETerrain.VOID);
@@ -322,9 +321,9 @@ function loadDisk(): void {
         .setTile(-1 - i, 4, ETerrain.WATER_OCEAN);
     }
     return mapBuilder.promise();
-  }).then(() => tilesMap.rebuild()).then(() => {
+  }).then(() => tilesMap.rebuild("test")).then(() => {
       document.getElementById("checksum").textContent = "";
-      tilesMap.getCheckSum()
+      tilesMap.getCheckSum("test")
         .then(checksum => document.getElementById("checksum").textContent = checksum);
       document.getElementById("expected").textContent = "expected: 18469171";
       document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
