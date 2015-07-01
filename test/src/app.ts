@@ -61,8 +61,7 @@ function createTestMap(): Promise<void> {
 function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var timeRebuildingStart = new Date();
-  createTestMap().then(() => {    
-    return timedRebuild().then(duration => {
+  createTestMap().then(() => timedRebuild()).then(duration => {
       document.getElementById("checksum").textContent = "";
       tilesMap.getCheckSum()
         .then(checksum => document.getElementById("checksum").textContent = checksum);
@@ -72,14 +71,15 @@ function loadTestMap(): void {
       document.getElementById("checksumBlock").style.display = 'block';
       console.log("whole took",(new Date().getTime() - timeRebuildingStart.getTime()) + "ms");  
     });
-  });
 }
 
 function loadSingleCircle(): void {
   document.getElementById("checksumBlock").style.display = 'none';
 
   tilesMap.clear().then(() => {
-    loadCircle(ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);  
+    var builder = tilesMap.loadingMode();
+    builder = loadCircle(builder, ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);
+    return builder.promise;
   }).then(() => tilesMap.rebuild()).then(() => {
     document.getElementById("checksum").textContent = "";
     tilesMap.getCheckSum()
@@ -118,13 +118,13 @@ function loadRandomMap(): void {
   document.getElementById("checksumBlock").style.display = 'none'
   redraw = false;
   tilesMap.clear();
-  tilesMap.setLoadingMode();
+  var builder = tilesMap.loadingMode();
   for (var i = -18; i < 18; i++)
     for (var j = -18; j < 18; j++) {
-      tilesMap.setTerrain(i, j, Math.floor(Math.random() * 22));
+      builder = builder.setTile(i, j, Math.floor(Math.random() * 22));
     }
 
-  timedRebuild().then(duration => {
+  builder.promise().then(() => timedRebuild()).then(duration => {
     document.getElementById("checksum").textContent = "";
     tilesMap.getCheckSum()
      .then(checksum => document.getElementById("checksum").textContent = checksum);
@@ -139,18 +139,13 @@ function loadRandomMap(): void {
 function loadRandomMapWithWoods(): void {
   document.getElementById("checksumBlock").style.display = 'none'
   redraw = false;
-  tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
-    var tiles: WesnothTiles.ITileChange[] = [];
+  tilesMap.clear().then(() => {
+    var builder = tilesMap.loadingMode();
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
-        tiles.push({
-          q: i,
-          r: j,
-          terrain: ETerrain.GRASS_SEMI_DRY,
-          overlay: ETerrain.VOID + 1 + Math.floor(Math.random() * 14)
-        });
+        builder = builder.setTile(i, j, ETerrain.GRASS_SEMI_DRY, ETerrain.VOID + 1 + Math.floor(Math.random() * 14));
       }
-    return tilesMap.setTiles(tiles);
+    return builder.promise;
   }).then(() => tilesMap.rebuild().then(() => {
     redraw = true;
   }));
@@ -159,24 +154,26 @@ function loadRandomMapWithWoods(): void {
 function loadChunksRandom(): void {
   document.getElementById("checksumBlock").style.display = 'none'
   redraw = false;
-  tilesMap.clear();
-  for (var i = -17; i < 17; i++)
-    for (var j = -17; j < 17; j++) {
-      tilesMap.setTerrain(i, j, ETerrain.GRASS_GREEN);
-    }
-  for (var i = 0; i < 160; i++) {
-    var x = -17 + Math.floor(Math.random() * 34);
-    var y = -17 + Math.floor(Math.random() * 34);
+  tilesMap.clear().then(() => {
+    var builder = tilesMap.loadingMode();
+    for (var i = -17; i < 17; i++)
+      for (var j = -17; j < 17; j++) {
+        builder = builder.setTile(i, j, ETerrain.GRASS_GREEN);
+      }
+    for (var i = 0; i < 160; i++) {
+      var x = -17 + Math.floor(Math.random() * 34);
+      var y = -17 + Math.floor(Math.random() * 34);
 
-    var terrainCode = Math.floor(Math.random() * 21)
-    tilesMap.setTerrain(x, y, terrainCode);
-    tilesMap.setTerrain(x, y - 1, terrainCode);
-    tilesMap.setTerrain(x + 1, y - 1, terrainCode);
-    tilesMap.setTerrain(x + 1, y, terrainCode);
-    tilesMap.setTerrain(x, y + 1, terrainCode);
-    tilesMap.setTerrain(x - 1, y + 1, terrainCode);
-    tilesMap.setTerrain(x - 1, y, terrainCode);
-  }
+      var terrainCode = Math.floor(Math.random() * 21)
+      builder = builder.setTile(x, y, terrainCode)
+        .setTile(x, y - 1, terrainCode)
+        .setTile(x + 1, y - 1, terrainCode)
+        .setTile(x + 1, y, terrainCode)
+        .setTile(x, y + 1, terrainCode)
+        .setTile(x - 1, y + 1, terrainCode)
+        .setTile(x - 1, y, terrainCode)
+    }
+  });
   tilesMap.rebuild(). then(() => {
     redraw = true;
   });
@@ -343,14 +340,14 @@ function timedRebuild(): Promise<number> {
   });
 }
 
-function loadCircle(terrain1, terrain2, overlay1, overlay2, x, y) {
-  tilesMap.setTerrain(x, y, terrain1, overlay1);
-  tilesMap.setTerrain(x, y - 1, terrain2, overlay2);
-  tilesMap.setTerrain(x + 1, y - 1, terrain2, overlay2);
-  tilesMap.setTerrain(x + 1, y, terrain2, overlay2);
-  tilesMap.setTerrain(x, y + 1, terrain2, overlay2);
-  tilesMap.setTerrain(x - 1, y + 1, terrain2, overlay2);
-  tilesMap.setTerrain(x - 1, y, terrain2, overlay2);
+function loadCircle(builder: WesnothTiles.MapBuilder, terrain1, terrain2, overlay1, overlay2, x, y): WesnothTiles.MapBuilder {
+  return builder.setTile(x, y, terrain1, overlay1)
+    .setTile(x, y - 1, terrain2, overlay2)
+    .setTile(x + 1, y - 1, terrain2, overlay2)
+    .setTile(x + 1, y, terrain2, overlay2)
+    .setTile(x, y + 1, terrain2, overlay2)
+    .setTile(x - 1, y + 1, terrain2, overlay2)
+    .setTile(x - 1, y, terrain2, overlay2);
 }
 
 function start() {

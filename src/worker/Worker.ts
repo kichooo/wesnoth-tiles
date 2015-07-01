@@ -28,7 +28,7 @@ module WesnothTiles.Worker {
       return jeb;
     }
 
-    setTiles = (bundle: ISetTerrainBundle): void => {
+    setTiles = (bundle: Internal.ISetTerrainBundle): void => {
       if (bundle.loadingMode)
         hexMap.setLoadingMode();
       bundle.tileChanges.forEach(change => {
@@ -67,10 +67,6 @@ module WesnothTiles.Worker {
 
     clear = (): void => {
       hexMap.clear();
-    }
-
-    setLoadingMode = (): void => {
-      hexMap.setLoadingMode();
     }
   }
 

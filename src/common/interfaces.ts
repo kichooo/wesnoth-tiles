@@ -2,7 +2,19 @@
 
 module WesnothTiles.Internal {
   'use strict';
+  
+  export interface ITileChange {
+    q: number;
+    r: number;
+    terrain?: ETerrain;
+    overlay?: EOverlay;
+    fog?: boolean;
+  }
 
+  export interface ISetTerrainBundle {
+    tileChanges: ITileChange[];
+    loadingMode: boolean;
+  }
 
   export interface IWorkerOrder {
     // name of the function to execute.
@@ -120,19 +132,6 @@ module WesnothTiles {
     VILLAGE_COAST,
     DESERT_PLANTS,
     NONE
-  }
-
-  export interface ITileChange {
-    q: number;
-    r: number;
-    terrain?: ETerrain;
-    overlay?: EOverlay;
-    fog?: boolean;
-  }
-
-  export interface ISetTerrainBundle {
-    tileChanges: ITileChange[];
-    loadingMode: boolean;
   }
 
 }

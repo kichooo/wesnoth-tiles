@@ -2,7 +2,7 @@ module WesnothTiles {
   'use strict';
 
   export class MapBuilder {
-    private tileChanges: ITileChange[] = [];
+    private tileChanges: Internal.ITileChange[] = [];
 
     constructor(private loadingMode = false) {      
     }
@@ -43,67 +43,9 @@ module WesnothTiles {
     // Goes into loading mode - setting terrains is faster. This is the prefereable
     // method of modifying terrains if more then few terrains at once are changed.
     // This mode is being unset by first call to Rebuild or UnsetLoadingMode.
-    setLoadingMode(): Promise<void> {
-      return <Promise<void>><any>Internal.sendCommand("setLoadingMode");
-    }
-
-    unsetLoadingMode(): void {
-      // this.hexMap.unsetLoadingMode();
-    }
-
     loadingMode(): MapBuilder {
       return new MapBuilder(true);
     }
-
-    // Sets given hex to specified terrain. If not specified, overlay does not change.
-    // A 'rebuild' call is needed to actually display the change.
-    setTerrain(q: number, r: number, terrain: ETerrain, overlay = EOverlay.NONE, fog = false) {
-      this.setTiles({
-        q: q,
-        r: r,
-        terrain: terrain,
-        overlay: overlay,
-        fog: fog
-      });
-      // this.hexMap.setTerrain(q, r, terrain, overlay, fog);
-    }
-
-    // Unsets given hex. Overlay is cleared too.
-    // It is not an equivalent of setting terrain to Void.
-    // A 'rebuild' call is needed to actually display the change.
-    unsetTerrain(q: number, r: number) {
-      // this.hexMap.removeHex(q, r);
-    }
-
-    // Sets given hex to specified overlay. If hex does not exist,
-    // an error is thrown. To clear the overlay, one needs to set it to None.
-    // A 'rebuild' call is needed to actually display the change.
-    // setOverlay(q: number, r: number, overlay: EOverlay) {
-    //   var hex = this.hexMap.getHexP(q, r);
-    //   if (hex === undefined)
-    //     throw new Error("Cannot set overlay for hex (" + q + "," + r + "). No hex present.");
-    //   hex.overlay = overlay;
-    // }
-
-    // Sets the fog of war - usually meant to display hex which was once seen,
-    // but is no longer in the line of sight. If no hex is present, thows an error.
-    // A 'rebuild' call is needed to actually display the change.    
-    // setFog(q: number, r: number) {
-    //   var hex = this.hexMap.getHexP(q, r);
-    //   if (hex === undefined)
-    //     throw new Error("Cannot set fog for hex (" + q + "," + r + "). No hex present.");
-    //   hex.fog = true;
-    // }
-
-    // Removes the fog of war - usually meant to display hex which was once seen,
-    // but is no longer in the line of sight. If no hex is present, thows an error.
-    // A 'rebuild' call is needed to actually display the change.
-    // unsetFog(q: number, r: number) {
-    //   var hex = this.hexMap.getHexP(q, r);
-    //   if (hex === undefined)
-    //     throw new Error("Cannot unset fog for hex (" + q + "," + r + "). No hex present.");
-    //   hex.fog = false;
-    // }
 
     // Clears the map.
     clear(): Promise<void> {
@@ -134,8 +76,6 @@ module WesnothTiles {
             drawable.x, drawable.y, drawable.name, drawable.layer,
             drawable.base, drawable.frames, drawable.duration));
         });
-
-        console.log(this.drawables);
       });
     }
 
@@ -179,16 +119,12 @@ module WesnothTiles {
       return new MapBuilder().setTile(q, r, terrain, overlay, fog);
     }
 
+
+    // Unsets given hex. Overlay is cleared too.
+    // It is not an equivalent of setting terrain to Void.
+    // A 'rebuild' call is needed to actually display the change.
     unsetTile(q: number, r: number): MapBuilder {
-      // We messages sent to the worker just have terrain as undefined.
       return new MapBuilder().unsetTile(q, r);
-    }
-
-    setTiles(changes: ITileChange[]| ITileChange): Promise<void> {
-
-      var tileChanges = <ITileChange[]>((changes.constructor === Array)
-        ? changes : [changes]);
-      return <Promise<void>><any>Internal.sendCommand("setTiles", tileChanges);
     }
 
     load(): Promise<void> {
