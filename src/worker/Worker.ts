@@ -35,7 +35,7 @@ module WesnothTiles.Worker {
         if (change.terrain === undefined || change.terrain === null) {
           hexMap.removeTerrain(change.q, change.r);
         }
-        hexMap.setTerrain(change.q, change.r, change.terrain, change.overlay, change.fog);        
+        hexMap.setTerrain(change.q, change.r, change.terrain, change.overlay, change.fog);
       });
       hexMap.unsetLoadingMode();
     }

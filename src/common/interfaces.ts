@@ -2,7 +2,7 @@
 
 module WesnothTiles.Internal {
   'use strict';
-  
+
   export interface ITileChange {
     q: number;
     r: number;

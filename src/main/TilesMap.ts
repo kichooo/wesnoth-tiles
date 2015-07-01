@@ -4,11 +4,11 @@ module WesnothTiles {
   export class MapBuilder {
     private tileChanges: Internal.ITileChange[] = [];
 
-    constructor(private loadingMode = false) {      
+    constructor(private loadingMode = false) {
     }
 
     setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
-      this.tileChanges.push({q: q, r: r, terrain: terrain, overlay: overlay, fog: fog})
+      this.tileChanges.push({ q: q, r: r, terrain: terrain, overlay: overlay, fog: fog })
       return this;
     }
 
@@ -21,7 +21,7 @@ module WesnothTiles {
       return <Promise<void>><any>Internal.sendCommand("setTiles", {
         loadingMode: this.loadingMode,
         tileChanges: this.tileChanges
-      });      
+      });
     }
   }
 
