@@ -4,7 +4,7 @@ module WesnothTiles {
   export class MapBuilder {
     private tileChanges: Internal.ITileChange[] = [];
 
-    constructor(private map: string, private loadingMode) {
+    constructor(private mapName: string, private loadingMode) {
     }
 
     setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
@@ -21,7 +21,7 @@ module WesnothTiles {
       return <Promise<void>><any>Internal.sendCommand("setTiles", {
         loadingMode: this.loadingMode,
         tileChanges: this.tileChanges,
-        map: this.map
+        mapName: this.mapName
       });
     }
   }
@@ -62,8 +62,8 @@ module WesnothTiles {
       return a.layer - b.layer;
     };
 
-    rebuild(map = "default"): Promise<void> {
-      return this.rebuildMap(map).then(drawables => {
+    rebuild(mapName = "default"): Promise<void> {
+      return this.rebuildMap(mapName).then(drawables => {
         this.drawables = [];
         drawables.forEach(drawable => {
           this.drawables.push(new Internal.AnimatedDrawable(
@@ -73,8 +73,8 @@ module WesnothTiles {
       });
     }
 
-    private rebuildMap(map: string): Promise<Internal.Drawable[]> {
-      return <Promise<Internal.Drawable[]>><any>Internal.sendCommand("rebuild", map);
+    private rebuildMap(mapName: string): Promise<Internal.Drawable[]> {
+      return <Promise<Internal.Drawable[]>><any>Internal.sendCommand("rebuild", mapName);
       // var p = new Promise<void>((resolve, reject) => {
       //   window.setTimeout(() => {
       //     // this.hexMap.unsetLoadingMode();

@@ -75,7 +75,7 @@ function loadTestMap(): void {
 function loadSingleCircle(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
-  tilesMap.clear().then(() => {
+  tilesMap.clear("test").then(() => {
     var builder = tilesMap.getBuilder("test", true);
     builder = loadCircle(builder, ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);
     return builder.promise();
@@ -206,7 +206,7 @@ function loadRing(mapBuilder: WesnothTiles.MapBuilder, radius, terrain): Wesnoth
 function loadDisk(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
-  tilesMap.clear().then(() => {
+  tilesMap.clear("test").then(() => {
     var mapBuilder = tilesMap.getBuilder("test", true);
     mapBuilder = loadRing(mapBuilder, 5, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 6, ETerrain.ABYSS);

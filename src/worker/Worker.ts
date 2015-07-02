@@ -5,7 +5,17 @@ module WesnothTiles.Worker {
 
   export var spriteNames = new Set<string>();
 
-  var hexMap: HexMap;
+  var hexMaps = new Map<string, HexMap>();
+
+  var ensureMap = (name: string): HexMap => {
+    var map = hexMaps.get(name);
+    if (map === undefined) {
+      map = new HexMap();
+      console.log("Creating new map!", name);
+      hexMaps.set(name, map);
+    }
+    return map;
+  }
 
   export class Worker {
     constructor() {
@@ -23,37 +33,35 @@ module WesnothTiles.Worker {
       }
     }
 
-    testCall = (jeb: number): number => {
-      jeb += 25;
-      return jeb;
-    }
-
     setTiles = (bundle: Internal.ISetTerrainBundle): void => {
+      var map = ensureMap(bundle.mapName);
       if (bundle.loadingMode)
-        hexMap.setLoadingMode();
+        map.setLoadingMode();
       bundle.tileChanges.forEach(change => {
         if (change.terrain === undefined || change.terrain === null) {
-          hexMap.removeTerrain(change.q, change.r);
+          map.removeTerrain(change.q, change.r);
         }
-        hexMap.setTerrain(change.q, change.r, change.terrain, change.overlay, change.fog);
+        map.setTerrain(change.q, change.r, change.terrain, change.overlay, change.fog);
       });
-      hexMap.unsetLoadingMode();
+      map.unsetLoadingMode();
     }
 
     init = (definitions: string[]): void => {
       definitions.forEach(spriteName => spriteNames.add(spriteName));
-      hexMap = new HexMap();
     }
 
-    rebuild = (): Internal.Drawable[]=> {
-      hexMap.unsetLoadingMode();
-      var drawables = rebuild(hexMap);
+    rebuild = (mapName: string): Internal.Drawable[]=> {
+      var map = ensureMap(mapName);
+      map.unsetLoadingMode();
+      var drawables = rebuild(map);
       drawables.sort(sortFunc);
+      
       return drawables;
     }
 
-    getChecksum = (): string => {
-      var drawables = this.rebuild();
+    getChecksum = (mapName: string): string => {
+      var map = ensureMap(mapName);
+      var drawables = this.rebuild(mapName);
 
       var checksum = 0;
 
@@ -65,8 +73,8 @@ module WesnothTiles.Worker {
       return checksum.toString();
     }
 
-    clear = (): void => {
-      hexMap.clear();
+    clear = (mapName: string): void => {
+      ensureMap(mapName).clear();
     }
   }
 
