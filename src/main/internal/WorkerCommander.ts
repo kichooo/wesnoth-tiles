@@ -22,7 +22,7 @@ module WesnothTiles.Internal {
     }
   }
 
-  export var sendCommand = (commandName: string, params?: Object): Promise<Object> => {
+  export var sendCommand = <T>(commandName: string, params?: Object): Promise<T> => {
     return new Promise<Object>((resolve, reject) => {
       deferreds.set(id, {
         resolve: resolve,

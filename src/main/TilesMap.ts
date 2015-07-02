@@ -18,7 +18,7 @@ module WesnothTiles {
     }
 
     promise() {
-      return <Promise<void>><any>Internal.sendCommand("setTiles", {
+      return Internal.sendCommand<void>("setTiles", {
         loadingMode: this.loadingMode,
         tileChanges: this.tileChanges,
         mapName: this.mapName
@@ -43,7 +43,7 @@ module WesnothTiles {
 
     // Clears the map.
     clear(map = "default"): Promise<void> {
-      return <Promise<void>><any>Internal.sendCommand("clear", map);
+      return Internal.sendCommand<void>("clear", map);
       // this.hexMap.clear();
     }
 
@@ -74,21 +74,12 @@ module WesnothTiles {
     }
 
     private rebuildMap(mapName: string): Promise<Internal.Drawable[]> {
-      return <Promise<Internal.Drawable[]>><any>Internal.sendCommand("rebuild", mapName);
-      // var p = new Promise<void>((resolve, reject) => {
-      //   window.setTimeout(() => {
-      //     // this.hexMap.unsetLoadingMode();
-      //     // this.drawables = Internal.rebuild(this.hexMap);
-      //     // this.drawables.sort(this.sortFunc);
-      //     resolve();
-      //   });
-      // });
-      // return p;   
+      return Internal.sendCommand<Internal.Drawable[]>("rebuild", mapName);
     }
 
     // Rebuilds, then calculates the checksum. Build results are discarded.
     getCheckSum(map = "default"): Promise<string> {
-      return <Promise<string>><any>Internal.sendCommand("getChecksum", map);
+      return Internal.sendCommand<string>("getChecksum", map);
     }
 
     redraw(): void {
@@ -137,10 +128,7 @@ module WesnothTiles {
         Internal.definitions.forEach((val, key) => {
           keys.push(key);
         });
-        return <Promise<void>><any>Internal.sendCommand(
-          "init",
-          keys
-          );
+        return Internal.sendCommand<void>("init", keys);
       });
     }
 
