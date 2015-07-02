@@ -12,6 +12,10 @@ module WesnothTiles {
       return this;
     }
 
+
+    // // Unsets given hex. Overlay is cleared too.
+    // // It is not an equivalent of setting terrain to Void.
+    // // A 'rebuild' call is needed to actually display the change.}
     unsetTile(q: number, r: number): MapBuilder {
       // We messages sent to the worker just have terrain as undefined.
       return this.setTile(q, r);
@@ -44,26 +48,11 @@ module WesnothTiles {
     // Clears the map.
     clear(map = "default"): Promise<void> {
       return Internal.sendCommand<void>("clear", map);
-      // this.hexMap.clear();
     }
 
-    private sortFunc = (a: Internal.AnimatedDrawable, b: Internal.AnimatedDrawable) => {
-      if (a.layer === b.layer) {
-        if (a.base !== undefined && b.base !== undefined) {
-          return a.base.y - b.base.y;
-        }
-        if (b.base !== undefined) {
-          return a.layer < 0 ? -1 : 1;
-        } else if (a.base !== undefined) {
-          return b.layer < 0 ? 1 : -1;
-        }
-        return 0;
-      }
-      return a.layer - b.layer;
-    };
-
+    // Rebuilds the map. Following calls to redraw will draw the resulting map.
     rebuild(mapName = "default"): Promise<void> {
-      return this.rebuildMap(mapName).then(drawables => {
+      return Internal.sendCommand<Internal.Drawable[]>("rebuild", mapName).then(drawables => {
         this.drawables = [];
         drawables.forEach(drawable => {
           this.drawables.push(new Internal.AnimatedDrawable(
@@ -73,15 +62,12 @@ module WesnothTiles {
       });
     }
 
-    private rebuildMap(mapName: string): Promise<Internal.Drawable[]> {
-      return Internal.sendCommand<Internal.Drawable[]>("rebuild", mapName);
-    }
-
     // Rebuilds, then calculates the checksum. Build results are discarded.
     getCheckSum(map = "default"): Promise<string> {
       return Internal.sendCommand<string>("getChecksum", map);
     }
 
+    // Draws map onto the canvas. Best used in Animation Frame.
     redraw(): void {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       var now = Date.now();
@@ -100,26 +86,14 @@ module WesnothTiles {
       this.canvas.height = height;
     }
 
-    // setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
-    //   return new MapBuilder().setTile(q, r, terrain, overlay, fog);
-    // }
-
-
-    // // Unsets given hex. Overlay is cleared too.
-    // // It is not an equivalent of setting terrain to Void.
-    // // A 'rebuild' call is needed to actually display the change.
-    // unsetTile(q: number, r: number): MapBuilder {
-    //   return new MapBuilder().unsetTile(q, r);
-    // }
-
-
-    // Goes into loading mode - setting terrains is faster. This is the prefereable
-    // method of modifying terrains if more then few terrains at once are changed.
-    // This mode is being unset by first call to Rebuild or UnsetLoadingMode.
+    // Creates instance of MapBuilder. LoadingMode argument is worth seting 
+    // When you plan to load bigger chunks of tiles at once.
     getBuilder(map = "default", loadingMode = false): MapBuilder {
       return new MapBuilder(map, loadingMode);
     }
 
+    // Prepares all the data needed by the plugin to run. Make sure load() is resolved before you use 
+    // anything else.
     load(): Promise<void> {
       Internal.loadWorker();
       return Internal.loadResources().then(() => {
