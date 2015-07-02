@@ -345,8 +345,11 @@ function loadCircle(builder: WesnothTiles.MapBuilder, terrain1, terrain2, overla
 
 function start() {
   var timeStart = new Date();
-  var canvas = <HTMLCanvasElement>document.getElementById("map-canvas");
-  tilesMap = new WesnothTiles.TilesMap(canvas);
+  var leftCanvas = <HTMLCanvasElement>document.getElementById("map-canvas-left");
+  var rightCanvas = <HTMLCanvasElement>document.getElementById("map-canvas-right");
+  var leftCtx = leftCanvas.getContext('2d');
+  var rightCtx = rightCanvas.getContext('2d');
+  tilesMap = new WesnothTiles.TilesMap();
   tilesMap.load().then(() => {
     // loadChunksRandom(map);
     // loadRandomMapWithWoods(map);
@@ -360,11 +363,16 @@ function start() {
     loadDisk();
     // loadSingleCircle();
 
-    tilesMap.resize(window.innerWidth, window.innerHeight);
+    leftCanvas.width = leftCanvas.parentElement.clientWidth/2;
+    leftCanvas.height = leftCanvas.parentElement.clientHeight;
+
+    rightCanvas.width = rightCanvas.parentElement.clientWidth/2;
+    rightCanvas.height = rightCanvas.parentElement.clientHeight;
     var anim = () => {
       window.requestAnimationFrame(() => {
         if (redraw) {
-          tilesMap.redraw();
+          leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
+          tilesMap.redraw(leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2));
         }
         anim();
       });

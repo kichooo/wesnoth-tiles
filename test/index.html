@@ -15,8 +15,29 @@
       bottom: 0px;
     }
 
-    canvas {
-      position: absolute;      
+    .canvas-container {
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      bottom: 0px;
+      top: 0px;
+    }
+
+    #map-canvas-left {
+      position: absolute;
+      left: 0px;
+      bottom: 0px;
+      top: 0px;
+      right: 50%;
+      /*z-index: 0;*/
+    }
+
+    #map-canvas-right {
+      position: absolute;
+      left: 50%;
+      bottom: 0px;
+      top: 0px;
+      right: 0px;
       /*z-index: 0;*/
     }
 
@@ -34,12 +55,18 @@
 </head>
 <body onload = "start();">
 
+  <div class="canvas-container">
+    <canvas id="map-canvas-left">
+    </canvas>    
+    <canvas id="map-canvas-right">
+    </canvas>  
+  </div>
 
-  <canvas id="map-canvas">
-    
 
+
+<!--   <canvas id="map-canvas-right">
   </canvas>
-
+ -->
   <div style="position:absolute"> 
     <button type="button" onclick="loadDisk()">Load Disk</button>
     <button type="button" onclick="loadTestMap()">Load Test Map</button>

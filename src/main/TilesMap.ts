@@ -31,18 +31,14 @@ module WesnothTiles {
   }
 
   export class TilesMap {
-    private ctx: CanvasRenderingContext2D;
-    // private drawMap = new Map<string,  HexToDraw>();
     private drawables: Internal.AnimatedDrawable[] = [];
     private lastDraw: number = Date.now();
-    // private hexMap = new Internal.HexMap();
 
     private worker: Worker;
 
     private workerId = 0;
 
-    constructor(private canvas: HTMLCanvasElement) {
-      this.ctx = <any>this.canvas.getContext('2d');
+    constructor() {
     }
 
     // Clears the map.
@@ -68,22 +64,13 @@ module WesnothTiles {
     }
 
     // Draws map onto the canvas. Best used in Animation Frame.
-    redraw(): void {
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    redraw(ctx: CanvasRenderingContext2D, x: number, y: number): void {
       var now = Date.now();
       var diff = now - this.lastDraw;
       this.lastDraw = now;
       this.drawables.forEach(drawable => {
-        drawable.draw(
-          Math.floor((this.canvas.width) / 2),
-          Math.floor((this.canvas.height) / 2),
-          this.ctx, diff);
+        drawable.draw(x, y, ctx, diff);
       });
-    }
-
-    resize(width: number, height: number): void {
-      this.canvas.width = width;
-      this.canvas.height = height;
     }
 
     // Creates instance of MapBuilder. LoadingMode argument is worth seting 
