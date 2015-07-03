@@ -8,7 +8,7 @@ var redraw = true;
 
 function createTestMap(): Promise<void> {
   return tilesMap.clear().then(() => {
-    var mapBuilder = tilesMap.getBuilder("test", true);
+    var mapBuilder = tilesMap.getBuilder("right", true);
     var rng = new Rng(1337);
 
     for (var i = -18; i < 18; i++)
@@ -61,9 +61,9 @@ function createTestMap(): Promise<void> {
 function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
-  createTestMap().then(() => tilesMap.rebuild("test")).then(() => {
+  createTestMap().then(() => tilesMap.rebuild("right")).then(() => {
       document.getElementById("checksum").textContent = "";
-      tilesMap.getCheckSum("test")
+      tilesMap.getCheckSum("right")
         .then(checksum => document.getElementById("checksum").textContent = checksum);
       document.getElementById("expected").textContent = "expected: 1386360853";
       document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
@@ -75,13 +75,13 @@ function loadTestMap(): void {
 function loadSingleCircle(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
-  tilesMap.clear("test").then(() => {
-    var builder = tilesMap.getBuilder("test", true);
+  tilesMap.clear("right").then(() => {
+    var builder = tilesMap.getBuilder("right", true);
     builder = loadCircle(builder, ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);
     return builder.promise();
-  }).then(() => tilesMap.rebuild("test")).then(() => {
+  }).then(() => tilesMap.rebuild("right")).then(() => {
     document.getElementById("checksum").textContent = "";
-    tilesMap.getCheckSum("test")
+    tilesMap.getCheckSum("right")
       .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
@@ -95,15 +95,15 @@ function benchmark(): void {
   redraw = false;
   var timer = new Date();
   createTestMap().then(() => {
-    var promise: Promise<void> = tilesMap.rebuild("test");
+    var promise: Promise<void> = tilesMap.rebuild("right");
     for (var i = 0; i < 39; i++) {
-      promise = promise.then(() => { return tilesMap.rebuild("test"); });
+      promise = promise.then(() => { return tilesMap.rebuild("right"); });
     }    
     return promise;  
   }).then(() => {
     var duration = (new Date().getTime() - timer.getTime()) / 40;
     document.getElementById("checksum").textContent = "";
-    tilesMap.getCheckSum("test")
+    tilesMap.getCheckSum("right")
       .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: 3643646740";
     document.getElementById("duration").textContent = duration.toString();
@@ -117,17 +117,17 @@ function benchmark(): void {
 function loadRandomMap(): void {
   document.getElementById("checksumBlock").style.display = 'none'
   var start = new Date();
-  tilesMap.clear("test").then(() => {
-    var builder = tilesMap.getBuilder("test", true);
+  tilesMap.clear("right").then(() => {
+    var builder = tilesMap.getBuilder("right", true);
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
         builder = builder.setTile(i, j, Math.floor(Math.random() * 22));
       }
     return builder.promise();
   })
-    .then(() => tilesMap.rebuild("test")).then(() => {
+    .then(() => tilesMap.rebuild("right")).then(() => {
     document.getElementById("checksum").textContent = "";
-    tilesMap.getCheckSum("test")
+    tilesMap.getCheckSum("right")
      .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
@@ -139,14 +139,14 @@ function loadRandomMap(): void {
 function loadRandomMapWithWoods(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
-  tilesMap.clear("test").then(() => {
-    var builder = tilesMap.getBuilder("default", true);
+  tilesMap.clear("right").then(() => {
+    var builder = tilesMap.getBuilder("right", true);
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
         builder = builder.setTile(i, j, ETerrain.GRASS_SEMI_DRY, ETerrain.VOID + 1 + Math.floor(Math.random() * 14));
       }          
     return builder.promise();
-  }).then(() => tilesMap.rebuild()).then(() => {
+  }).then(() => tilesMap.rebuild("right")).then(() => {
     document.getElementById("checksum").textContent = "none";
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
@@ -206,8 +206,8 @@ function loadRing(mapBuilder: WesnothTiles.MapBuilder, radius, terrain): Wesnoth
 function loadDisk(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
-  tilesMap.clear("test").then(() => {
-    var mapBuilder = tilesMap.getBuilder("test", true);
+  tilesMap.clear("left").then(() => {
+    var mapBuilder = tilesMap.getBuilder("left", true);
     mapBuilder = loadRing(mapBuilder, 5, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 6, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 7, ETerrain.VOID);
@@ -321,9 +321,9 @@ function loadDisk(): void {
         .setTile(-1 - i, 4, ETerrain.WATER_OCEAN);
     }
     return mapBuilder.promise();
-  }).then(() => tilesMap.rebuild("test")).then(() => {
+  }).then(() => tilesMap.rebuild("left")).then(() => {
       document.getElementById("checksum").textContent = "";
-      tilesMap.getCheckSum("test")
+      tilesMap.getCheckSum("left")
         .then(checksum => document.getElementById("checksum").textContent = checksum);
       document.getElementById("expected").textContent = "expected: 18469171";
       document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
@@ -372,7 +372,10 @@ function start() {
       window.requestAnimationFrame(() => {
         if (redraw) {
           leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
-          tilesMap.redraw("test", leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2));
+          tilesMap.redraw("left", leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2));
+
+          rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
+          tilesMap.redraw("right", rightCtx, Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2));          
         }
         anim();
       });
