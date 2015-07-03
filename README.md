@@ -63,16 +63,13 @@ WML files with terrain definitions will be converted using short GO program.
  -  [x] remains
 - [x] ethereal abyss (chasm)
 
-# current iteration (v0.7)
- - [x] Stabilize api
- - [x] Code clenaup.
- - [x] Multiple maps
- - [x] Removing tiles.
+# current iteration (v0.8)
+ - [ ] Better drawing control.
+ - [ ] Angular directive (with good performance)
 
 # backlog list
  - introduce some automatic testing
  - angular directive (?)
- - multiple maps
 # license
 
 GPL. See LICENSE file in the root of the repository.
