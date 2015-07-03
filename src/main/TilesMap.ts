@@ -60,12 +60,12 @@ module WesnothTiles {
     }
 
     // Rebuilds, then calculates the checksum. Build results are discarded.
-    getCheckSum(map = "default"): Promise<string> {
-      return Internal.sendCommand<string>("getChecksum", map);
+    getCheckSum(mapName = "default"): Promise<string> {
+      return Internal.sendCommand<string>("getChecksum", mapName);
     }
 
     // Draws map onto the canvas. Best used in Animation Frame.
-    redraw(mapName: string, ctx: CanvasRenderingContext2D, x: number, y: number): void {
+    redraw(ctx: CanvasRenderingContext2D, x: number, y: number, mapName = "default"): void {
       var drawables = this.drawables.get(mapName);
       if (drawables === undefined)
         return;
@@ -79,8 +79,8 @@ module WesnothTiles {
 
     // Creates instance of MapBuilder. LoadingMode argument is worth seting 
     // When you plan to load bigger chunks of tiles at once.
-    getBuilder(map = "default", loadingMode = false): MapBuilder {
-      return new MapBuilder(map, loadingMode);
+    getBuilder(loadingMode = false, mapName = "default"): MapBuilder {
+      return new MapBuilder(mapName, loadingMode);
     }
 
     // Prepares all the data needed by the plugin to run. Make sure load() is resolved before you use 

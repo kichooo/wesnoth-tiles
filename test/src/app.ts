@@ -8,7 +8,7 @@ var redraw = true;
 
 function createTestMap(): Promise<void> {
   return tilesMap.clear().then(() => {
-    var mapBuilder = tilesMap.getBuilder("right", true);
+    var mapBuilder = tilesMap.getBuilder(true, "right");
     var rng = new Rng(1337);
 
     for (var i = -18; i < 18; i++)
@@ -76,7 +76,7 @@ function loadSingleCircle(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
   tilesMap.clear("right").then(() => {
-    var builder = tilesMap.getBuilder("right", true);
+    var builder = tilesMap.getBuilder(true, "right");
     builder = loadCircle(builder, ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);
     return builder.promise();
   }).then(() => tilesMap.rebuild("right")).then(() => {
@@ -118,7 +118,7 @@ function loadRandomMap(): void {
   document.getElementById("checksumBlock").style.display = 'none'
   var start = new Date();
   tilesMap.clear("right").then(() => {
-    var builder = tilesMap.getBuilder("right", true);
+    var builder = tilesMap.getBuilder(true, "right");
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
         builder = builder.setTile(i, j, Math.floor(Math.random() * 22));
@@ -140,7 +140,7 @@ function loadRandomMapWithWoods(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
   tilesMap.clear("right").then(() => {
-    var builder = tilesMap.getBuilder("right", true);
+    var builder = tilesMap.getBuilder(true, "right");
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
         builder = builder.setTile(i, j, ETerrain.GRASS_SEMI_DRY, ETerrain.VOID + 1 + Math.floor(Math.random() * 14));
@@ -207,7 +207,7 @@ function loadDisk(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
   tilesMap.clear("left").then(() => {
-    var mapBuilder = tilesMap.getBuilder("left", true);
+    var mapBuilder = tilesMap.getBuilder(true, "left");
     mapBuilder = loadRing(mapBuilder, 5, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 6, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 7, ETerrain.VOID);
@@ -372,10 +372,10 @@ function start() {
       window.requestAnimationFrame(() => {
         if (redraw) {
           leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
-          tilesMap.redraw("left", leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2));
+          tilesMap.redraw(leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2), "left");
 
           rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
-          tilesMap.redraw("right", rightCtx, Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2));          
+          tilesMap.redraw(rightCtx, Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2), "right");
         }
         anim();
       });
