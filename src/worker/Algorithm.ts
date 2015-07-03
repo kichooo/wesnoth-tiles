@@ -6,7 +6,7 @@ module WesnothTiles.Worker {
   interface IDrawParams {
     hex: Hex;
     hexMap: HexMap;
-    drawables: Internal.Drawable[];
+    drawableDatas: Internal.DrawableData[];
   }
 
   var setFlags = (rot: number, rotations: string[],
@@ -114,7 +114,7 @@ module WesnothTiles.Worker {
         return;
     }
 
-    var drawables: Internal.Drawable[] = [];
+    var drawableDatas: Internal.DrawableData[] = [];
 
     for (var j = 0; j < tg.images.length; j++) {
       var img = tg.images[j];
@@ -135,7 +135,7 @@ module WesnothTiles.Worker {
         y: drawPos.y
       } : undefined;
 
-      drawables.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase));
+      drawableDatas.push(tg.builder.toDrawable(imgName, translatedPostfix, drawPos, img.layer, newBase));
 
     }
 
@@ -151,7 +151,7 @@ module WesnothTiles.Worker {
       setFlags(rot, tg.rotations,
         tile.set_no_flag, rotatedHex.flags);
     }
-    dp.drawables.push.apply(dp.drawables, drawables);
+    dp.drawableDatas.push.apply(dp.drawableDatas, drawableDatas);
   }
 
   var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
@@ -163,18 +163,18 @@ module WesnothTiles.Worker {
       performRotatedTerrainGraphics(tg, dp);
   }
 
-  export var rebuild = (hexMap: HexMap): Internal.Drawable[]=> {
+  export var rebuild = (hexMap: HexMap): Internal.DrawableData[]=> {
     prepareRotations();
     // clear old flags.
 
     hexMap.iterate(h => h.reset());
 
-    var drawables: Internal.Drawable[] = [];
+    var drawableDatas: Internal.DrawableData[] = [];
 
     var dp: IDrawParams = {
       hex: null,
       hexMap: hexMap,
-      drawables: drawables
+      drawableDatas: drawableDatas
     }
 
     hexMap.tgGroup.tgs.forEach(tg => {
@@ -183,7 +183,7 @@ module WesnothTiles.Worker {
         performTerrainGraphics(tg, dp);
       });
     });
-    return drawables;
+    return drawableDatas;
   }
 
 } 

@@ -31,7 +31,7 @@ module WesnothTiles {
   }
 
   export class TilesMap {
-    private drawables: Internal.AnimatedDrawable[] = [];
+    private drawables = new Map<string, Internal.Drawable[]>();
     private lastDraw: number = Date.now();
 
     private worker: Worker;
@@ -48,12 +48,13 @@ module WesnothTiles {
 
     // Rebuilds the map. Following calls to redraw will draw the resulting map.
     rebuild(mapName = "default"): Promise<void> {
-      return Internal.sendCommand<Internal.Drawable[]>("rebuild", mapName).then(drawables => {
-        this.drawables = [];
-        drawables.forEach(drawable => {
-          this.drawables.push(new Internal.AnimatedDrawable(
-            drawable.x, drawable.y, drawable.name, drawable.layer,
-            drawable.base, drawable.frames, drawable.duration));
+      return Internal.sendCommand<Internal.DrawableData[]>("rebuild", mapName).then(drawableDatas => {
+        var drawables: Internal.Drawable[] = [];
+        this.drawables.set(mapName, drawables);
+        drawableDatas.forEach(drawableData => {
+          drawables.push(new Internal.Drawable(
+            drawableData.x, drawableData.y, drawableData.name, drawableData.layer,
+            drawableData.base, drawableData.frames, drawableData.duration));
         });
       });
     }
@@ -64,11 +65,14 @@ module WesnothTiles {
     }
 
     // Draws map onto the canvas. Best used in Animation Frame.
-    redraw(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+    redraw(mapName: string, ctx: CanvasRenderingContext2D, x: number, y: number): void {
+      var drawables = this.drawables.get(mapName);
+      if (drawables === undefined)
+        return;
       var now = Date.now();
       var diff = now - this.lastDraw;
       this.lastDraw = now;
-      this.drawables.forEach(drawable => {
+      drawables.forEach(drawable => {
         drawable.draw(x, y, ctx, diff);
       });
     }

@@ -49,7 +49,7 @@ module WesnothTiles.Worker {
       definitions.forEach(spriteName => spriteNames.add(spriteName));
     }
 
-    rebuild = (mapName: string): Internal.Drawable[]=> {
+    rebuild = (mapName: string): Internal.DrawableData[]=> {
       var map = ensureMap(mapName);
       map.unsetLoadingMode();
       var drawables = rebuild(map);
@@ -77,7 +77,7 @@ module WesnothTiles.Worker {
     }
   }
 
-  var sortFunc = (a: Internal.Drawable, b: Internal.Drawable) => {
+  var sortFunc = (a: Internal.DrawableData, b: Internal.DrawableData) => {
     if (a.layer === b.layer) {
       if (a.base !== undefined && b.base !== undefined) {
         return a.base.y - b.base.y;
@@ -92,7 +92,7 @@ module WesnothTiles.Worker {
     return a.layer - b.layer;
   };
 
-  var sortFuncForChecksum = (a: Internal.Drawable, b: Internal.Drawable) => {
+  var sortFuncForChecksum = (a: Internal.DrawableData, b: Internal.DrawableData) => {
     if (a.layer === b.layer) {
       if (a.base !== undefined && b.base !== undefined) {
         if (a.base.y === b.base.y) {

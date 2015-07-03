@@ -372,7 +372,7 @@ function start() {
       window.requestAnimationFrame(() => {
         if (redraw) {
           leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
-          tilesMap.redraw(leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2));
+          tilesMap.redraw("test", leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2));
         }
         anim();
       });

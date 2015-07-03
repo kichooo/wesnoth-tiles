@@ -13,14 +13,14 @@ module WesnothTiles.Worker {
 
 
   export interface IBuilder {
-    toDrawable(imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector): Internal.Drawable;
+    toDrawable(imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector): Internal.DrawableData;
     toString(imageStem: string, postfix?: string): string;
   }
   // image builders.
   export var IB_IMAGE_SINGLE: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
       // console.log("Adding " + imageStem + postfix);
-      return new Internal.Drawable(
+      return new Internal.DrawableData(
         pos.x,
         pos.y,
         imageStem + postfix, layer, base, undefined, undefined // TODO change me to undefined, i am not needed.
@@ -34,7 +34,7 @@ module WesnothTiles.Worker {
 
   export var IB_ANIMATION_15_SLOW: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
-      return new Internal.Drawable(
+      return new Internal.DrawableData(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 15, 150
@@ -47,7 +47,7 @@ module WesnothTiles.Worker {
 
   export var IB_ANIMATION_15: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
-      return new Internal.Drawable(
+      return new Internal.DrawableData(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 15, 110
@@ -60,7 +60,7 @@ module WesnothTiles.Worker {
 
   export var IB_ANIMATION_06: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
-      return new Internal.Drawable(
+      return new Internal.DrawableData(
         pos.x,
         pos.y,
         imageStem + "-@A" + postfix, layer, base, 6, 200

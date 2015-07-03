@@ -3,7 +3,7 @@
 module WesnothTiles.Internal {
   'use strict';
 
-  export class AnimatedDrawable {
+  export class Drawable {
     private animTime = Date.now();
     constructor(public x: number,
       public y: number,

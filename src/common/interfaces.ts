@@ -40,7 +40,7 @@ module WesnothTiles.Internal {
   }
 
 
-  export class Drawable {
+  export class DrawableData {
     constructor(public x: number,
       public y: number,
       public name: string,
