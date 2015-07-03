@@ -10,7 +10,7 @@ module WesnothTiles.Worker {
   var ensureMap = (name: string): HexMap => {
     var map = hexMaps.get(name);
     if (map === undefined) {
-      map = new HexMap();      
+      map = new HexMap();
       hexMaps.set(name, map);
     }
     return map;
@@ -54,7 +54,7 @@ module WesnothTiles.Worker {
       map.unsetLoadingMode();
       var drawables = rebuild(map);
       drawables.sort(sortFunc);
-      
+
       return drawables;
     }
 

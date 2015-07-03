@@ -66,7 +66,7 @@ WML files with terrain definitions will be converted using short GO program.
 # current iteration (v0.7)
  - [x] Stabilize api
  - [x] Code clenaup.
- - [ ] Multiple maps
+ - [x] Multiple maps
  - [x] Removing tiles.
 
 # backlog list
