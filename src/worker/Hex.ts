@@ -1,11 +1,6 @@
 module WesnothTiles.Worker {
   'use strict';
 
-  export interface IHexPos {
-    q: number;
-    r: number;
-  }
-
   export class Hex implements IHexPos {
     public str;
     private hashesTaken = 0;

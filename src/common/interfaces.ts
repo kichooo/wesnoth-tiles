@@ -60,6 +60,11 @@ module WesnothTiles.Internal {
 }
 
 module WesnothTiles {
+  export interface IHexPos {
+    q: number;
+    r: number;
+  }
+  
   export enum ETerrain {
     GRASS_GREEN, // Gg 0
     GRASS_SEMI_DRY, // Ggd 1

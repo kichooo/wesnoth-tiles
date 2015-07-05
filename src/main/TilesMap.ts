@@ -31,6 +31,9 @@ module WesnothTiles {
   }
 
   export class TilesMap {
+    private static radius = 72;
+    private static halfRadius = TilesMap.radius/2;
+
     private drawables = new Map<string, Internal.Drawable[]>();
     private lastDraw: number = Date.now();
 
@@ -95,6 +98,20 @@ module WesnothTiles {
         });
         return Internal.sendCommand<void>("init", keys);
       });
+    }
+
+    pointToHexPos(x, y): IHexPos {
+      y = y / TilesMap.radius;
+
+      var t1 = (x +  TilesMap.halfRadius) / TilesMap.halfRadius;
+      var t2 = Math.floor(y + t1);
+      var q = Math.floor((Math.floor(t1 - y) + t2) / 3);
+      var r = Math.floor((Math.floor(2 * y + 1) + t2) / 3) - q;      
+
+      return {
+        q: Math.floor(q),
+        r: Math.floor(r)
+      }
     }
 
   }
