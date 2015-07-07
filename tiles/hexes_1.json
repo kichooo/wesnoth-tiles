@@ -3736,6 +3736,15 @@
 	"pivot": {"x":0.5,"y":0.5}
 },
 {
+	"filename": "hover-hex",
+	"frame": {"x":1115,"y":1112,"w":71,"h":72},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":1,"y":0,"w":71,"h":72},
+	"sourceSize": {"w":72,"h":72},
+	"pivot": {"x":0.5,"y":0.5}
+},
+{
 	"filename": "void/void-ne-se",
 	"frame": {"x":1811,"y":1047,"w":58,"h":72},
 	"rotated": false,

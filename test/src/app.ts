@@ -376,6 +376,15 @@ function start() {
       console.log("clicked left canvas!", x, y, x - rightCanvas.width / 2, y - rightCanvas.height / 2, pos.q, pos.r);
     });
 
+    leftCanvas.addEventListener('mousemove', ev => {
+      var rect = leftCanvas.getBoundingClientRect();
+      var x = ev.clientX - rect.left - leftCanvas.width / 2;
+      var y = ev.clientY - rect.top - leftCanvas.height / 2;
+
+      tilesMap.moveCursor(x, y);
+
+    });
+
     rightCanvas.width = rightCanvas.parentElement.clientWidth/2;
     rightCanvas.height = rightCanvas.parentElement.clientHeight;
     rightCanvas.addEventListener('click', ev => {
@@ -394,21 +403,24 @@ function start() {
           leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
           tilesMap.redraw(leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2), "left");
 
-          // rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
-                rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
-          for (var i = -200; i < 200; i++) {
-            for (var j = -200; j < 200; j++) {
-              var p = tilesMap.pointToHexPos(i, j);
-              p.q = ((p.q + 10) * 30)%255;
-              p.r = ((p.r + 10) * 30)%255;
-              rightCtx.fillStyle = "rgba("+p.q+","+p.r+","+0+","+(255)+")";
-              rightCtx.fillRect( i + rightCanvas.width / 2 , j + rightCanvas.height / 2, 1, 1 );
-            }
-           }
-
+          rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);          
           tilesMap.redraw(rightCtx, Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2), "right");
-          rightCtx.fillStyle = "red";
-          rightCtx.fillRect(Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2), 1, 1);
+          // rightCtx.globalAlpha = 0.5;
+                // rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
+          // for (var i = -200; i < 200; i++) {
+          //   for (var j = -200; j < 200; j++) {
+          //     var p = tilesMap.pointToHexPos(i, j);
+          //     p.q = ((p.q + 10) * 30)%255;
+          //     p.r = ((p.r + 10) * 30)%255;
+          //     rightCtx.fillStyle = "rgba("+p.q+","+p.r+","+0+","+(255)+")";
+          //     rightCtx.fillRect( i + rightCanvas.width / 2 , j + rightCanvas.height / 2, 1, 1 );
+          //   }
+          //  }
+           // rightCtx.globalAlpha = 1;
+          
+          
+          // rightCtx.fillStyle = "red";
+          // rightCtx.fillRect(Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2), 1, 1);
         }
         anim();
       });
