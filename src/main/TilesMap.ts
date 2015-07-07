@@ -35,7 +35,7 @@ module WesnothTiles {
     private static halfRadius = TilesMap.radius/2;
 
     private drawables = new Map<string, Internal.Drawable[]>();
-    private cursor: Internal.Drawable;
+    private cursors = new Map<string, Internal.Drawable>();
     private lastDraw: number = Date.now();
 
     private worker: Worker;
@@ -80,7 +80,11 @@ module WesnothTiles {
         drawable.draw(x, y, ctx, diff);
       });
       
-      this.cursor.draw(x, y, ctx, diff);
+      var cursor = this.cursors.get(mapName);
+      if (cursor !== undefined) {
+        this.cursors.get(mapName).draw(x, y, ctx, diff);  
+      }
+      
     }
 
     // Creates instance of MapBuilder. LoadingMode argument is worth seting 
@@ -99,7 +103,6 @@ module WesnothTiles {
         Internal.definitions.forEach((val, key) => {
           keys.push(key);
         });
-        this.cursor = new Internal.Drawable(0, 0, "hover-hex", 0, undefined, undefined, undefined);
         return Internal.sendCommand<void>("init", keys);
       });
     }
@@ -118,16 +121,18 @@ module WesnothTiles {
       }
     }
 
-    moveCursor(x: number, y: number): void {
+    moveCursor(x: number, y: number, mapName = "default"): void {
+      var cursor = this.cursors.get(mapName);
+      if (cursor === undefined)
+          return;
       var hexPos = this.pointToHexPos(x, y);
-
-      this.cursor.x = TilesMap.halfRadius * 1.5 * hexPos.q;
-      this.cursor.y = TilesMap.halfRadius * (2 * hexPos.r + hexPos.q);
+      cursor.x = TilesMap.halfRadius * 1.5 * hexPos.q;
+      cursor.y = TilesMap.halfRadius * (2 * hexPos.r + hexPos.q);
 
     }
 
-    setCursorVisibility(visible: boolean) {
-      this.cursor = visible ? new Internal.Drawable(0, 0, "hover-hex", 0, undefined, undefined, undefined) : undefined;
+    setCursorVisibility(visible: boolean, mapName = "default") {
+        this.cursors.set(mapName, visible ? new Internal.Drawable(0, 0, "hover-hex", 0, undefined, undefined, undefined) : undefined);
     }
 
   }

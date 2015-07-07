@@ -351,6 +351,9 @@ function start() {
   var rightCtx = rightCanvas.getContext('2d');
   tilesMap = new WesnothTiles.TilesMap();
   tilesMap.load().then(() => {
+
+    tilesMap.setCursorVisibility(true, "left");
+    tilesMap.setCursorVisibility(true, "right");
     // loadChunksRandom(map);
     // loadRandomMapWithWoods(map);
     // loadRandomMap(map);
@@ -381,7 +384,16 @@ function start() {
       var x = ev.clientX - rect.left - leftCanvas.width / 2;
       var y = ev.clientY - rect.top - leftCanvas.height / 2;
 
-      tilesMap.moveCursor(x, y);
+      tilesMap.moveCursor(x, y, "left");
+
+    });
+
+    rightCanvas.addEventListener('mousemove', ev => {
+      var rect = rightCanvas.getBoundingClientRect();
+      var x = ev.clientX - rect.left - rightCanvas.width / 2;
+      var y = ev.clientY - rect.top - rightCanvas.height / 2;
+
+      tilesMap.moveCursor(x, y, "right");
 
     });
 
