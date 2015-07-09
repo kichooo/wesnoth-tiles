@@ -34,6 +34,8 @@ module WesnothTiles {
 
   var lastId = 0;
 
+
+  // Singleton creating map objects. It ensures that loading is already done before you can use a map.
   export var createMap = (): Promise<TilesMap> => {
       if (loadingPromise === undefined) {
           Internal.loadWorker();
@@ -110,20 +112,6 @@ module WesnothTiles {
     // When you plan to load bigger chunks of tiles at once.
     getBuilder(loadingMode = false): MapBuilder {
       return new MapBuilder(this.$mapId, loadingMode);
-    }
-
-    // Prepares all the data needed by the plugin to run. Make sure load() is resolved before you use 
-    // anything else.
-    load(): Promise<void> {
-      Internal.loadWorker();
-      return Internal.loadResources().then(() => {
-        // console.log(Internal.definitions.);
-        var keys: string[] = [];
-        Internal.definitions.forEach((val, key) => {
-          keys.push(key);
-        });
-        return Internal.sendCommand<void>("init", keys);
-      });
     }
 
     pointToHexPos(x: number, y: number): IHexPos {
