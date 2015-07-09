@@ -30,7 +30,31 @@ module WesnothTiles {
     }
   }
 
+  var loadingPromise: Promise<void> = undefined;
+
+  var lastId = 0;
+
+  export var createMap = (): Promise<TilesMap> => {
+      if (loadingPromise === undefined) {
+          Internal.loadWorker();
+          loadingPromise = Internal.loadResources().then(() => {
+              // console.log(Internal.definitions.);
+              var keys: string[] = [];
+              Internal.definitions.forEach((val, key) => {
+                  keys.push(key);
+              });
+              return keys;
+          }).then(keys => Internal.sendCommand<void>("init", keys));
+      }
+      return loadingPromise.then(() => {
+        var map = new TilesMap(lastId)
+        lastId++;
+        return map;
+      });       
+  };
+
   export class TilesMap {
+
     private static radius = 72;
     private static halfRadius = TilesMap.radius/2;
 
@@ -42,7 +66,7 @@ module WesnothTiles {
 
     private workerId = 0;
 
-    constructor() {
+    constructor(id: number) {
     }
 
     // Clears the map.
