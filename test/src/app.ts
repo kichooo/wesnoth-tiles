@@ -375,7 +375,7 @@ function start() {
       var x = ev.clientX - rect.left - leftCanvas.width / 2;
       var y = ev.clientY - rect.top - leftCanvas.height / 2;
 
-      leftMap.moveCursor(x, y, "left");
+      leftMap.moveCursor(x, y);
 
     });
 
@@ -393,7 +393,7 @@ function start() {
       var x = ev.clientX - rect.left - rightCanvas.width / 2;
       var y = ev.clientY - rect.top - rightCanvas.height / 2;
 
-      rightMap.moveCursor(x, y, "right");
+      rightMap.moveCursor(x, y);
 
     });
     rightCanvas.addEventListener('click', ev => {
@@ -407,7 +407,7 @@ function start() {
       console.log("clicked right canvas!", x, y, x - rightCanvas.width / 2, y - rightCanvas.height / 2, pos.q, pos.r);
     });
 
-    leftMap.setCursorVisibility(true);
+    right.setCursorVisibility(true);
   }));
 
   Promise.all(promises).then(() => {

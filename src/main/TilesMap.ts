@@ -2,13 +2,13 @@ module WesnothTiles {
   'use strict';
 
   export class MapBuilder {
-    private tileChanges: Internal.ITileChange[] = [];
+    private $tileChanges: Internal.ITileChange[] = [];
 
-    constructor(private mapName: string, private loadingMode) {
+    constructor(private $mapId: number, private $loadingMode) {
     }
 
     setTile(q: number, r: number, terrain: ETerrain = undefined, overlay = EOverlay.NONE, fog = false): MapBuilder {
-      this.tileChanges.push({ q: q, r: r, terrain: terrain, overlay: overlay, fog: fog })
+      this.$tileChanges.push({ q: q, r: r, terrain: terrain, overlay: overlay, fog: fog })
       return this;
     }
 
@@ -23,9 +23,9 @@ module WesnothTiles {
 
     promise() {
       return Internal.sendCommand<void>("setTiles", {
-        loadingMode: this.loadingMode,
-        tileChanges: this.tileChanges,
-        mapName: this.mapName
+        loadingMode: this.$loadingMode,
+        tileChanges: this.$tileChanges,
+        mapId: this.$mapId
       });
     }
   }
@@ -58,29 +58,28 @@ module WesnothTiles {
     private static radius = 72;
     private static halfRadius = TilesMap.radius/2;
 
-    private drawables = new Map<string, Internal.Drawable[]>();
-    private cursors = new Map<string, Internal.Drawable>();
+    private drawables: Internal.Drawable[] = [];
+    private cursor: Internal.Drawable;
     private lastDraw: number = Date.now();
 
     private worker: Worker;
 
     private workerId = 0;
 
-    constructor(id: number) {
+    constructor(private $mapId: number) {      
     }
 
     // Clears the map.
-    clear(map = "default"): Promise<void> {
-      return Internal.sendCommand<void>("clear", map);
+    clear(): Promise<void> {
+      return Internal.sendCommand<void>("clear", this.$mapId);
     }
 
     // Rebuilds the map. Following calls to redraw will draw the resulting map.
-    rebuild(mapName = "default"): Promise<void> {
-      return Internal.sendCommand<Internal.DrawableData[]>("rebuild", mapName).then(drawableDatas => {
-        var drawables: Internal.Drawable[] = [];
-        this.drawables.set(mapName, drawables);
+    rebuild(): Promise<void> {
+      return Internal.sendCommand<Internal.DrawableData[]>("rebuild", this.$mapId).then(drawableDatas => {
+        this.drawables = [];
         drawableDatas.forEach(drawableData => {
-          drawables.push(new Internal.Drawable(
+          this.drawables.push(new Internal.Drawable(
             drawableData.x, drawableData.y, drawableData.name, drawableData.layer,
             drawableData.base, drawableData.frames, drawableData.duration));
         });
@@ -88,33 +87,29 @@ module WesnothTiles {
     }
 
     // Rebuilds, then calculates the checksum. Build results are discarded.
-    getCheckSum(mapName = "default"): Promise<string> {
-      return Internal.sendCommand<string>("getChecksum", mapName);
+    getCheckSum(): Promise<string> {
+      return Internal.sendCommand<string>("getChecksum", this.$mapId);
     }
 
     // Draws map onto the canvas. Best used in Animation Frame.
-    redraw(ctx: CanvasRenderingContext2D, x: number, y: number, mapName = "default"): void {
-      var drawables = this.drawables.get(mapName);
-      if (drawables === undefined)
-        return;
+    redraw(ctx: CanvasRenderingContext2D, x: number, y: number): void {
       var now = Date.now();
       var diff = now - this.lastDraw;
       this.lastDraw = now;
-      drawables.forEach(drawable => {
+      this.drawables.forEach(drawable => {
         drawable.draw(x, y, ctx, diff);
       });
       
-      var cursor = this.cursors.get(mapName);
-      if (cursor !== undefined) {
-        this.cursors.get(mapName).draw(x, y, ctx, diff);  
+      if (this.cursor !== undefined) {
+        this.cursor.draw(x, y, ctx, diff);  
       }
       
     }
 
     // Creates instance of MapBuilder. LoadingMode argument is worth seting 
     // When you plan to load bigger chunks of tiles at once.
-    getBuilder(loadingMode = false, mapName = "default"): MapBuilder {
-      return new MapBuilder(mapName, loadingMode);
+    getBuilder(loadingMode = false): MapBuilder {
+      return new MapBuilder(this.$mapId, loadingMode);
     }
 
     // Prepares all the data needed by the plugin to run. Make sure load() is resolved before you use 
@@ -145,18 +140,17 @@ module WesnothTiles {
       }
     }
 
-    moveCursor(x: number, y: number, mapName = "default"): void {
-      var cursor = this.cursors.get(mapName);
-      if (cursor === undefined)
+    moveCursor(x: number, y: number): void {
+      if (this.cursor === undefined)
           return;
       var hexPos = this.pointToHexPos(x, y);
-      cursor.x = TilesMap.halfRadius * 1.5 * hexPos.q;
-      cursor.y = TilesMap.halfRadius * (2 * hexPos.r + hexPos.q);
+      this.cursor.x = TilesMap.halfRadius * 1.5 * hexPos.q;
+      this.cursor.y = TilesMap.halfRadius * (2 * hexPos.r + hexPos.q);
 
     }
 
     setCursorVisibility(visible: boolean, mapName = "default") {
-        this.cursors.set(mapName, visible ? new Internal.Drawable(0, 0, "hover-hex", 0, undefined, undefined, undefined) : undefined);
+        this.cursor = visible ? new Internal.Drawable(0, 0, "hover-hex", 0, undefined, undefined, undefined) : undefined;
     }
 
   }

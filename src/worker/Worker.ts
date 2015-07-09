@@ -5,13 +5,13 @@ module WesnothTiles.Worker {
 
   export var spriteNames = new Set<string>();
 
-  var hexMaps = new Map<string, HexMap>();
+  var hexMaps = new Map<number, HexMap>();
 
-  var ensureMap = (name: string): HexMap => {
-    var map = hexMaps.get(name);
+  var ensureMap = (mapId: number): HexMap => {
+    var map = hexMaps.get(mapId);
     if (map === undefined) {
       map = new HexMap();
-      hexMaps.set(name, map);
+      hexMaps.set(mapId, map);
     }
     return map;
   }
@@ -33,7 +33,7 @@ module WesnothTiles.Worker {
     }
 
     setTiles = (bundle: Internal.ISetTerrainBundle): void => {
-      var map = ensureMap(bundle.mapName);
+      var map = ensureMap(bundle.mapId);
       if (bundle.loadingMode)
         map.setLoadingMode();
       bundle.tileChanges.forEach(change => {
@@ -49,8 +49,8 @@ module WesnothTiles.Worker {
       definitions.forEach(spriteName => spriteNames.add(spriteName));
     }
 
-    rebuild = (mapName: string): Internal.DrawableData[]=> {
-      var map = ensureMap(mapName);
+    rebuild = (mapId: number): Internal.DrawableData[]=> {
+      var map = ensureMap(mapId);
       map.unsetLoadingMode();
       var drawables = rebuild(map);
       drawables.sort(sortFunc);
@@ -58,9 +58,9 @@ module WesnothTiles.Worker {
       return drawables;
     }
 
-    getChecksum = (mapName: string): string => {
-      var map = ensureMap(mapName);
-      var drawables = this.rebuild(mapName);
+    getChecksum = (mapId: number): string => {
+      var map = ensureMap(mapId);
+      var drawables = this.rebuild(mapId);
 
       var checksum = 0;
 
@@ -72,8 +72,8 @@ module WesnothTiles.Worker {
       return checksum.toString();
     }
 
-    clear = (mapName: string): void => {
-      ensureMap(mapName).clear();
+    clear = (mapId: number): void => {
+      ensureMap(mapId).clear();
     }
   }
 
