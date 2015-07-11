@@ -62,7 +62,6 @@ module WesnothTiles {
 
     private drawables: Internal.Drawable[] = [];
     private cursor: Internal.Drawable;
-    private lastDraw: number = Date.now();
 
     private worker: Worker;
 
@@ -94,16 +93,13 @@ module WesnothTiles {
     }
 
     // Draws map onto the canvas. Best used in Animation Frame.
-    redraw(ctx: CanvasRenderingContext2D, x: number, y: number): void {
-      var now = Date.now();
-      var diff = now - this.lastDraw;
-      this.lastDraw = now;
+    redraw(ctx: CanvasRenderingContext2D, x: number, y: number, timestamp: number): void {
       this.drawables.forEach(drawable => {
-        drawable.draw(x, y, ctx, diff);
+        drawable.draw(x, y, ctx, timestamp);
       });
       
       if (this.cursor !== undefined) {
-        this.cursor.draw(x, y, ctx, diff);  
+        this.cursor.draw(x, y, ctx, timestamp);  
       }
       
     }

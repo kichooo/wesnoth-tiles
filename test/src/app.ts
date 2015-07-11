@@ -94,7 +94,7 @@ function loadSingleCircle(): void {
 
 function benchmark(): void {
   document.getElementById("checksumBlock").style.display = 'none';
-  redraw = false;
+  // redraw = false;
   var timer = new Date();
   createTestMap().then(() => {
     var promise: Promise<void> = rightMap.rebuild();
@@ -112,7 +112,7 @@ function benchmark(): void {
 
     document.getElementById("checksumBlock").style.display = 'block';
 
-    redraw = true;
+    // redraw = true;
   });
 }
 
@@ -430,13 +430,13 @@ function start() {
 
     
     var anim = () => {
-      window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(timestamp => {
         if (redraw) {
           leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
-          leftMap.redraw(leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2));
+          leftMap.redraw(leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2), timestamp);
 
           rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);          
-          rightMap.redraw(rightCtx, Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2));
+          rightMap.redraw(rightCtx, Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2), timestamp);
           // rightCtx.globalAlpha = 0.5;
                 // rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
           // for (var i = -200; i < 200; i++) {

@@ -4,7 +4,6 @@ module WesnothTiles.Internal {
   'use strict';
 
   export class Drawable {
-    private animTime = Date.now();
     constructor(public x: number,
       public y: number,
       public name: string,
@@ -14,7 +13,7 @@ module WesnothTiles.Internal {
       private duration: number) {
     }
 
-    draw(x: number, y: number, ctx: CanvasRenderingContext2D, timePassed: number) {
+    draw(x: number, y: number, ctx: CanvasRenderingContext2D, timestamp: number) {
       if (this.duration === undefined) { // sprite is static.
         var sprite = definitions.get(this.name);
         if (sprite === undefined) {
@@ -23,8 +22,7 @@ module WesnothTiles.Internal {
         sprite.draw(this.x + x, this.y + y, ctx);
         return;
       }
-      this.animTime = (this.animTime + timePassed) % (this.frames * this.duration);
-      var frame = 1 + Math.floor(this.animTime / this.duration);
+      var frame = 1 + Math.floor(timestamp / this.duration) % this.frames;
       var frameString = "A" + (frame >= 10 ? frame.toString() : ("0" + frame.toString()));
       var sprite = definitions.get(this.name.replace("@A", frameString));
       if (sprite === undefined) {
