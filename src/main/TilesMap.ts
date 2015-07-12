@@ -146,6 +146,14 @@ module WesnothTiles {
       }
     }
 
+    hexToPoint(q: number, r: number): IVector {
+      return {
+        x: q * TilesMap.radius * 3 / 4,
+        y: r * TilesMap.radius + q * TilesMap.halfRadius
+      };
+    }
+
+
     moveCursor(x: number, y: number): void {
       if (this.cursor === undefined)
           return;

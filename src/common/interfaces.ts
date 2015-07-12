@@ -1,65 +1,9 @@
-// Worker. Meant to be run on another thread.
-
-module WesnothTiles.Internal {
-  'use strict';
-
-  export interface ITileChange {
-    q: number;
-    r: number;
-    terrain?: ETerrain;
-    overlay?: EOverlay;
-    fog?: boolean;
-  }
-
-  export interface ISetTerrainBundle {
-    tileChanges: ITileChange[];
-    loadingMode: boolean;
-    mapId: number;
-  }
-
-  export interface IWorkerOrder {
-    // name of the function to execute.
-    func: string; 
-    // request id - unique for each call.
-    id: number; 
-    // additional parameters
-    data?: Object;
-  }
-
-  export interface IWorkerResponse {
-    // request id - unique for each call - the same as in the WorkerOrder.
-    id: number; 
-    // response data.
-    data?: Object;
-    error?: string;
-  }
-
+module WesnothTiles {
   export interface IVector {
     x: number;
     y: number;
   }
-
-
-  export class DrawableData {
-    constructor(public x: number,
-      public y: number,
-      public name: string,
-      public layer: number,
-      public base: IVector,
-      public frames: number,
-      public duration: number) {
-    }
-
-    toString(): string {
-      if (this.duration === undefined)
-        return this.name + this.layer + ',' + this.x + ',' + this.y;
-      else
-        return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
-    }
-  }
-}
-
-module WesnothTiles {
+  
   export interface IHexPos {
     q: number;
     r: number;
@@ -140,4 +84,57 @@ module WesnothTiles {
     NONE
   }
 
+}
+
+module WesnothTiles.Internal {
+  'use strict';
+
+  export interface ITileChange {
+    q: number;
+    r: number;
+    terrain?: ETerrain;
+    overlay?: EOverlay;
+    fog?: boolean;
+  }
+
+  export interface ISetTerrainBundle {
+    tileChanges: ITileChange[];
+    loadingMode: boolean;
+    mapId: number;
+  }
+
+  export interface IWorkerOrder {
+    // name of the function to execute.
+    func: string; 
+    // request id - unique for each call.
+    id: number; 
+    // additional parameters
+    data?: Object;
+  }
+
+  export interface IWorkerResponse {
+    // request id - unique for each call - the same as in the WorkerOrder.
+    id: number; 
+    // response data.
+    data?: Object;
+    error?: string;
+  }
+
+  export class DrawableData {
+    constructor(public x: number,
+      public y: number,
+      public name: string,
+      public layer: number,
+      public base: IVector,
+      public frames: number,
+      public duration: number) {
+    }
+
+    toString(): string {
+      if (this.duration === undefined)
+        return this.name + this.layer + ',' + this.x + ',' + this.y;
+      else
+        return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
+    }
+  }
 }

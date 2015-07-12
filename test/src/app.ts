@@ -389,8 +389,8 @@ function start() {
 
     rightCanvas.addEventListener('mousemove', ev => {
       var rect = rightCanvas.getBoundingClientRect();
-      var x = ev.clientX - rect.left - rightCanvas.width / 2;
-      var y = ev.clientY - rect.top - rightCanvas.height / 2;
+      var x = ev.clientX - rect.left - rightCanvas.width / 2 + leftMap.hexToPoint(1, 1).x;
+      var y = ev.clientY - rect.top - rightCanvas.height / 2 + leftMap.hexToPoint(1, 1).y;
 
       rightMap.moveCursor(x, y);
 
@@ -398,8 +398,8 @@ function start() {
     rightCanvas.addEventListener('click', ev => {
 
       var rect = rightCanvas.getBoundingClientRect();
-      var x = ev.clientX - rect.left;
-      var y = ev.clientY - rect.top;
+      var x = ev.clientX - rect.left + leftMap.hexToPoint(1, 1).x;
+      var y = ev.clientY - rect.top + leftMap.hexToPoint(1, 1).y;
 
       var pos = rightMap.pointToHexPos(x - rightCanvas.width / 2, y - rightCanvas.height / 2);
       ev.preventDefault();
@@ -410,7 +410,6 @@ function start() {
 
   Promise.all(promises).then(() => {
     loadDisk();
-
     var leftProjection: WesnothTiles.IProjection = {
       left: -leftCanvas.width / 2,
       right: leftCanvas.width / 2,
@@ -421,10 +420,10 @@ function start() {
     };
 
     var rightProjection: WesnothTiles.IProjection = {
-      left: -rightCanvas.width / 2,
-      right: rightCanvas.width / 2,
-      top: -rightCanvas.height / 2,
-      bottom: rightCanvas.height / 2,
+      left: -rightCanvas.width / 2 + rightMap.hexToPoint(1, 1).x,
+      right: rightCanvas.width / 2 + rightMap.hexToPoint(1, 1).x,
+      top: -rightCanvas.height / 2 + rightMap.hexToPoint(1, 1).y,
+      bottom: rightCanvas.height / 2 + rightMap.hexToPoint(1, 1).y,
       x: 0,
       y: 0,
     };
@@ -438,8 +437,8 @@ function start() {
           rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);          
           rightMap.redraw(rightCtx, rightProjection, timestamp);
 
-          // rightCtx.fillStyle = "red";
-          // rightCtx.fillRect(rightCanvas.width / 2 , rightCanvas.height / 2, 3, 3 );
+          leftCtx.fillStyle = "red";
+          leftCtx.fillRect(leftCanvas.width / 2 , leftCanvas.height / 2, 3, 3 );
           // rightCtx.globalAlpha = 0.5;
                 // rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
           // for (var i = -200; i < 200; i++) {

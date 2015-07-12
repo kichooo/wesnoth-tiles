@@ -13,12 +13,12 @@ module WesnothTiles.Worker {
 
 
   export interface IBuilder {
-    toDrawable(imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector): Internal.DrawableData;
+    toDrawable(imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector): Internal.DrawableData;
     toString(imageStem: string, postfix?: string): string;
   }
   // image builders.
   export var IB_IMAGE_SINGLE: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       // console.log("Adding " + imageStem + postfix);
       return new Internal.DrawableData(
         pos.x,
@@ -33,7 +33,7 @@ module WesnothTiles.Worker {
   }
 
   export var IB_ANIMATION_15_SLOW: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new Internal.DrawableData(
         pos.x,
         pos.y,
@@ -46,7 +46,7 @@ module WesnothTiles.Worker {
   }
 
   export var IB_ANIMATION_15: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new Internal.DrawableData(
         pos.x,
         pos.y,
@@ -59,7 +59,7 @@ module WesnothTiles.Worker {
   }
 
   export var IB_ANIMATION_06: IBuilder = {
-    toDrawable: (imageStem: string, postfix: string, pos: Internal.IVector, layer: number, base: Internal.IVector) => {
+    toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new Internal.DrawableData(
         pos.x,
         pos.y,
@@ -76,8 +76,8 @@ module WesnothTiles.Worker {
     layer: number;
     variations: string[];
     postfix?: string;
-    base?: Internal.IVector;
-    center?: Internal.IVector;
+    base?: IVector;
+    center?: IVector;
   }
 
   export interface WMLTile extends IHexPos {

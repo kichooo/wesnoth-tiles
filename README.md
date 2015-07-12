@@ -64,7 +64,7 @@ WML files with terrain definitions will be converted using short GO program.
 - [x] ethereal abyss (chasm)
 
 # current iteration (v0.8)
- - [ ] Better drawing control.
+ - [x] Better drawing control.
  - [x] Get click position in hex coord.
  - [x] Draw marker on highlighted and selected hexes.
 
