@@ -77,7 +77,7 @@ GPL. See LICENSE file in the root of the repository.
 
 # preview
 
-![](http://i.imgur.com/jO4kabC.jpg)
+![](http://i.imgur.com/MsHKY1P.jpg)
 
 # from author
 
