@@ -29,7 +29,7 @@ function createTestMap(): Promise<void> {
           overlay = rng.nextRange(EOverlay.MUSHROOMS, EOverlay.NONE + 1);
         mapBuilder = mapBuilder.setTile(i, j, terrain, overlay);
       }
-    return mapBuilder.promise();  
+    return mapBuilder.promise();
   });
 
   // return tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
@@ -64,14 +64,14 @@ function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   var start = new Date();
   createTestMap().then(() => rightMap.rebuild()).then(() => {
-      document.getElementById("checksum").textContent = "";
-      rightMap.getCheckSum()
-        .then(checksum => document.getElementById("checksum").textContent = checksum);
-      document.getElementById("expected").textContent = "expected: 1386360853";
-      document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
+    document.getElementById("checksum").textContent = "";
+    rightMap.getCheckSum()
+      .then(checksum => document.getElementById("checksum").textContent = checksum);
+    document.getElementById("expected").textContent = "expected: 1386360853";
+    document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
 
-      document.getElementById("checksumBlock").style.display = 'block';
-    });
+    document.getElementById("checksumBlock").style.display = 'block';
+  });
 }
 
 function loadSingleCircle(): void {
@@ -87,9 +87,9 @@ function loadSingleCircle(): void {
       .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
-    document.getElementById("checksumBlock").style.display = 'block';  
+    document.getElementById("checksumBlock").style.display = 'block';
   });
-  
+
 }
 
 function benchmark(): void {
@@ -100,8 +100,8 @@ function benchmark(): void {
     var promise: Promise<void> = rightMap.rebuild();
     for (var i = 0; i < 39; i++) {
       promise = promise.then(() => { return rightMap.rebuild(); });
-    }    
-    return promise;  
+    }
+    return promise;
   }).then(() => {
     var duration = (new Date().getTime() - timer.getTime()) / 40;
     document.getElementById("checksum").textContent = "";
@@ -130,7 +130,7 @@ function loadRandomMap(): void {
     .then(() => rightMap.rebuild()).then(() => {
     document.getElementById("checksum").textContent = "";
     rightMap.getCheckSum()
-     .then(checksum => document.getElementById("checksum").textContent = checksum);
+      .then(checksum => document.getElementById("checksum").textContent = checksum);
     document.getElementById("expected").textContent = "expected: none";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
 
@@ -146,7 +146,7 @@ function loadRandomMapWithWoods(): void {
     for (var i = -18; i < 18; i++)
       for (var j = -18; j < 18; j++) {
         builder = builder.setTile(i, j, ETerrain.GRASS_SEMI_DRY, ETerrain.VOID + 1 + Math.floor(Math.random() * 14));
-      }          
+      }
     return builder.promise();
   }).then(() => rightMap.rebuild()).then(() => {
     document.getElementById("checksum").textContent = "none";
@@ -324,15 +324,15 @@ function loadDisk(): void {
     }
     return mapBuilder.promise();
   }).then(() => leftMap.rebuild()).then(() => {
-      document.getElementById("checksum").textContent = "";
-      leftMap.getCheckSum()
-        .then(checksum => document.getElementById("checksum").textContent = checksum);
-      document.getElementById("expected").textContent = "expected: 18469171";
-      document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
-      document.getElementById("checksumBlock").style.display = 'block';
-    });  ;
-  
-  
+    document.getElementById("checksum").textContent = "";
+    leftMap.getCheckSum()
+      .then(checksum => document.getElementById("checksum").textContent = checksum);
+    document.getElementById("expected").textContent = "expected: 18469171";
+    document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
+    document.getElementById("checksumBlock").style.display = 'block';
+  });;
+
+
 }
 
 function loadCircle(builder: WesnothTiles.MapBuilder, terrain1, terrain2, overlay1, overlay2, x, y): WesnothTiles.MapBuilder {
@@ -357,7 +357,7 @@ function start() {
   promises.push(WesnothTiles.createMap().then(left => {
     leftMap = left;
 
-    leftCanvas.width = leftCanvas.parentElement.clientWidth/2;
+    leftCanvas.width = leftCanvas.parentElement.clientWidth / 2;
     leftCanvas.height = leftCanvas.parentElement.clientHeight;
 
     leftCanvas.addEventListener('click', ev => {
@@ -384,7 +384,7 @@ function start() {
   promises.push(WesnothTiles.createMap().then(right => {
     rightMap = right;
 
-    rightCanvas.width = rightCanvas.parentElement.clientWidth/2;
+    rightCanvas.width = rightCanvas.parentElement.clientWidth / 2;
     rightCanvas.height = rightCanvas.parentElement.clientHeight;
 
     rightCanvas.addEventListener('mousemove', ev => {
@@ -434,13 +434,13 @@ function start() {
           leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
           leftMap.redraw(leftCtx, leftProjection, timestamp);
 
-          rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);          
+          rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
           rightMap.redraw(rightCtx, rightProjection, timestamp);
 
           leftCtx.fillStyle = "red";
-          leftCtx.fillRect(leftCanvas.width / 2 , leftCanvas.height / 2, 3, 3 );
+          leftCtx.fillRect(leftCanvas.width / 2, leftCanvas.height / 2, 3, 3);
           // rightCtx.globalAlpha = 0.5;
-                // rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
+          // rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
           // for (var i = -200; i < 200; i++) {
           //   for (var j = -200; j < 200; j++) {
           //     var p = tilesMap.pointToHexPos(i, j);
@@ -450,7 +450,7 @@ function start() {
           //     rightCtx.fillRect( i + rightCanvas.width / 2 , j + rightCanvas.height / 2, 1, 1 );
           //   }
           //  }
-           // rightCtx.globalAlpha = 1;
+          // rightCtx.globalAlpha = 1;
           
           
           // rightCtx.fillStyle = "red";

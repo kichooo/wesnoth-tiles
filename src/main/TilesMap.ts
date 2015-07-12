@@ -44,28 +44,28 @@ module WesnothTiles {
   }
 
   export var pointToHexPos = (x: number, y: number): IHexPos => {
-      y = y / radius;
+    y = y / radius;
 
-      var t1 = (x +  halfRadius) / halfRadius;
-      var t2 = Math.floor(y + t1);
-      var q = Math.floor((Math.floor(t1 - y) + t2) / 3);
-      var r = Math.floor((Math.floor(2 * y + 1) + t2) / 3) - q;      
+    var t1 = (x + halfRadius) / halfRadius;
+    var t2 = Math.floor(y + t1);
+    var q = Math.floor((Math.floor(t1 - y) + t2) / 3);
+    var r = Math.floor((Math.floor(2 * y + 1) + t2) / 3) - q;
 
-      return {
-        q: Math.floor(q),
-        r: Math.floor(r)
-      }
+    return {
+      q: Math.floor(q),
+      r: Math.floor(r)
     }
+  }
 
   export var hexToPoint = (q: number, r: number): IVector => {
-      return {
-        x: q * radius * 3 / 4,
-        y: r * radius + q * halfRadius
-      };
-    }
+    return {
+      x: q * radius * 3 / 4,
+      y: r * radius + q * halfRadius
+    };
+  }
 
   var radius = 72;
-  var halfRadius = radius/2;
+  var halfRadius = radius / 2;
 
   var loadingPromise: Promise<void> = undefined;
 
@@ -82,19 +82,19 @@ module WesnothTiles {
         keys.push(key);
       });
       return keys;
-    }).then(keys => Internal.sendCommand<void>("init", keys));  
+    }).then(keys => Internal.sendCommand<void>("init", keys));
   }
 
   // Singleton creating map objects. It ensures that loading is already done before you can use a map.
   export var createMap = (): Promise<TilesMap> => {
-      if (loadingPromise === undefined) {
-        createLoadingPromise();
-      }
-      return loadingPromise.then(() => {
-        var map = new TilesMap(lastId)
-        lastId++;
-        return map;
-      });       
+    if (loadingPromise === undefined) {
+      createLoadingPromise();
+    }
+    return loadingPromise.then(() => {
+      var map = new TilesMap(lastId)
+      lastId++;
+      return map;
+    });
   };
 
   export var load = (): Promise<void> => {
@@ -111,7 +111,7 @@ module WesnothTiles {
 
     private workerId = 0;
 
-    constructor(private $mapId: number) {      
+    constructor(private $mapId: number) {
     }
 
     // Clears the map.
@@ -140,22 +140,22 @@ module WesnothTiles {
       this.drawables.forEach(drawable => {
         drawable.draw(projection, ctx, timestamp);
       });
-      
+
       if (this.cursor !== undefined) {
-        this.cursor.draw(projection, ctx, timestamp);  
+        this.cursor.draw(projection, ctx, timestamp);
       }
-      
+
     }
 
     // Creates instance of MapBuilder. LoadingMode argument is worth seting 
     // When you plan to load bigger chunks of tiles at once.
     getBuilder(loadingMode = false): MapBuilder {
       return new MapBuilder(this.$mapId, loadingMode);
-    }    
+    }
 
     moveCursor(x: number, y: number): void {
       if (this.cursor === undefined)
-          return;
+        return;
       var hexPos = pointToHexPos(x, y);
       this.cursor.x = halfRadius * 1.5 * hexPos.q;
       this.cursor.y = halfRadius * (2 * hexPos.r + hexPos.q);
@@ -163,7 +163,7 @@ module WesnothTiles {
     }
 
     setCursorVisibility(visible: boolean, mapName = "default") {
-        this.cursor = visible ? new Internal.Drawable(0, 0, "hover-hex", undefined, undefined) : undefined;
+      this.cursor = visible ? new Internal.Drawable(0, 0, "hover-hex", undefined, undefined) : undefined;
     }
 
   }
