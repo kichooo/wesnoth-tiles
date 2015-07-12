@@ -13,14 +13,15 @@ module WesnothTiles {
     }
 
 
-    // // Unsets given hex. Overlay is cleared too.
-    // // It is not an equivalent of setting terrain to Void.
-    // // A 'rebuild' call is needed to actually display the change.}
+    // Unsets given hex. Overlay is cleared too.
+    // It is not an equivalent of setting terrain to Void.
+    // A 'rebuild' call is needed to actually display the change.}
     unsetTile(q: number, r: number): MapBuilder {
       // We messages sent to the worker just have terrain as undefined.
       return this.setTile(q, r);
     }
 
+    // When this promise is resolved, a rebuild call might be executed.
     promise() {
       return Internal.sendCommand<void>("setTiles", {
         loadingMode: this.$loadingMode,
@@ -35,18 +36,23 @@ module WesnothTiles {
   var lastId = 0;
 
 
+  var createLoadingPromise = (): void => {
+    if (loadingPromise !== undefined)
+      return
+    loadingPromise = Internal.loadResources().then(() => {
+      Internal.loadWorker();
+      var keys: string[] = [];
+      Internal.definitions.forEach((val, key) => {
+        keys.push(key);
+      });
+      return keys;
+    }).then(keys => Internal.sendCommand<void>("init", keys));  
+  }
+
   // Singleton creating map objects. It ensures that loading is already done before you can use a map.
   export var createMap = (): Promise<TilesMap> => {
       if (loadingPromise === undefined) {
-          Internal.loadWorker();
-          loadingPromise = Internal.loadResources().then(() => {
-              // console.log(Internal.definitions.);
-              var keys: string[] = [];
-              Internal.definitions.forEach((val, key) => {
-                  keys.push(key);
-              });
-              return keys;
-          }).then(keys => Internal.sendCommand<void>("init", keys));
+        createLoadingPromise();
       }
       return loadingPromise.then(() => {
         var map = new TilesMap(lastId)
@@ -54,6 +60,11 @@ module WesnothTiles {
         return map;
       });       
   };
+
+  export var load = (): Promise<void> => {
+    createLoadingPromise();
+    return loadingPromise;
+  }
 
   export class TilesMap {
 
