@@ -367,7 +367,6 @@ function start() {
 
       var pos = leftMap.pointToHexPos(Math.floor(x - leftCanvas.width / 2), Math.floor(y - leftCanvas.height / 2));
       ev.preventDefault();
-      console.log("clicked left canvas!", x, y, x - rightCanvas.width / 2, y - rightCanvas.height / 2, pos.q, pos.r);
     });
 
     leftCanvas.addEventListener('mousemove', ev => {
@@ -404,7 +403,6 @@ function start() {
 
       var pos = rightMap.pointToHexPos(x - rightCanvas.width / 2, y - rightCanvas.height / 2);
       ev.preventDefault();
-      console.log("clicked right canvas!", x, y, x - rightCanvas.width / 2, y - rightCanvas.height / 2, pos.q, pos.r);
     });
 
     right.setCursorVisibility(true);

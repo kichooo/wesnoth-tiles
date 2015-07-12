@@ -92,8 +92,7 @@ module WesnothTiles {
         this.drawables = [];
         drawableDatas.forEach(drawableData => {
           this.drawables.push(new Internal.Drawable(
-            drawableData.x, drawableData.y, drawableData.name, drawableData.layer,
-            drawableData.base, drawableData.frames, drawableData.duration));
+            drawableData.x, drawableData.y, drawableData.name, drawableData.frames, drawableData.duration));
         });
       });
     }
@@ -145,7 +144,7 @@ module WesnothTiles {
     }
 
     setCursorVisibility(visible: boolean, mapName = "default") {
-        this.cursor = visible ? new Internal.Drawable(0, 0, "hover-hex", 0, undefined, undefined, undefined) : undefined;
+        this.cursor = visible ? new Internal.Drawable(0, 0, "hover-hex", undefined, undefined) : undefined;
     }
 
   }

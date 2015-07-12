@@ -6,9 +6,7 @@ module WesnothTiles.Internal {
   export class Drawable {
     constructor(public x: number,
       public y: number,
-      public name: string,
-      public layer: number,
-      public base: IVector,
+      private name: string,
       private frames: number,
       private duration: number) {
     }
