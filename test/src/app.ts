@@ -365,7 +365,7 @@ function start() {
       var x = ev.clientX - rect.left;
       var y = ev.clientY - rect.top;
 
-      var pos = leftMap.pointToHexPos(Math.floor(x - leftCanvas.width / 2), Math.floor(y - leftCanvas.height / 2));
+      var pos = WesnothTiles.pointToHexPos(Math.floor(x - leftCanvas.width / 2), Math.floor(y - leftCanvas.height / 2));
       ev.preventDefault();
     });
 
@@ -389,8 +389,8 @@ function start() {
 
     rightCanvas.addEventListener('mousemove', ev => {
       var rect = rightCanvas.getBoundingClientRect();
-      var x = ev.clientX - rect.left - rightCanvas.width / 2 + leftMap.hexToPoint(1, 1).x;
-      var y = ev.clientY - rect.top - rightCanvas.height / 2 + leftMap.hexToPoint(1, 1).y;
+      var x = ev.clientX - rect.left - rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x;
+      var y = ev.clientY - rect.top - rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y;
 
       rightMap.moveCursor(x, y);
 
@@ -398,10 +398,10 @@ function start() {
     rightCanvas.addEventListener('click', ev => {
 
       var rect = rightCanvas.getBoundingClientRect();
-      var x = ev.clientX - rect.left + leftMap.hexToPoint(1, 1).x;
-      var y = ev.clientY - rect.top + leftMap.hexToPoint(1, 1).y;
+      var x = ev.clientX - rect.left + WesnothTiles.hexToPoint(1, 1).x;
+      var y = ev.clientY - rect.top + WesnothTiles.hexToPoint(1, 1).y;
 
-      var pos = rightMap.pointToHexPos(x - rightCanvas.width / 2, y - rightCanvas.height / 2);
+      var pos = WesnothTiles.pointToHexPos(x - rightCanvas.width / 2, y - rightCanvas.height / 2);
       ev.preventDefault();
     });
 
@@ -420,10 +420,10 @@ function start() {
     };
 
     var rightProjection: WesnothTiles.IProjection = {
-      left: -rightCanvas.width / 2 + rightMap.hexToPoint(1, 1).x,
-      right: rightCanvas.width / 2 + rightMap.hexToPoint(1, 1).x,
-      top: -rightCanvas.height / 2 + rightMap.hexToPoint(1, 1).y,
-      bottom: rightCanvas.height / 2 + rightMap.hexToPoint(1, 1).y,
+      left: -rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x,
+      right: rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x,
+      top: -rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y,
+      bottom: rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y,
       x: 0,
       y: 0,
     };

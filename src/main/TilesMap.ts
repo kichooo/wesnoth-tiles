@@ -43,6 +43,30 @@ module WesnothTiles {
     }
   }
 
+  export var pointToHexPos = (x: number, y: number): IHexPos => {
+      y = y / radius;
+
+      var t1 = (x +  halfRadius) / halfRadius;
+      var t2 = Math.floor(y + t1);
+      var q = Math.floor((Math.floor(t1 - y) + t2) / 3);
+      var r = Math.floor((Math.floor(2 * y + 1) + t2) / 3) - q;      
+
+      return {
+        q: Math.floor(q),
+        r: Math.floor(r)
+      }
+    }
+
+  export var hexToPoint = (q: number, r: number): IVector => {
+      return {
+        x: q * radius * 3 / 4,
+        y: r * radius + q * halfRadius
+      };
+    }
+
+  var radius = 72;
+  var halfRadius = radius/2;
+
   var loadingPromise: Promise<void> = undefined;
 
   var lastId = 0;
@@ -79,9 +103,6 @@ module WesnothTiles {
   }
 
   export class TilesMap {
-
-    private static radius = 72;
-    private static halfRadius = TilesMap.radius/2;
 
     private drawables: Internal.Drawable[] = [];
     private cursor: Internal.Drawable;
@@ -130,36 +151,14 @@ module WesnothTiles {
     // When you plan to load bigger chunks of tiles at once.
     getBuilder(loadingMode = false): MapBuilder {
       return new MapBuilder(this.$mapId, loadingMode);
-    }
-
-    pointToHexPos(x: number, y: number): IHexPos {
-      y = y / TilesMap.radius;
-
-      var t1 = (x +  TilesMap.halfRadius) / TilesMap.halfRadius;
-      var t2 = Math.floor(y + t1);
-      var q = Math.floor((Math.floor(t1 - y) + t2) / 3);
-      var r = Math.floor((Math.floor(2 * y + 1) + t2) / 3) - q;      
-
-      return {
-        q: Math.floor(q),
-        r: Math.floor(r)
-      }
-    }
-
-    hexToPoint(q: number, r: number): IVector {
-      return {
-        x: q * TilesMap.radius * 3 / 4,
-        y: r * TilesMap.radius + q * TilesMap.halfRadius
-      };
-    }
-
+    }    
 
     moveCursor(x: number, y: number): void {
       if (this.cursor === undefined)
           return;
-      var hexPos = this.pointToHexPos(x, y);
-      this.cursor.x = TilesMap.halfRadius * 1.5 * hexPos.q;
-      this.cursor.y = TilesMap.halfRadius * (2 * hexPos.r + hexPos.q);
+      var hexPos = pointToHexPos(x, y);
+      this.cursor.x = halfRadius * 1.5 * hexPos.q;
+      this.cursor.y = halfRadius * (2 * hexPos.r + hexPos.q);
 
     }
 
