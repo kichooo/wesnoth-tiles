@@ -409,32 +409,37 @@ function start() {
   }));
 
   Promise.all(promises).then(() => {
-
-    
-    
-    // loadChunksRandom(map);
-    // loadRandomMapWithWoods(map);
-    // loadRandomMap(map);
-    // loadCircle(map, ETerrain.ABYSS, ETerrain.GRASS_GREEN, -2, 0);
-    // loadCircle(map, ETerrain.GRASS_GREEN, ETerrain.GRASS_GREEN,
-    //   EOverlay.VILLAGE_DESERT, EOverlay.NONE, 2, -2);
-    // loadCircle(map, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL,
-    //   EOverlay.NONE, EOverlay.NONE, 3, 0);
-    // loadCircle(map, ETerrain.GRASS_GREEN, ETerrain.ABYSS, 2, -2);
     loadDisk();
-    // loadSingleCircle();
 
-    
+    var leftProjection: WesnothTiles.IProjection = {
+      left: -leftCanvas.width / 2,
+      right: leftCanvas.width / 2,
+      top: -leftCanvas.height / 2,
+      bottom: leftCanvas.height / 2,
+      x: 0,
+      y: 0,
+    };
 
-    
+    var rightProjection: WesnothTiles.IProjection = {
+      left: -rightCanvas.width / 2,
+      right: rightCanvas.width / 2,
+      top: -rightCanvas.height / 2,
+      bottom: rightCanvas.height / 2,
+      x: 0,
+      y: 0,
+    };
+
     var anim = () => {
       window.requestAnimationFrame(timestamp => {
         if (redraw) {
           leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
-          leftMap.redraw(leftCtx, Math.floor(leftCanvas.width / 2), Math.floor(leftCanvas.height / 2), timestamp);
+          leftMap.redraw(leftCtx, leftProjection, timestamp);
 
           rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);          
-          rightMap.redraw(rightCtx, Math.floor(rightCanvas.width / 2), Math.floor(rightCanvas.height / 2), timestamp);
+          rightMap.redraw(rightCtx, rightProjection, timestamp);
+
+          // rightCtx.fillStyle = "red";
+          // rightCtx.fillRect(rightCanvas.width / 2 , rightCanvas.height / 2, 3, 3 );
           // rightCtx.globalAlpha = 0.5;
                 // rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
           // for (var i = -200; i < 200; i++) {

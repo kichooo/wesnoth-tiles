@@ -11,22 +11,37 @@ module WesnothTiles.Internal {
       private duration: number) {
     }
 
-    draw(x: number, y: number, ctx: CanvasRenderingContext2D, timestamp: number) {
+    draw(projection: IProjection, ctx: CanvasRenderingContext2D, timestamp: number) {
+      var sprite: SpriteDefinition;      
+
       if (this.duration === undefined) { // sprite is static.
-        var sprite = definitions.get(this.name);
+        sprite = definitions.get(this.name);
         if (sprite === undefined) {
           console.error("Undefined sprite", this.name)
         }
-        sprite.draw(this.x + x, this.y + y, ctx);
+
+        if (this.x > projection.right + sprite.size().x / 2 || this.y > projection.bottom + sprite.size().y / 2
+          || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
         return;
+
+        sprite.draw(this.x - projection.left, this.y - projection.top, ctx);
+        return;
+      } else {
+        var frame = 1 + Math.floor(timestamp / this.duration) % this.frames;
+        var frameString = "A" + (frame >= 10 ? frame.toString() : ("0" + frame.toString()));
+        sprite = definitions.get(this.name.replace("@A", frameString));
       }
-      var frame = 1 + Math.floor(timestamp / this.duration) % this.frames;
-      var frameString = "A" + (frame >= 10 ? frame.toString() : ("0" + frame.toString()));
-      var sprite = definitions.get(this.name.replace("@A", frameString));
+
+      // Check if we really need to draw the sprite, maybe it is outside of the drawing area.
+      if (this.x > projection.right + sprite.size().x / 2 || this.y > projection.bottom + sprite.size().y / 2
+        || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
+        return;
+
       if (sprite === undefined) {
-        console.error("Undefined sprite", this.name.replace("@A", frameString))
-      }
-      sprite.draw(this.x + x, this.y + y, ctx);
+        console.error("Undefined sprite", this.name, this);
+      }     
+
+      sprite.draw(this.x + projection.x - projection.left, this.y + projection.y - projection.top, ctx);
     }
   }
 }  

@@ -20,5 +20,10 @@ module WesnothTiles.Internal {
         this.frame.size.x, this.frame.size.y
         );
     }
+
+    size(): IVector {
+      return this.sourceSize;
+    }
+
   }
 } 

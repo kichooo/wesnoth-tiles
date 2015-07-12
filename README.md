@@ -65,9 +65,8 @@ WML files with terrain definitions will be converted using short GO program.
 
 # current iteration (v0.8)
  - [ ] Better drawing control.
- - [ ] Angular directive (with good performance)
  - [x] Get click position in hex coord.
- - [ ] Draw marker on highlighted and selected hexes.
+ - [x] Draw marker on highlighted and selected hexes.
 
 # backlog list
  - introduce some automatic testing

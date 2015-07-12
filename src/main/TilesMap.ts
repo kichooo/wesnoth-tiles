@@ -1,6 +1,18 @@
 module WesnothTiles {
   'use strict';
 
+  export interface IProjection {
+    // Part of the map to draw
+    left: number;
+    right: number;
+    top: number;
+    bottom: number;
+
+    // Where to draw on the canvas
+    x: number;
+    y: number;
+  }
+
   export class MapBuilder {
     private $tileChanges: Internal.ITileChange[] = [];
 
@@ -103,13 +115,13 @@ module WesnothTiles {
     }
 
     // Draws map onto the canvas. Best used in Animation Frame.
-    redraw(ctx: CanvasRenderingContext2D, x: number, y: number, timestamp: number): void {
+    redraw(ctx: CanvasRenderingContext2D, projection: IProjection, timestamp: number): void {
       this.drawables.forEach(drawable => {
-        drawable.draw(x, y, ctx, timestamp);
+        drawable.draw(projection, ctx, timestamp);
       });
       
       if (this.cursor !== undefined) {
-        this.cursor.draw(x, y, ctx, timestamp);  
+        this.cursor.draw(projection, ctx, timestamp);  
       }
       
     }
