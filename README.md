@@ -1,6 +1,6 @@
 # wesnoth-tiles
 
-Javascript port of the beautiful hex system from [Battle for Wesnoth](wesnoth.org)
+Javascript port of the beautiful hex system from [Battle for Wesnoth](http://wesnoth.org)
 
 # try yourself
 
