@@ -107,7 +107,7 @@ function benchmark(): void {
     document.getElementById("checksum").textContent = "";
     rightMap.getCheckSum()
       .then(checksum => document.getElementById("checksum").textContent = checksum);
-    document.getElementById("expected").textContent = "expected: 3643646740";
+    document.getElementById("expected").textContent = "expected: 1386360853";
     document.getElementById("duration").textContent = duration.toString();
 
     document.getElementById("checksumBlock").style.display = 'block';
