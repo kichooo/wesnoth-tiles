@@ -10,7 +10,10 @@ module WesnothTiles.Internal {
   var worker: Worker;
 
   export var loadWorker = () => {
-    worker = new Worker("worker.js");
+    var blob = new Blob([workerString], {type: 'application/javascript'});
+
+    worker = new Worker(URL.createObjectURL(blob));    
+
 
     worker.onmessage = (obj) => {
       var response: Internal.IWorkerResponse = obj.data;

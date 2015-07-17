@@ -89,6 +89,8 @@ module WesnothTiles {
 module WesnothTiles.Internal {
   'use strict';
 
+  export var workerString;
+
   export interface ITileChange {
     q: number;
     r: number;

@@ -3,6 +3,8 @@
 module WesnothTiles.Internal {
   'use strict';
 
+  var d = `pies`;
+
   export class Drawable {
     constructor(public x: number,
       public y: number,

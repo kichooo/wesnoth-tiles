@@ -5,10 +5,11 @@ var gulp = require('gulp'),
   notify = require('gulp-notify'),
   copy = require('gulp-copy'),
   merge = require('merge2');
+  uglify = require('gulp-uglify');
+  wrap = require('gulp-wrap');
+  replace = require('gulp-replace');
 
-
-gulp.task('worker', function() {
-
+function getWorkerStream(minify) {
   var tsStreams = gulp.src(['src/worker/**/*.ts'])
     .pipe(ts({
       // noImplicitAny: true,
@@ -19,10 +20,18 @@ gulp.task('worker', function() {
     }));
 
   var jsStream = tsStreams.js
-    .pipe(gulp.dest("bin"))
+
+    if (minify)
+      jsStream = jsStream.pipe(uglify({mangle: false}))
+
+    jsStream = jsStream.pipe(replace(/"/g, '\\"'))
+    .pipe(wrap({ src: 'template.js'}))
+    // .pipe(insert.prepend("var WesnothTiles;!function(a){var b;!function(a){\"use strict\";a.workerString=\`"))
+    // .pipe(insert.append("\`}(b=a.Internal||(a.Internal={}))}(WesnothTiles||(WesnothTiles={}));"))
+
 
   return jsStream;
-});
+}
 
 gulp.task('scripts', function() {
   var tsStreams = gulp.src(['src/main**/*.ts'])
@@ -33,8 +42,10 @@ gulp.task('scripts', function() {
       out: 'wesnoth-tiles.js'
     }));
 
-  var jsStream = tsStreams.js
-    .pipe(gulp.dest("bin"))
+
+  var jsStream = merge(tsStreams.js, getWorkerStream(false))
+    .pipe(concat('wesnoth-tiles.js'))
+    .pipe(gulp.dest("bin"))    
     .pipe(notify({
       "message": "Typescript built succesfully.",
       "onLast": true,
@@ -47,13 +58,15 @@ gulp.task('scripts', function() {
       prefix: 2
     }));
 
+
+
   return merge([jsStream, defStream])
     .on("error", notify.onError(function(error) {
       return "Failed to build typescript: " + error.message;
     }));
 });
 
-gulp.task('app', ['scripts', 'worker'], function() {
+gulp.task('app', ['scripts'], function() {
   var streams = gulp.src('test/src/**/*.ts')
     .pipe(ts({
       declarationFiles: false,
