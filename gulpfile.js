@@ -8,6 +8,7 @@ var gulp = require('gulp'),
   uglify = require('gulp-uglify');
   wrap = require('gulp-wrap');
   replace = require('gulp-replace');
+  util = require('gulp-util');
 
 function getWorkerStream(minify) {
   var tsStreams = gulp.src(['src/worker/**/*.ts'])
@@ -26,9 +27,6 @@ function getWorkerStream(minify) {
 
     jsStream = jsStream.pipe(replace(/"/g, '\\"'))
     .pipe(wrap({ src: 'template.js'}))
-    // .pipe(insert.prepend("var WesnothTiles;!function(a){var b;!function(a){\"use strict\";a.workerString=\`"))
-    // .pipe(insert.append("\`}(b=a.Internal||(a.Internal={}))}(WesnothTiles||(WesnothTiles={}));"))
-
 
   return jsStream;
 }
@@ -42,9 +40,11 @@ gulp.task('scripts', function() {
       out: 'wesnoth-tiles.js'
     }));
 
-
-  var jsStream = merge(tsStreams.js, getWorkerStream(false))
+  // var jsStream = tsStreams.js
+  var jsStream = merge(tsStreams.js, getWorkerStream())
     .pipe(concat('wesnoth-tiles.js'))
+    // ufligy.js needs to wait for es6 support.
+    // .pipe(uglify({mangle: false}).on('error', util.log))
     .pipe(gulp.dest("bin"))    
     .pipe(notify({
       "message": "Typescript built succesfully.",

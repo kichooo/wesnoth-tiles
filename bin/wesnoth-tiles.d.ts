@@ -114,6 +114,7 @@ declare module WesnothTiles {
     }
 }
 declare module WesnothTiles.Internal {
+    var workerString: any;
     interface ITileChange {
         q: number;
         r: number;
