@@ -411,19 +411,19 @@ function start() {
   Promise.all(promises).then(() => {
     loadDisk();
     var leftProjection: WesnothTiles.IProjection = {
-      left: -leftCanvas.width / 2,
-      right: leftCanvas.width / 2,
-      top: -leftCanvas.height / 2,
-      bottom: leftCanvas.height / 2,
+      left: Math.floor(-leftCanvas.width / 2),
+      right: Math.floor(leftCanvas.width / 2),
+      top: Math.floor(-leftCanvas.height / 2),
+      bottom: Math.floor(leftCanvas.height / 2),
       x: 0,
       y: 0,
     };
 
     var rightProjection: WesnothTiles.IProjection = {
-      left: -rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x,
-      right: rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x,
-      top: -rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y,
-      bottom: rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y,
+      left: Math.floor(-rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x),
+      right: Math.floor(rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x),
+      top: Math.floor(-rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y),
+      bottom: Math.floor(rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y),
       x: 0,
       y: 0,
     };
