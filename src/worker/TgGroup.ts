@@ -467,7 +467,7 @@ module WesnothTiles.Worker {
         [ETerrain.FROZEN_SNOW],
         swapTerrains([ETerrain.FROZEN_SNOW, ETerrain.ABYSS,
           ETerrain.FROZEN_SNOW, ETerrain.ABYSS, ETerrain.MOUNTAIN_DRY, ETerrain.HILLS_DRY, ETerrain.HILLS_REGULAR,
-          ETerrain.GRASS_DRY, ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY,
+          ETerrain.GRASS_GREEN, ETerrain.GRASS_LEAF_LITTER, ETerrain.GRASS_SEMI_DRY,
           ETerrain.SWAMP_WATER, ETerrain.MOUNTAIN_BASIC, ETerrain.HILLS_SNOW, ETerrain.MOUNTAIN_SNOW,
           ETerrain.HILLS_DESERT, ETerrain.WATER_COAST_TROPICAL, ETerrain.WATER_OCEAN, ETerrain.MOUNTAIN_VOLCANO]),
         "frozen/snow", { layer: -281 }, [1, 2, 3, 4]);

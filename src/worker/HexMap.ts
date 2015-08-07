@@ -89,17 +89,20 @@ module WesnothTiles.Worker {
       });
     }
 
-    private getNeighboursStreaksMap(hex: Hex): Map<ETerrain, number> {
-      var bestStreaksMap = new Map<ETerrain, number>();
+    private calculateStreaks(hex: Hex, bestStreaksMap: Map<ETerrain, number>): number {
       var currentStreakMap = new Map<ETerrain, number>();
+      var bestFogStreak = 0;
+      var currentFogStreak = 0;
 
-      this.iterateNeighboursDouble(hex.q, hex.r, terrain => {
+      this.iterateNeighboursDouble(hex.q, hex.r,(terrain, fog) => {
         // stop current streaks.
         currentStreakMap.forEach((val, key) => {
           if (key !== terrain) {
             currentStreakMap.set(key, 0);
           }
         });
+        if (!fog)
+          currentFogStreak = 0;
         if (terrain === undefined)
           return;
         var newValue: number;
@@ -107,13 +110,22 @@ module WesnothTiles.Worker {
           newValue = 1;
         else
           newValue = (currentStreakMap.get(terrain) + 1) % 6;
+
         currentStreakMap.set(terrain, newValue);
         var bestStreak = bestStreaksMap.has(terrain) ?
           bestStreaksMap.get(terrain) : 0;
         if (newValue > bestStreak)
           bestStreaksMap.set(terrain, newValue);
+
+        if (fog) {
+          currentFogStreak = (currentFogStreak + 1) % 6;
+          if (bestFogStreak = Math.max(bestFogStreak, currentFogStreak));
+        } else {
+          currentFogStreak = 0;
+        }
+
       });
-      return bestStreaksMap;
+      return bestFogStreak;
     }
 
     private addHexToTgs(hex: Hex): void {
@@ -121,35 +133,42 @@ module WesnothTiles.Worker {
       // for transition macros, try to catch longest sequences of the same neighbour type
       // in a row. That way we can filter out transition macros of higher grades.
 
-      // var neighboursMap = new Map<ETerrain, number>();
-      var neighboursMap = this.getNeighboursStreaksMap(hex);
-      // this.iterateNeighbours(hex.q, hex.r, hex => {
-      //   if (!neighboursMap.has(hex.terrain))
-      //     neighboursMap.set(hex.terrain, 1);
-      //   else 
-      //     neighboursMap.set(hex.terrain, neighboursMap.get(hex.terrain) + 1);
-      // });
+      var streaksMap = new Map<ETerrain, number>();
+      var fogStreak = this.calculateStreaks(hex, streaksMap);
 
       // iterate through all the macros and check which of them applies here.      
       this.tgGroup.tgs.forEach(tg => {
         var tile = tg.tiles[0];
         if (tile.type !== undefined && !tile.type.has(hex.terrain))
           return;
+
         if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
           return;
-        if (tile.fog !== undefined && !hex.fog)
-          return;
+
         if (tg.transition !== undefined) {
-          var found = 0;
-          neighboursMap.forEach((value: number, key: ETerrain) => {
-            if (tg.transition.has(key))
-              found += value;
-          });
-          if (found < tg.transitionNumber) {
-            return;
+          if (tile.fog === undefined) {
+            var found = 0;
+            streaksMap.forEach((value: number, key: ETerrain) => {
+              if (tg.transition.has(key))
+                found += value;
+            });
+            if (found < tg.transitionNumber) {
+              return;
+            }
           }
 
         }
+
+        if (tile.fog !== undefined) {
+          if (tg.transitionNumber === undefined && !hex.fog) {
+            return;
+          }
+          else {
+            if (tg.transitionNumber > fogStreak)
+              return;
+          }
+        }
+
         tg.hexes.set(hex.str, hex);
       });
 
@@ -178,12 +197,12 @@ module WesnothTiles.Worker {
     }
 
     // This function is for optimization purposes.
-    private iterateNeighboursDouble(q: number, r: number, callback: (terrain: ETerrain) => void) {
+    private iterateNeighboursDouble(q: number, r: number, callback: (terrain: ETerrain, fog: boolean) => void) {
       var func = (hex: Hex) => {
         if (hex !== undefined)
-          callback(hex.terrain);
+          callback(hex.terrain, hex.fog);
         else
-          callback(undefined);
+          callback(undefined, undefined);
       }
 
       func(this.getHexP(q, r - 1));

@@ -286,7 +286,7 @@ function loadDisk(): void {
       .setTile(-2, 1, ETerrain.GRASS_SEMI_DRY, EOverlay.WOODS_PINE)
       .setTile(-2, 0, ETerrain.GRASS_DRY, EOverlay.LITER)
       .setTile(-2, -1, ETerrain.SAND_DESERT, EOverlay.DESERT_PLANTS)
-      .setTile(-2, -2, ETerrain.SAND_DESERT, EOverlay.PALM_DESERT)
+      .setTile(-2, -2, ETerrain.SAND_DESERT, EOverlay.PALM_DESERT, true)
       .setTile(-2, -3, ETerrain.HILLS_DESERT, EOverlay.VILLAGE_DESERT)
 
       .setTile(-1, -3, ETerrain.HILLS_DESERT)
@@ -327,7 +327,7 @@ function loadDisk(): void {
     document.getElementById("checksum").textContent = "";
     leftMap.getCheckSum()
       .then(checksum => document.getElementById("checksum").textContent = checksum);
-    document.getElementById("expected").textContent = "expected: 18469171";
+    document.getElementById("expected").textContent = "expected: 1178355923";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
     document.getElementById("checksumBlock").style.display = 'block';
   });;

@@ -673,16 +673,19 @@ var WesnothTiles;
                     tg.hexes.delete(key);
                 });
             };
-            HexMap.prototype.getNeighboursStreaksMap = function (hex) {
-                var bestStreaksMap = new Map();
+            HexMap.prototype.calculateStreaks = function (hex, bestStreaksMap) {
                 var currentStreakMap = new Map();
-                this.iterateNeighboursDouble(hex.q, hex.r, function (terrain) {
+                var bestFogStreak = 0;
+                var currentFogStreak = 0;
+                this.iterateNeighboursDouble(hex.q, hex.r, function (terrain, fog) {
                     // stop current streaks.
                     currentStreakMap.forEach(function (val, key) {
                         if (key !== terrain) {
                             currentStreakMap.set(key, 0);
                         }
                     });
+                    if (!fog)
+                        currentFogStreak = 0;
                     if (terrain === undefined)
                         return;
                     var newValue;
@@ -694,20 +697,22 @@ var WesnothTiles;
                     var bestStreak = bestStreaksMap.has(terrain) ? bestStreaksMap.get(terrain) : 0;
                     if (newValue > bestStreak)
                         bestStreaksMap.set(terrain, newValue);
+                    if (fog) {
+                        currentFogStreak = (currentFogStreak + 1) % 6;
+                        if (bestFogStreak = Math.max(bestFogStreak, currentFogStreak))
+                            ;
+                    }
+                    else {
+                        currentFogStreak = 0;
+                    }
                 });
-                return bestStreaksMap;
+                return bestFogStreak;
             };
             HexMap.prototype.addHexToTgs = function (hex) {
                 // for transition macros, try to catch longest sequences of the same neighbour type
                 // in a row. That way we can filter out transition macros of higher grades.
-                // var neighboursMap = new Map<ETerrain, number>();
-                var neighboursMap = this.getNeighboursStreaksMap(hex);
-                // this.iterateNeighbours(hex.q, hex.r, hex => {
-                //   if (!neighboursMap.has(hex.terrain))
-                //     neighboursMap.set(hex.terrain, 1);
-                //   else 
-                //     neighboursMap.set(hex.terrain, neighboursMap.get(hex.terrain) + 1);
-                // });
+                var streaksMap = new Map();
+                var fogStreak = this.calculateStreaks(hex, streaksMap);
                 // iterate through all the macros and check which of them applies here.      
                 this.tgGroup.tgs.forEach(function (tg) {
                     var tile = tg.tiles[0];
@@ -715,16 +720,25 @@ var WesnothTiles;
                         return;
                     if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
                         return;
-                    if (tile.fog !== undefined && !hex.fog)
-                        return;
                     if (tg.transition !== undefined) {
-                        var found = 0;
-                        neighboursMap.forEach(function (value, key) {
-                            if (tg.transition.has(key))
-                                found += value;
-                        });
-                        if (found < tg.transitionNumber) {
+                        if (tile.fog === undefined) {
+                            var found = 0;
+                            streaksMap.forEach(function (value, key) {
+                                if (tg.transition.has(key))
+                                    found += value;
+                            });
+                            if (found < tg.transitionNumber) {
+                                return;
+                            }
+                        }
+                    }
+                    if (tile.fog !== undefined) {
+                        if (tg.transitionNumber === undefined && !hex.fog) {
                             return;
+                        }
+                        else {
+                            if (tg.transitionNumber > fogStreak)
+                                return;
                         }
                     }
                     tg.hexes.set(hex.str, hex);
@@ -753,9 +767,9 @@ var WesnothTiles;
             HexMap.prototype.iterateNeighboursDouble = function (q, r, callback) {
                 var func = function (hex) {
                     if (hex !== undefined)
-                        callback(hex.terrain);
+                        callback(hex.terrain, hex.fog);
                     else
-                        callback(undefined);
+                        callback(undefined, undefined);
                 };
                 func(this.getHexP(q, r - 1));
                 func(this.getHexP(q + 1, r - 1));
@@ -2968,7 +2982,7 @@ var WesnothTiles;
                 Worker.TRANSITION_COMPLETE_LFB(this, [1 /* GRASS_SEMI_DRY */], [19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 13 /* FROZEN_ICE */, 16 /* SWAMP_MUD */], \"grass/semi-dry-abrupt\", { layer: -272 }, [1]);
                 Worker.TRANSITION_COMPLETE_LFB(this, [2 /* GRASS_DRY */], [19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 13 /* FROZEN_ICE */, 16 /* SWAMP_MUD */], \"grass/dry-abrupt\", { layer: -273 }, [1]);
                 Worker.TRANSITION_COMPLETE_LFB(this, [12 /* FROZEN_SNOW */], [19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 17 /* SWAMP_WATER */], \"frozen/snow-to-water\", { layer: -280 }, [1, 2, 3, 4]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [12 /* FROZEN_SNOW */], Worker.swapTerrains([12 /* FROZEN_SNOW */, 20 /* ABYSS */, 12 /* FROZEN_SNOW */, 20 /* ABYSS */, 9 /* MOUNTAIN_DRY */, 5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */, 2 /* GRASS_DRY */, 0 /* GRASS_GREEN */, 3 /* GRASS_LEAF_LITTER */, 1 /* GRASS_SEMI_DRY */, 17 /* SWAMP_WATER */, 8 /* MOUNTAIN_BASIC */, 7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */, 6 /* HILLS_DESERT */, 19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 11 /* MOUNTAIN_VOLCANO */]), \"frozen/snow\", { layer: -281 }, [1, 2, 3, 4]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [12 /* FROZEN_SNOW */], Worker.swapTerrains([12 /* FROZEN_SNOW */, 20 /* ABYSS */, 12 /* FROZEN_SNOW */, 20 /* ABYSS */, 9 /* MOUNTAIN_DRY */, 5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */, 0 /* GRASS_GREEN */, 3 /* GRASS_LEAF_LITTER */, 1 /* GRASS_SEMI_DRY */, 17 /* SWAMP_WATER */, 8 /* MOUNTAIN_BASIC */, 7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */, 6 /* HILLS_DESERT */, 19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 11 /* MOUNTAIN_VOLCANO */]), \"frozen/snow\", { layer: -281 }, [1, 2, 3, 4]);
                 Worker.TRANSITION_COMPLETE_LFB(this, [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */], [3 /* GRASS_LEAF_LITTER */], \"flat/bank\", { layer: -300 }, [1]);
                 Worker.TRANSITION_COMPLETE_LFB(this, [16 /* SWAMP_MUD */], [14 /* SAND_BEACH */, 15 /* SAND_DESERT */], \"swamp/mud-to-land\", { layer: -310 }, [1]);
                 Worker.NEW_WAVES(this, [6 /* HILLS_DESERT */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */], -499, \"water/waves\");
