@@ -563,7 +563,7 @@ module WesnothTiles.Worker {
   }
 
   // grades is used by BORDER_COMPLETE, to filter out not needed macros.
-  export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, grades = [1, 2, 3, 4, 5, 6]) => {
+  export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, grades: number[]) => {
     if (lfb.layer === undefined)
       lfb.layer = -500;
     if (lfb.flag === undefined)
@@ -573,7 +573,7 @@ module WesnothTiles.Worker {
     BORDER_COMPLETE_LFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, lfb, grades);
   }
 
-  export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: boolean, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades = [1, 2, 3, 4, 5, 6]) => {
+  export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: boolean, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number[]) => {
     if (lfb.layer === undefined)
       lfb.layer = -500;
     if (lfb.flag === undefined)

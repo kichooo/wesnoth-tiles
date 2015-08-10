@@ -327,7 +327,7 @@ function loadDisk(): void {
     document.getElementById("checksum").textContent = "";
     leftMap.getCheckSum()
       .then(checksum => document.getElementById("checksum").textContent = checksum);
-    document.getElementById("expected").textContent = "expected: 1178355923";
+    document.getElementById("expected").textContent = "expected: 1644312895";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
     document.getElementById("checksumBlock").style.display = 'block';
   });;
@@ -336,13 +336,14 @@ function loadDisk(): void {
 }
 
 function loadCircle(builder: WesnothTiles.MapBuilder, terrain1, terrain2, overlay1, overlay2, x, y): WesnothTiles.MapBuilder {
+  var fog = true;
   return builder.setTile(x, y, terrain1, overlay1)
-    .setTile(x, y - 1, terrain2, overlay2)
-    .setTile(x + 1, y - 1, terrain2, overlay2)
-    .setTile(x + 1, y, terrain2, overlay2)
-    .setTile(x, y + 1, terrain2, overlay2)
-    .setTile(x - 1, y + 1, terrain2, overlay2)
-    .setTile(x - 1, y, terrain2, overlay2);
+    .setTile(x, y - 1, terrain2, overlay2, fog)
+    .setTile(x + 1, y - 1, terrain2, overlay2, fog)
+    .setTile(x + 1, y, terrain2, overlay2, fog)
+    .setTile(x, y + 1, terrain2, overlay2, fog)
+    .setTile(x - 1, y + 1, terrain2, overlay2, fog)
+    .setTile(x - 1, y, terrain2, overlay2, fog);
 }
 
 function start() {
