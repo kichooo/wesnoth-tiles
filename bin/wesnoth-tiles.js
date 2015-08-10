@@ -692,13 +692,13 @@ var WesnothTiles;
                     if (!currentStreakMap.has(terrain))
                         newValue = 1;
                     else
-                        newValue = (currentStreakMap.get(terrain) + 1) % 6;
+                        newValue = (currentStreakMap.get(terrain) + 1) % 7;
                     currentStreakMap.set(terrain, newValue);
                     var bestStreak = bestStreaksMap.has(terrain) ? bestStreaksMap.get(terrain) : 0;
                     if (newValue > bestStreak)
                         bestStreaksMap.set(terrain, newValue);
                     if (fog) {
-                        currentFogStreak = (currentFogStreak + 1) % 6;
+                        currentFogStreak = (currentFogStreak + 1) % 7;
                         if (bestFogStreak = Math.max(bestFogStreak, currentFogStreak))
                             ;
                     }
