@@ -17,7 +17,6 @@ module WesnothTiles.Internal {
           return;
         }
         atlases.set(name, img);
-        console.log("atlas loaded!!", name);
         resolve();
       }
       img.onerror = () => {
@@ -32,7 +31,6 @@ module WesnothTiles.Internal {
         if (req.readyState == 4) {
           if (req.status == 200) {
             var frames: IFrames = JSON.parse(req.responseText);
-            console.log(frames);
             resolve(frames);
           }
           else
