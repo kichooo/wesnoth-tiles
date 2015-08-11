@@ -33,7 +33,7 @@ declare module WesnothTiles {
         redraw(ctx: CanvasRenderingContext2D, projection: IProjection, timestamp: number): void;
         getBuilder(loadingMode?: boolean): MapBuilder;
         moveCursor(x: number, y: number): void;
-        setCursorVisibility(visible: boolean, mapName?: string): void;
+        setCursorVisibility(visible: boolean): void;
     }
 }
 declare module WesnothTiles {

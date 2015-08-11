@@ -126,9 +126,13 @@ var WesnothTiles;
             this.cursor.x = halfRadius * 1.5 * hexPos.q;
             this.cursor.y = halfRadius * (2 * hexPos.r + hexPos.q);
         };
-        TilesMap.prototype.setCursorVisibility = function (visible, mapName) {
-            if (mapName === void 0) { mapName = "default"; }
-            this.cursor = visible ? new WesnothTiles.Internal.Drawable(0, 0, "hover-hex", undefined, undefined) : undefined;
+        TilesMap.prototype.setCursorVisibility = function (visible) {
+            if (visible && this.cursor === undefined) {
+                this.cursor = new WesnothTiles.Internal.Drawable(0, 0, "hover-hex", undefined, undefined);
+            }
+            else if (!visible && this.cursor !== undefined) {
+                this.cursor = undefined;
+            }
         };
         return TilesMap;
     })();
@@ -252,7 +256,6 @@ var WesnothTiles;
                         return;
                     }
                     atlases.set(name, img);
-                    console.log("atlas loaded!!", name);
                     resolve();
                 };
                 img.onerror = function () {
@@ -266,7 +269,6 @@ var WesnothTiles;
                     if (req.readyState == 4) {
                         if (req.status == 200) {
                             var frames = JSON.parse(req.responseText);
-                            console.log(frames);
                             resolve(frames);
                         }
                         else
