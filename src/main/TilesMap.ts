@@ -162,7 +162,7 @@ module WesnothTiles {
 
     }
 
-    setCursorVisibility(visible: boolean, mapName = "default") {
+    setCursorVisibility(visible: boolean) {
       this.cursor = visible ? new Internal.Drawable(0, 0, "hover-hex", undefined, undefined) : undefined;
     }
 
