@@ -163,7 +163,11 @@ module WesnothTiles {
     }
 
     setCursorVisibility(visible: boolean) {
-      this.cursor = visible ? new Internal.Drawable(0, 0, "hover-hex", undefined, undefined) : undefined;
+      if (visible && this.cursor === undefined) {
+        this.cursor = new Internal.Drawable(0, 0, "hover-hex", undefined, undefined);
+      } else if (!visible && this.cursor !== undefined) {
+        this.cursor = undefined;
+      }
     }
 
   }
