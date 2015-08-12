@@ -329,7 +329,7 @@ var WesnothTiles;
                     }
                     if (this.x > projection.right + sprite.size().x / 2 || this.y > projection.bottom + sprite.size().y / 2 || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
                         return;
-                    sprite.draw(this.x - projection.left, this.y - projection.top, ctx);
+                    sprite.draw(this.x + projection.x - projection.left, this.y + projection.y - projection.top, ctx);
                     return;
                 }
                 else {

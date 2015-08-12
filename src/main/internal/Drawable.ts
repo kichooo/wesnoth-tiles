@@ -24,7 +24,7 @@ module WesnothTiles.Internal {
           || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
           return;
 
-        sprite.draw(this.x - projection.left, this.y - projection.top, ctx);
+        sprite.draw(this.x + projection.x - projection.left, this.y + projection.y - projection.top, ctx);
         return;
       } else {
         var frame = 1 + Math.floor(timestamp / this.duration) % this.frames;
