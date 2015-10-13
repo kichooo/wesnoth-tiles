@@ -412,10 +412,10 @@ function start() {
   Promise.all(promises).then(() => {
     loadDisk();
     var leftProjection: WesnothTiles.IProjection = {
-      left: Math.floor(-leftCanvas.width / 2),
-      right: Math.floor(leftCanvas.width / 2),
-      top: Math.floor(-leftCanvas.height / 2),
-      bottom: Math.floor(leftCanvas.height / 2),
+      left: Math.floor(-leftCanvas.width / 2) - 300,
+      right: Math.floor(leftCanvas.width / 2) - 300,
+      top: Math.floor(-leftCanvas.height / 2) - 0,
+      bottom: Math.floor(leftCanvas.height / 2) - 0,
       x: 0,
       y: 0,
     };
