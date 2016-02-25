@@ -1,5 +1,7 @@
 /// <reference path="wesnoth-tiles.d.ts"/>
 
+'use strict';
+
 import ETerrain = WesnothTiles.ETerrain;
 import EOverlay = WesnothTiles.EOverlay;
 

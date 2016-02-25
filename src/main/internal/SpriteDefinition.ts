@@ -9,7 +9,7 @@ module WesnothTiles.Internal {
   }
 
   export class SpriteDefinition {
-    constructor(private frame: IFrame, private spriteSource: IFrame, private sourceSize: IVector, private atlas: HTMLElement) {
+    constructor(private frame: IFrame, private spriteSource: IFrame, private sourceSize: IVector, private atlas: HTMLImageElement) {
     }
 
     draw(x: number, y: number, ctx: CanvasRenderingContext2D) {

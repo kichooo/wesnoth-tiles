@@ -178,7 +178,7 @@ declare module WesnothTiles.Internal {
         private spriteSource;
         private sourceSize;
         private atlas;
-        constructor(frame: IFrame, spriteSource: IFrame, sourceSize: IVector, atlas: HTMLElement);
+        constructor(frame: IFrame, spriteSource: IFrame, sourceSize: IVector, atlas: HTMLImageElement);
         draw(x: number, y: number, ctx: CanvasRenderingContext2D): void;
         size(): IVector;
     }
