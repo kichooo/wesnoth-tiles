@@ -2,13 +2,13 @@ module WesnothTiles.Internal {
   'use strict';
 
   // This file is responsible for the loading of the graphics.
-  var atlases = new Map<string, HTMLElement>();
-  export var definitions = new Map<string, SpriteDefinition>();
+  const atlases = new Map<string, HTMLElement>();
+  export const definitions = new Map<string, SpriteDefinition>();
 
 
-  var provideAtlas = (name: string): Promise<void> => {
-    var img = new Image();
-    var promises: Promise<void>[] = [];
+  const provideAtlas = (name: string): Promise<void> => {
+    const img = new Image();
+    const promises: Promise<void>[] = [];
     promises.push(new Promise<void>((resolve, reject) => {
       img.src = name + ".png";
       img.onload = () => {
@@ -25,12 +25,12 @@ module WesnothTiles.Internal {
     }));
 
     promises.push(new Promise((resolve, reject) => {
-      var req = new XMLHttpRequest();
+      const req = new XMLHttpRequest();
       req.open('GET', name + ".json", true);
       req.onreadystatechange = function(aEvt) {
         if (req.readyState == 4) {
           if (req.status == 200) {
-            var frames: IFrames = JSON.parse(req.responseText);
+            const frames: IFrames = JSON.parse(req.responseText);
             resolve(frames);
           }
           else
@@ -42,7 +42,7 @@ module WesnothTiles.Internal {
 
     }).then((frames: IFrames) => {
       frames.frames.forEach((d: IDefinition) => {
-        var def = new SpriteDefinition({
+        const def = new SpriteDefinition({
           point: { x: d.frame.x, y: d.frame.y },
           size: { x: d.frame.w, y: d.frame.h }
         }, {
@@ -62,9 +62,9 @@ module WesnothTiles.Internal {
   }
 
   // Will return promise when they are supported;) (by ArcticTypescript)
-  export var loadResources = (): Promise<void> => {
-    var promises: Promise<void>[] = [];
-    for (var i = 0; i < 2; i++) {
+  export const loadResources = (): Promise<void> => {
+    const promises: Promise<void>[] = [];
+    for (let i = 0; i < 2; i++) {
       promises.push(provideAtlas("hexes_" + i));
     }
 

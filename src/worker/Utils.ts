@@ -14,8 +14,8 @@ module WesnothTiles.Worker {
    * @return {number} 32-bit positive integer hash 
    */
 
-  export var murmurhash3 = (key: string, seed: number) => {
-    var remainder, bytes, h1, h1b, c1, c1b, c2, c2b, k1, i;
+  export const murmurhash3 = (key: string, seed: number) => {
+    let remainder, bytes, h1, h1b, c1, c1b, c2, c2b, k1, i;
 
     remainder = key.length & 3; // key.length % 4
     bytes = key.length - remainder;
@@ -66,10 +66,10 @@ module WesnothTiles.Worker {
     return h1 >>> 0;
   }
 
-  export var swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
-    var swapped = new Map<ETerrain, boolean>();
+  export const swapTerrainTypes = (types: Map<ETerrain, boolean>) => {
+    const swapped = new Map<ETerrain, boolean>();
     // We skip the void
-    for (var i = 0; i < ETerrain.VOID; i++) {
+    for (let i = 0; i < ETerrain.VOID; i++) {
       if (!types.has(i))
         swapped.set(i, true);
     }

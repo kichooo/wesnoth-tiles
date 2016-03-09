@@ -9,39 +9,39 @@ module WesnothTiles.Worker {
     drawableDatas: Internal.DrawableData[];
   }
 
-  var setFlags = (rot: number, rotations: string[],
+  const setFlags = (rot: number, rotations: string[],
     set_no_flags: string[], flags: Map<string, boolean>) => {
     if (set_no_flags !== undefined)
-      for (var i = 0; i < set_no_flags.length; i++)
+      for (let i = 0; i < set_no_flags.length; i++)
         flags.set(replaceRotation(set_no_flags[i], rot, rotations), true);
   }
 
-  var checkFlags = (rot: number, rotations: string[],
+  const checkFlags = (rot: number, rotations: string[],
     set_no_flags: string[], flags: Map<string, boolean>) => {
 
     if (set_no_flags !== undefined)
-      for (var i = 0; i < set_no_flags.length; i++)
+      for (let i = 0; i < set_no_flags.length; i++)
         if (flags.has(replaceRotation(set_no_flags[i], rot, rotations))) return false;
     return true;
   }
 
-  var getRotatedPos = (pos: IHexPos, rot: number): IHexPos => {
+  const getRotatedPos = (pos: IHexPos, rot: number): IHexPos => {
     if (rot === 0)
       return pos;
     return rotationsMap.get(rot).get(pos.q).get(pos.r);
   }
 
-  var rotationsMap = new Map<number, Map<number, Map<number, IHexPos>>>();
+  const rotationsMap = new Map<number, Map<number, Map<number, IHexPos>>>();
 
-  export var prepareRotations = () => {
-    for (var rot = 0; rot < 6; rot++) {
-      var rotMap = new Map<number, Map<number, IHexPos>>();
+  export const prepareRotations = () => {
+    for (let rot = 0; rot < 6; rot++) {
+      const rotMap = new Map<number, Map<number, IHexPos>>();
       rotationsMap.set(rot, rotMap);
-      for (var q = -1; q <= 1; q++) {
-        var iMap = new Map<number, IHexPos>();
+      for (let q = -1; q <= 1; q++) {
+        const iMap = new Map<number, IHexPos>();
         rotMap.set(q, iMap);
-        for (var r = -1; r <= 1; r++) {
-          var result = [0, 0, 0];
+        for (let r = -1; r <= 1; r++) {
+          const result = [0, 0, 0];
           result[(6 - rot) % 3] = rot % 2 === 0 ? q : -q;
           result[(7 - rot) % 3] = rot % 2 === 0 ? r : -r;
           result[(8 - rot) % 3] = rot % 2 === 0 ? -q - r : q + r;
@@ -51,7 +51,7 @@ module WesnothTiles.Worker {
     }
   }
 
-  var replaceRotation = (input: string, rot: number, rotations: string[]) => {
+  const replaceRotation = (input: string, rot: number, rotations: string[]) => {
     if (rotations === undefined)
       return input;
     return rotations === undefined ? input : input.replace("@R0", rotations[rot])
@@ -63,17 +63,14 @@ module WesnothTiles.Worker {
   }
 
 
-  var getImgName = (hex: Hex, img: WMLImage, tg: WMLTerrainGraphics, rot: number, translatedPostfix: string) => {
-
-    var imgName: string;
-    var num = img.variations.length;
-    for (; ;) {
+  const getImgName = (hex: Hex, img: WMLImage, tg: WMLTerrainGraphics, rot: number, translatedPostfix: string) => {
+    let num = img.variations.length;
+    for (;;) {
       num = hex.getRandom(0, num);
-      var translatedName = tg.builder.toString(img.name, translatedPostfix);
+      let translatedName = tg.builder.toString(img.name, translatedPostfix);
       translatedName = translatedName.replace("@V", img.variations[num]);
       if (spriteNames.has(translatedName)) {
-        imgName = img.name.replace("@V", img.variations[num]);
-        break;
+        return img.name.replace("@V", img.variations[num]);
       }
       if (num === 0) {
         return undefined;
@@ -83,16 +80,16 @@ module WesnothTiles.Worker {
 
   }
 
-  var performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
+  const performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
     if (tg.probability !== 100 && dp.hex.getRandom(0, 101) > tg.probability)
       return;
     // we need to know coors of the leftmost hex.
-    for (var i = 0; i < tg.tiles.length; i++) {
-      var tile = tg.tiles[i];
-      var rotHex = getRotatedPos(tile, rot);
-      var hexPosQ = dp.hex.q + rotHex.q;
-      var hexPosR = dp.hex.r + rotHex.r;
-      var hex = dp.hexMap.getHexP(hexPosQ, hexPosR);
+    for (let i = 0; i < tg.tiles.length; i++) {
+      const tile = tg.tiles[i];
+      const rotHex = getRotatedPos(tile, rot);
+      const hexPosQ = dp.hex.q + rotHex.q;
+      const hexPosR = dp.hex.r + rotHex.r;
+      const hex = dp.hexMap.getHexP(hexPosQ, hexPosR);
 
       if (hex === undefined)
         return;
@@ -114,23 +111,23 @@ module WesnothTiles.Worker {
         return;
     }
 
-    var drawableDatas: Internal.DrawableData[] = [];
+    const drawableDatas: Internal.DrawableData[] = [];
 
-    for (var j = 0; j < tg.images.length; j++) {
-      var img = tg.images[j];
+    for (let j = 0; j < tg.images.length; j++) {
+      const img = tg.images[j];
 
-      var translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
+      const translatedPostfix = img.postfix !== undefined ? replaceRotation(img.postfix, rot, tg.rotations) : "";
 
-      var imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
+      const imgName = getImgName(dp.hex, img, tg, rot, translatedPostfix);
       // console.log("Name",imgName, img.name, translatedPostfix);
       if (imgName === undefined)
         return;
-      var drawPos = {
+      const drawPos = {
         x: (36 * 1.5) * dp.hex.q - 36 + img.center.x,
         y: 36 * (2 * dp.hex.r + dp.hex.q) - 36 + img.center.y
       }
 
-      var newBase = img.base !== undefined ? {
+      const newBase = img.base !== undefined ? {
         x: drawPos.x,
         y: drawPos.y
       } : undefined;
@@ -139,12 +136,12 @@ module WesnothTiles.Worker {
 
     }
 
-    for (var i = 0; i < tg.tiles.length; i++) {
-      var tile = tg.tiles[i];
+    for (let i = 0; i < tg.tiles.length; i++) {
+      const tile = tg.tiles[i];
 
-      var rotHex = getRotatedPos(tile, rot);
+      const rotHex = getRotatedPos(tile, rot);
 
-      var rotatedHex = dp.hexMap.getHexP(
+      const rotatedHex = dp.hexMap.getHexP(
         dp.hex.q + rotHex.q,
         dp.hex.r + rotHex.r);
 
@@ -154,24 +151,24 @@ module WesnothTiles.Worker {
     dp.drawableDatas.push.apply(dp.drawableDatas, drawableDatas);
   }
 
-  var performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
+  const performTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams) => {
     if (tg.rotations !== undefined) {
-      for (var i = 0; i < tg.rotations.length; i++) {
+      for (let i = 0; i < tg.rotations.length; i++) {
         performRotatedTerrainGraphics(tg, dp, i);
       }
     } else
       performRotatedTerrainGraphics(tg, dp);
   }
 
-  export var rebuild = (hexMap: HexMap): Internal.DrawableData[]=> {
+  export const rebuild = (hexMap: HexMap): Internal.DrawableData[]=> {
     prepareRotations();
     // clear old flags.
 
     hexMap.iterate(h => h.reset());
 
-    var drawableDatas: Internal.DrawableData[] = [];
+    const drawableDatas: Internal.DrawableData[] = [];
 
-    var dp: IDrawParams = {
+    const dp: IDrawParams = {
       hex: null,
       hexMap: hexMap,
       drawableDatas: drawableDatas

@@ -1,16 +1,16 @@
 module WesnothTiles.Worker {
   'use strict';
 
-  export var swapTerrains = (terrains: ETerrain[]) => {
-    var terrainList: ETerrain[] = [];
-    for (var i = 0; i < ETerrain.VOID; i++) {
+  export const swapTerrains = (terrains: ETerrain[]) => {
+    const terrainList: ETerrain[] = [];
+    for (let i = 0; i < ETerrain.VOID; i++) {
       if (terrains.indexOf(i) === -1)
         terrainList.push(i);
     }
     return terrainList;
   }
 
-  var addSparseForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
+  const addSparseForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
     NEW_FOREST(tgGroup,
       [ETerrain.HILLS_DRY, ETerrain.HILLS_DESERT, ETerrain.HILLS_REGULAR, ETerrain.HILLS_SNOW,
         ETerrain.MOUNTAIN_SNOW, ETerrain.MOUNTAIN_DRY, ETerrain.MOUNTAIN_BASIC],
@@ -20,7 +20,7 @@ module WesnothTiles.Worker {
       imagestem);
   }
 
-  var addForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
+  const addForestMacro = (tgGroup: TgGroup, overlay: EOverlay, imagestem: string) => {
     NEW_FOREST(tgGroup, undefined,
       [overlay],
       [ETerrain.ABYSS, ETerrain.WATER_OCEAN, ETerrain.WATER_COAST_TROPICAL, ETerrain.FROZEN_ICE,
@@ -40,7 +40,7 @@ module WesnothTiles.Worker {
 
     // add terrain graphics
     addTg(tg: WMLTerrainGraphics) {
-      var tile = tg.tiles[0];
+      const tile = tg.tiles[0];
       if (tile.q !== 0 || tile.r !== 0) {
         console.error("One of the macros has improper first tile!", tg);
         return;

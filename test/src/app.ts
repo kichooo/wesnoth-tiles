@@ -5,20 +5,20 @@
 import ETerrain = WesnothTiles.ETerrain;
 import EOverlay = WesnothTiles.EOverlay;
 
-var leftMap: WesnothTiles.TilesMap;
-var rightMap: WesnothTiles.TilesMap;
+let leftMap: WesnothTiles.TilesMap;
+let rightMap: WesnothTiles.TilesMap;
 
-var redraw = true;
+const redraw = true;
 
 function createTestMap(): Promise<void> {
   return rightMap.clear().then(() => {
-    var mapBuilder = rightMap.getBuilder(true);
-    var rng = new Rng(1337);
+    let mapBuilder = rightMap.getBuilder(true);
+    const rng = new Rng(1337);
 
-    for (var i = -18; i < 18; i++)
-      for (var j = -18; j < 18; j++) {
-        var terrain = rng.nextRange(0, ETerrain.VOID + 1);
-        var overlay = EOverlay.NONE;
+    for (let i = -18; i < 18; i++)
+      for (let j = -18; j < 18; j++) {
+        let terrain = rng.nextRange(0, ETerrain.VOID + 1);
+        let overlay = EOverlay.NONE;
 
         if (terrain === ETerrain.GRASS_LEAF_LITTER)
           overlay = rng.nextRange(EOverlay.WOODS_PINE, EOverlay.MUSHROOMS);
@@ -35,12 +35,12 @@ function createTestMap(): Promise<void> {
   });
 
   // return tilesMap.clear().then(() => tilesMap.setLoadingMode()).then(() => {
-  //   var rng = new Rng(1337);
-  //   var tiles: WesnothTiles.ITileChange[] = [];
-  //   for (var i = -18; i < 18; i++)
-  //     for (var j = -18; j < 18; j++) {
-  //       var terrain = rng.nextRange(0, ETerrain.VOID + 1);
-  //       var overlay = EOverlay.NONE;
+  //   const rng = new Rng(1337);
+  //   const tiles: WesnothTiles.ITileChange[] = [];
+  //   for (const i = -18; i < 18; i++)
+  //     for (const j = -18; j < 18; j++) {
+  //       const terrain = rng.nextRange(0, ETerrain.VOID + 1);
+  //       const overlay = EOverlay.NONE;
 
   //       if (terrain === ETerrain.GRASS_LEAF_LITTER)
   //         overlay = rng.nextRange(EOverlay.WOODS_PINE, EOverlay.MUSHROOMS);
@@ -64,7 +64,7 @@ function createTestMap(): Promise<void> {
 
 function loadTestMap(): void {
   document.getElementById("checksumBlock").style.display = 'none';
-  var start = new Date();
+  const start = new Date();
   createTestMap().then(() => rightMap.rebuild()).then(() => {
     document.getElementById("checksum").textContent = "";
     rightMap.getCheckSum()
@@ -78,9 +78,9 @@ function loadTestMap(): void {
 
 function loadSingleCircle(): void {
   document.getElementById("checksumBlock").style.display = 'none';
-  var start = new Date();
+  const start = new Date();
   rightMap.clear().then(() => {
-    var builder = rightMap.getBuilder(true);
+    let builder = rightMap.getBuilder(true);
     builder = loadCircle(builder, ETerrain.GRASS_DRY, ETerrain.WATER_OCEAN, EOverlay.NONE, EOverlay.NONE, 0, 0);
     return builder.promise();
   }).then(() => rightMap.rebuild()).then(() => {
@@ -97,15 +97,15 @@ function loadSingleCircle(): void {
 function benchmark(): void {
   document.getElementById("checksumBlock").style.display = 'none';
   // redraw = false;
-  var timer = new Date();
+  const timer = new Date();
   createTestMap().then(() => {
-    var promise: Promise<void> = rightMap.rebuild();
-    for (var i = 0; i < 39; i++) {
+    let promise: Promise<void> = rightMap.rebuild();
+    for (let i = 0; i < 39; i++) {
       promise = promise.then(() => { return rightMap.rebuild(); });
     }
     return promise;
   }).then(() => {
-    var duration = (new Date().getTime() - timer.getTime()) / 40;
+    const duration = (new Date().getTime() - timer.getTime()) / 40;
     document.getElementById("checksum").textContent = "";
     rightMap.getCheckSum()
       .then(checksum => document.getElementById("checksum").textContent = checksum);
@@ -120,11 +120,11 @@ function benchmark(): void {
 
 function loadRandomMap(): void {
   document.getElementById("checksumBlock").style.display = 'none'
-  var start = new Date();
+  const start = new Date();
   rightMap.clear().then(() => {
-    var builder = rightMap.getBuilder(true);
-    for (var i = -18; i < 18; i++)
-      for (var j = -18; j < 18; j++) {
+    let builder = rightMap.getBuilder(true);
+    for (let i = -18; i < 18; i++)
+      for (let j = -18; j < 18; j++) {
         builder = builder.setTile(i, j, Math.floor(Math.random() * 22));
       }
     return builder.promise();
@@ -142,11 +142,11 @@ function loadRandomMap(): void {
 
 function loadRandomMapWithWoods(): void {
   document.getElementById("checksumBlock").style.display = 'none';
-  var start = new Date();
+  const start = new Date();
   rightMap.clear().then(() => {
-    var builder = rightMap.getBuilder(true);
-    for (var i = -18; i < 18; i++)
-      for (var j = -18; j < 18; j++) {
+    let builder = rightMap.getBuilder(true);
+    for (let i = -18; i < 18; i++)
+      for (let j = -18; j < 18; j++) {
         builder = builder.setTile(i, j, ETerrain.GRASS_SEMI_DRY, ETerrain.VOID + 1 + Math.floor(Math.random() * 14));
       }
     return builder.promise();
@@ -162,16 +162,16 @@ function loadRandomMapWithWoods(): void {
 //   document.getElementById("checksumBlock").style.display = 'none'
 //   redraw = false;
 //   tilesMap.clear().then(() => {
-//     var builder = tilesMap.loadingMode();
-//     for (var i = -17; i < 17; i++)
-//       for (var j = -17; j < 17; j++) {
+//     const builder = tilesMap.loadingMode();
+//     for (const i = -17; i < 17; i++)
+//       for (const j = -17; j < 17; j++) {
 //         builder = builder.setTile(i, j, ETerrain.GRASS_GREEN);
 //       }
-//     for (var i = 0; i < 160; i++) {
-//       var x = -17 + Math.floor(Math.random() * 34);
-//       var y = -17 + Math.floor(Math.random() * 34);
+//     for (const i = 0; i < 160; i++) {
+//       const x = -17 + Math.floor(Math.random() * 34);
+//       const y = -17 + Math.floor(Math.random() * 34);
 
-//       var terrainCode = Math.floor(Math.random() * 21)
+//       const terrainCode = Math.floor(Math.random() * 21)
 //       builder = builder.setTile(x, y, terrainCode)
 //         .setTile(x, y - 1, terrainCode)
 //         .setTile(x + 1, y - 1, terrainCode)
@@ -187,7 +187,7 @@ function loadRandomMapWithWoods(): void {
 // }
 
 function loadRing(mapBuilder: WesnothTiles.MapBuilder, radius, terrain): WesnothTiles.MapBuilder {
-  for (var i = 0; i < radius; i++) {
+  for (let i = 0; i < radius; i++) {
     mapBuilder = mapBuilder.setTile(2 + i, -radius - 1, terrain)
       .setTile(2 + radius, i - radius - 1, terrain)
       .setTile(2 + radius - i, i - 1, terrain)
@@ -209,14 +209,14 @@ function loadRing(mapBuilder: WesnothTiles.MapBuilder, radius, terrain): Wesnoth
 
 function loadDisk(): void {
   document.getElementById("checksumBlock").style.display = 'none';
-  var start = new Date();
+  const start = new Date();
   leftMap.clear().then(() => {
-    var mapBuilder = leftMap.getBuilder(true);
+    let mapBuilder = leftMap.getBuilder(true);
     mapBuilder = loadRing(mapBuilder, 5, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 6, ETerrain.ABYSS);
     mapBuilder = loadRing(mapBuilder, 7, ETerrain.VOID);
 
-    for (var i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
       mapBuilder = mapBuilder.setTile(-6, i + 1, ETerrain.WATER_OCEAN)
         .setTile(-5, i, ETerrain.WATER_OCEAN)
         .setTile(-4, i - 1, ETerrain.SAND_BEACH);
@@ -320,7 +320,7 @@ function loadDisk(): void {
       .setTile(0, -3, ETerrain.MOUNTAIN_VOLCANO)
       .setTile(0, -4, ETerrain.SAND_DESERT);
 
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       mapBuilder = mapBuilder.setTile(-2 - i, 4 + 1, ETerrain.WATER_OCEAN)
         .setTile(-1 - i, 4, ETerrain.WATER_OCEAN);
     }
@@ -338,7 +338,7 @@ function loadDisk(): void {
 }
 
 function loadCircle(builder: WesnothTiles.MapBuilder, terrain1, terrain2, overlay1, overlay2, x, y): WesnothTiles.MapBuilder {
-  var fog = true;
+  const fog = true;
   return builder.setTile(x, y, terrain1, overlay1)
     .setTile(x, y - 1, terrain2, overlay2, fog)
     .setTile(x + 1, y - 1, terrain2, overlay2, fog)
@@ -349,13 +349,13 @@ function loadCircle(builder: WesnothTiles.MapBuilder, terrain1, terrain2, overla
 }
 
 function start() {
-  var timeStart = new Date();
-  var leftCanvas = <HTMLCanvasElement>document.getElementById("map-canvas-left");
-  var rightCanvas = <HTMLCanvasElement>document.getElementById("map-canvas-right");
-  var leftCtx = leftCanvas.getContext('2d');
-  var rightCtx = rightCanvas.getContext('2d');
+  const timeStart = new Date();
+  const leftCanvas = <HTMLCanvasElement>document.getElementById("map-canvas-left");
+  const rightCanvas = <HTMLCanvasElement>document.getElementById("map-canvas-right");
+  const leftCtx = leftCanvas.getContext('2d');
+  const rightCtx = rightCanvas.getContext('2d');
 
-  var promises: Promise<void>[] = [];
+  const promises: Promise<void>[] = [];
 
   promises.push(WesnothTiles.createMap().then(left => {
     leftMap = left;
@@ -364,18 +364,18 @@ function start() {
     leftCanvas.height = leftCanvas.parentElement.clientHeight;
 
     leftCanvas.addEventListener('click', ev => {
-      var rect = leftCanvas.getBoundingClientRect();
-      var x = ev.clientX - rect.left;
-      var y = ev.clientY - rect.top;
+      const rect = leftCanvas.getBoundingClientRect();
+      const x = ev.clientX - rect.left;
+      const y = ev.clientY - rect.top;
 
-      var pos = WesnothTiles.pointToHexPos(Math.floor(x - leftCanvas.width / 2), Math.floor(y - leftCanvas.height / 2));
+      const pos = WesnothTiles.pointToHexPos(Math.floor(x - leftCanvas.width / 2), Math.floor(y - leftCanvas.height / 2));
       ev.preventDefault();
     });
 
     leftCanvas.addEventListener('mousemove', ev => {
-      var rect = leftCanvas.getBoundingClientRect();
-      var x = ev.clientX - rect.left - leftCanvas.width / 2;
-      var y = ev.clientY - rect.top - leftCanvas.height / 2;
+      const rect = leftCanvas.getBoundingClientRect();
+      const x = ev.clientX - rect.left - leftCanvas.width / 2;
+      const y = ev.clientY - rect.top - leftCanvas.height / 2;
 
       leftMap.moveCursor(x, y);
 
@@ -391,20 +391,20 @@ function start() {
     rightCanvas.height = rightCanvas.parentElement.clientHeight;
 
     rightCanvas.addEventListener('mousemove', ev => {
-      var rect = rightCanvas.getBoundingClientRect();
-      var x = ev.clientX - rect.left - rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x;
-      var y = ev.clientY - rect.top - rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y;
+      const rect = rightCanvas.getBoundingClientRect();
+      const x = ev.clientX - rect.left - rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x;
+      const y = ev.clientY - rect.top - rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y;
 
       rightMap.moveCursor(x, y);
 
     });
     rightCanvas.addEventListener('click', ev => {
 
-      var rect = rightCanvas.getBoundingClientRect();
-      var x = ev.clientX - rect.left + WesnothTiles.hexToPoint(1, 1).x;
-      var y = ev.clientY - rect.top + WesnothTiles.hexToPoint(1, 1).y;
+      const rect = rightCanvas.getBoundingClientRect();
+      const x = ev.clientX - rect.left + WesnothTiles.hexToPoint(1, 1).x;
+      const y = ev.clientY - rect.top + WesnothTiles.hexToPoint(1, 1).y;
 
-      var pos = WesnothTiles.pointToHexPos(x - rightCanvas.width / 2, y - rightCanvas.height / 2);
+      const pos = WesnothTiles.pointToHexPos(x - rightCanvas.width / 2, y - rightCanvas.height / 2);
       ev.preventDefault();
     });
 
@@ -413,7 +413,7 @@ function start() {
 
   Promise.all(promises).then(() => {
     loadDisk();
-    var leftProjection: WesnothTiles.IProjection = {
+    const leftProjection: WesnothTiles.IProjection = {
       left: Math.floor(-leftCanvas.width / 2) - 300,
       right: Math.floor(leftCanvas.width / 2) - 300,
       top: Math.floor(-leftCanvas.height / 2) - 0,
@@ -422,7 +422,7 @@ function start() {
       y: 0,
     };
 
-    var rightProjection: WesnothTiles.IProjection = {
+    const rightProjection: WesnothTiles.IProjection = {
       left: Math.floor(-rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x),
       right: Math.floor(rightCanvas.width / 2 + WesnothTiles.hexToPoint(1, 1).x),
       top: Math.floor(-rightCanvas.height / 2 + WesnothTiles.hexToPoint(1, 1).y),
@@ -431,7 +431,7 @@ function start() {
       y: 0,
     };
 
-    var anim = () => {
+    const anim = () => {
       window.requestAnimationFrame(timestamp => {
         if (redraw) {
           leftCtx.clearRect(0, 0, leftCanvas.width, leftCanvas.height);
@@ -444,9 +444,9 @@ function start() {
           leftCtx.fillRect(leftCanvas.width / 2, leftCanvas.height / 2, 3, 3);
           // rightCtx.globalAlpha = 0.5;
           // rightCtx.clearRect(0, 0, rightCanvas.width, rightCanvas.height);
-          // for (var i = -200; i < 200; i++) {
-          //   for (var j = -200; j < 200; j++) {
-          //     var p = tilesMap.pointToHexPos(i, j);
+          // for (const i = -200; i < 200; i++) {
+          //   for (const j = -200; j < 200; j++) {
+          //     const p = tilesMap.pointToHexPos(i, j);
           //     p.q = ((p.q + 10) * 30)%255;
           //     p.r = ((p.r + 10) * 30)%255;
           //     rightCtx.fillStyle = "rgba("+p.q+","+p.r+","+0+","+(255)+")";
@@ -493,8 +493,8 @@ class Rng {
   nextRange(start: number, end: number) {
     // returns in range [start, end): including start, excluding end
     // can't modulu nextInt because of weak randomness in lower bits
-    var rangeSize = end - start;
-    var randomUnder1 = this.nextInt() / this.m;
+    const rangeSize = end - start;
+    const randomUnder1 = this.nextInt() / this.m;
     return start + Math.floor(randomUnder1 * rangeSize);
   }
 }

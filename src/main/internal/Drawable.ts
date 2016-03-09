@@ -12,7 +12,7 @@ module WesnothTiles.Internal {
     }
 
     draw(projection: IProjection, ctx: CanvasRenderingContext2D, timestamp: number) {
-      var sprite: SpriteDefinition;
+      let sprite: SpriteDefinition;
 
       if (this.duration === undefined) { // sprite is static.
         sprite = definitions.get(this.name);
@@ -27,8 +27,8 @@ module WesnothTiles.Internal {
         sprite.draw(this.x + projection.x - projection.left, this.y + projection.y - projection.top, ctx);
         return;
       } else {
-        var frame = 1 + Math.floor(timestamp / this.duration) % this.frames;
-        var frameString = "A" + (frame >= 10 ? frame.toString() : ("0" + frame.toString()));
+        const frame = 1 + Math.floor(timestamp / this.duration) % this.frames;
+        const frameString = "A" + (frame >= 10 ? frame.toString() : ("0" + frame.toString()));
         sprite = definitions.get(this.name.replace("@A", frameString));
       }
 

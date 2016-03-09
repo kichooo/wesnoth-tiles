@@ -3,12 +3,12 @@
 module WesnothTiles.Worker {
   'use strict';
 
-  export var spriteNames = new Set<string>();
+  export const spriteNames = new Set<string>();
 
-  var hexMaps = new Map<number, HexMap>();
+  const hexMaps = new Map<number, HexMap>();
 
-  var ensureMap = (mapId: number): HexMap => {
-    var map = hexMaps.get(mapId);
+  const ensureMap = (mapId: number): HexMap => {
+    let map = hexMaps.get(mapId);
     if (map === undefined) {
       map = new HexMap();
       hexMaps.set(mapId, map);
@@ -19,11 +19,11 @@ module WesnothTiles.Worker {
   export class Worker {
     constructor() {
       onmessage = (oEvent: MessageEvent) => {
-        var order: Internal.IWorkerOrder = oEvent.data;
+        const order: Internal.IWorkerOrder = oEvent.data;
 
-        var func = this[order.func];
-        var result = func(order.data);
-        var response: Internal.IWorkerResponse = {
+        const func = this[order.func];
+        const result = func(order.data);
+        const response: Internal.IWorkerResponse = {
           id: order.id,
           data: result,
         }
@@ -33,7 +33,7 @@ module WesnothTiles.Worker {
     }
 
     setTiles = (bundle: Internal.ISetTerrainBundle): void => {
-      var map = ensureMap(bundle.mapId);
+      const map = ensureMap(bundle.mapId);
       if (bundle.loadingMode)
         map.setLoadingMode();
       bundle.tileChanges.forEach(change => {
@@ -50,19 +50,19 @@ module WesnothTiles.Worker {
     }
 
     rebuild = (mapId: number): Internal.DrawableData[]=> {
-      var map = ensureMap(mapId);
+      const map = ensureMap(mapId);
       map.unsetLoadingMode();
-      var drawables = rebuild(map);
+      const drawables = rebuild(map);
       drawables.sort(sortFunc);
 
       return drawables;
     }
 
     getChecksum = (mapId: number): string => {
-      var map = ensureMap(mapId);
-      var drawables = this.rebuild(mapId);
+      const map = ensureMap(mapId);
+      const drawables = this.rebuild(mapId);
 
-      var checksum = 0;
+      let checksum = 0;
 
       drawables.sort(sortFuncForChecksum);
       drawables.forEach(drawable => {
@@ -77,7 +77,7 @@ module WesnothTiles.Worker {
     }
   }
 
-  var sortFunc = (a: Internal.DrawableData, b: Internal.DrawableData) => {
+  const sortFunc = (a: Internal.DrawableData, b: Internal.DrawableData) => {
     if (a.layer === b.layer) {
       if (a.base !== undefined && b.base !== undefined) {
         return a.base.y - b.base.y;
@@ -92,7 +92,7 @@ module WesnothTiles.Worker {
     return a.layer - b.layer;
   };
 
-  var sortFuncForChecksum = (a: Internal.DrawableData, b: Internal.DrawableData) => {
+  const sortFuncForChecksum = (a: Internal.DrawableData, b: Internal.DrawableData) => {
     if (a.layer === b.layer) {
       if (a.base !== undefined && b.base !== undefined) {
         if (a.base.y === b.base.y) {
@@ -112,5 +112,5 @@ module WesnothTiles.Worker {
 
 }
 
-var worker = new WesnothTiles.Worker.Worker();
+const worker = new WesnothTiles.Worker.Worker();
 

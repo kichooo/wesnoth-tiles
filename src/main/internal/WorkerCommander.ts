@@ -5,18 +5,18 @@ module WesnothTiles.Internal {
   }
 
   'use strict';
-  var id = 0;
-  var deferreds = new Map<number, IDeferred>();
-  var worker: Worker;
+  let id = 0;
+  let worker: Worker;
+  const deferreds = new Map<number, IDeferred>();
 
-  export var loadWorker = () => {
-    var blob = new Blob([workerString], {type: 'application/javascript'});
+  export const loadWorker = () => {
+    const blob = new Blob([workerString], {type: 'application/javascript'});
 
     worker = new Worker(URL.createObjectURL(blob));    
 
 
     worker.onmessage = (obj) => {
-      var response: Internal.IWorkerResponse = obj.data;
+      const response: Internal.IWorkerResponse = obj.data;
       if (deferreds.has(response.id)) {
         deferreds.get(response.id).resolve(response.data);
         deferreds.delete(response.id);
@@ -25,7 +25,7 @@ module WesnothTiles.Internal {
     }
   }
 
-  export var sendCommand = <T>(commandName: string, params?: Object): Promise<T> => {
+  export const sendCommand = <T>(commandName: string, params?: Object): Promise<T> => {
     return new Promise<Object>((resolve, reject) => {
       deferreds.set(id, {
         resolve: resolve,

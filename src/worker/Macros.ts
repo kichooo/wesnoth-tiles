@@ -1,10 +1,10 @@
 module WesnothTiles.Worker {
   'use strict';
 
-  var getTerrainMap = (terrains: EOverlay[]| ETerrain[]): Map<number, boolean> => {
+  const getTerrainMap = (terrains: EOverlay[]| ETerrain[]): Map<number, boolean> => {
     if (terrains === undefined)
       return undefined;
-    var terrainList = new Map<number, boolean>();
+    const terrainList = new Map<number, boolean>();
     (<number[]>terrains).forEach(terrain => {
       terrainList.set(terrain, true);
     });
@@ -17,7 +17,7 @@ module WesnothTiles.Worker {
     toString(imageStem: string, postfix?: string): string;
   }
   // image builders.
-  export var IB_IMAGE_SINGLE: IBuilder = {
+  export const IB_IMAGE_SINGLE: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       // console.log("Adding " + imageStem + postfix);
       return new Internal.DrawableData(
@@ -32,7 +32,7 @@ module WesnothTiles.Worker {
     }
   }
 
-  export var IB_ANIMATION_15_SLOW: IBuilder = {
+  export const IB_ANIMATION_15_SLOW: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new Internal.DrawableData(
         pos.x,
@@ -45,7 +45,7 @@ module WesnothTiles.Worker {
     }
   }
 
-  export var IB_ANIMATION_15: IBuilder = {
+  export const IB_ANIMATION_15: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new Internal.DrawableData(
         pos.x,
@@ -58,7 +58,7 @@ module WesnothTiles.Worker {
     }
   }
 
-  export var IB_ANIMATION_06: IBuilder = {
+  export const IB_ANIMATION_06: IBuilder = {
     toDrawable: (imageStem: string, postfix: string, pos: IVector, layer: number, base: IVector) => {
       return new Internal.DrawableData(
         pos.x,
@@ -114,8 +114,8 @@ module WesnothTiles.Worker {
     builder?: IBuilder;
   }
 
-  var GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
+  const GENERIC_SINGLE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, plfb: PLFB) => {
+    const img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"],
@@ -123,7 +123,7 @@ module WesnothTiles.Worker {
       center: { x: 90 - 54, y: 108 - 72 }
     }
 
-    var tile: WMLTile = {
+    const tile: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
@@ -132,7 +132,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile
       ],
@@ -143,7 +143,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var TERRAIN_BASE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
+  export const TERRAIN_BASE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
     if (plfb.prob === undefined)
       plfb.prob = 100;
     if (plfb.layer === undefined)
@@ -155,7 +155,7 @@ module WesnothTiles.Worker {
     GENERIC_SINGLE_PLFB(tgGroup, terrains, undefined, undefined, imageStem, plfb);
   }
 
-  var GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, lfb: LFB) => {
+  const GENERIC_SINGLE_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, lfb: LFB) => {
     GENERIC_SINGLE_PLFB(tgGroup, terrains, overlays, fog, imageStem + "@V", {
       prob: 100,
       layer: lfb.layer,
@@ -164,7 +164,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  export var OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, lfb: LFB) => {
+  export const OVERLAY_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, lfb: LFB) => {
     GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, overlays, fog, imageStem, {
       layer: lfb.layer === undefined ? 0 : lfb.layer,
       flag: lfb.flag === undefined ? "overlay" : lfb.flag,
@@ -172,7 +172,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  export var TERRAIN_BASE_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, lfb: LFB) => {
+  export const TERRAIN_BASE_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, lfb: LFB) => {
     if (lfb.layer === undefined)
       lfb.layer = -1000;
     if (lfb.flag === undefined)
@@ -182,9 +182,9 @@ module WesnothTiles.Worker {
     GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, undefined, undefined, imageStem, lfb);
   }
 
-  var BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
+    const img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",
       layer: plfb.layer,
@@ -192,7 +192,7 @@ module WesnothTiles.Worker {
       variations: ["", "2"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
@@ -200,7 +200,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R0"]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(terrains),
@@ -208,7 +208,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2
@@ -223,9 +223,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED6_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED6_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
+    const img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3-@R4-@R5",
       layer: plfb.layer,
@@ -233,7 +233,7 @@ module WesnothTiles.Worker {
       variations: ["", "2"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
@@ -241,7 +241,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3", plfb.flag + "-@R4", plfb.flag + "-@R5"]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(terrains),
@@ -249,7 +249,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(terrains),
@@ -257,7 +257,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
-    var tile4: WMLTile = {
+    const tile4: WMLTile = {
       q: 1,
       r: 0,
       type: getTerrainMap(terrains),
@@ -265,7 +265,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R5"]
     }
 
-    var tile5: WMLTile = {
+    const tile5: WMLTile = {
       q: 0,
       r: 1,
       type: getTerrainMap(terrains),
@@ -273,7 +273,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R0"]
     }
 
-    var tile6: WMLTile = {
+    const tile6: WMLTile = {
       q: -1,
       r: 1,
       type: getTerrainMap(terrains),
@@ -281,7 +281,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R1"]
     }
 
-    var tile7: WMLTile = {
+    const tile7: WMLTile = {
       q: -1,
       r: 0,
       type: getTerrainMap(terrains),
@@ -289,7 +289,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R2"]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -309,9 +309,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED4_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED4_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
+    const img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2-@R3",
       layer: plfb.layer,
@@ -319,7 +319,7 @@ module WesnothTiles.Worker {
       variations: ["", "2"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
@@ -327,7 +327,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2", plfb.flag + "-@R3"]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(terrains),
@@ -335,7 +335,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(terrains),
@@ -343,7 +343,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
-    var tile4: WMLTile = {
+    const tile4: WMLTile = {
       q: 1,
       r: 0,
       type: getTerrainMap(terrains),
@@ -351,7 +351,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R5"]
     }
 
-    var tile5: WMLTile = {
+    const tile5: WMLTile = {
       q: 0,
       r: 1,
       type: getTerrainMap(terrains),
@@ -359,7 +359,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R0"]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -377,9 +377,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
+    const img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1-@R2",
       layer: plfb.layer,
@@ -387,7 +387,7 @@ module WesnothTiles.Worker {
       variations: ["", "2"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
@@ -395,7 +395,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1", plfb.flag + "-@R2"]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(terrains),
@@ -403,7 +403,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(terrains),
@@ -411,7 +411,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
-    var tile4: WMLTile = {
+    const tile4: WMLTile = {
       q: 1,
       r: 0,
       type: getTerrainMap(terrains),
@@ -419,7 +419,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R5"]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -436,9 +436,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
+    const img: WMLImage = {
       name: imageStem,
       postfix: "-@R0-@R1",
       layer: plfb.layer,
@@ -446,7 +446,7 @@ module WesnothTiles.Worker {
       variations: ["", "2"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
@@ -454,7 +454,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R0", plfb.flag + "-@R1"]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(terrains),
@@ -462,7 +462,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R3"]
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(terrains),
@@ -470,7 +470,7 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag + "-@R4"]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -486,7 +486,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED6_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
@@ -496,7 +496,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  var BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED4_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
@@ -506,7 +506,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  var BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED3_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
@@ -516,7 +516,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  var BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED2_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
@@ -526,7 +526,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  var BORDER_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB) => {
     BORDER_RESTRICTED_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + "@V", {
       prob: 100,
@@ -536,7 +536,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  var BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
+  const BORDER_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], fog: boolean,
     adjacent: ETerrain[], fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number[]) => {
     grades.forEach(grade => {
       switch (grade) {
@@ -563,7 +563,7 @@ module WesnothTiles.Worker {
   }
 
   // grades is used by BORDER_COMPLETE, to filter out not needed macros.
-  export var TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, grades: number[]) => {
+  export const TRANSITION_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, grades: number[]) => {
     if (lfb.layer === undefined)
       lfb.layer = -500;
     if (lfb.flag === undefined)
@@ -573,7 +573,7 @@ module WesnothTiles.Worker {
     BORDER_COMPLETE_LFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, lfb, grades);
   }
 
-  export var FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: boolean, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number[]) => {
+  export const FOG_TRANSITION_LFB = (tgGroup: TgGroup, fog: boolean, fogAdjacent: boolean, imageStem: string, lfb: LFB, grades: number[]) => {
     if (lfb.layer === undefined)
       lfb.layer = -500;
     if (lfb.flag === undefined)
@@ -584,22 +584,22 @@ module WesnothTiles.Worker {
   }
 
 
-  var GENERIC_SINGLEHEX_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
-    var img: WMLImage = {
+  const GENERIC_SINGLEHEX_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
+    const img: WMLImage = {
       name: imageStem,
       layer: plfb.layer,
       center: { x: 36, y: 36 },
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile: WMLTile = {
+    const tile: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile
       ],
@@ -610,7 +610,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var TERRAIN_BASE_SINGLEHEX_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
+  export const TERRAIN_BASE_SINGLEHEX_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, plfb: PLFB) => {
     if (plfb.prob === undefined)
       plfb.prob = 100;
     if (plfb.layer === undefined)
@@ -622,15 +622,15 @@ module WesnothTiles.Worker {
     GENERIC_SINGLEHEX_PLFB(tgGroup, terrains, imageStem, plfb);
   }
 
-  export var ANIMATED_WATER_15_TRANSITION = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, layer: number) => {
-    var img: WMLImage = {
+  export const ANIMATED_WATER_15_TRANSITION = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, layer: number) => {
+    const img: WMLImage = {
       name: imageStem,
       postfix: "-@R0",
       layer: layer,
       center: { x: 36, y: 36 },
       variations: [""]
     }
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
@@ -638,13 +638,13 @@ module WesnothTiles.Worker {
       set_no_flag: ["transition-@R0"]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(terrains),
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2
@@ -659,8 +659,8 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var NEW_BEACH = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string) => {
-    var concave_img1: WMLImage = {
+  export const NEW_BEACH = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string) => {
+    const concave_img1: WMLImage = {
       name: imageStem + "-concave",
       postfix: "-@R0-@R5",
       layer: -500,
@@ -668,7 +668,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var concave_img2: WMLImage = {
+    const concave_img2: WMLImage = {
       name: imageStem + "-concave",
       postfix: "-@R0-@R1",
       layer: -500,
@@ -676,28 +676,28 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var concave_tile1: WMLTile = {
+    const concave_tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
-    var concave_tile2: WMLTile = {
+    const concave_tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(terrains),
       set_no_flag: ["beach-@R2-@R3"]
     }
 
-    var concave_tile3: WMLTile = {
+    const concave_tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(terrains),
       set_no_flag: ["beach-@R4-@R3"]
     }
 
-    var concave_terrainGraphic: WMLTerrainGraphics = {
+    const concave_terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         concave_tile1,
         concave_tile2,
@@ -713,7 +713,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(concave_terrainGraphic);
     // ----------------------------------------------------
 
-    var convex0_img1: WMLImage = {
+    const convex0_img1: WMLImage = {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
@@ -721,7 +721,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var convex0_img2: WMLImage = {
+    const convex0_img2: WMLImage = {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
@@ -729,28 +729,28 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var convex0_tile1: WMLTile = {
+    const convex0_tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: ["beach-@R0-@R5", "beach-@R0-@R1"]
     }
 
-    var convex0_tile2: WMLTile = {
+    const convex0_tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R2-@R3"]
     }
 
-    var convex0_tile3: WMLTile = {
+    const convex0_tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R4-@R3"]
     }
 
-    var convex0_terrainGraphic: WMLTerrainGraphics = {
+    const convex0_terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         convex0_tile1,
         convex0_tile2,
@@ -765,7 +765,7 @@ module WesnothTiles.Worker {
     }
     tgGroup.addTg(convex0_terrainGraphic);
     // ----------------------------------------------------
-    var convex1_img1: WMLImage = {
+    const convex1_img1: WMLImage = {
       name: imageStem + "-convex",
       postfix: "-@R0-@R5",
       layer: -500,
@@ -773,27 +773,27 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var convex1_tile1: WMLTile = {
+    const convex1_tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: ["beach-@R0-@R5"]
     }
 
-    var convex1_tile2: WMLTile = {
+    const convex1_tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R2-@R3"]
     }
 
-    var convex1_tile3: WMLTile = {
+    const convex1_tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(swapTerrains(adjacent.concat(terrains))),
     }
 
-    var convex1_terrainGraphic: WMLTerrainGraphics = {
+    const convex1_terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         convex1_tile1,
         convex1_tile2,
@@ -809,7 +809,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(convex1_terrainGraphic);
 
     // ----------------------------------------------------
-    var convex2_img1: WMLImage = {
+    const convex2_img1: WMLImage = {
       name: imageStem + "-convex",
       postfix: "-@R0-@R1",
       layer: -500,
@@ -817,7 +817,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var convex2_tile1: WMLTile = {
+    const convex2_tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
@@ -825,20 +825,20 @@ module WesnothTiles.Worker {
       set_no_flag: ["beach-@R0-@R1"]
     }
 
-    var convex2_tile2: WMLTile = {
+    const convex2_tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(swapTerrains(adjacent.concat(terrains))),
     }
 
-    var convex2_tile3: WMLTile = {
+    const convex2_tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(adjacent),
       set_no_flag: ["beach-@R4-@R3"]
     }
 
-    var convex2_terrainGraphic: WMLTerrainGraphics = {
+    const convex2_terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         convex2_tile1,
         convex2_tile2,
@@ -854,8 +854,8 @@ module WesnothTiles.Worker {
     tgGroup.addTg(convex2_terrainGraphic);
   }
 
-  export var NEW_WAVES = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], layer: number, imageStem: string) => {
-    var convex_img1: WMLImage = {
+  export const NEW_WAVES = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], layer: number, imageStem: string) => {
+    const convex_img1: WMLImage = {
       name: imageStem + "-convex",
       postfix: "-@R0",
       layer: layer,
@@ -863,28 +863,28 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var convex_tile1: WMLTile = {
+    const convex_tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: ["waves-@R0"]
     }
 
-    var convex_tile2: WMLTile = {
+    const convex_tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent),
       set_no_flag: ["waves-@R2"]
     }
 
-    var convex_tile3: WMLTile = {
+    const convex_tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(adjacent),
       set_no_flag: ["waves-@R4"]
     }
 
-    var convex_terrainGraphic: WMLTerrainGraphics = {
+    const convex_terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         convex_tile1,
         convex_tile2,
@@ -898,7 +898,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(convex_terrainGraphic);
     // ----------------------------------------------------
 
-    var concave_img1: WMLImage = {
+    const concave_img1: WMLImage = {
       name: imageStem + "-concave",
       postfix: "-@R0",
       layer: layer,
@@ -906,28 +906,28 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var concave_tile1: WMLTile = {
+    const concave_tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(adjacent),
       set_no_flag: ["waves-@R0"]
     }
 
-    var concave_tile2: WMLTile = {
+    const concave_tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(terrains),
       set_no_flag: ["waves-@R2"]
     }
 
-    var concave_tile3: WMLTile = {
+    const concave_tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(terrains),
       set_no_flag: ["waves-@R4"]
     }
 
-    var concave_terrainGraphic: WMLTerrainGraphics = {
+    const concave_terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         concave_tile1,
         concave_tile2,
@@ -942,8 +942,8 @@ module WesnothTiles.Worker {
 
   }
 
-  export var MOUNTAIN_SINGLE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, prob: number, flag: string) => {
-    var img: WMLImage = {
+  export const MOUNTAIN_SINGLE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, prob: number, flag: string) => {
+    const img: WMLImage = {
       name: imageStem,
       base: { x: 90 - 54, y: 107 - 72 },
       layer: 0,
@@ -951,14 +951,14 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6"],
     }
 
-    var tile: WMLTile = {
+    const tile: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [flag]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [tile],
       images: [img],
       probability: prob,
@@ -967,7 +967,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var GENERIC_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+  const GENERIC_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
     GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem + "@V", {
       layer: lfb.layer,
       prob: 100,
@@ -976,7 +976,7 @@ module WesnothTiles.Worker {
     }, rotation);
   }
 
-  var GENERIC_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+  const GENERIC_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
     GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem + "@V", {
       layer: lfb.layer,
       prob: 100,
@@ -985,7 +985,7 @@ module WesnothTiles.Worker {
     }, rotation);
   }
 
-  var GENERIC_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+  const GENERIC_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
     GENERIC_RESTRICTED_PLFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem + "@V", {
       layer: lfb.layer,
       prob: 100,
@@ -994,7 +994,7 @@ module WesnothTiles.Worker {
     }, rotation);
   }
 
-  var GENERIC_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
+  const GENERIC_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
     GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0-@R1-@R2");
     GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
     GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0-@R1");
@@ -1004,7 +1004,7 @@ module WesnothTiles.Worker {
     GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, undefined, undefined, imageStem, lfb);
   }
 
-  export var OVERLAY_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
+  export const OVERLAY_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
     GENERIC_COMPLETE_LFB(tgGroup, terrains, adjacent, imageStem, {
       layer: lfb.layer === undefined ? 0 : lfb.layer,
       flag: lfb.flag === undefined ? "overlay" : lfb.flag,
@@ -1012,12 +1012,12 @@ module WesnothTiles.Worker {
     });
   }
 
-  export var MOUNTAIN_SINGLE_RANDOM = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string) => {
+  export const MOUNTAIN_SINGLE_RANDOM = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string) => {
     MOUNTAIN_SINGLE(tgGroup, terrains, imageStem + "@V", 100, flag);
   }
 
-  var GENERIC_RESTRICTED3_N_NE_SE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    var img: WMLImage = {
+  const GENERIC_RESTRICTED3_N_NE_SE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
@@ -1026,32 +1026,32 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile4: WMLTile = {
+    const tile4: WMLTile = {
       q: 1,
       r: 0,
       type: getTerrainMap(adjacent)
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -1067,8 +1067,8 @@ module WesnothTiles.Worker {
 
   }
 
-  var GENERIC_RESTRICTED3_N_NE_S_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    var img: WMLImage = {
+  const GENERIC_RESTRICTED3_N_NE_S_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
@@ -1077,32 +1077,32 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile4: WMLTile = {
+    const tile4: WMLTile = {
       q: 0,
       r: 1,
       type: getTerrainMap(adjacent)
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -1118,8 +1118,8 @@ module WesnothTiles.Worker {
 
   }
 
-  var GENERIC_RESTRICTED3_N_NE_SW_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    var img: WMLImage = {
+  const GENERIC_RESTRICTED3_N_NE_SW_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
@@ -1128,32 +1128,32 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile4: WMLTile = {
+    const tile4: WMLTile = {
       q: -1,
       r: 1,
       type: getTerrainMap(adjacent)
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -1168,8 +1168,8 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var GENERIC_RESTRICTED3_N_SE_SW_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    var img: WMLImage = {
+  const GENERIC_RESTRICTED3_N_SE_SW_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
@@ -1178,32 +1178,32 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: 0,
       type: getTerrainMap(adjacent)
     }
 
-    var tile4: WMLTile = {
+    const tile4: WMLTile = {
       q: -1,
       r: 1,
       type: getTerrainMap(adjacent)
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -1218,7 +1218,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var GENERIC_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+  const GENERIC_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     GENERIC_RESTRICTED3_N_NE_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
     GENERIC_RESTRICTED3_N_NE_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
     GENERIC_RESTRICTED3_N_NE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
@@ -1226,7 +1226,7 @@ module WesnothTiles.Worker {
   }
 
 
-  export var OVERLAY_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+  export const OVERLAY_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1235,7 +1235,7 @@ module WesnothTiles.Worker {
     }, "");
   }
 
-  export var OVERLAY_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+  export const OVERLAY_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1244,8 +1244,8 @@ module WesnothTiles.Worker {
     }, "");
   }
 
-  var GENERIC_RESTRICTED2_N_NE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    var img: WMLImage = {
+  const GENERIC_RESTRICTED2_N_NE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
@@ -1254,26 +1254,26 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -1288,8 +1288,8 @@ module WesnothTiles.Worker {
 
   }
 
-  var GENERIC_RESTRICTED2_N_SE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    var img: WMLImage = {
+  const GENERIC_RESTRICTED2_N_SE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
@@ -1298,27 +1298,27 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 1,
       r: 0,
       type: getTerrainMap(adjacent)
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -1333,8 +1333,8 @@ module WesnothTiles.Worker {
 
   }
 
-  var GENERIC_RESTRICTED2_N_S_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    var img: WMLImage = {
+  const GENERIC_RESTRICTED2_N_S_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
@@ -1343,26 +1343,26 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
       set_no_flag: [plfb.flag]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent)
     }
 
-    var tile3: WMLTile = {
+    const tile3: WMLTile = {
       q: 0,
       r: 1,
       type: getTerrainMap(adjacent)
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -1376,7 +1376,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var OVERLAY_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, plfb: PLFB) => {
+  export const OVERLAY_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, plfb: PLFB) => {
     GENERIC_SINGLE_PLFB(tgGroup, terrains, overlays, fog, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1385,13 +1385,13 @@ module WesnothTiles.Worker {
     });
   }
 
-  var GENERIC_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+  const GENERIC_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     GENERIC_RESTRICTED2_N_NE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
     GENERIC_RESTRICTED2_N_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
     GENERIC_RESTRICTED2_N_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
   }
 
-  export var OVERLAY_ROTATION_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+  export const OVERLAY_ROTATION_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1400,9 +1400,9 @@ module WesnothTiles.Worker {
     }, "-@R0-@R1");
   }
 
-  var GENERIC_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
+  const GENERIC_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
     adjacent: ETerrain[], adjacentOverlays: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    var img: WMLImage = {
+    const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
       layer: plfb.layer,
@@ -1411,7 +1411,7 @@ module WesnothTiles.Worker {
       variations: ["", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
     }
 
-    var tile1: WMLTile = {
+    const tile1: WMLTile = {
       q: 0,
       r: 0,
       type: getTerrainMap(terrains),
@@ -1419,14 +1419,14 @@ module WesnothTiles.Worker {
       set_no_flag: [plfb.flag]
     }
 
-    var tile2: WMLTile = {
+    const tile2: WMLTile = {
       q: 0,
       r: -1,
       type: getTerrainMap(adjacent),
       overlay: getTerrainMap(adjacentOverlays),
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [
         tile1,
         tile2,
@@ -1439,7 +1439,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var OVERLAY_ROTATION_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+  export const OVERLAY_ROTATION_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     GENERIC_RESTRICTED_PLFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1448,9 +1448,9 @@ module WesnothTiles.Worker {
     }, "-@R0");
   }
 
-  export var MOUNTAINS_2x4_NW_SE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
-    var center = { x: 198 - 54, y: 180 - 108 }
-    var img1: WMLImage = {
+  export const MOUNTAINS_2x4_NW_SE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
+    const center = { x: 198 - 54, y: 180 - 108 }
+    const img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
       layer: 0,
@@ -1459,7 +1459,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img2: WMLImage = {
+    const img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
       layer: 0,
@@ -1468,7 +1468,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img3: WMLImage = {
+    const img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
       center: center,
@@ -1477,7 +1477,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img4: WMLImage = {
+    const img4: WMLImage = {
       name: imageStem + "_4",
       postfix: "",
       center: center,
@@ -1486,7 +1486,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img5: WMLImage = {
+    const img5: WMLImage = {
       name: imageStem + "_5",
       postfix: "",
       center: center,
@@ -1495,14 +1495,14 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [],
       images: [img1, img2, img3, img4, img5],
       probability: prob,
       builder: IB_IMAGE_SINGLE
     }
 
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       terrainGraphic.tiles.push({
         q: i,
         r: 0,
@@ -1520,9 +1520,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var MOUNTAINS_1x3_NW_SE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
-    var center = { x: 144 - 54, y: 162 - 108 }
-    var img1: WMLImage = {
+  export const MOUNTAINS_1x3_NW_SE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
+    const center = { x: 144 - 54, y: 162 - 108 }
+    const img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
       layer: 0,
@@ -1531,7 +1531,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img2: WMLImage = {
+    const img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
       layer: 0,
@@ -1540,7 +1540,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img3: WMLImage = {
+    const img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
       layer: 0,
@@ -1549,14 +1549,14 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [],
       images: [img1, img2, img3],
       probability: prob,
       builder: IB_IMAGE_SINGLE
     }
 
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       terrainGraphic.tiles.push({
         q: i,
         r: 0,
@@ -1568,9 +1568,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var MOUNTAINS_2x4_SW_NE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
-    var center = { x: 198 - 216, y: 180 - 72 }
-    var img1: WMLImage = {
+  export const MOUNTAINS_2x4_SW_NE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
+    const center = { x: 198 - 216, y: 180 - 72 }
+    const img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
       layer: 0,
@@ -1579,7 +1579,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img2: WMLImage = {
+    const img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
       layer: 0,
@@ -1588,7 +1588,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img3: WMLImage = {
+    const img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
       layer: 0,
@@ -1597,7 +1597,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img4: WMLImage = {
+    const img4: WMLImage = {
       name: imageStem + "_4",
       postfix: "",
       layer: 0,
@@ -1606,7 +1606,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img5: WMLImage = {
+    const img5: WMLImage = {
       name: imageStem + "_5",
       postfix: "",
       layer: 0,
@@ -1615,14 +1615,14 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [],
       images: [img1, img2, img3, img4, img5],
       probability: prob,
       builder: IB_IMAGE_SINGLE
     }
 
-    for (var i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       terrainGraphic.tiles.push({
         q: -i,
         r: i,
@@ -1640,9 +1640,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var MOUNTAINS_1x3_SW_NE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
-    var center = { x: 144 - 162, y: 162 - 108 }
-    var img1: WMLImage = {
+  export const MOUNTAINS_1x3_SW_NE = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
+    const center = { x: 144 - 162, y: 162 - 108 }
+    const img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
       layer: 0,
@@ -1651,7 +1651,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img2: WMLImage = {
+    const img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
       layer: 0,
@@ -1660,7 +1660,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img3: WMLImage = {
+    const img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
       layer: 0,
@@ -1669,14 +1669,14 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [],
       images: [img1, img2, img3],
       probability: prob,
       builder: IB_IMAGE_SINGLE
     }
 
-    for (var i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
       terrainGraphic.tiles.push({
         q: -i,
         r: i,
@@ -1688,9 +1688,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var MOUNTAINS_2x2 = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
-    var center = { x: 144 - 108, y: 144 - 72 }
-    var img1: WMLImage = {
+  export const MOUNTAINS_2x2 = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string, prob: number) => {
+    const center = { x: 144 - 108, y: 144 - 72 }
+    const img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
       layer: 0,
@@ -1699,7 +1699,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img2: WMLImage = {
+    const img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
       layer: 0,
@@ -1708,7 +1708,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img3: WMLImage = {
+    const img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
       layer: 0,
@@ -1717,14 +1717,14 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [],
       images: [img1, img2, img3],
       probability: prob,
       builder: IB_IMAGE_SINGLE
     }
 
-    for (var i = 0; i < 2; i++) {
+    for (let i = 0; i < 2; i++) {
       terrainGraphic.tiles.push({
         q: -i,
         r: i,
@@ -1742,9 +1742,9 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export var VOLCANO_2x2 = (tgGroup: TgGroup, volcano: ETerrain[], adjacent: ETerrain[], imageStem: string, flag: string) => {
-    var center = { x: 144 - 108, y: 144 - 72 }
-    var img1: WMLImage = {
+  export const VOLCANO_2x2 = (tgGroup: TgGroup, volcano: ETerrain[], adjacent: ETerrain[], imageStem: string, flag: string) => {
+    const center = { x: 144 - 108, y: 144 - 72 }
+    const img1: WMLImage = {
       name: imageStem + "_1",
       postfix: "",
       layer: 0,
@@ -1753,7 +1753,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img2: WMLImage = {
+    const img2: WMLImage = {
       name: imageStem + "_2",
       postfix: "",
       layer: 0,
@@ -1762,7 +1762,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var img3: WMLImage = {
+    const img3: WMLImage = {
       name: imageStem + "_3",
       postfix: "",
       center: center,
@@ -1771,7 +1771,7 @@ module WesnothTiles.Worker {
       variations: [""]
     }
 
-    var terrainGraphic: WMLTerrainGraphics = {
+    const terrainGraphic: WMLTerrainGraphics = {
       tiles: [],
       images: [img1, img2, img3],
       probability: 100,
@@ -1807,7 +1807,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  var CORNER_PLFB_CONVEX = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+  const CORNER_PLFB_CONVEX = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
  
     // 0 ["tr", "r", "br", "bl", "l", "tl"]
     tgGroup.addTg({
@@ -2002,7 +2002,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  var CORNER_PLFB_CONCAVE = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[],
+  const CORNER_PLFB_CONCAVE = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[],
     imageStem: string, plfb: PLFB) => {
  
     // 0 ["tr", "r", "br", "bl", "l", "tl"]
@@ -2198,7 +2198,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  export var WALL_TRANSITION_PLFB = (tgGroup: TgGroup, terrains: ETerrain[],
+  export const WALL_TRANSITION_PLFB = (tgGroup: TgGroup, terrains: ETerrain[],
     adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     if (plfb.layer === undefined)
       plfb.layer = 0;
@@ -2212,7 +2212,7 @@ module WesnothTiles.Worker {
     CORNER_PLFB_CONCAVE(tgGroup, adjacent, terrains, imageStem + "-concave", plfb);
   }
 
-  export var NEW_FOREST = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
+  export const NEW_FOREST = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
     adjacent: ETerrain[], imageStem: string) => {
     tgGroup.addTg({
       tiles: [{
@@ -2260,7 +2260,7 @@ module WesnothTiles.Worker {
       builder: IB_IMAGE_SINGLE
     });
   }
-  export var NEW_VILLAGE = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
+  export const NEW_VILLAGE = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
     imageStem: string) => {
 
     tgGroup.addTg({
@@ -2285,7 +2285,7 @@ module WesnothTiles.Worker {
     });
   }
 
-  export var OVERLAY_RESTRICTED_PLFB = (tgGroup: TgGroup, overlays: EOverlay[],
+  export const OVERLAY_RESTRICTED_PLFB = (tgGroup: TgGroup, overlays: EOverlay[],
     adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     GENERIC_RESTRICTED_PLFB(tgGroup, undefined, overlays, adjacent, undefined, imageStem, {
       layer: plfb.layer === undefined ? 0 : plfb.layer,

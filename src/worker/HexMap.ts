@@ -14,22 +14,22 @@ module WesnothTiles.Worker {
     }
 
     getHexP(q: number, r: number): Hex {
-      var map = this.hexes.get(q);
+      const map = this.hexes.get(q);
       return (map !== undefined) ? map.get(r) : undefined;
     }
 
     removeHex(q: number, r: number): void {
-      var map = this.hexes.get(q);
+      const map = this.hexes.get(q);
       if (map !== undefined)
         map.delete(r);
     }
 
     removeTerrain(q: number, r: number): void {
-      var row = this.hexes.get(q);
+      const row = this.hexes.get(q);
       if (row === undefined) {
         return;
       }
-      var hex = row.get(r);
+      const hex = row.get(r);
       if (hex !== undefined) {
         this.removeHexFromTgs(hex);
         row.delete(r);
@@ -37,13 +37,13 @@ module WesnothTiles.Worker {
     }
 
     setTerrain(q: number, r: number, terrain: ETerrain, overlay = EOverlay.NONE, fog = false): void {
-      var row = this.hexes.get(q);
+      let row = this.hexes.get(q);
       if (row === undefined) {
         row = new Map<number, Hex>();
         this.hexes.set(q, row);
       }
 
-      var hex = row.get(r);
+      let hex = row.get(r);
       if (hex === undefined) {
         hex = new Hex(q, r, terrain);
         row.set(r, hex);
@@ -83,16 +83,16 @@ module WesnothTiles.Worker {
     }
 
     private removeHexFromTgs(hex: Hex): void {
-      var key = hex.str;
+      const key = hex.str;
       this.tgGroup.tgs.forEach(tg => {
         tg.hexes.delete(key);
       });
     }
 
     private calculateStreaks(hex: Hex, bestStreaksMap: Map<ETerrain, number>): number {
-      var currentStreakMap = new Map<ETerrain, number>();
-      var bestFogStreak = 0;
-      var currentFogStreak = 0;
+      const currentStreakMap = new Map<ETerrain, number>();
+      let bestFogStreak = 0;
+      let currentFogStreak = 0;
 
       this.iterateNeighboursDouble(hex.q, hex.r,(terrain, fog) => {
         // stop current streaks.
@@ -105,14 +105,12 @@ module WesnothTiles.Worker {
           currentFogStreak = 0;
         if (terrain === undefined)
           return;
-        var newValue: number;
-        if (!currentStreakMap.has(terrain))
-          newValue = 1;
-        else
-          newValue = (currentStreakMap.get(terrain) + 1) % 7;
+        const newValue = currentStreakMap.has(terrain) ?
+          (currentStreakMap.get(terrain) + 1) % 7 :
+          1;
 
         currentStreakMap.set(terrain, newValue);
-        var bestStreak = bestStreaksMap.has(terrain) ?
+        const bestStreak = bestStreaksMap.has(terrain) ?
           bestStreaksMap.get(terrain) : 0;
         if (newValue > bestStreak)
           bestStreaksMap.set(terrain, newValue);
@@ -133,12 +131,12 @@ module WesnothTiles.Worker {
       // for transition macros, try to catch longest sequences of the same neighbour type
       // in a row. That way we can filter out transition macros of higher grades.
 
-      var streaksMap = new Map<ETerrain, number>();
-      var fogStreak = this.calculateStreaks(hex, streaksMap);
+      const streaksMap = new Map<ETerrain, number>();
+      const fogStreak = this.calculateStreaks(hex, streaksMap);
 
       // iterate through all the macros and check which of them applies here.      
       this.tgGroup.tgs.forEach(tg => {
-        var tile = tg.tiles[0];
+        const tile = tg.tiles[0];
         if (tile.type !== undefined && !tile.type.has(hex.terrain))
           return;
 
@@ -147,7 +145,7 @@ module WesnothTiles.Worker {
 
         if (tg.transition !== undefined) {
           if (tile.fog === undefined) {
-            var found = 0;
+            let found = 0;
             streaksMap.forEach((value: number, key: ETerrain) => {
               if (tg.transition.has(key))
                 found += value;
@@ -183,7 +181,7 @@ module WesnothTiles.Worker {
     }
 
     private iterateNeighbours(q: number, r: number, callback: (hex: Hex) => void) {
-      var func = (hex: Hex) => {
+      const func = (hex: Hex) => {
         if (hex !== undefined)
           callback(hex);
       }
@@ -198,7 +196,7 @@ module WesnothTiles.Worker {
 
     // This function is for optimization purposes.
     private iterateNeighboursDouble(q: number, r: number, callback: (terrain: ETerrain, fog: boolean) => void) {
-      var func = (hex: Hex) => {
+      const func = (hex: Hex) => {
         if (hex !== undefined)
           callback(hex.terrain, hex.fog);
         else
