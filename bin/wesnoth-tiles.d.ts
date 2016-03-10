@@ -150,8 +150,8 @@ declare module WesnothTiles.Internal {
     }
 }
 declare module WesnothTiles.Internal {
-    var definitions: Map<string, SpriteDefinition>;
-    var loadResources: () => Promise<void>;
+    const definitions: Map<string, SpriteDefinition>;
+    const loadResources: () => Promise<void>;
     interface IXY {
         x: number;
         y: number;
@@ -184,6 +184,6 @@ declare module WesnothTiles.Internal {
     }
 }
 declare module WesnothTiles.Internal {
-    var loadWorker: () => void;
-    var sendCommand: <T>(commandName: string, params?: Object) => Promise<T>;
+    const loadWorker: () => void;
+    const sendCommand: <T>(commandName: string, params?: Object) => Promise<T>;
 }

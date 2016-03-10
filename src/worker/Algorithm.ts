@@ -76,14 +76,11 @@ module WesnothTiles.Worker {
         return undefined;
       }
     }
-    return imgName;
-
   }
 
   const performRotatedTerrainGraphics = (tg: WMLTerrainGraphics, dp: IDrawParams, rot: number = 0) => {
     if (tg.probability !== 100 && dp.hex.getRandom(0, 101) > tg.probability)
       return;
-    // we need to know coors of the leftmost hex.
     for (let i = 0; i < tg.tiles.length; i++) {
       const tile = tg.tiles[i];
       const rotHex = getRotatedPos(tile, rot);
@@ -91,24 +88,12 @@ module WesnothTiles.Worker {
       const hexPosR = dp.hex.r + rotHex.r;
       const hex = dp.hexMap.getHexP(hexPosQ, hexPosR);
 
-      if (hex === undefined)
-        return;
-
-      if (tile.type !== undefined && !tile.type.has(hex.terrain)) {
-        return;
-      }
-
-      if (tile.overlay !== undefined && !tile.overlay.has(hex.overlay)) {
-        return;
-      }
-
-      if (tile.fog !== undefined && tile.fog !== hex.fog) {
-        return;
-      }
-
-      if (!checkFlags(rot, tg.rotations,
-        tile.set_no_flag, hex.flags))
-        return;
+      if (hex === undefined
+          || (tile.type !== undefined && !tile.type.has(hex.terrain))
+          || (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
+          || (tile.fog !== undefined && tile.fog !== hex.fog)
+          || !checkFlags(rot, tg.rotations, tile.set_no_flag, hex.flags)
+      ) return
     }
 
     const drawableDatas: Internal.DrawableData[] = [];
