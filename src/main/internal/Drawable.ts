@@ -32,14 +32,15 @@ module WesnothTiles.Internal {
         sprite = definitions.get(this.name.replace("@A", frameString));
       }
 
+      if (sprite === undefined) {
+        console.error("Undefined sprite", this.name, this);
+      }
+
       // Check if we really need to draw the sprite, maybe it is outside of the drawing area.
       if (this.x > projection.right + sprite.size().x / 2 || this.y > projection.bottom + sprite.size().y / 2
         || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
         return;
 
-      if (sprite === undefined) {
-        console.error("Undefined sprite", this.name, this);
-      }
 
       sprite.draw(this.x + projection.x - projection.left, this.y + projection.y - projection.top, ctx);
     }

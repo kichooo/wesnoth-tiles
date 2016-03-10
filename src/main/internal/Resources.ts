@@ -61,16 +61,13 @@ module WesnothTiles.Internal {
       .then(() => { });
   }
 
-  // Will return promise when they are supported;) (by ArcticTypescript)
   export const loadResources = (): Promise<void> => {
     const promises: Promise<void>[] = [];
     for (let i = 0; i < 2; i++) {
       promises.push(provideAtlas("hexes_" + i));
     }
 
-    return Promise.all(promises).then(() => {
-    });
-
+    return Promise.all(promises).then(() => {});
   }
 
 
