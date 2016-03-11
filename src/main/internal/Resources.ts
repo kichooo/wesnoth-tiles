@@ -10,7 +10,7 @@ module WesnothTiles.Internal {
     const img = new Image();
     const promises: Promise<void>[] = [];
     promises.push(new Promise<void>((resolve, reject) => {
-      img.src = name + ".png";
+      img.src = config.path + name + ".png";
       img.onload = () => {
         if (atlases.has(name)) {
           console.error("That atlas was already loaded!", name);

@@ -7,6 +7,9 @@ declare module WesnothTiles {
         x: number;
         y: number;
     }
+    interface IConfig {
+        path: string;
+    }
     class MapBuilder {
         private $mapId;
         private $loadingMode;
@@ -19,6 +22,8 @@ declare module WesnothTiles {
     var pointToHexPos: (x: number, y: number) => IHexPos;
     var hexToPoint: (q: number, r: number) => IVector;
     const createMap: () => Promise<TilesMap>;
+    const config: IConfig;
+    const init: (newConfig: IConfig) => void;
     class TilesMap {
         private $mapId;
         private drawables;

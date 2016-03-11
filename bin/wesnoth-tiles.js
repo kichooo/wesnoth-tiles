@@ -76,10 +76,12 @@ var WesnothTiles;
             return map;
         });
     };
-    // export const load = (): Promise<void> => {
-    //   createLoadingPromise();
-    //   return loadingPromise;
-    // }
+    WesnothTiles.config = {
+        path: ""
+    };
+    WesnothTiles.init = function (newConfig) {
+        Object.assign(WesnothTiles.config, newConfig);
+    };
     var TilesMap = (function () {
         function TilesMap($mapId) {
             this.$mapId = $mapId;
@@ -249,7 +251,7 @@ var WesnothTiles;
             const img = new Image();
             const promises = [];
             promises.push(new Promise(function (resolve, reject) {
-                img.src = name + ".png";
+                img.src = WesnothTiles.config.path + name + ".png";
                 img.onload = function () {
                     if (atlases.has(name)) {
                         console.error("That atlas was already loaded!", name);

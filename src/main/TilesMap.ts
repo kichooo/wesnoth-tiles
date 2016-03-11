@@ -13,6 +13,10 @@ module WesnothTiles {
     y: number;
   }
 
+  export interface IConfig {
+    path: string;
+  }
+
   const radius = 72;
   const halfRadius = radius / 2;
 
@@ -97,10 +101,13 @@ module WesnothTiles {
     });
   };
 
-  // export const load = (): Promise<void> => {
-  //   createLoadingPromise();
-  //   return loadingPromise;
-  // }
+  export const config: IConfig = {
+    path: ""
+  }
+
+  export const init = (newConfig: IConfig) => {
+    Object.assign(config, newConfig);
+  }
 
   export class TilesMap {
 
