@@ -967,55 +967,6 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  const GENERIC_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
-    GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem + "@V", {
-      layer: lfb.layer,
-      prob: 100,
-      flag: lfb.flag,
-      builder: lfb.builder
-    }, rotation);
-  }
-
-  const GENERIC_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
-    GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem + "@V", {
-      layer: lfb.layer,
-      prob: 100,
-      flag: lfb.flag,
-      builder: lfb.builder
-    }, rotation);
-  }
-
-  const GENERIC_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
-    GENERIC_RESTRICTED_PLFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem + "@V", {
-      layer: lfb.layer,
-      prob: 100,
-      flag: lfb.flag,
-      builder: lfb.builder
-    }, rotation);
-  }
-
-  const GENERIC_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
-    GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0-@R1-@R2");
-    GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
-    GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0-@R1");
-    GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
-    GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0");
-    GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
-    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, undefined, undefined, imageStem, lfb);
-  }
-
-  export const OVERLAY_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
-    GENERIC_COMPLETE_LFB(tgGroup, terrains, adjacent, imageStem, {
-      layer: lfb.layer === undefined ? 0 : lfb.layer,
-      flag: lfb.flag === undefined ? "overlay" : lfb.flag,
-      builder: lfb.builder === undefined ? IB_IMAGE_SINGLE : lfb.builder,
-    });
-  }
-
-  export const MOUNTAIN_SINGLE_RANDOM = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string) => {
-    MOUNTAIN_SINGLE(tgGroup, terrains, imageStem + "@V", 100, flag);
-  }
-
   const GENERIC_RESTRICTED3_N_NE_SE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     const img: WMLImage = {
       name: imageStem,
@@ -1218,33 +1169,7 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  const GENERIC_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
-    GENERIC_RESTRICTED3_N_NE_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
-    GENERIC_RESTRICTED3_N_NE_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
-    GENERIC_RESTRICTED3_N_NE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
-    GENERIC_RESTRICTED3_N_SE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
-  }
-
-
-  export const OVERLAY_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
-    GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
-      prob: plfb.prob === undefined ? 100 : plfb.prob,
-      layer: plfb.layer === undefined ? 0 : plfb.layer,
-      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
-      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE : plfb.builder,
-    }, "");
-  }
-
-  export const OVERLAY_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
-    GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem, {
-      prob: plfb.prob === undefined ? 100 : plfb.prob,
-      layer: plfb.layer === undefined ? 0 : plfb.layer,
-      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
-      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE : plfb.builder,
-    }, "");
-  }
-
-  const GENERIC_RESTRICTED2_N_NE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+const GENERIC_RESTRICTED2_N_NE_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     const img: WMLImage = {
       name: imageStem,
       postfix: rotation,
@@ -1376,29 +1301,55 @@ module WesnothTiles.Worker {
     tgGroup.addTg(terrainGraphic);
   }
 
-  export const OVERLAY_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, plfb: PLFB) => {
-    GENERIC_SINGLE_PLFB(tgGroup, terrains, overlays, fog, imageStem, {
-      prob: plfb.prob === undefined ? 100 : plfb.prob,
-      layer: plfb.layer === undefined ? 0 : plfb.layer,
-      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
-      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE : plfb.builder,
-    });
-  }
 
-  const GENERIC_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+const GENERIC_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
     GENERIC_RESTRICTED2_N_NE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
     GENERIC_RESTRICTED2_N_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
     GENERIC_RESTRICTED2_N_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
   }
 
-  export const OVERLAY_ROTATION_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+  export const OVERLAY_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
     GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
       prob: plfb.prob === undefined ? 100 : plfb.prob,
       layer: plfb.layer === undefined ? 0 : plfb.layer,
       flag: plfb.flag === undefined ? "overlay" : plfb.flag,
       builder: plfb.builder === undefined ? IB_IMAGE_SINGLE : plfb.builder,
-    }, "-@R0-@R1");
+    }, "");
   }
+  
+  const GENERIC_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
+    GENERIC_RESTRICTED3_N_NE_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_NE_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_NE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+    GENERIC_RESTRICTED3_N_SE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
+  }
+
+  const GENERIC_RESTRICTED3_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem + "@V", {
+      layer: lfb.layer,
+      prob: 100,
+      flag: lfb.flag,
+      builder: lfb.builder
+    }, rotation);
+  }
+
+  export const OVERLAY_RESTRICTED3_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+    GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem, {
+      prob: plfb.prob === undefined ? 100 : plfb.prob,
+      layer: plfb.layer === undefined ? 0 : plfb.layer,
+      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
+      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE : plfb.builder,
+    }, "");
+  }  
+
+  const GENERIC_RESTRICTED2_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem + "@V", {
+      layer: lfb.layer,
+      prob: 100,
+      flag: lfb.flag,
+      builder: lfb.builder
+    }, rotation);
+  }  
 
   const GENERIC_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[],
     adjacent: ETerrain[], adjacentOverlays: ETerrain[], imageStem: string, plfb: PLFB, rotation: string) => {
@@ -1437,6 +1388,55 @@ module WesnothTiles.Worker {
       builder: plfb.builder
     }
     tgGroup.addTg(terrainGraphic);
+  }
+
+  const GENERIC_RESTRICTED_RANDOM_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB, rotation: string) => {
+    GENERIC_RESTRICTED_PLFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem + "@V", {
+      layer: lfb.layer,
+      prob: 100,
+      flag: lfb.flag,
+      builder: lfb.builder
+    }, rotation);
+  }
+
+  const GENERIC_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
+    GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0-@R1-@R2");
+    GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
+    GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0-@R1");
+    GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
+    GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "-@R0");
+    GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + "-small", lfb, "");
+    GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, undefined, undefined, imageStem, lfb);
+  }
+
+  export const OVERLAY_COMPLETE_LFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, lfb: LFB) => {
+    GENERIC_COMPLETE_LFB(tgGroup, terrains, adjacent, imageStem, {
+      layer: lfb.layer === undefined ? 0 : lfb.layer,
+      flag: lfb.flag === undefined ? "overlay" : lfb.flag,
+      builder: lfb.builder === undefined ? IB_IMAGE_SINGLE : lfb.builder,
+    });
+  }
+
+  export const MOUNTAIN_SINGLE_RANDOM = (tgGroup: TgGroup, terrains: ETerrain[], imageStem: string, flag: string) => {
+    MOUNTAIN_SINGLE(tgGroup, terrains, imageStem + "@V", 100, flag);
+  }
+
+  export const OVERLAY_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], overlays: EOverlay[], fog: boolean, imageStem: string, plfb: PLFB) => {
+    GENERIC_SINGLE_PLFB(tgGroup, terrains, overlays, fog, imageStem, {
+      prob: plfb.prob === undefined ? 100 : plfb.prob,
+      layer: plfb.layer === undefined ? 0 : plfb.layer,
+      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
+      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE : plfb.builder,
+    });
+  }
+
+  export const OVERLAY_ROTATION_RESTRICTED2_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {
+    GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
+      prob: plfb.prob === undefined ? 100 : plfb.prob,
+      layer: plfb.layer === undefined ? 0 : plfb.layer,
+      flag: plfb.flag === undefined ? "overlay" : plfb.flag,
+      builder: plfb.builder === undefined ? IB_IMAGE_SINGLE : plfb.builder,
+    }, "-@R0-@R1");
   }
 
   export const OVERLAY_ROTATION_RESTRICTED_PLFB = (tgGroup: TgGroup, terrains: ETerrain[], adjacent: ETerrain[], imageStem: string, plfb: PLFB) => {

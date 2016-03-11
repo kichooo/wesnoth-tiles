@@ -18,8 +18,7 @@ declare module WesnothTiles {
     }
     var pointToHexPos: (x: number, y: number) => IHexPos;
     var hexToPoint: (q: number, r: number) => IVector;
-    var createMap: () => Promise<TilesMap>;
-    var load: () => Promise<void>;
+    const createMap: () => Promise<TilesMap>;
     class TilesMap {
         private $mapId;
         private drawables;

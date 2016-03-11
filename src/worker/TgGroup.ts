@@ -1,7 +1,7 @@
 module WesnothTiles.Worker {
   'use strict';
 
-  export const swapTerrains = (terrains: ETerrain[]) => {
+  export function swapTerrains (terrains: ETerrain[]) {
     const terrainList: ETerrain[] = [];
     for (let i = 0; i < ETerrain.VOID; i++) {
       if (terrains.indexOf(i) === -1)

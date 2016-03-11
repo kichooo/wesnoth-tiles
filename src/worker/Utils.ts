@@ -14,7 +14,7 @@ module WesnothTiles.Worker {
    * @return {number} 32-bit positive integer hash 
    */
 
-  export const murmurhash3 = (key: string, seed: number) => {
+  export function murmurhash3 (key: string, seed: number) {
     let remainder, bytes, h1, h1b, c1, c1b, c2, c2b, k1, i;
 
     remainder = key.length & 3; // key.length % 4
