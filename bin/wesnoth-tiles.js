@@ -266,7 +266,7 @@ var WesnothTiles;
             }));
             promises.push(new Promise(function (resolve, reject) {
                 const req = new XMLHttpRequest();
-                req.open('GET', name + ".json", true);
+                req.open('GET', WesnothTiles.config.path + name + ".json", true);
                 req.onreadystatechange = function (aEvt) {
                     if (req.readyState == 4) {
                         if (req.status == 200) {

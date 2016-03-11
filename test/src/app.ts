@@ -357,6 +357,8 @@ function start() {
 
   const promises: Promise<void>[] = [];
 
+  WesnothTiles.init({path: "tiles/"});
+  
   promises.push(WesnothTiles.createMap().then(left => {
     leftMap = left;
 

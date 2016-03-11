@@ -26,7 +26,7 @@ module WesnothTiles.Internal {
 
     promises.push(new Promise((resolve, reject) => {
       const req = new XMLHttpRequest();
-      req.open('GET', name + ".json", true);
+      req.open('GET', config.path + name + ".json", true);
       req.onreadystatechange = function(aEvt) {
         if (req.readyState == 4) {
           if (req.status == 200) {
