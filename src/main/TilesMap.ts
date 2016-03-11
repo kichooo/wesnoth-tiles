@@ -69,9 +69,6 @@ module WesnothTiles {
 
   var loadingPromise: Promise<void> = undefined;
 
-  var lastId = 0;
-
-
   var createLoadingPromise = (): void => {
     if (loadingPromise !== undefined)
       return
@@ -91,8 +88,7 @@ module WesnothTiles {
       createLoadingPromise();
     }
     return loadingPromise.then(() => {
-      var map = new TilesMap(lastId)
-      lastId++;
+      var map = new TilesMap()
       return map;
     });
   };
@@ -104,6 +100,8 @@ module WesnothTiles {
 
   export class TilesMap {
 
+    static lastId = 0;
+
     private drawables: Internal.Drawable[] = [];
     private cursor: Internal.Drawable;
 
@@ -111,7 +109,10 @@ module WesnothTiles {
 
     private workerId = 0;
 
-    constructor(private $mapId: number) {
+    private $mapId: number
+
+    constructor() {
+      this.$mapId = TilesMap.lastId++;
     }
 
     // Clears the map.
