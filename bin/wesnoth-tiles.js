@@ -3,38 +3,34 @@ var WesnothTiles;
     'use strict';
     const radius = 72;
     const halfRadius = radius / 2;
-    var MapBuilder = (function () {
-        function MapBuilder($mapId, $loadingMode) {
+    class MapBuilder {
+        constructor($mapId, $loadingMode) {
             this.$mapId = $mapId;
             this.$loadingMode = $loadingMode;
             this.$tileChanges = [];
         }
-        MapBuilder.prototype.setTile = function (q, r, terrain, overlay, fog) {
-            if (terrain === void 0) { terrain = undefined; }
-            if (overlay === void 0) { overlay = 62 /* NONE */; }
-            if (fog === void 0) { fog = false; }
+        setTile(q, r, terrain = undefined, overlay = WesnothTiles.EOverlay.NONE, fog = false) {
             this.$tileChanges.push({ q: q, r: r, terrain: terrain, overlay: overlay, fog: fog });
             return this;
-        };
+        }
         // Unsets given hex. Overlay is cleared too.
         // It is not an equivalent of setting terrain to Void.
         // A 'rebuild' call is needed to actually display the change.}
-        MapBuilder.prototype.unsetTile = function (q, r) {
+        unsetTile(q, r) {
             // We messages sent to the worker just have terrain as undefined.
             return this.setTile(q, r);
-        };
+        }
         // When this promise is resolved, a rebuild call might be executed.
-        MapBuilder.prototype.promise = function () {
+        promise() {
             return WesnothTiles.Internal.sendCommand("setTiles", {
                 loadingMode: this.$loadingMode,
                 tileChanges: this.$tileChanges,
                 mapId: this.$mapId
             });
-        };
-        return MapBuilder;
-    })();
+        }
+    }
     WesnothTiles.MapBuilder = MapBuilder;
-    WesnothTiles.pointToHexPos = function (x, y) {
+    WesnothTiles.pointToHexPos = (x, y) => {
         y = y / radius;
         var t1 = (x + halfRadius) / halfRadius;
         var t2 = Math.floor(y + t1);
@@ -45,7 +41,7 @@ var WesnothTiles;
             r: Math.floor(r)
         };
     };
-    WesnothTiles.hexToPoint = function (q, r) {
+    WesnothTiles.hexToPoint = (q, r) => {
         return {
             x: q * radius * 3 / 4,
             y: r * radius + q * halfRadius
@@ -53,24 +49,24 @@ var WesnothTiles;
     };
     let loadingPromise = undefined;
     let lastId = 0;
-    const createLoadingPromise = function () {
+    const createLoadingPromise = () => {
         if (loadingPromise !== undefined)
             return;
-        loadingPromise = WesnothTiles.Internal.loadResources().then(function () {
+        loadingPromise = WesnothTiles.Internal.loadResources().then(() => {
             WesnothTiles.Internal.loadWorker();
             var keys = [];
-            WesnothTiles.Internal.definitions.forEach(function (val, key) {
+            WesnothTiles.Internal.definitions.forEach((val, key) => {
                 keys.push(key);
             });
             return keys;
-        }).then(function (keys) { return WesnothTiles.Internal.sendCommand("init", keys); });
+        }).then(keys => WesnothTiles.Internal.sendCommand("init", keys));
     };
     // Singleton creating map objects. It ensures that loading is already done before you can use a map.
-    WesnothTiles.createMap = function () {
+    WesnothTiles.createMap = () => {
         if (loadingPromise === undefined) {
             createLoadingPromise();
         }
-        return loadingPromise.then(function () {
+        return loadingPromise.then(() => {
             const map = new TilesMap(lastId);
             lastId++;
             return map;
@@ -79,65 +75,62 @@ var WesnothTiles;
     WesnothTiles.config = {
         path: ""
     };
-    WesnothTiles.init = function (newConfig) {
+    WesnothTiles.init = (newConfig) => {
         Object.assign(WesnothTiles.config, newConfig);
     };
-    var TilesMap = (function () {
-        function TilesMap($mapId) {
+    class TilesMap {
+        constructor($mapId) {
             this.$mapId = $mapId;
             this.drawables = [];
             this.workerId = 0;
         }
         // Clears the map.
-        TilesMap.prototype.clear = function () {
+        clear() {
             return WesnothTiles.Internal.sendCommand("clear", this.$mapId);
-        };
+        }
         // Rebuilds the map. Following calls to redraw will draw the resulting map.
-        TilesMap.prototype.rebuild = function () {
-            var _this = this;
-            return WesnothTiles.Internal.sendCommand("rebuild", this.$mapId).then(function (drawableDatas) {
-                _this.drawables = [];
-                drawableDatas.forEach(function (drawableData) {
-                    _this.drawables.push(new WesnothTiles.Internal.Drawable(drawableData.x, drawableData.y, drawableData.name, drawableData.frames, drawableData.duration));
+        rebuild() {
+            return WesnothTiles.Internal.sendCommand("rebuild", this.$mapId).then(drawableDatas => {
+                this.drawables = [];
+                drawableDatas.forEach(drawableData => {
+                    this.drawables.push(new WesnothTiles.Internal.Drawable(drawableData.x, drawableData.y, drawableData.name, drawableData.frames, drawableData.duration));
                 });
             });
-        };
+        }
         // Rebuilds, then calculates the checksum. Build results are discarded.
-        TilesMap.prototype.getCheckSum = function () {
+        getCheckSum() {
             return WesnothTiles.Internal.sendCommand("getChecksum", this.$mapId);
-        };
+        }
         // Draws map onto the canvas. Best used in Animation Frame.
-        TilesMap.prototype.redraw = function (ctx, projection, timestamp) {
-            this.drawables.forEach(function (drawable) {
+        redraw(ctx, projection, timestamp) {
+            this.drawables.forEach(drawable => {
                 drawable.draw(projection, ctx, timestamp);
             });
             if (this.cursor !== undefined) {
                 this.cursor.draw(projection, ctx, timestamp);
             }
-        };
+        }
         // Creates instance of MapBuilder. LoadingMode argument is worth seting 
         // When you plan to load bigger chunks of tiles at once.
-        TilesMap.prototype.getBuilder = function (loadingMode) {
-            if (loadingMode === void 0) { loadingMode = false; }
+        getBuilder(loadingMode = false) {
             return new MapBuilder(this.$mapId, loadingMode);
-        };
-        TilesMap.prototype.moveCursor = function (x, y) {
+        }
+        moveCursor(x, y) {
             if (this.cursor === undefined)
                 return;
             var hexPos = WesnothTiles.pointToHexPos(x, y);
             this.cursor.x = halfRadius * 1.5 * hexPos.q;
             this.cursor.y = halfRadius * (2 * hexPos.r + hexPos.q);
-        };
-        TilesMap.prototype.setCursorVisibility = function (visible) {
+        }
+        setCursorVisibility(visible) {
             if (visible && this.cursor === undefined) {
                 this.cursor = new WesnothTiles.Internal.Drawable(0, 0, "hover-hex", undefined, undefined);
             }
             else if (!visible && this.cursor !== undefined) {
                 this.cursor = undefined;
             }
-        };
-        return TilesMap;
-    })();
+        }
+    }
     WesnothTiles.TilesMap = TilesMap;
 })(WesnothTiles || (WesnothTiles = {}));
 var WesnothTiles;
@@ -217,9 +210,8 @@ var WesnothTiles;
     var Internal;
     (function (Internal) {
         'use strict';
-        Internal.workerString;
-        var DrawableData = (function () {
-            function DrawableData(x, y, name, layer, base, frames, duration) {
+        class DrawableData {
+            constructor(x, y, name, layer, base, frames, duration) {
                 this.x = x;
                 this.y = y;
                 this.name = name;
@@ -228,14 +220,13 @@ var WesnothTiles;
                 this.frames = frames;
                 this.duration = duration;
             }
-            DrawableData.prototype.toString = function () {
+            toString() {
                 if (this.duration === undefined)
                     return this.name + this.layer + ',' + this.x + ',' + this.y;
                 else
                     return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
-            };
-            return DrawableData;
-        })();
+            }
+        }
         Internal.DrawableData = DrawableData;
     })(Internal = WesnothTiles.Internal || (WesnothTiles.Internal = {}));
 })(WesnothTiles || (WesnothTiles = {}));
@@ -247,12 +238,12 @@ var WesnothTiles;
         // This file is responsible for the loading of the graphics.
         const atlases = new Map();
         Internal.definitions = new Map();
-        const provideAtlas = function (name) {
+        const provideAtlas = (name) => {
             const img = new Image();
             const promises = [];
-            promises.push(new Promise(function (resolve, reject) {
+            promises.push(new Promise((resolve, reject) => {
                 img.src = WesnothTiles.config.path + name + ".png";
-                img.onload = function () {
+                img.onload = () => {
                     if (atlases.has(name)) {
                         console.error("That atlas was already loaded!", name);
                         return;
@@ -260,11 +251,11 @@ var WesnothTiles;
                     atlases.set(name, img);
                     resolve();
                 };
-                img.onerror = function () {
+                img.onerror = () => {
                     reject();
                 };
             }));
-            promises.push(new Promise(function (resolve, reject) {
+            promises.push(new Promise((resolve, reject) => {
                 const req = new XMLHttpRequest();
                 req.open('GET', WesnothTiles.config.path + name + ".json", true);
                 req.onreadystatechange = function (aEvt) {
@@ -278,8 +269,8 @@ var WesnothTiles;
                     }
                 };
                 req.send(null);
-            }).then(function (frames) {
-                frames.frames.forEach(function (d) {
+            }).then((frames) => {
+                frames.frames.forEach((d) => {
                     const def = new Internal.SpriteDefinition({
                         point: { x: d.frame.x, y: d.frame.y },
                         size: { x: d.frame.w, y: d.frame.h }
@@ -294,16 +285,15 @@ var WesnothTiles;
                     Internal.definitions.set(d.filename, def);
                 });
             }));
-            return Promise.all(promises).then(function () {
-            });
+            return Promise.all(promises)
+                .then(() => { });
         };
-        Internal.loadResources = function () {
+        Internal.loadResources = () => {
             const promises = [];
             for (let i = 0; i < 2; i++) {
                 promises.push(provideAtlas("hexes_" + i));
             }
-            return Promise.all(promises).then(function () {
-            });
+            return Promise.all(promises).then(() => { });
         };
     })(Internal = WesnothTiles.Internal || (WesnothTiles.Internal = {}));
 })(WesnothTiles || (WesnothTiles = {}));
@@ -313,22 +303,23 @@ var WesnothTiles;
     var Internal;
     (function (Internal) {
         'use strict';
-        var Drawable = (function () {
-            function Drawable(x, y, name, frames, duration) {
+        class Drawable {
+            constructor(x, y, name, frames, duration) {
                 this.x = x;
                 this.y = y;
                 this.name = name;
                 this.frames = frames;
                 this.duration = duration;
             }
-            Drawable.prototype.draw = function (projection, ctx, timestamp) {
+            draw(projection, ctx, timestamp) {
                 let sprite;
                 if (this.duration === undefined) {
                     sprite = Internal.definitions.get(this.name);
                     if (sprite === undefined) {
                         console.error("Undefined sprite", this.name);
                     }
-                    if (this.x > projection.right + sprite.size().x / 2 || this.y > projection.bottom + sprite.size().y / 2 || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
+                    if (this.x > projection.right + sprite.size().x / 2 || this.y > projection.bottom + sprite.size().y / 2
+                        || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
                         return;
                     sprite.draw(this.x + projection.x - projection.left, this.y + projection.y - projection.top, ctx);
                     return;
@@ -342,12 +333,12 @@ var WesnothTiles;
                     console.error("Undefined sprite", this.name, this);
                 }
                 // Check if we really need to draw the sprite, maybe it is outside of the drawing area.
-                if (this.x > projection.right + sprite.size().x / 2 || this.y > projection.bottom + sprite.size().y / 2 || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
+                if (this.x > projection.right + sprite.size().x / 2 || this.y > projection.bottom + sprite.size().y / 2
+                    || this.x + sprite.size().x / 2 < projection.left || this.y + sprite.size().y / 2 < projection.top)
                     return;
                 sprite.draw(this.x + projection.x - projection.left, this.y + projection.y - projection.top, ctx);
-            };
-            return Drawable;
-        })();
+            }
+        }
         Internal.Drawable = Drawable;
     })(Internal = WesnothTiles.Internal || (WesnothTiles.Internal = {}));
 })(WesnothTiles || (WesnothTiles = {}));
@@ -357,21 +348,20 @@ var WesnothTiles;
     var Internal;
     (function (Internal) {
         'use strict';
-        var SpriteDefinition = (function () {
-            function SpriteDefinition(frame, spriteSource, sourceSize, atlas) {
+        class SpriteDefinition {
+            constructor(frame, spriteSource, sourceSize, atlas) {
                 this.frame = frame;
                 this.spriteSource = spriteSource;
                 this.sourceSize = sourceSize;
                 this.atlas = atlas;
             }
-            SpriteDefinition.prototype.draw = function (x, y, ctx) {
+            draw(x, y, ctx) {
                 ctx.drawImage(this.atlas, this.frame.point.x, this.frame.point.y, this.frame.size.x, this.frame.size.y, x + this.spriteSource.point.x - this.sourceSize.x / 2, y + this.spriteSource.point.y - this.sourceSize.y / 2, this.frame.size.x, this.frame.size.y);
-            };
-            SpriteDefinition.prototype.size = function () {
+            }
+            size() {
                 return this.sourceSize;
-            };
-            return SpriteDefinition;
-        })();
+            }
+        }
         Internal.SpriteDefinition = SpriteDefinition;
     })(Internal = WesnothTiles.Internal || (WesnothTiles.Internal = {}));
 })(WesnothTiles || (WesnothTiles = {}));
@@ -383,10 +373,10 @@ var WesnothTiles;
         let id = 0;
         let worker;
         const deferreds = new Map();
-        Internal.loadWorker = function () {
+        Internal.loadWorker = () => {
             const blob = new Blob([Internal.workerString], { type: 'application/javascript' });
             worker = new Worker(URL.createObjectURL(blob));
-            worker.onmessage = function (obj) {
+            worker.onmessage = (obj) => {
                 const response = obj.data;
                 if (deferreds.has(response.id)) {
                     deferreds.get(response.id).resolve(response.data);
@@ -394,8 +384,8 @@ var WesnothTiles;
                 }
             };
         };
-        Internal.sendCommand = function (commandName, params) {
-            return new Promise(function (resolve, reject) {
+        Internal.sendCommand = (commandName, params) => {
+            return new Promise((resolve, reject) => {
                 deferreds.set(id, {
                     resolve: resolve,
                     reject: reject
@@ -430,30 +420,35 @@ var WesnothTiles;
     var Worker;
     (function (Worker) {
         'use strict';
-        const replaceRotation = function (input, rot, rotations) {
+        const replaceRotation = (input, rot, rotations) => {
             if (rotations === undefined)
                 return input;
-            return rotations === undefined ? input : input.replace(\"@R0\", rotations[rot]).replace(\"@R1\", rotations[(rot + 1) % 6]).replace(\"@R2\", rotations[(rot + 2) % 6]).replace(\"@R3\", rotations[(rot + 3) % 6]).replace(\"@R4\", rotations[(rot + 4) % 6]).replace(\"@R5\", rotations[(rot + 5) % 6]);
+            return rotations === undefined ? input : input.replace(\"@R0\", rotations[rot])
+                .replace(\"@R1\", rotations[(rot + 1) % 6])
+                .replace(\"@R2\", rotations[(rot + 2) % 6])
+                .replace(\"@R3\", rotations[(rot + 3) % 6])
+                .replace(\"@R4\", rotations[(rot + 4) % 6])
+                .replace(\"@R5\", rotations[(rot + 5) % 6]);
         };
         const rotationsMap = new Map();
-        const getRotatedPos = function (pos, rot) {
+        const getRotatedPos = (pos, rot) => {
             if (rot === 0)
                 return pos;
             return rotationsMap.get(rot).get(pos.q).get(pos.r);
         };
-        const setFlags = function (rot, rotations, set_no_flags, flags) {
+        const setFlags = (rot, rotations, set_no_flags, flags) => {
             if (set_no_flags !== undefined)
                 for (let i = 0; i < set_no_flags.length; i++)
                     flags.set(replaceRotation(set_no_flags[i], rot, rotations), true);
         };
-        const checkFlags = function (rot, rotations, set_no_flags, flags) {
+        const checkFlags = (rot, rotations, set_no_flags, flags) => {
             if (set_no_flags !== undefined)
                 for (let i = 0; i < set_no_flags.length; i++)
                     if (flags.has(replaceRotation(set_no_flags[i], rot, rotations)))
                         return false;
             return true;
         };
-        Worker.prepareRotations = function () {
+        Worker.prepareRotations = () => {
             for (let rot = 0; rot < 6; rot++) {
                 const rotMap = new Map();
                 rotationsMap.set(rot, rotMap);
@@ -470,7 +465,7 @@ var WesnothTiles;
                 }
             }
         };
-        const getImgName = function (hex, img, tg, rot, translatedPostfix) {
+        const getImgName = (hex, img, tg, rot, translatedPostfix) => {
             let num = img.variations.length;
             for (;;) {
                 num = hex.getRandom(0, num);
@@ -484,8 +479,7 @@ var WesnothTiles;
                 }
             }
         };
-        const performRotatedTerrainGraphics = function (tg, dp, rot) {
-            if (rot === void 0) { rot = 0; }
+        const performRotatedTerrainGraphics = (tg, dp, rot = 0) => {
             if (tg.probability !== 100 && dp.hex.getRandom(0, 101) > tg.probability)
                 return;
             for (let i = 0; i < tg.tiles.length; i++) {
@@ -494,7 +488,11 @@ var WesnothTiles;
                 const hexPosQ = dp.hex.q + rotHex.q;
                 const hexPosR = dp.hex.r + rotHex.r;
                 const hex = dp.hexMap.getHexP(hexPosQ, hexPosR);
-                if (hex === undefined || (tile.type !== undefined && !tile.type.has(hex.terrain)) || (tile.overlay !== undefined && !tile.overlay.has(hex.overlay)) || (tile.fog !== undefined && tile.fog !== hex.fog) || !checkFlags(rot, tg.rotations, tile.set_no_flag, hex.flags))
+                if (hex === undefined
+                    || (tile.type !== undefined && !tile.type.has(hex.terrain))
+                    || (tile.overlay !== undefined && !tile.overlay.has(hex.overlay))
+                    || (tile.fog !== undefined && tile.fog !== hex.fog)
+                    || !checkFlags(rot, tg.rotations, tile.set_no_flag, hex.flags))
                     return;
             }
             const drawableDatas = [];
@@ -523,7 +521,7 @@ var WesnothTiles;
             }
             dp.drawableDatas.push.apply(dp.drawableDatas, drawableDatas);
         };
-        const performTerrainGraphics = function (tg, dp) {
+        const performTerrainGraphics = (tg, dp) => {
             if (tg.rotations !== undefined) {
                 for (let i = 0; i < tg.rotations.length; i++) {
                     performRotatedTerrainGraphics(tg, dp, i);
@@ -532,18 +530,18 @@ var WesnothTiles;
             else
                 performRotatedTerrainGraphics(tg, dp);
         };
-        Worker.rebuild = function (hexMap) {
+        Worker.rebuild = (hexMap) => {
             Worker.prepareRotations();
             // clear old flags.
-            hexMap.iterate(function (h) { return h.reset(); });
+            hexMap.iterate(h => h.reset());
             const drawableDatas = [];
             const dp = {
                 hex: null,
                 hexMap: hexMap,
                 drawableDatas: drawableDatas
             };
-            hexMap.tgGroup.tgs.forEach(function (tg) {
-                tg.hexes.forEach(function (hex) {
+            hexMap.tgGroup.tgs.forEach(tg => {
+                tg.hexes.forEach(hex => {
                     dp.hex = hex;
                     performTerrainGraphics(tg, dp);
                 });
@@ -557,10 +555,8 @@ var WesnothTiles;
     var Worker;
     (function (Worker) {
         'use strict';
-        var Hex = (function () {
-            function Hex(q, r, terrain, overlay, fog) {
-                if (overlay === void 0) { overlay = 62 /* NONE */; }
-                if (fog === void 0) { fog = false; }
+        class Hex {
+            constructor(q, r, terrain, overlay = WesnothTiles.EOverlay.NONE, fog = false) {
                 this.q = q;
                 this.r = r;
                 this.terrain = terrain;
@@ -570,16 +566,15 @@ var WesnothTiles;
                 this.flags = new Map();
                 this.str = q + \",\" + r;
             }
-            Hex.prototype.getRandom = function (from, to) {
+            getRandom(from, to) {
                 this.hashesTaken++;
                 return from + Worker.murmurhash3(this.str, this.hashesTaken) % to;
-            };
-            Hex.prototype.reset = function () {
+            }
+            reset() {
                 this.flags.clear();
                 this.hashesTaken = 0;
-            };
-            return Hex;
-        })();
+            }
+        }
         Worker.Hex = Hex;
     })(Worker = WesnothTiles.Worker || (WesnothTiles.Worker = {}));
 })(WesnothTiles || (WesnothTiles = {}));
@@ -588,22 +583,22 @@ var WesnothTiles;
     var Worker;
     (function (Worker) {
         'use strict';
-        var HexMap = (function () {
-            function HexMap() {
+        class HexMap {
+            constructor() {
                 this.tgGroup = new Worker.TgGroup();
                 this.hexes = new Map();
                 this.loadingMode = false;
             }
-            HexMap.prototype.getHexP = function (q, r) {
+            getHexP(q, r) {
                 const map = this.hexes.get(q);
                 return (map !== undefined) ? map.get(r) : undefined;
-            };
-            HexMap.prototype.removeHex = function (q, r) {
+            }
+            removeHex(q, r) {
                 const map = this.hexes.get(q);
                 if (map !== undefined)
                     map.delete(r);
-            };
-            HexMap.prototype.removeTerrain = function (q, r) {
+            }
+            removeTerrain(q, r) {
                 const row = this.hexes.get(q);
                 if (row === undefined) {
                     return;
@@ -613,11 +608,8 @@ var WesnothTiles;
                     this.removeHexFromTgs(hex);
                     row.delete(r);
                 }
-            };
-            HexMap.prototype.setTerrain = function (q, r, terrain, overlay, fog) {
-                var _this = this;
-                if (overlay === void 0) { overlay = 62 /* NONE */; }
-                if (fog === void 0) { fog = false; }
+            }
+            setTerrain(q, r, terrain, overlay = WesnothTiles.EOverlay.NONE, fog = false) {
                 let row = this.hexes.get(q);
                 if (row === undefined) {
                     row = new Map();
@@ -634,41 +626,40 @@ var WesnothTiles;
                 if (!this.loadingMode) {
                     this.removeHexFromTgs(hex);
                     this.addHexToTgs(hex);
-                    this.iterateNeighbours(hex.q, hex.r, function (h) {
-                        _this.removeHexFromTgs(h);
-                        _this.addHexToTgs(h);
+                    this.iterateNeighbours(hex.q, hex.r, h => {
+                        this.removeHexFromTgs(h);
+                        this.addHexToTgs(h);
                     });
                 }
-            };
-            HexMap.prototype.setLoadingMode = function () {
+            }
+            setLoadingMode() {
                 this.loadingMode = true;
                 // remove all currently loaded Tgs.
-                this.tgGroup.tgs.forEach(function (tg) {
+                this.tgGroup.tgs.forEach(tg => {
                     tg.hexes.clear();
                 });
-            };
-            HexMap.prototype.unsetLoadingMode = function () {
-                var _this = this;
+            }
+            unsetLoadingMode() {
                 if (!this.loadingMode)
                     return;
                 this.loadingMode = false;
-                this.iterate(function (h) {
-                    _this.addHexToTgs(h);
+                this.iterate(h => {
+                    this.addHexToTgs(h);
                 });
-            };
-            HexMap.prototype.removeHexFromTgs = function (hex) {
+            }
+            removeHexFromTgs(hex) {
                 const key = hex.str;
-                this.tgGroup.tgs.forEach(function (tg) {
+                this.tgGroup.tgs.forEach(tg => {
                     tg.hexes.delete(key);
                 });
-            };
-            HexMap.prototype.calculateStreaks = function (hex, bestStreaksMap) {
+            }
+            calculateStreaks(hex, bestStreaksMap) {
                 const currentStreakMap = new Map();
                 let bestFogStreak = 0;
                 let currentFogStreak = 0;
-                this.iterateNeighboursDouble(hex.q, hex.r, function (terrain, fog) {
+                this.iterateNeighboursDouble(hex.q, hex.r, (terrain, fog) => {
                     // stop current streaks.
-                    currentStreakMap.forEach(function (val, key) {
+                    currentStreakMap.forEach((val, key) => {
                         if (key !== terrain) {
                             currentStreakMap.set(key, 0);
                         }
@@ -677,29 +668,31 @@ var WesnothTiles;
                         currentFogStreak = 0;
                     if (terrain === undefined)
                         return;
-                    const newValue = currentStreakMap.has(terrain) ? (currentStreakMap.get(terrain) + 1) % 7 : 1;
+                    const newValue = currentStreakMap.has(terrain) ?
+                        (currentStreakMap.get(terrain) + 1) % 7 :
+                        1;
                     currentStreakMap.set(terrain, newValue);
-                    const bestStreak = bestStreaksMap.has(terrain) ? bestStreaksMap.get(terrain) : 0;
+                    const bestStreak = bestStreaksMap.has(terrain) ?
+                        bestStreaksMap.get(terrain) : 0;
                     if (newValue > bestStreak)
                         bestStreaksMap.set(terrain, newValue);
                     if (fog) {
                         currentFogStreak = (currentFogStreak + 1) % 7;
-                        if (bestFogStreak = Math.max(bestFogStreak, currentFogStreak))
-                            ;
+                        bestFogStreak = Math.max(bestFogStreak, currentFogStreak);
                     }
                     else {
                         currentFogStreak = 0;
                     }
                 });
                 return bestFogStreak;
-            };
-            HexMap.prototype.addHexToTgs = function (hex) {
+            }
+            addHexToTgs(hex) {
                 // for transition macros, try to catch longest sequences of the same neighbour type
                 // in a row. That way we can filter out transition macros of higher grades.
                 const streaksMap = new Map();
                 const fogStreak = this.calculateStreaks(hex, streaksMap);
                 // iterate through all the macros and check which of them applies here.      
-                this.tgGroup.tgs.forEach(function (tg) {
+                this.tgGroup.tgs.forEach(tg => {
                     const tile = tg.tiles[0];
                     if (tile.type !== undefined && !tile.type.has(hex.terrain))
                         return;
@@ -708,7 +701,7 @@ var WesnothTiles;
                     if (tg.transition !== undefined) {
                         if (tile.fog === undefined) {
                             let found = 0;
-                            streaksMap.forEach(function (value, key) {
+                            streaksMap.forEach((value, key) => {
                                 if (tg.transition.has(key))
                                     found += value;
                             });
@@ -728,16 +721,16 @@ var WesnothTiles;
                     }
                     tg.hexes.set(hex.str, hex);
                 });
-            };
-            HexMap.prototype.iterate = function (callback) {
-                this.hexes.forEach(function (map) {
-                    map.forEach(function (hex) {
+            }
+            iterate(callback) {
+                this.hexes.forEach(map => {
+                    map.forEach(hex => {
                         callback(hex);
                     });
                 });
-            };
-            HexMap.prototype.iterateNeighbours = function (q, r, callback) {
-                const func = function (hex) {
+            }
+            iterateNeighbours(q, r, callback) {
+                const func = (hex) => {
                     if (hex !== undefined)
                         callback(hex);
                 };
@@ -747,10 +740,10 @@ var WesnothTiles;
                 func(this.getHexP(q, r - 1));
                 func(this.getHexP(q + 1, r - 1));
                 func(this.getHexP(q - 1, r + 1));
-            };
+            }
             // This function is for optimization purposes.
-            HexMap.prototype.iterateNeighboursDouble = function (q, r, callback) {
-                const func = function (hex) {
+            iterateNeighboursDouble(q, r, callback) {
+                const func = (hex) => {
                     if (hex !== undefined)
                         callback(hex.terrain, hex.fog);
                     else
@@ -768,15 +761,14 @@ var WesnothTiles;
                 func(this.getHexP(q + 1, r - 1));
                 func(this.getHexP(q + 1, r));
                 func(this.getHexP(q, r + 1));
-            };
-            HexMap.prototype.clear = function () {
+            }
+            clear() {
                 this.hexes.clear();
-                this.tgGroup.tgs.forEach(function (tg) {
+                this.tgGroup.tgs.forEach(tg => {
                     tg.hexes.clear();
                 });
-            };
-            return HexMap;
-        })();
+            }
+        }
         Worker.HexMap = HexMap;
     })(Worker = WesnothTiles.Worker || (WesnothTiles.Worker = {}));
 })(WesnothTiles || (WesnothTiles = {}));
@@ -785,50 +777,51 @@ var WesnothTiles;
     var Worker;
     (function (Worker) {
         'use strict';
-        const getTerrainMap = function (terrains) {
+        const getTerrainMap = (terrains) => {
             if (terrains === undefined)
                 return undefined;
             const terrainList = new Map();
-            terrains.forEach(function (terrain) {
+            terrains.forEach(terrain => {
                 terrainList.set(terrain, true);
             });
             return terrainList;
         };
         // image builders.
         Worker.IB_IMAGE_SINGLE = {
-            toDrawable: function (imageStem, postfix, pos, layer, base) {
+            toDrawable: (imageStem, postfix, pos, layer, base) => {
                 // console.log(\"Adding \" + imageStem + postfix);
-                return new WesnothTiles.Internal.DrawableData(pos.x, pos.y, imageStem + postfix, layer, base, undefined, undefined);
+                return new WesnothTiles.Internal.DrawableData(pos.x, pos.y, imageStem + postfix, layer, base, undefined, undefined // TODO change me to undefined, i am not needed.
+                );
             },
-            toString: function (imageStem, postfix) {
+            toString: (imageStem, postfix) => {
                 return imageStem + postfix;
             }
         };
         Worker.IB_ANIMATION_15_SLOW = {
-            toDrawable: function (imageStem, postfix, pos, layer, base) {
+            toDrawable: (imageStem, postfix, pos, layer, base) => {
                 return new WesnothTiles.Internal.DrawableData(pos.x, pos.y, imageStem + \"-@A\" + postfix, layer, base, 15, 150);
             },
-            toString: function (imageStem, postfix) {
+            toString: (imageStem, postfix) => {
                 return imageStem + \"-A01\" + postfix;
             }
         };
         Worker.IB_ANIMATION_15 = {
-            toDrawable: function (imageStem, postfix, pos, layer, base) {
+            toDrawable: (imageStem, postfix, pos, layer, base) => {
                 return new WesnothTiles.Internal.DrawableData(pos.x, pos.y, imageStem + \"-@A\" + postfix, layer, base, 15, 110);
             },
-            toString: function (imageStem, postfix) {
+            toString: (imageStem, postfix) => {
                 return imageStem + \"-A01\" + postfix;
             }
         };
         Worker.IB_ANIMATION_06 = {
-            toDrawable: function (imageStem, postfix, pos, layer, base) {
+            toDrawable: (imageStem, postfix, pos, layer, base) => {
                 return new WesnothTiles.Internal.DrawableData(pos.x, pos.y, imageStem + \"-@A\" + postfix, layer, base, 6, 200);
             },
-            toString: function (imageStem, postfix) {
+            toString: (imageStem, postfix) => {
                 return imageStem + \"-A01\" + postfix;
             }
         };
-        const GENERIC_SINGLE_PLFB = function (tgGroup, terrains, overlays, fog, imageStem, plfb) {
+        const GENERIC_SINGLE_PLFB = (tgGroup, terrains, overlays, fog, imageStem, plfb) => {
             const img = {
                 name: imageStem,
                 layer: plfb.layer,
@@ -854,7 +847,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        Worker.TERRAIN_BASE_PLFB = function (tgGroup, terrains, imageStem, plfb) {
+        Worker.TERRAIN_BASE_PLFB = (tgGroup, terrains, imageStem, plfb) => {
             if (plfb.prob === undefined)
                 plfb.prob = 100;
             if (plfb.layer === undefined)
@@ -865,7 +858,7 @@ var WesnothTiles;
                 plfb.builder = Worker.IB_IMAGE_SINGLE;
             GENERIC_SINGLE_PLFB(tgGroup, terrains, undefined, undefined, imageStem, plfb);
         };
-        const GENERIC_SINGLE_RANDOM_LFB = function (tgGroup, terrains, overlays, fog, imageStem, lfb) {
+        const GENERIC_SINGLE_RANDOM_LFB = (tgGroup, terrains, overlays, fog, imageStem, lfb) => {
             GENERIC_SINGLE_PLFB(tgGroup, terrains, overlays, fog, imageStem + \"@V\", {
                 prob: 100,
                 layer: lfb.layer,
@@ -873,14 +866,14 @@ var WesnothTiles;
                 builder: lfb.builder
             });
         };
-        Worker.OVERLAY_RANDOM_LFB = function (tgGroup, terrains, overlays, fog, imageStem, lfb) {
+        Worker.OVERLAY_RANDOM_LFB = (tgGroup, terrains, overlays, fog, imageStem, lfb) => {
             GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, overlays, fog, imageStem, {
                 layer: lfb.layer === undefined ? 0 : lfb.layer,
                 flag: lfb.flag === undefined ? \"overlay\" : lfb.flag,
                 builder: lfb.builder === undefined ? Worker.IB_IMAGE_SINGLE : lfb.builder,
             });
         };
-        Worker.TERRAIN_BASE_RANDOM_LFB = function (tgGroup, terrains, imageStem, lfb) {
+        Worker.TERRAIN_BASE_RANDOM_LFB = (tgGroup, terrains, imageStem, lfb) => {
             if (lfb.layer === undefined)
                 lfb.layer = -1000;
             if (lfb.flag === undefined)
@@ -889,7 +882,7 @@ var WesnothTiles;
                 lfb.builder = Worker.IB_IMAGE_SINGLE;
             GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, undefined, undefined, imageStem, lfb);
         };
-        const BORDER_RESTRICTED_PLFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) {
+        const BORDER_RESTRICTED_PLFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) => {
             const img = {
                 name: imageStem,
                 postfix: \"-@R0\",
@@ -925,7 +918,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const BORDER_RESTRICTED6_PLFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) {
+        const BORDER_RESTRICTED6_PLFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) => {
             const img = {
                 name: imageStem,
                 postfix: \"-@R0-@R1-@R2-@R3-@R4-@R5\",
@@ -1001,7 +994,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const BORDER_RESTRICTED4_PLFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) {
+        const BORDER_RESTRICTED4_PLFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) => {
             const img = {
                 name: imageStem,
                 postfix: \"-@R0-@R1-@R2-@R3\",
@@ -1061,7 +1054,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const BORDER_RESTRICTED3_PLFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) {
+        const BORDER_RESTRICTED3_PLFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) => {
             const img = {
                 name: imageStem,
                 postfix: \"-@R0-@R1-@R2\",
@@ -1113,7 +1106,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const BORDER_RESTRICTED2_PLFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) {
+        const BORDER_RESTRICTED2_PLFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, plfb) => {
             const img = {
                 name: imageStem,
                 postfix: \"-@R0-@R1\",
@@ -1157,7 +1150,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const BORDER_RESTRICTED6_RANDOM_LFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) {
+        const BORDER_RESTRICTED6_RANDOM_LFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) => {
             BORDER_RESTRICTED6_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + \"@V\", {
                 prob: 100,
                 layer: lfb.layer,
@@ -1165,7 +1158,7 @@ var WesnothTiles;
                 builder: lfb.builder
             });
         };
-        const BORDER_RESTRICTED4_RANDOM_LFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) {
+        const BORDER_RESTRICTED4_RANDOM_LFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) => {
             BORDER_RESTRICTED4_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + \"@V\", {
                 prob: 100,
                 layer: lfb.layer,
@@ -1173,7 +1166,7 @@ var WesnothTiles;
                 builder: lfb.builder
             });
         };
-        const BORDER_RESTRICTED3_RANDOM_LFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) {
+        const BORDER_RESTRICTED3_RANDOM_LFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) => {
             BORDER_RESTRICTED3_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + \"@V\", {
                 prob: 100,
                 layer: lfb.layer,
@@ -1181,7 +1174,7 @@ var WesnothTiles;
                 builder: lfb.builder
             });
         };
-        const BORDER_RESTRICTED2_RANDOM_LFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) {
+        const BORDER_RESTRICTED2_RANDOM_LFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) => {
             BORDER_RESTRICTED2_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + \"@V\", {
                 prob: 100,
                 layer: lfb.layer,
@@ -1189,7 +1182,7 @@ var WesnothTiles;
                 builder: lfb.builder
             });
         };
-        const BORDER_RESTRICTED_RANDOM_LFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) {
+        const BORDER_RESTRICTED_RANDOM_LFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb) => {
             BORDER_RESTRICTED_PLFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem + \"@V\", {
                 prob: 100,
                 layer: lfb.layer,
@@ -1197,12 +1190,13 @@ var WesnothTiles;
                 builder: lfb.builder
             });
         };
-        const BORDER_COMPLETE_LFB = function (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb, grades) {
-            grades.forEach(function (grade) {
+        const BORDER_COMPLETE_LFB = (tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb, grades) => {
+            grades.forEach(grade => {
                 switch (grade) {
                     case 6:
                         BORDER_RESTRICTED6_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
                         break;
+                    // 5 borders transition was nowhere used, thus got removed.
                     case 4:
                         BORDER_RESTRICTED4_RANDOM_LFB(tgGroup, terrains, fog, adjacent, fogAdjacent, imageStem, lfb);
                         break;
@@ -1219,7 +1213,7 @@ var WesnothTiles;
             });
         };
         // grades is used by BORDER_COMPLETE, to filter out not needed macros.
-        Worker.TRANSITION_COMPLETE_LFB = function (tgGroup, terrains, adjacent, imageStem, lfb, grades) {
+        Worker.TRANSITION_COMPLETE_LFB = (tgGroup, terrains, adjacent, imageStem, lfb, grades) => {
             if (lfb.layer === undefined)
                 lfb.layer = -500;
             if (lfb.flag === undefined)
@@ -1228,7 +1222,7 @@ var WesnothTiles;
                 lfb.builder = Worker.IB_IMAGE_SINGLE;
             BORDER_COMPLETE_LFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, lfb, grades);
         };
-        Worker.FOG_TRANSITION_LFB = function (tgGroup, fog, fogAdjacent, imageStem, lfb, grades) {
+        Worker.FOG_TRANSITION_LFB = (tgGroup, fog, fogAdjacent, imageStem, lfb, grades) => {
             if (lfb.layer === undefined)
                 lfb.layer = -500;
             if (lfb.flag === undefined)
@@ -1237,7 +1231,7 @@ var WesnothTiles;
                 lfb.builder = Worker.IB_IMAGE_SINGLE;
             BORDER_COMPLETE_LFB(tgGroup, undefined, fog, undefined, fogAdjacent, imageStem, lfb, grades);
         };
-        const GENERIC_SINGLEHEX_PLFB = function (tgGroup, terrains, imageStem, plfb) {
+        const GENERIC_SINGLEHEX_PLFB = (tgGroup, terrains, imageStem, plfb) => {
             const img = {
                 name: imageStem,
                 layer: plfb.layer,
@@ -1260,7 +1254,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        Worker.TERRAIN_BASE_SINGLEHEX_PLFB = function (tgGroup, terrains, imageStem, plfb) {
+        Worker.TERRAIN_BASE_SINGLEHEX_PLFB = (tgGroup, terrains, imageStem, plfb) => {
             if (plfb.prob === undefined)
                 plfb.prob = 100;
             if (plfb.layer === undefined)
@@ -1271,7 +1265,7 @@ var WesnothTiles;
                 plfb.builder = Worker.IB_IMAGE_SINGLE;
             GENERIC_SINGLEHEX_PLFB(tgGroup, terrains, imageStem, plfb);
         };
-        Worker.ANIMATED_WATER_15_TRANSITION = function (tgGroup, terrains, adjacent, imageStem, layer) {
+        Worker.ANIMATED_WATER_15_TRANSITION = (tgGroup, terrains, adjacent, imageStem, layer) => {
             const img = {
                 name: imageStem,
                 postfix: \"-@R0\",
@@ -1304,7 +1298,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        Worker.NEW_BEACH = function (tgGroup, terrains, adjacent, imageStem) {
+        Worker.NEW_BEACH = (tgGroup, terrains, adjacent, imageStem) => {
             const concave_img1 = {
                 name: imageStem + \"-concave\",
                 postfix: \"-@R0-@R5\",
@@ -1477,7 +1471,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(convex2_terrainGraphic);
         };
-        Worker.NEW_WAVES = function (tgGroup, terrains, adjacent, layer, imageStem) {
+        Worker.NEW_WAVES = (tgGroup, terrains, adjacent, layer, imageStem) => {
             const convex_img1 = {
                 name: imageStem + \"-convex\",
                 postfix: \"-@R0\",
@@ -1554,7 +1548,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(concave_terrainGraphic);
         };
-        Worker.MOUNTAIN_SINGLE = function (tgGroup, terrains, imageStem, prob, flag) {
+        Worker.MOUNTAIN_SINGLE = (tgGroup, terrains, imageStem, prob, flag) => {
             const img = {
                 name: imageStem,
                 base: { x: 90 - 54, y: 107 - 72 },
@@ -1576,7 +1570,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const GENERIC_RESTRICTED3_N_NE_SE_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED3_N_NE_SE_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
             const img = {
                 name: imageStem,
                 postfix: rotation,
@@ -1620,7 +1614,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const GENERIC_RESTRICTED3_N_NE_S_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED3_N_NE_S_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
             const img = {
                 name: imageStem,
                 postfix: rotation,
@@ -1664,7 +1658,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const GENERIC_RESTRICTED3_N_NE_SW_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED3_N_NE_SW_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
             const img = {
                 name: imageStem,
                 postfix: rotation,
@@ -1687,50 +1681,6 @@ var WesnothTiles;
             const tile3 = {
                 q: 1,
                 r: -1,
-                type: getTerrainMap(adjacent)
-            };
-            const tile4 = {
-                q: -1,
-                r: 1,
-                type: getTerrainMap(adjacent)
-            };
-            const terrainGraphic = {
-                tiles: [
-                    tile1,
-                    tile2,
-                    tile3,
-                    tile4
-                ],
-                images: [img],
-                probability: plfb.prob,
-                rotations: [\"n\", \"ne\", \"se\", \"s\", \"sw\", \"nw\"],
-                builder: plfb.builder
-            };
-            tgGroup.addTg(terrainGraphic);
-        };
-        const GENERIC_RESTRICTED3_N_SE_SW_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
-            const img = {
-                name: imageStem,
-                postfix: rotation,
-                layer: plfb.layer,
-                base: { x: 90 - 90, y: 108 - 144 },
-                center: { x: 90 - 54, y: 108 - 72 },
-                variations: [\"\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\"]
-            };
-            const tile1 = {
-                q: 0,
-                r: 0,
-                type: getTerrainMap(terrains),
-                set_no_flag: [plfb.flag]
-            };
-            const tile2 = {
-                q: 0,
-                r: -1,
-                type: getTerrainMap(adjacent)
-            };
-            const tile3 = {
-                q: 1,
-                r: 0,
                 type: getTerrainMap(adjacent)
             };
             const tile4 = {
@@ -1752,7 +1702,51 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const GENERIC_RESTRICTED2_N_NE_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED3_N_SE_SW_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
+            const img = {
+                name: imageStem,
+                postfix: rotation,
+                layer: plfb.layer,
+                base: { x: 90 - 90, y: 108 - 144 },
+                center: { x: 90 - 54, y: 108 - 72 },
+                variations: [\"\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\"]
+            };
+            const tile1 = {
+                q: 0,
+                r: 0,
+                type: getTerrainMap(terrains),
+                set_no_flag: [plfb.flag]
+            };
+            const tile2 = {
+                q: 0,
+                r: -1,
+                type: getTerrainMap(adjacent)
+            };
+            const tile3 = {
+                q: 1,
+                r: 0,
+                type: getTerrainMap(adjacent)
+            };
+            const tile4 = {
+                q: -1,
+                r: 1,
+                type: getTerrainMap(adjacent)
+            };
+            const terrainGraphic = {
+                tiles: [
+                    tile1,
+                    tile2,
+                    tile3,
+                    tile4
+                ],
+                images: [img],
+                probability: plfb.prob,
+                rotations: [\"n\", \"ne\", \"se\", \"s\", \"sw\", \"nw\"],
+                builder: plfb.builder
+            };
+            tgGroup.addTg(terrainGraphic);
+        };
+        const GENERIC_RESTRICTED2_N_NE_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
             const img = {
                 name: imageStem,
                 postfix: rotation,
@@ -1790,7 +1784,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const GENERIC_RESTRICTED2_N_SE_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED2_N_SE_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
             const img = {
                 name: imageStem,
                 postfix: rotation,
@@ -1828,7 +1822,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const GENERIC_RESTRICTED2_N_S_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED2_N_S_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
             const img = {
                 name: imageStem,
                 postfix: rotation,
@@ -1866,12 +1860,12 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const GENERIC_RESTRICTED2_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED2_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
             GENERIC_RESTRICTED2_N_NE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
             GENERIC_RESTRICTED2_N_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
             GENERIC_RESTRICTED2_N_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
         };
-        Worker.OVERLAY_RESTRICTED2_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb) {
+        Worker.OVERLAY_RESTRICTED2_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb) => {
             GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
                 prob: plfb.prob === undefined ? 100 : plfb.prob,
                 layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1879,13 +1873,13 @@ var WesnothTiles;
                 builder: plfb.builder === undefined ? Worker.IB_IMAGE_SINGLE : plfb.builder,
             }, \"\");
         };
-        const GENERIC_RESTRICTED3_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED3_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb, rotation) => {
             GENERIC_RESTRICTED3_N_NE_SE_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
             GENERIC_RESTRICTED3_N_NE_S_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
             GENERIC_RESTRICTED3_N_NE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
             GENERIC_RESTRICTED3_N_SE_SW_PLFB(tgGroup, terrains, adjacent, imageStem, plfb, rotation);
         };
-        const GENERIC_RESTRICTED3_RANDOM_LFB = function (tgGroup, terrains, adjacent, imageStem, lfb, rotation) {
+        const GENERIC_RESTRICTED3_RANDOM_LFB = (tgGroup, terrains, adjacent, imageStem, lfb, rotation) => {
             GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem + \"@V\", {
                 layer: lfb.layer,
                 prob: 100,
@@ -1893,7 +1887,7 @@ var WesnothTiles;
                 builder: lfb.builder
             }, rotation);
         };
-        Worker.OVERLAY_RESTRICTED3_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb) {
+        Worker.OVERLAY_RESTRICTED3_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb) => {
             GENERIC_RESTRICTED3_PLFB(tgGroup, terrains, adjacent, imageStem, {
                 prob: plfb.prob === undefined ? 100 : plfb.prob,
                 layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1901,7 +1895,7 @@ var WesnothTiles;
                 builder: plfb.builder === undefined ? Worker.IB_IMAGE_SINGLE : plfb.builder,
             }, \"\");
         };
-        const GENERIC_RESTRICTED2_RANDOM_LFB = function (tgGroup, terrains, adjacent, imageStem, lfb, rotation) {
+        const GENERIC_RESTRICTED2_RANDOM_LFB = (tgGroup, terrains, adjacent, imageStem, lfb, rotation) => {
             GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem + \"@V\", {
                 layer: lfb.layer,
                 prob: 100,
@@ -1909,7 +1903,7 @@ var WesnothTiles;
                 builder: lfb.builder
             }, rotation);
         };
-        const GENERIC_RESTRICTED_PLFB = function (tgGroup, terrains, overlays, adjacent, adjacentOverlays, imageStem, plfb, rotation) {
+        const GENERIC_RESTRICTED_PLFB = (tgGroup, terrains, overlays, adjacent, adjacentOverlays, imageStem, plfb, rotation) => {
             const img = {
                 name: imageStem,
                 postfix: rotation,
@@ -1943,7 +1937,7 @@ var WesnothTiles;
             };
             tgGroup.addTg(terrainGraphic);
         };
-        const GENERIC_RESTRICTED_RANDOM_LFB = function (tgGroup, terrains, adjacent, imageStem, lfb, rotation) {
+        const GENERIC_RESTRICTED_RANDOM_LFB = (tgGroup, terrains, adjacent, imageStem, lfb, rotation) => {
             GENERIC_RESTRICTED_PLFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem + \"@V\", {
                 layer: lfb.layer,
                 prob: 100,
@@ -1951,7 +1945,7 @@ var WesnothTiles;
                 builder: lfb.builder
             }, rotation);
         };
-        const GENERIC_COMPLETE_LFB = function (tgGroup, terrains, adjacent, imageStem, lfb) {
+        const GENERIC_COMPLETE_LFB = (tgGroup, terrains, adjacent, imageStem, lfb) => {
             GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + \"-small\", lfb, \"-@R0-@R1-@R2\");
             GENERIC_RESTRICTED3_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + \"-small\", lfb, \"\");
             GENERIC_RESTRICTED2_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + \"-small\", lfb, \"-@R0-@R1\");
@@ -1960,17 +1954,17 @@ var WesnothTiles;
             GENERIC_RESTRICTED_RANDOM_LFB(tgGroup, terrains, adjacent, imageStem + \"-small\", lfb, \"\");
             GENERIC_SINGLE_RANDOM_LFB(tgGroup, terrains, undefined, undefined, imageStem, lfb);
         };
-        Worker.OVERLAY_COMPLETE_LFB = function (tgGroup, terrains, adjacent, imageStem, lfb) {
+        Worker.OVERLAY_COMPLETE_LFB = (tgGroup, terrains, adjacent, imageStem, lfb) => {
             GENERIC_COMPLETE_LFB(tgGroup, terrains, adjacent, imageStem, {
                 layer: lfb.layer === undefined ? 0 : lfb.layer,
                 flag: lfb.flag === undefined ? \"overlay\" : lfb.flag,
                 builder: lfb.builder === undefined ? Worker.IB_IMAGE_SINGLE : lfb.builder,
             });
         };
-        Worker.MOUNTAIN_SINGLE_RANDOM = function (tgGroup, terrains, imageStem, flag) {
+        Worker.MOUNTAIN_SINGLE_RANDOM = (tgGroup, terrains, imageStem, flag) => {
             Worker.MOUNTAIN_SINGLE(tgGroup, terrains, imageStem + \"@V\", 100, flag);
         };
-        Worker.OVERLAY_PLFB = function (tgGroup, terrains, overlays, fog, imageStem, plfb) {
+        Worker.OVERLAY_PLFB = (tgGroup, terrains, overlays, fog, imageStem, plfb) => {
             GENERIC_SINGLE_PLFB(tgGroup, terrains, overlays, fog, imageStem, {
                 prob: plfb.prob === undefined ? 100 : plfb.prob,
                 layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1978,7 +1972,7 @@ var WesnothTiles;
                 builder: plfb.builder === undefined ? Worker.IB_IMAGE_SINGLE : plfb.builder,
             });
         };
-        Worker.OVERLAY_ROTATION_RESTRICTED2_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb) {
+        Worker.OVERLAY_ROTATION_RESTRICTED2_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb) => {
             GENERIC_RESTRICTED2_PLFB(tgGroup, terrains, adjacent, imageStem, {
                 prob: plfb.prob === undefined ? 100 : plfb.prob,
                 layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1986,7 +1980,7 @@ var WesnothTiles;
                 builder: plfb.builder === undefined ? Worker.IB_IMAGE_SINGLE : plfb.builder,
             }, \"-@R0-@R1\");
         };
-        Worker.OVERLAY_ROTATION_RESTRICTED_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb) {
+        Worker.OVERLAY_ROTATION_RESTRICTED_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb) => {
             GENERIC_RESTRICTED_PLFB(tgGroup, terrains, undefined, adjacent, undefined, imageStem, {
                 prob: plfb.prob === undefined ? 100 : plfb.prob,
                 layer: plfb.layer === undefined ? 0 : plfb.layer,
@@ -1994,7 +1988,7 @@ var WesnothTiles;
                 builder: plfb.builder === undefined ? Worker.IB_IMAGE_SINGLE : plfb.builder,
             }, \"-@R0\");
         };
-        Worker.MOUNTAINS_2x4_NW_SE = function (tgGroup, terrains, imageStem, flag, prob) {
+        Worker.MOUNTAINS_2x4_NW_SE = (tgGroup, terrains, imageStem, flag, prob) => {
             const center = { x: 198 - 54, y: 180 - 108 };
             const img1 = {
                 name: imageStem + \"_1\",
@@ -2058,7 +2052,7 @@ var WesnothTiles;
             }
             tgGroup.addTg(terrainGraphic);
         };
-        Worker.MOUNTAINS_1x3_NW_SE = function (tgGroup, terrains, imageStem, flag, prob) {
+        Worker.MOUNTAINS_1x3_NW_SE = (tgGroup, terrains, imageStem, flag, prob) => {
             const center = { x: 144 - 54, y: 162 - 108 };
             const img1 = {
                 name: imageStem + \"_1\",
@@ -2100,7 +2094,7 @@ var WesnothTiles;
             }
             tgGroup.addTg(terrainGraphic);
         };
-        Worker.MOUNTAINS_2x4_SW_NE = function (tgGroup, terrains, imageStem, flag, prob) {
+        Worker.MOUNTAINS_2x4_SW_NE = (tgGroup, terrains, imageStem, flag, prob) => {
             const center = { x: 198 - 216, y: 180 - 72 };
             const img1 = {
                 name: imageStem + \"_1\",
@@ -2164,7 +2158,7 @@ var WesnothTiles;
             }
             tgGroup.addTg(terrainGraphic);
         };
-        Worker.MOUNTAINS_1x3_SW_NE = function (tgGroup, terrains, imageStem, flag, prob) {
+        Worker.MOUNTAINS_1x3_SW_NE = (tgGroup, terrains, imageStem, flag, prob) => {
             const center = { x: 144 - 162, y: 162 - 108 };
             const img1 = {
                 name: imageStem + \"_1\",
@@ -2206,7 +2200,7 @@ var WesnothTiles;
             }
             tgGroup.addTg(terrainGraphic);
         };
-        Worker.MOUNTAINS_2x2 = function (tgGroup, terrains, imageStem, flag, prob) {
+        Worker.MOUNTAINS_2x2 = (tgGroup, terrains, imageStem, flag, prob) => {
             const center = { x: 144 - 108, y: 144 - 72 };
             const img1 = {
                 name: imageStem + \"_1\",
@@ -2254,7 +2248,7 @@ var WesnothTiles;
             }
             tgGroup.addTg(terrainGraphic);
         };
-        Worker.VOLCANO_2x2 = function (tgGroup, volcano, adjacent, imageStem, flag) {
+        Worker.VOLCANO_2x2 = (tgGroup, volcano, adjacent, imageStem, flag) => {
             const center = { x: 144 - 108, y: 144 - 72 };
             const img1 = {
                 name: imageStem + \"_1\",
@@ -2312,32 +2306,33 @@ var WesnothTiles;
             });
             tgGroup.addTg(terrainGraphic);
         };
-        const CORNER_PLFB_CONVEX = function (tgGroup, terrains, adjacent, imageStem, plfb) {
+        const CORNER_PLFB_CONVEX = (tgGroup, terrains, adjacent, imageStem, plfb) => {
             // 0 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-tr\"]
-                }, {
-                    q: 0,
-                    r: -1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-br\"]
-                }, {
-                    q: 1,
-                    r: -1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-l\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-tr\"]
+                    }, {
+                        q: 0,
+                        r: -1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-br\"]
+                    }, {
+                        q: 1,
+                        r: -1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-l\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-tr\",
-                    layer: plfb.layer,
-                    center: { x: 72 - 9, y: 0 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-tr\",
+                        layer: plfb.layer,
+                        center: { x: 72 - 9, y: 0 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2346,28 +2341,29 @@ var WesnothTiles;
             // 1 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-r\"]
-                }, {
-                    q: 1,
-                    r: -1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-bl\"]
-                }, {
-                    q: 1,
-                    r: 0,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-tl\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-r\"]
+                    }, {
+                        q: 1,
+                        r: -1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-bl\"]
+                    }, {
+                        q: 1,
+                        r: 0,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-tl\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-r\",
-                    layer: plfb.layer,
-                    center: { x: 72 - 9, y: 18 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-r\",
+                        layer: plfb.layer,
+                        center: { x: 72 - 9, y: 18 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2376,28 +2372,29 @@ var WesnothTiles;
             // 2 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-br\"]
-                }, {
-                    q: 1,
-                    r: 0,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-l\"]
-                }, {
-                    q: 0,
-                    r: 1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-tr\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-br\"]
+                    }, {
+                        q: 1,
+                        r: 0,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-l\"]
+                    }, {
+                        q: 0,
+                        r: 1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-tr\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-br\",
-                    layer: plfb.layer,
-                    center: { x: 54, y: 54 + 9 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-br\",
+                        layer: plfb.layer,
+                        center: { x: 54, y: 54 + 9 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2406,28 +2403,29 @@ var WesnothTiles;
             // 3 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-bl\"]
-                }, {
-                    q: 0,
-                    r: 1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-tl\"]
-                }, {
-                    q: -1,
-                    r: 1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-r\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-bl\"]
+                    }, {
+                        q: 0,
+                        r: 1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-tl\"]
+                    }, {
+                        q: -1,
+                        r: 1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-r\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-bl\",
-                    layer: plfb.layer,
-                    center: { x: 0, y: 36 + 9 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-bl\",
+                        layer: plfb.layer,
+                        center: { x: 0, y: 36 + 9 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2436,28 +2434,29 @@ var WesnothTiles;
             // 4 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-l\"]
-                }, {
-                    q: -1,
-                    r: 1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-tr\"]
-                }, {
-                    q: -1,
-                    r: 0,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-br\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-l\"]
+                    }, {
+                        q: -1,
+                        r: 1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-tr\"]
+                    }, {
+                        q: -1,
+                        r: 0,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-br\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-l\",
-                    layer: plfb.layer,
-                    center: { x: 0, y: 27 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-l\",
+                        layer: plfb.layer,
+                        center: { x: 0, y: 27 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2466,60 +2465,62 @@ var WesnothTiles;
             // 5 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-tl\"]
-                }, {
-                    q: -1,
-                    r: 0,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-r\"]
-                }, {
-                    q: 0,
-                    r: -1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-bl\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-tl\"]
+                    }, {
+                        q: -1,
+                        r: 0,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-r\"]
+                    }, {
+                        q: 0,
+                        r: -1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-bl\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-tl\",
-                    layer: plfb.layer,
-                    center: { x: 9, y: -18 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-tl\",
+                        layer: plfb.layer,
+                        center: { x: 9, y: -18 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
                 builder: plfb.builder
             });
         };
-        const CORNER_PLFB_CONCAVE = function (tgGroup, terrains, adjacent, imageStem, plfb) {
+        const CORNER_PLFB_CONCAVE = (tgGroup, terrains, adjacent, imageStem, plfb) => {
             // 0 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-tr\"]
-                }, {
-                    q: 0,
-                    r: -1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-br\"]
-                }, {
-                    q: 1,
-                    r: -1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-l\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-tr\"]
+                    }, {
+                        q: 0,
+                        r: -1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-br\"]
+                    }, {
+                        q: 1,
+                        r: -1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-l\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-tr\",
-                    layer: plfb.layer,
-                    center: { x: 72 - 9, y: 0 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-tr\",
+                        layer: plfb.layer,
+                        center: { x: 72 - 9, y: 0 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2528,28 +2529,29 @@ var WesnothTiles;
             // 1 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-r\"]
-                }, {
-                    q: 1,
-                    r: -1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-bl\"]
-                }, {
-                    q: 1,
-                    r: 0,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-tl\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-r\"]
+                    }, {
+                        q: 1,
+                        r: -1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-bl\"]
+                    }, {
+                        q: 1,
+                        r: 0,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-tl\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-r\",
-                    layer: plfb.layer,
-                    center: { x: 72 - 9, y: 18 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-r\",
+                        layer: plfb.layer,
+                        center: { x: 72 - 9, y: 18 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2558,28 +2560,29 @@ var WesnothTiles;
             // 2 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-br\"]
-                }, {
-                    q: 1,
-                    r: 0,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-l\"]
-                }, {
-                    q: 0,
-                    r: 1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-tr\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-br\"]
+                    }, {
+                        q: 1,
+                        r: 0,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-l\"]
+                    }, {
+                        q: 0,
+                        r: 1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-tr\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-br\",
-                    layer: plfb.layer,
-                    center: { x: 54 + 9, y: 54 + 9 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-br\",
+                        layer: plfb.layer,
+                        center: { x: 54 + 9, y: 54 + 9 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2588,28 +2591,29 @@ var WesnothTiles;
             // 3 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-bl\"]
-                }, {
-                    q: 0,
-                    r: 1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-tl\"]
-                }, {
-                    q: -1,
-                    r: 1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-r\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-bl\"]
+                    }, {
+                        q: 0,
+                        r: 1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-tl\"]
+                    }, {
+                        q: -1,
+                        r: 1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-r\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-bl\",
-                    layer: plfb.layer,
-                    center: { x: 9, y: 36 + 9 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-bl\",
+                        layer: plfb.layer,
+                        center: { x: 9, y: 36 + 9 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2618,28 +2622,29 @@ var WesnothTiles;
             // 4 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-l\"]
-                }, {
-                    q: -1,
-                    r: 1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-tr\"]
-                }, {
-                    q: -1,
-                    r: 0,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-br\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-l\"]
+                    }, {
+                        q: -1,
+                        r: 1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-tr\"]
+                    }, {
+                        q: -1,
+                        r: 0,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-br\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-l\",
-                    layer: plfb.layer,
-                    center: { x: 9, y: 36 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-l\",
+                        layer: plfb.layer,
+                        center: { x: 9, y: 36 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
@@ -2648,35 +2653,36 @@ var WesnothTiles;
             // 5 [\"tr\", \"r\", \"br\", \"bl\", \"l\", \"tl\"]
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [plfb.flag + \"-tl\"]
-                }, {
-                    q: -1,
-                    r: 0,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-r\"]
-                }, {
-                    q: 0,
-                    r: -1,
-                    type: getTerrainMap(adjacent),
-                    set_no_flag: [plfb.flag + \"-bl\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [plfb.flag + \"-tl\"]
+                    }, {
+                        q: -1,
+                        r: 0,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-r\"]
+                    }, {
+                        q: 0,
+                        r: -1,
+                        type: getTerrainMap(adjacent),
+                        set_no_flag: [plfb.flag + \"-bl\"]
+                    }
+                ],
                 images: [{
-                    name: imageStem,
-                    postfix: \"-tl\",
-                    layer: plfb.layer,
-                    center: { x: 9, y: -18 },
-                    variations: [\"\"]
-                }],
+                        name: imageStem,
+                        postfix: \"-tl\",
+                        layer: plfb.layer,
+                        center: { x: 9, y: -18 },
+                        variations: [\"\"]
+                    }],
                 transition: getTerrainMap(adjacent),
                 transitionNumber: 2,
                 probability: plfb.prob,
                 builder: plfb.builder
             });
         };
-        Worker.WALL_TRANSITION_PLFB = function (tgGroup, terrains, adjacent, imageStem, plfb) {
+        Worker.WALL_TRANSITION_PLFB = (tgGroup, terrains, adjacent, imageStem, plfb) => {
             if (plfb.layer === undefined)
                 plfb.layer = 0;
             if (plfb.flag === undefined)
@@ -2688,73 +2694,74 @@ var WesnothTiles;
             CORNER_PLFB_CONVEX(tgGroup, terrains, adjacent, imageStem + \"-convex\", plfb);
             CORNER_PLFB_CONCAVE(tgGroup, adjacent, terrains, imageStem + \"-concave\", plfb);
         };
-        Worker.NEW_FOREST = function (tgGroup, terrains, overlays, adjacent, imageStem) {
+        Worker.NEW_FOREST = (tgGroup, terrains, overlays, adjacent, imageStem) => {
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    overlay: getTerrainMap(overlays),
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [\"overlay\"]
-                }, {
-                    q: 0,
-                    r: -1,
-                    type: getTerrainMap(adjacent)
-                }],
+                        q: 0,
+                        r: 0,
+                        overlay: getTerrainMap(overlays),
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [\"overlay\"]
+                    }, {
+                        q: 0,
+                        r: -1,
+                        type: getTerrainMap(adjacent)
+                    }
+                ],
                 images: [{
-                    name: imageStem + \"-small@V\",
-                    postfix: \"\",
-                    layer: 0,
-                    center: { x: 36, y: 36 },
-                    base: { x: 36, y: 36 },
-                    variations: [\"\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\"],
-                }],
+                        name: imageStem + \"-small@V\",
+                        postfix: \"\",
+                        layer: 0,
+                        center: { x: 36, y: 36 },
+                        base: { x: 36, y: 36 },
+                        variations: [\"\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\"],
+                    }],
                 probability: 100,
                 rotations: [\"n\", \"ne\", \"se\", \"s\", \"sw\", \"nw\"],
                 builder: Worker.IB_IMAGE_SINGLE
             });
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    overlay: getTerrainMap(overlays),
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [\"overlay\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        overlay: getTerrainMap(overlays),
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [\"overlay\"]
+                    }],
                 images: [{
-                    name: imageStem + \"@V\",
-                    postfix: \"\",
-                    layer: 0,
-                    center: { x: 36, y: 36 },
-                    base: { x: 36, y: 36 },
-                    variations: [\"\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\"],
-                }],
+                        name: imageStem + \"@V\",
+                        postfix: \"\",
+                        layer: 0,
+                        center: { x: 36, y: 36 },
+                        base: { x: 36, y: 36 },
+                        variations: [\"\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"10\", \"11\"],
+                    }],
                 probability: 100,
                 builder: Worker.IB_IMAGE_SINGLE
             });
         };
-        Worker.NEW_VILLAGE = function (tgGroup, terrains, overlays, imageStem) {
+        Worker.NEW_VILLAGE = (tgGroup, terrains, overlays, imageStem) => {
             tgGroup.addTg({
                 tiles: [{
-                    q: 0,
-                    r: 0,
-                    overlay: getTerrainMap(overlays),
-                    type: getTerrainMap(terrains),
-                    set_no_flag: [\"village\"]
-                }],
+                        q: 0,
+                        r: 0,
+                        overlay: getTerrainMap(overlays),
+                        type: getTerrainMap(terrains),
+                        set_no_flag: [\"village\"]
+                    }],
                 images: [{
-                    name: imageStem + \"@V\",
-                    postfix: \"\",
-                    layer: 0,
-                    center: { x: 36, y: 36 },
-                    base: { x: 36, y: 36 },
-                    variations: [\"\", \"2\", \"3\", \"4\"],
-                }],
+                        name: imageStem + \"@V\",
+                        postfix: \"\",
+                        layer: 0,
+                        center: { x: 36, y: 36 },
+                        base: { x: 36, y: 36 },
+                        variations: [\"\", \"2\", \"3\", \"4\"],
+                    }],
                 probability: 100,
                 builder: Worker.IB_IMAGE_SINGLE
             });
         };
-        Worker.OVERLAY_RESTRICTED_PLFB = function (tgGroup, overlays, adjacent, imageStem, plfb) {
+        Worker.OVERLAY_RESTRICTED_PLFB = (tgGroup, overlays, adjacent, imageStem, plfb) => {
             GENERIC_RESTRICTED_PLFB(tgGroup, undefined, overlays, adjacent, undefined, imageStem, {
                 layer: plfb.layer === undefined ? 0 : plfb.layer,
                 flag: plfb.flag === undefined ? \"overlay\" : plfb.flag,
@@ -2771,27 +2778,30 @@ var WesnothTiles;
         'use strict';
         function swapTerrains(terrains) {
             const terrainList = [];
-            for (let i = 0; i < 21 /* VOID */; i++) {
+            for (let i = 0; i < WesnothTiles.ETerrain.VOID; i++) {
                 if (terrains.indexOf(i) === -1)
                     terrainList.push(i);
             }
             return terrainList;
         }
         Worker.swapTerrains = swapTerrains;
-        const addSparseForestMacro = function (tgGroup, overlay, imagestem) {
-            Worker.NEW_FOREST(tgGroup, [5 /* HILLS_DRY */, 6 /* HILLS_DESERT */, 4 /* HILLS_REGULAR */, 7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */, 9 /* MOUNTAIN_DRY */, 8 /* MOUNTAIN_BASIC */], [overlay], [20 /* ABYSS */, 18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */, 8 /* MOUNTAIN_BASIC */, 9 /* MOUNTAIN_DRY */, 10 /* MOUNTAIN_SNOW */, 11 /* MOUNTAIN_VOLCANO */], imagestem);
+        const addSparseForestMacro = (tgGroup, overlay, imagestem) => {
+            Worker.NEW_FOREST(tgGroup, [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.HILLS_SNOW,
+                WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_BASIC], [overlay], [WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE,
+                WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO], imagestem);
         };
-        const addForestMacro = function (tgGroup, overlay, imagestem) {
-            Worker.NEW_FOREST(tgGroup, undefined, [overlay], [20 /* ABYSS */, 18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */, 8 /* MOUNTAIN_BASIC */, 9 /* MOUNTAIN_DRY */, 10 /* MOUNTAIN_SNOW */, 11 /* MOUNTAIN_VOLCANO */], imagestem);
+        const addForestMacro = (tgGroup, overlay, imagestem) => {
+            Worker.NEW_FOREST(tgGroup, undefined, [overlay], [WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE,
+                WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO], imagestem);
         };
         // Group of terrain graphics elements
-        var TgGroup = (function () {
-            function TgGroup() {
+        class TgGroup {
+            constructor() {
                 this.tgs = [];
                 this.populateTgs();
             }
             // add terrain graphics
-            TgGroup.prototype.addTg = function (tg) {
+            addTg(tg) {
                 const tile = tg.tiles[0];
                 if (tile.q !== 0 || tile.r !== 0) {
                     console.error(\"One of the macros has improper first tile!\", tg);
@@ -2799,196 +2809,231 @@ var WesnothTiles;
                 }
                 tg.hexes = new Map();
                 this.tgs.push(tg);
-            };
-            TgGroup.prototype.populateTgs = function () {
-                Worker.OVERLAY_COMPLETE_LFB(this, [17 /* SWAMP_WATER */], [6 /* HILLS_DESERT */, 5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */, 7 /* HILLS_SNOW */, 9 /* MOUNTAIN_DRY */, 9 /* MOUNTAIN_DRY */, 10 /* MOUNTAIN_SNOW */, 13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */, 20 /* ABYSS */], \"swamp/reed\", { layer: -85, flag: \"base2\" });
-                addSparseForestMacro(this, 22 /* WOODS_PINE */, \"forest/pine-sparse\");
-                addForestMacro(this, 22 /* WOODS_PINE */, \"forest/pine\");
-                addSparseForestMacro(this, 23 /* SNOW_FOREST */, \"forest/snow-forest-sparse\");
-                addForestMacro(this, 23 /* SNOW_FOREST */, \"forest/snow-forest\");
-                addSparseForestMacro(this, 24 /* JUNGLE */, \"forest/tropical/jungle-sparse\");
-                addForestMacro(this, 24 /* JUNGLE */, \"forest/tropical/jungle\");
-                addSparseForestMacro(this, 25 /* PALM_DESERT */, \"forest/tropical/palm-desert-sparse\");
-                addForestMacro(this, 25 /* PALM_DESERT */, \"forest/tropical/palm-desert\");
-                addSparseForestMacro(this, 25 /* PALM_DESERT */, \"forest/tropical/palm-desert-sparse\");
-                addForestMacro(this, 25 /* PALM_DESERT */, \"forest/tropical/palm-desert\");
-                addForestMacro(this, 26 /* RAINFOREST */, \"forest/tropical/rainforest\");
-                addSparseForestMacro(this, 27 /* SAVANNA */, \"forest/tropical/savanna-sparse\");
-                addForestMacro(this, 27 /* SAVANNA */, \"forest/tropical/savanna\");
-                addSparseForestMacro(this, 28 /* DECIDUOUS_SUMMER */, \"forest/deciduous-summer-sparse\");
-                addForestMacro(this, 28 /* DECIDUOUS_SUMMER */, \"forest/deciduous-summer\");
-                addSparseForestMacro(this, 29 /* DECIDUOUS_FALL */, \"forest/deciduous-fall-sparse\");
-                addForestMacro(this, 29 /* DECIDUOUS_FALL */, \"forest/deciduous-fall\");
-                addSparseForestMacro(this, 30 /* DECIDUOUS_WINTER */, \"forest/deciduous-winter-sparse\");
-                addForestMacro(this, 30 /* DECIDUOUS_WINTER */, \"forest/deciduous-winter\");
-                addSparseForestMacro(this, 31 /* DECIDUOUS_WINTER_SNOW */, \"forest/deciduous-winter-snow-sparse\");
-                addForestMacro(this, 31 /* DECIDUOUS_WINTER_SNOW */, \"forest/deciduous-winter-snow\");
-                addSparseForestMacro(this, 32 /* MIXED_SUMMER */, \"forest/mixed-summer-sparse\");
-                addForestMacro(this, 32 /* MIXED_SUMMER */, \"forest/mixed-summer\");
-                addSparseForestMacro(this, 33 /* MIXED_FALL */, \"forest/mixed-fall-sparse\");
-                addForestMacro(this, 33 /* MIXED_FALL */, \"forest/mixed-fall\");
-                addSparseForestMacro(this, 34 /* MIXED_WINTER */, \"forest/mixed-winter-sparse\");
-                addForestMacro(this, 34 /* MIXED_WINTER */, \"forest/mixed-winter\");
-                addSparseForestMacro(this, 35 /* MIXED_WINTER_SNOW */, \"forest/mixed-winter-snow-sparse\");
-                addForestMacro(this, 35 /* MIXED_WINTER_SNOW */, \"forest/mixed-winter-snow\");
-                addForestMacro(this, 36 /* MUSHROOMS */, \"forest/mushrooms\");
-                Worker.OVERLAY_PLFB(this, undefined, [41 /* OASIS */], undefined, \"village/desert-oasis-1\", { prob: 30 });
-                Worker.OVERLAY_PLFB(this, undefined, [41 /* OASIS */], undefined, \"village/desert-oasis-2\", { prob: 43 });
-                Worker.OVERLAY_PLFB(this, undefined, [41 /* OASIS */], undefined, \"village/desert-oasis-3\", { prob: 100 });
-                Worker.OVERLAY_RANDOM_LFB(this, undefined, [42 /* DETRITUS */], undefined, \"misc/detritus/detritusA\", {});
-                Worker.OVERLAY_RANDOM_LFB(this, undefined, [44 /* TRASH */], undefined, \"misc/detritus/trashA\", {});
-                Worker.OVERLAY_RANDOM_LFB(this, undefined, [43 /* LITER */], undefined, \"misc/detritus/liter\", {});
-                Worker.VOLCANO_2x2(this, [11 /* MOUNTAIN_VOLCANO */], [8 /* MOUNTAIN_BASIC */, 9 /* MOUNTAIN_DRY */], \"mountains/volcano6\", \"base2\");
-                Worker.OVERLAY_RESTRICTED3_PLFB(this, [8 /* MOUNTAIN_BASIC */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 20 /* ABYSS */], \"mountains/basic-castle-n\", { flag: \"base2\" });
-                Worker.OVERLAY_ROTATION_RESTRICTED2_PLFB(this, [8 /* MOUNTAIN_BASIC */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 20 /* ABYSS */], \"mountains/basic-castle\", { flag: \"base2\" });
-                Worker.OVERLAY_RESTRICTED2_PLFB(this, [8 /* MOUNTAIN_BASIC */], [20 /* ABYSS */], \"mountains/basic-castle-n\", { flag: \"base2\" });
-                Worker.OVERLAY_ROTATION_RESTRICTED_PLFB(this, [8 /* MOUNTAIN_BASIC */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 20 /* ABYSS */], \"mountains/basic-castle\", { flag: \"base2\" });
-                Worker.MOUNTAINS_2x4_NW_SE(this, [8 /* MOUNTAIN_BASIC */], \"mountains/basic_range3\", \"base2\", 18); // Mm    
-                Worker.MOUNTAINS_2x4_SW_NE(this, [8 /* MOUNTAIN_BASIC */], \"mountains/basic_range4\", \"base2\", 26); // Mm    
-                Worker.MOUNTAINS_1x3_NW_SE(this, [8 /* MOUNTAIN_BASIC */], \"mountains/basic_range1\", \"base2\", 20); // Mm    
-                Worker.MOUNTAINS_1x3_SW_NE(this, [8 /* MOUNTAIN_BASIC */], \"mountains/basic_range2\", \"base2\", 20); // Mm    
-                Worker.MOUNTAINS_2x2(this, [8 /* MOUNTAIN_BASIC */], \"mountains/basic5\", \"base2\", 40); // Mm    
-                Worker.MOUNTAINS_2x2(this, [8 /* MOUNTAIN_BASIC */], \"mountains/basic6\", \"base2\", 30); // Mm    
-                Worker.MOUNTAIN_SINGLE_RANDOM(this, [8 /* MOUNTAIN_BASIC */], \"mountains/basic\", \"base2\"); // Mm
-                Worker.OVERLAY_RESTRICTED3_PLFB(this, [9 /* MOUNTAIN_DRY */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 20 /* ABYSS */], \"mountains/dry-castle-n\", { flag: \"base2\" });
-                Worker.OVERLAY_ROTATION_RESTRICTED2_PLFB(this, [9 /* MOUNTAIN_DRY */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 20 /* ABYSS */], \"mountains/dry-castle\", { flag: \"base2\" });
-                Worker.OVERLAY_RESTRICTED2_PLFB(this, [9 /* MOUNTAIN_DRY */], [20 /* ABYSS */], \"mountains/dry-castle-n\", { flag: \"base2\" });
-                Worker.OVERLAY_ROTATION_RESTRICTED_PLFB(this, [9 /* MOUNTAIN_DRY */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 20 /* ABYSS */], \"mountains/dry-castle\", { flag: \"base2\" });
-                Worker.MOUNTAINS_2x4_NW_SE(this, [9 /* MOUNTAIN_DRY */], \"mountains/dry_range3\", \"base2\", 18); // Md    
-                Worker.MOUNTAINS_2x4_SW_NE(this, [9 /* MOUNTAIN_DRY */], \"mountains/dry_range4\", \"base2\", 26); // Md    
-                Worker.MOUNTAINS_1x3_NW_SE(this, [9 /* MOUNTAIN_DRY */], \"mountains/dry_range1\", \"base2\", 20); // Md
-                Worker.MOUNTAINS_1x3_SW_NE(this, [9 /* MOUNTAIN_DRY */], \"mountains/dry_range2\", \"base2\", 20); // Md       
-                Worker.MOUNTAINS_2x2(this, [9 /* MOUNTAIN_DRY */], \"mountains/dry5\", \"base2\", 40); // Md
-                Worker.MOUNTAINS_2x2(this, [9 /* MOUNTAIN_DRY */], \"mountains/dry6\", \"base2\", 30); // Md
-                Worker.MOUNTAIN_SINGLE_RANDOM(this, [9 /* MOUNTAIN_DRY */], \"mountains/dry\", \"base2\"); // Md
-                Worker.OVERLAY_COMPLETE_LFB(this, [11 /* MOUNTAIN_VOLCANO */], [20 /* ABYSS */], \"mountains/volcano\", { flag: \"base2\" }); // Mv
-                Worker.MOUNTAINS_2x2(this, [10 /* MOUNTAIN_SNOW */], \"mountains/snow5\", \"base2\", 15); // Ms
-                Worker.MOUNTAINS_2x2(this, [10 /* MOUNTAIN_SNOW */], \"mountains/snow6\", \"base2\", 20); // Ms
-                Worker.MOUNTAIN_SINGLE_RANDOM(this, [10 /* MOUNTAIN_SNOW */], \"mountains/snow\", \"base2\"); // Ms
+            }
+            populateTgs() {
+                Worker.OVERLAY_COMPLETE_LFB(this, [WesnothTiles.ETerrain.SWAMP_WATER], [WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.HILLS_SNOW,
+                    WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_SNOW,
+                    WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.ABYSS], \"swamp/reed\", { layer: -85, flag: \"base2\" });
+                addSparseForestMacro(this, WesnothTiles.EOverlay.WOODS_PINE, \"forest/pine-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.WOODS_PINE, \"forest/pine\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.SNOW_FOREST, \"forest/snow-forest-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.SNOW_FOREST, \"forest/snow-forest\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.JUNGLE, \"forest/tropical/jungle-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.JUNGLE, \"forest/tropical/jungle\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.PALM_DESERT, \"forest/tropical/palm-desert-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.PALM_DESERT, \"forest/tropical/palm-desert\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.PALM_DESERT, \"forest/tropical/palm-desert-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.PALM_DESERT, \"forest/tropical/palm-desert\");
+                addForestMacro(this, WesnothTiles.EOverlay.RAINFOREST, \"forest/tropical/rainforest\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.SAVANNA, \"forest/tropical/savanna-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.SAVANNA, \"forest/tropical/savanna\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.DECIDUOUS_SUMMER, \"forest/deciduous-summer-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.DECIDUOUS_SUMMER, \"forest/deciduous-summer\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.DECIDUOUS_FALL, \"forest/deciduous-fall-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.DECIDUOUS_FALL, \"forest/deciduous-fall\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.DECIDUOUS_WINTER, \"forest/deciduous-winter-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.DECIDUOUS_WINTER, \"forest/deciduous-winter\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.DECIDUOUS_WINTER_SNOW, \"forest/deciduous-winter-snow-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.DECIDUOUS_WINTER_SNOW, \"forest/deciduous-winter-snow\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.MIXED_SUMMER, \"forest/mixed-summer-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.MIXED_SUMMER, \"forest/mixed-summer\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.MIXED_FALL, \"forest/mixed-fall-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.MIXED_FALL, \"forest/mixed-fall\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.MIXED_WINTER, \"forest/mixed-winter-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.MIXED_WINTER, \"forest/mixed-winter\");
+                addSparseForestMacro(this, WesnothTiles.EOverlay.MIXED_WINTER_SNOW, \"forest/mixed-winter-snow-sparse\");
+                addForestMacro(this, WesnothTiles.EOverlay.MIXED_WINTER_SNOW, \"forest/mixed-winter-snow\");
+                addForestMacro(this, WesnothTiles.EOverlay.MUSHROOMS, \"forest/mushrooms\");
+                Worker.OVERLAY_PLFB(this, undefined, [WesnothTiles.EOverlay.OASIS], undefined, \"village/desert-oasis-1\", { prob: 30 });
+                Worker.OVERLAY_PLFB(this, undefined, [WesnothTiles.EOverlay.OASIS], undefined, \"village/desert-oasis-2\", { prob: 43 });
+                Worker.OVERLAY_PLFB(this, undefined, [WesnothTiles.EOverlay.OASIS], undefined, \"village/desert-oasis-3\", { prob: 100 });
+                Worker.OVERLAY_RANDOM_LFB(this, undefined, [WesnothTiles.EOverlay.DETRITUS], undefined, \"misc/detritus/detritusA\", {});
+                Worker.OVERLAY_RANDOM_LFB(this, undefined, [WesnothTiles.EOverlay.TRASH], undefined, \"misc/detritus/trashA\", {});
+                Worker.OVERLAY_RANDOM_LFB(this, undefined, [WesnothTiles.EOverlay.LITER], undefined, \"misc/detritus/liter\", {});
+                Worker.VOLCANO_2x2(this, [WesnothTiles.ETerrain.MOUNTAIN_VOLCANO], [WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.MOUNTAIN_DRY], \"mountains/volcano6\", \"base2\");
+                Worker.OVERLAY_RESTRICTED3_PLFB(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.ABYSS], \"mountains/basic-castle-n\", { flag: \"base2\" });
+                Worker.OVERLAY_ROTATION_RESTRICTED2_PLFB(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.ABYSS], \"mountains/basic-castle\", { flag: \"base2\" });
+                Worker.OVERLAY_RESTRICTED2_PLFB(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], [WesnothTiles.ETerrain.ABYSS], \"mountains/basic-castle-n\", { flag: \"base2\" });
+                Worker.OVERLAY_ROTATION_RESTRICTED_PLFB(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.ABYSS], \"mountains/basic-castle\", { flag: \"base2\" });
+                Worker.MOUNTAINS_2x4_NW_SE(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"mountains/basic_range3\", \"base2\", 18); // Mm    
+                Worker.MOUNTAINS_2x4_SW_NE(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"mountains/basic_range4\", \"base2\", 26); // Mm    
+                Worker.MOUNTAINS_1x3_NW_SE(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"mountains/basic_range1\", \"base2\", 20); // Mm    
+                Worker.MOUNTAINS_1x3_SW_NE(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"mountains/basic_range2\", \"base2\", 20); // Mm    
+                Worker.MOUNTAINS_2x2(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"mountains/basic5\", \"base2\", 40); // Mm    
+                Worker.MOUNTAINS_2x2(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"mountains/basic6\", \"base2\", 30); // Mm    
+                Worker.MOUNTAIN_SINGLE_RANDOM(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"mountains/basic\", \"base2\"); // Mm
+                Worker.OVERLAY_RESTRICTED3_PLFB(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.ABYSS], \"mountains/dry-castle-n\", { flag: \"base2\" });
+                Worker.OVERLAY_ROTATION_RESTRICTED2_PLFB(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.ABYSS], \"mountains/dry-castle\", { flag: \"base2\" });
+                Worker.OVERLAY_RESTRICTED2_PLFB(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], [WesnothTiles.ETerrain.ABYSS], \"mountains/dry-castle-n\", { flag: \"base2\" });
+                Worker.OVERLAY_ROTATION_RESTRICTED_PLFB(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.ABYSS], \"mountains/dry-castle\", { flag: \"base2\" });
+                Worker.MOUNTAINS_2x4_NW_SE(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], \"mountains/dry_range3\", \"base2\", 18); // Md    
+                Worker.MOUNTAINS_2x4_SW_NE(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], \"mountains/dry_range4\", \"base2\", 26); // Md    
+                Worker.MOUNTAINS_1x3_NW_SE(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], \"mountains/dry_range1\", \"base2\", 20); // Md
+                Worker.MOUNTAINS_1x3_SW_NE(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], \"mountains/dry_range2\", \"base2\", 20); // Md       
+                Worker.MOUNTAINS_2x2(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], \"mountains/dry5\", \"base2\", 40); // Md
+                Worker.MOUNTAINS_2x2(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], \"mountains/dry6\", \"base2\", 30); // Md
+                Worker.MOUNTAIN_SINGLE_RANDOM(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], \"mountains/dry\", \"base2\"); // Md
+                Worker.OVERLAY_COMPLETE_LFB(this, [WesnothTiles.ETerrain.MOUNTAIN_VOLCANO], [WesnothTiles.ETerrain.ABYSS], \"mountains/volcano\", { flag: \"base2\" }); // Mv
+                Worker.MOUNTAINS_2x2(this, [WesnothTiles.ETerrain.MOUNTAIN_SNOW], \"mountains/snow5\", \"base2\", 15); // Ms
+                Worker.MOUNTAINS_2x2(this, [WesnothTiles.ETerrain.MOUNTAIN_SNOW], \"mountains/snow6\", \"base2\", 20); // Ms
+                Worker.MOUNTAIN_SINGLE_RANDOM(this, [WesnothTiles.ETerrain.MOUNTAIN_SNOW], \"mountains/snow\", \"base2\"); // Ms
                 // villages
-                Worker.NEW_VILLAGE(this, [5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */], [45 /* VILLAGE_HUMAN */], \"village/human-hills\");
-                Worker.NEW_VILLAGE(this, [7 /* HILLS_SNOW */], [45 /* VILLAGE_HUMAN */], \"village/human-snow-hills\");
-                Worker.NEW_VILLAGE(this, [5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */], [46 /* VILLAGE_HUMAN_RUIN */], \"village/human-hills-ruin\");
-                Worker.NEW_VILLAGE(this, [12 /* FROZEN_SNOW */, 13 /* FROZEN_ICE */], [45 /* VILLAGE_HUMAN */], \"village/human-snow\");
-                Worker.NEW_VILLAGE(this, undefined, [45 /* VILLAGE_HUMAN */], \"village/human\");
-                Worker.NEW_VILLAGE(this, undefined, [46 /* VILLAGE_HUMAN_RUIN */], \"village/human-cottage-ruin\");
-                Worker.NEW_VILLAGE(this, undefined, [47 /* VILLAGE_HUMAN_CITY */], \"village/human-city\");
-                Worker.NEW_VILLAGE(this, [12 /* FROZEN_SNOW */, 13 /* FROZEN_ICE */, 7 /* HILLS_SNOW */], [47 /* VILLAGE_HUMAN_CITY */], \"village/human-city-snow\");
-                Worker.NEW_VILLAGE(this, undefined, [48 /* VILLAGE_HUMAN_CITY_RUIN */], \"village/human-city-ruin\");
-                Worker.NEW_VILLAGE(this, undefined, [49 /* VILLAGE_TROPICAL */], \"village/tropical-forest\");
-                Worker.NEW_VILLAGE(this, [12 /* FROZEN_SNOW */, 13 /* FROZEN_ICE */, 7 /* HILLS_SNOW */], [50 /* VILLAGE_HUT */], \"village/hut-snow\");
-                Worker.NEW_VILLAGE(this, undefined, [51 /* VILLAGE_LOG_CABIN */], \"village/log-cabin\");
-                Worker.NEW_VILLAGE(this, undefined, [52 /* VILLAGE_CAMP */], \"village/camp\");
-                Worker.NEW_VILLAGE(this, undefined, [53 /* VILLAGE_IGLOO */], \"village/igloo\");
-                Worker.NEW_VILLAGE(this, undefined, [54 /* VILLAGE_ORC */], \"village/orc\");
-                Worker.NEW_VILLAGE(this, [12 /* FROZEN_SNOW */, 13 /* FROZEN_ICE */, 7 /* HILLS_SNOW */], [55 /* VILLAGE_ELVEN */], \"village/elven-snow\");
-                Worker.NEW_VILLAGE(this, undefined, [55 /* VILLAGE_ELVEN */], \"village/elven\");
-                Worker.NEW_VILLAGE(this, undefined, [56 /* VILLAGE_DESERT */], \"village/desert\");
-                Worker.NEW_VILLAGE(this, undefined, [57 /* VILLAGE_DESERT_CAMP */], \"village/desert-camp\");
-                Worker.NEW_VILLAGE(this, undefined, [58 /* VILLAGE_DWARVEN */], \"village/dwarven\");
-                Worker.NEW_VILLAGE(this, undefined, [59 /* VILLAGE_SWAMP */], \"village/swampwater\");
-                Worker.NEW_VILLAGE(this, undefined, [60 /* VILLAGE_COAST */], \"village/coast\");
-                Worker.OVERLAY_RANDOM_LFB(this, undefined, [37 /* FARM_VEGS */], undefined, \"embellishments/farm-veg-spring\", { layer: -81 });
-                Worker.OVERLAY_RANDOM_LFB(this, undefined, [38 /* FLOWERS_MIXED */], undefined, \"embellishments/flowers-mixed\", { layer: -500 });
-                Worker.OVERLAY_RANDOM_LFB(this, undefined, [39 /* RUBBLE */], undefined, \"misc/rubble\", { layer: -1 });
-                Worker.OVERLAY_RANDOM_LFB(this, undefined, [40 /* STONES_SMALL */], undefined, \"embellishments/stones-small\", {});
+                Worker.NEW_VILLAGE(this, [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_REGULAR], [WesnothTiles.EOverlay.VILLAGE_HUMAN], \"village/human-hills\");
+                Worker.NEW_VILLAGE(this, [WesnothTiles.ETerrain.HILLS_SNOW], [WesnothTiles.EOverlay.VILLAGE_HUMAN], \"village/human-snow-hills\");
+                Worker.NEW_VILLAGE(this, [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_REGULAR], [WesnothTiles.EOverlay.VILLAGE_HUMAN_RUIN], \"village/human-hills-ruin\");
+                Worker.NEW_VILLAGE(this, [WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.FROZEN_ICE], [WesnothTiles.EOverlay.VILLAGE_HUMAN], \"village/human-snow\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_HUMAN], \"village/human\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_HUMAN_RUIN], \"village/human-cottage-ruin\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_HUMAN_CITY], \"village/human-city\");
+                Worker.NEW_VILLAGE(this, [WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.HILLS_SNOW], [WesnothTiles.EOverlay.VILLAGE_HUMAN_CITY], \"village/human-city-snow\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_HUMAN_CITY_RUIN], \"village/human-city-ruin\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_TROPICAL], \"village/tropical-forest\");
+                Worker.NEW_VILLAGE(this, [WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.HILLS_SNOW], [WesnothTiles.EOverlay.VILLAGE_HUT], \"village/hut-snow\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_LOG_CABIN], \"village/log-cabin\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_CAMP], \"village/camp\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_IGLOO], \"village/igloo\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_ORC], \"village/orc\");
+                Worker.NEW_VILLAGE(this, [WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.HILLS_SNOW], [WesnothTiles.EOverlay.VILLAGE_ELVEN], \"village/elven-snow\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_ELVEN], \"village/elven\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_DESERT], \"village/desert\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_DESERT_CAMP], \"village/desert-camp\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_DWARVEN], \"village/dwarven\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_SWAMP], \"village/swampwater\");
+                Worker.NEW_VILLAGE(this, undefined, [WesnothTiles.EOverlay.VILLAGE_COAST], \"village/coast\");
+                Worker.OVERLAY_RANDOM_LFB(this, undefined, [WesnothTiles.EOverlay.FARM_VEGS], undefined, \"embellishments/farm-veg-spring\", { layer: -81 });
+                Worker.OVERLAY_RANDOM_LFB(this, undefined, [WesnothTiles.EOverlay.FLOWERS_MIXED], undefined, \"embellishments/flowers-mixed\", { layer: -500 });
+                Worker.OVERLAY_RANDOM_LFB(this, undefined, [WesnothTiles.EOverlay.RUBBLE], undefined, \"misc/rubble\", { layer: -1 });
+                Worker.OVERLAY_RANDOM_LFB(this, undefined, [WesnothTiles.EOverlay.STONES_SMALL], undefined, \"embellishments/stones-small\", {});
                 // fillers for mountains
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [8 /* MOUNTAIN_BASIC */], \"hills/regular\", {});
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [9 /* MOUNTAIN_DRY */], \"hills/dry\", {});
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [10 /* MOUNTAIN_SNOW */], \"hills/snow\", {});
-                Worker.TERRAIN_BASE_PLFB(this, [0 /* GRASS_GREEN */], \"grass/green\", { prob: 20 });
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [0 /* GRASS_GREEN */], \"grass/green\", {});
-                Worker.TERRAIN_BASE_PLFB(this, [2 /* GRASS_DRY */], \"grass/dry\", { prob: 25 });
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [2 /* GRASS_DRY */], \"grass/dry\", {});
-                Worker.TERRAIN_BASE_PLFB(this, [1 /* GRASS_SEMI_DRY */], \"grass/semi-dry\", { prob: 25 });
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [1 /* GRASS_SEMI_DRY */], \"grass/semi-dry\", {});
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [3 /* GRASS_LEAF_LITTER */], \"grass/leaf-litter\", {});
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [4 /* HILLS_REGULAR */], \"hills/regular\", {}); // Hh
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [5 /* HILLS_DRY */], \"hills/dry\", {}); // Hhd
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [6 /* HILLS_DESERT */], \"hills/desert\", {}); // Hd
-                Worker.OVERLAY_RESTRICTED_PLFB(this, [61 /* DESERT_PLANTS */], [20 /* ABYSS */], \"embellishments/desert-plant\", { prob: 33 });
-                Worker.OVERLAY_RESTRICTED_PLFB(this, [61 /* DESERT_PLANTS */], [20 /* ABYSS */], \"embellishments/desert-plant1\", { prob: 50 });
-                Worker.OVERLAY_RESTRICTED_PLFB(this, [61 /* DESERT_PLANTS */], [20 /* ABYSS */], \"embellishments/desert-plant2\", { prob: 100 });
-                Worker.OVERLAY_RANDOM_LFB(this, undefined, [61 /* DESERT_PLANTS */], undefined, \"embellishments/desert-plant\", {});
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [7 /* HILLS_SNOW */], \"hills/snow\", {}); // Ha
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [20 /* ABYSS */], \"chasm/abyss\", {}); // Ha
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [15 /* SAND_DESERT */], \"sand/desert\", {}); // Hhd
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [14 /* SAND_BEACH */], \"sand/beach\", {}); // Hhd
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [12 /* FROZEN_SNOW */], \"frozen/snow\", {}); // Aa
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [13 /* FROZEN_ICE */], \"frozen/ice2\", { prob: 10 }); // Ai
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [13 /* FROZEN_ICE */], \"frozen/ice3\", { prob: 11 }); // Ai
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [13 /* FROZEN_ICE */], \"frozen/ice5\", { prob: 13 }); // Ai
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [13 /* FROZEN_ICE */], \"frozen/ice6\", { prob: 14 }); // Ai
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [13 /* FROZEN_ICE */], \"frozen/ice4\", { prob: 42 }); // Ai
-                Worker.TERRAIN_BASE_PLFB(this, [13 /* FROZEN_ICE */], \"frozen/ice\", {}); // Hhd
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [16 /* SWAMP_MUD */], \"swamp/mud\", {}); // Sm
-                Worker.TERRAIN_BASE_PLFB(this, [17 /* SWAMP_WATER */], \"swamp/water-plant@V\", { prob: 33 }); // Sm
-                Worker.TERRAIN_BASE_RANDOM_LFB(this, [17 /* SWAMP_WATER */], \"swamp/water\", {}); // Sm
-                Worker.TERRAIN_BASE_PLFB(this, [21 /* VOID */], \"void/void\", { layer: 1000 });
-                Worker.TERRAIN_BASE_SINGLEHEX_PLFB(this, [18 /* WATER_OCEAN */], \"water/ocean\", {
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"hills/regular\", {});
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY], \"hills/dry\", {});
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.MOUNTAIN_SNOW], \"hills/snow\", {});
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.GRASS_GREEN], \"grass/green\", { prob: 20 });
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.GRASS_GREEN], \"grass/green\", {});
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.GRASS_DRY], \"grass/dry\", { prob: 25 });
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.GRASS_DRY], \"grass/dry\", {});
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.GRASS_SEMI_DRY], \"grass/semi-dry\", { prob: 25 });
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.GRASS_SEMI_DRY], \"grass/semi-dry\", {});
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.GRASS_LEAF_LITTER], \"grass/leaf-litter\", {});
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.HILLS_REGULAR], \"hills/regular\", {}); // Hh
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.HILLS_DRY], \"hills/dry\", {}); // Hhd
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.HILLS_DESERT], \"hills/desert\", {}); // Hd
+                Worker.OVERLAY_RESTRICTED_PLFB(this, [WesnothTiles.EOverlay.DESERT_PLANTS], [WesnothTiles.ETerrain.ABYSS], \"embellishments/desert-plant\", { prob: 33 });
+                Worker.OVERLAY_RESTRICTED_PLFB(this, [WesnothTiles.EOverlay.DESERT_PLANTS], [WesnothTiles.ETerrain.ABYSS], \"embellishments/desert-plant1\", { prob: 50 });
+                Worker.OVERLAY_RESTRICTED_PLFB(this, [WesnothTiles.EOverlay.DESERT_PLANTS], [WesnothTiles.ETerrain.ABYSS], \"embellishments/desert-plant2\", { prob: 100 });
+                Worker.OVERLAY_RANDOM_LFB(this, undefined, [WesnothTiles.EOverlay.DESERT_PLANTS], undefined, \"embellishments/desert-plant\", {});
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.HILLS_SNOW], \"hills/snow\", {}); // Ha
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.ABYSS], \"chasm/abyss\", {}); // Ha
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.SAND_DESERT], \"sand/desert\", {}); // Hhd
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.SAND_BEACH], \"sand/beach\", {}); // Hhd
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.FROZEN_SNOW], \"frozen/snow\", {}); // Aa
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.FROZEN_ICE], \"frozen/ice2\", { prob: 10 }); // Ai
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.FROZEN_ICE], \"frozen/ice3\", { prob: 11 }); // Ai
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.FROZEN_ICE], \"frozen/ice5\", { prob: 13 }); // Ai
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.FROZEN_ICE], \"frozen/ice6\", { prob: 14 }); // Ai
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.FROZEN_ICE], \"frozen/ice4\", { prob: 42 }); // Ai
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.FROZEN_ICE], \"frozen/ice\", {}); // Hhd
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.SWAMP_MUD], \"swamp/mud\", {}); // Sm
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.SWAMP_WATER], \"swamp/water-plant@V\", { prob: 33 }); // Sm
+                Worker.TERRAIN_BASE_RANDOM_LFB(this, [WesnothTiles.ETerrain.SWAMP_WATER], \"swamp/water\", {}); // Sm
+                Worker.TERRAIN_BASE_PLFB(this, [WesnothTiles.ETerrain.VOID], \"void/void\", { layer: 1000 });
+                Worker.TERRAIN_BASE_SINGLEHEX_PLFB(this, [WesnothTiles.ETerrain.WATER_OCEAN], \"water/ocean\", {
                     builder: Worker.IB_ANIMATION_15_SLOW
                 }); // Wo
-                Worker.TERRAIN_BASE_SINGLEHEX_PLFB(this, [19 /* WATER_COAST_TROPICAL */], \"water/coast-tropical\", {
+                Worker.TERRAIN_BASE_SINGLEHEX_PLFB(this, [WesnothTiles.ETerrain.WATER_COAST_TROPICAL], \"water/coast-tropical\", {
                     builder: Worker.IB_ANIMATION_15
                 }); // Wwt
                 Worker.OVERLAY_RANDOM_LFB(this, undefined, undefined, true, \"fog/fog\", { layer: 999, flag: \"fog\" });
                 Worker.FOG_TRANSITION_LFB(this, true, false, \"fog/fog\", { layer: 999, flag: \"fog\" }, [6, 4, 3, 2, 1]);
                 // chasms transitions
-                Worker.TRANSITION_COMPLETE_LFB(this, [20 /* ABYSS */], [9 /* MOUNTAIN_DRY */, 8 /* MOUNTAIN_BASIC */, 10 /* MOUNTAIN_SNOW */, 11 /* MOUNTAIN_VOLCANO */], \"mountains/blend-from-chasm\", { layer: 2, flag: \"transition3\" }, [1]);
-                Worker.WALL_TRANSITION_PLFB(this, [20 /* ABYSS */], [13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */, 10 /* MOUNTAIN_SNOW */, 7 /* HILLS_SNOW */], \"chasm/regular-snow\", { layer: -90, flag: \"ground\" });
-                Worker.WALL_TRANSITION_PLFB(this, [20 /* ABYSS */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 17 /* SWAMP_WATER */, 16 /* SWAMP_MUD */], \"chasm/water\", { layer: -90, flag: \"ground\" });
-                Worker.WALL_TRANSITION_PLFB(this, [20 /* ABYSS */], swapTerrains([20 /* ABYSS */]), \"chasm/regular\", { layer: -90, flag: \"ground\" });
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.ABYSS], [WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO], \"mountains/blend-from-chasm\", { layer: 2, flag: \"transition3\" }, [1]);
+                Worker.WALL_TRANSITION_PLFB(this, [WesnothTiles.ETerrain.ABYSS], [WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.HILLS_SNOW], \"chasm/regular-snow\", { layer: -90, flag: \"ground\" });
+                Worker.WALL_TRANSITION_PLFB(this, [WesnothTiles.ETerrain.ABYSS], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.SWAMP_WATER, WesnothTiles.ETerrain.SWAMP_MUD], \"chasm/water\", { layer: -90, flag: \"ground\" });
+                Worker.WALL_TRANSITION_PLFB(this, [WesnothTiles.ETerrain.ABYSS], swapTerrains([WesnothTiles.ETerrain.ABYSS]), \"chasm/regular\", { layer: -90, flag: \"ground\" });
                 // transitions --------------------------
-                Worker.TRANSITION_COMPLETE_LFB(this, [9 /* MOUNTAIN_DRY */, 11 /* MOUNTAIN_VOLCANO */], swapTerrains([9 /* MOUNTAIN_DRY */, 5 /* HILLS_DRY */, 11 /* MOUNTAIN_VOLCANO */, 18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 17 /* SWAMP_WATER */, 16 /* SWAMP_MUD */, 20 /* ABYSS */]), \"mountains/dry\", { layer: -166 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [5 /* HILLS_DRY */, 6 /* HILLS_DESERT */, 2 /* GRASS_DRY */, 7 /* HILLS_SNOW */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */, 13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */], [8 /* MOUNTAIN_BASIC */], \"mountains/blend-from-dry\", { layer: 0, flag: \"inside\" }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [5 /* HILLS_DRY */, 6 /* HILLS_DESERT */, 2 /* GRASS_DRY */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */], [10 /* MOUNTAIN_SNOW */], \"mountains/blend-from-dry\", { layer: 0, flag: \"inside\" }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [8 /* MOUNTAIN_BASIC */], [5 /* HILLS_DRY */, 6 /* HILLS_DESERT */, 2 /* GRASS_DRY */, 7 /* HILLS_SNOW */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */, 13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */], \"hills/dry\", { layer: -166 }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [10 /* MOUNTAIN_SNOW */], [5 /* HILLS_DRY */, 6 /* HILLS_DESERT */, 2 /* GRASS_DRY */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */], \"hills/dry\", { layer: -166 }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */], [5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */], \"hills/snow-to-hills\", { layer: -170 }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 17 /* SWAMP_WATER */, 16 /* SWAMP_MUD */], \"hills/snow-to-water\", { layer: -171 }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */], [6 /* HILLS_DESERT */, 2 /* GRASS_DRY */, 1 /* GRASS_SEMI_DRY */, 0 /* GRASS_GREEN */, 3 /* GRASS_LEAF_LITTER */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */, 13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */], \"hills/snow\", { layer: -172 }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [4 /* HILLS_REGULAR */, 8 /* MOUNTAIN_BASIC */], swapTerrains([4 /* HILLS_REGULAR */, 18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 16 /* SWAMP_MUD */, 17 /* SWAMP_WATER */, 20 /* ABYSS */, 8 /* MOUNTAIN_BASIC */, 11 /* MOUNTAIN_VOLCANO */, 9 /* MOUNTAIN_DRY */]), \"hills/regular\", { layer: -180 }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [5 /* HILLS_DRY */], swapTerrains([5 /* HILLS_DRY */, 18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 16 /* SWAMP_MUD */, 17 /* SWAMP_WATER */, 10 /* MOUNTAIN_SNOW */, 8 /* MOUNTAIN_BASIC */, 4 /* HILLS_REGULAR */, 7 /* HILLS_SNOW */]), \"hills/dry\", { layer: -183 }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [6 /* HILLS_DESERT */], swapTerrains([6 /* HILLS_DESERT */, 18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 20 /* ABYSS */, 10 /* MOUNTAIN_SNOW */, 8 /* MOUNTAIN_BASIC */, 7 /* HILLS_SNOW */, 4 /* HILLS_REGULAR */, 5 /* HILLS_DRY */]), \"hills/desert\", { layer: -184 }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [17 /* SWAMP_WATER */], swapTerrains([17 /* SWAMP_WATER */, 6 /* HILLS_DESERT */, 5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */, 7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */, 8 /* MOUNTAIN_BASIC */, 9 /* MOUNTAIN_DRY */, 12 /* FROZEN_SNOW */, 13 /* FROZEN_ICE */, 20 /* ABYSS */]), \"swamp/water\", { layer: -230 }, [3, 2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [1 /* GRASS_SEMI_DRY */], [0 /* GRASS_GREEN */, 2 /* GRASS_DRY */, 3 /* GRASS_LEAF_LITTER */], \"grass/semi-dry-long\", { flag: \"inside\", layer: -250 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [0 /* GRASS_GREEN */], [1 /* GRASS_SEMI_DRY */, 2 /* GRASS_DRY */, 3 /* GRASS_LEAF_LITTER */], \"grass/green-long\", { flag: \"inside\", layer: -251 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [2 /* GRASS_DRY */], [0 /* GRASS_GREEN */, 1 /* GRASS_SEMI_DRY */, 3 /* GRASS_LEAF_LITTER */], \"grass/dry-long\", { flag: \"inside\", layer: -252 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [3 /* GRASS_LEAF_LITTER */], [0 /* GRASS_GREEN */, 1 /* GRASS_SEMI_DRY */, 2 /* GRASS_DRY */], \"grass/leaf-litter-long\", { flag: \"inside\", layer: -253 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [3 /* GRASS_LEAF_LITTER */], [0 /* GRASS_GREEN */, 1 /* GRASS_SEMI_DRY */, 2 /* GRASS_DRY */], \"grass/leaf-litter-long\", { layer: -254 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [2 /* GRASS_DRY */], [0 /* GRASS_GREEN */, 1 /* GRASS_SEMI_DRY */], \"grass/dry-long\", { layer: -255 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [0 /* GRASS_GREEN */], [1 /* GRASS_SEMI_DRY */], \"grass/green-long\", { layer: -256 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [1 /* GRASS_SEMI_DRY */], [15 /* SAND_DESERT */, 14 /* SAND_BEACH */, 12 /* FROZEN_SNOW */], \"grass/semi-dry-medium\", { layer: -260 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [0 /* GRASS_GREEN */], [15 /* SAND_DESERT */, 14 /* SAND_BEACH */, 12 /* FROZEN_SNOW */], \"grass/green-medium\", { layer: -261 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [2 /* GRASS_DRY */], [15 /* SAND_DESERT */, 14 /* SAND_BEACH */, 12 /* FROZEN_SNOW */], \"grass/dry-medium\", { layer: -262 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [3 /* GRASS_LEAF_LITTER */], [16 /* SWAMP_MUD */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */, 12 /* FROZEN_SNOW */], \"grass/leaf-litter\", { layer: -270 }, [3, 2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [0 /* GRASS_GREEN */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */, 16 /* SWAMP_MUD */], \"grass/green-abrupt\", { layer: -271 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [1 /* GRASS_SEMI_DRY */], [19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 13 /* FROZEN_ICE */, 16 /* SWAMP_MUD */], \"grass/semi-dry-abrupt\", { layer: -272 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [2 /* GRASS_DRY */], [19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 13 /* FROZEN_ICE */, 16 /* SWAMP_MUD */], \"grass/dry-abrupt\", { layer: -273 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [12 /* FROZEN_SNOW */], [19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 17 /* SWAMP_WATER */], \"frozen/snow-to-water\", { layer: -280 }, [4, 3, 2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [12 /* FROZEN_SNOW */], swapTerrains([12 /* FROZEN_SNOW */, 20 /* ABYSS */, 12 /* FROZEN_SNOW */, 20 /* ABYSS */, 9 /* MOUNTAIN_DRY */, 5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */, 0 /* GRASS_GREEN */, 3 /* GRASS_LEAF_LITTER */, 1 /* GRASS_SEMI_DRY */, 17 /* SWAMP_WATER */, 8 /* MOUNTAIN_BASIC */, 7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */, 6 /* HILLS_DESERT */, 19 /* WATER_COAST_TROPICAL */, 18 /* WATER_OCEAN */, 11 /* MOUNTAIN_VOLCANO */]), \"frozen/snow\", { layer: -281 }, [4, 3, 2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */], [3 /* GRASS_LEAF_LITTER */], \"flat/bank\", { layer: -300 }, [1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [16 /* SWAMP_MUD */], [14 /* SAND_BEACH */, 15 /* SAND_DESERT */], \"swamp/mud-to-land\", { layer: -310 }, [1]);
-                Worker.NEW_WAVES(this, [6 /* HILLS_DESERT */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */], -499, \"water/waves\");
-                Worker.TRANSITION_COMPLETE_LFB(this, [14 /* SAND_BEACH */], swapTerrains([14 /* SAND_BEACH */, 5 /* HILLS_DRY */, 18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */, 16 /* SWAMP_MUD */, 17 /* SWAMP_WATER */, 20 /* ABYSS */, 6 /* HILLS_DESERT */, 3 /* GRASS_LEAF_LITTER */, 1 /* GRASS_SEMI_DRY */, 2 /* GRASS_DRY */, 0 /* GRASS_GREEN */, 8 /* MOUNTAIN_BASIC */, 10 /* MOUNTAIN_SNOW */, 7 /* HILLS_SNOW */, 4 /* HILLS_REGULAR */, 8 /* MOUNTAIN_BASIC */, 12 /* FROZEN_SNOW */, 16 /* SWAMP_MUD */]), \"sand/beach\", { layer: -510 }, [6, 4, 3, 2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [15 /* SAND_DESERT */], swapTerrains([15 /* SAND_DESERT */, 18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */, 16 /* SWAMP_MUD */, 17 /* SWAMP_WATER */, 20 /* ABYSS */, 8 /* MOUNTAIN_BASIC */, 10 /* MOUNTAIN_SNOW */, 7 /* HILLS_SNOW */, 4 /* HILLS_REGULAR */, 5 /* HILLS_DRY */, 6 /* HILLS_DESERT */, 1 /* GRASS_SEMI_DRY */, 2 /* GRASS_DRY */, 0 /* GRASS_GREEN */, 3 /* GRASS_LEAF_LITTER */, 16 /* SWAMP_MUD */, 14 /* SAND_BEACH */]), \"sand/desert\", { layer: -510 }, [6, 4, 3, 2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [4 /* HILLS_REGULAR */, 8 /* MOUNTAIN_BASIC */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */, 16 /* SWAMP_MUD */, 17 /* SWAMP_WATER */], \"hills/regular-to-water\", { layer: -482, flag: \"non_submerged\" }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [5 /* HILLS_DRY */, 9 /* MOUNTAIN_DRY */, 11 /* MOUNTAIN_VOLCANO */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */, 16 /* SWAMP_MUD */, 17 /* SWAMP_WATER */], \"hills/dry-to-water\", { layer: -482, flag: \"non_submerged\" }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [2 /* GRASS_DRY */, 0 /* GRASS_GREEN */, 3 /* GRASS_LEAF_LITTER */, 1 /* GRASS_SEMI_DRY */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 13 /* FROZEN_ICE */], \"flat/bank-to-ice\", { layer: -483, flag: \"non_submerged\" }, [2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */], [15 /* SAND_DESERT */, 14 /* SAND_BEACH */], \"frozen/ice\", { layer: -485, flag: \"non_submerged\" }, [4, 3, 2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */, 13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 16 /* SWAMP_MUD */, 17 /* SWAMP_WATER */], \"frozen/ice\", { layer: -485, flag: \"non_submerged\" }, [4, 3, 2, 1]);
-                Worker.TRANSITION_COMPLETE_LFB(this, [7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */, 13 /* FROZEN_ICE */, 12 /* FROZEN_SNOW */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 16 /* SWAMP_MUD */, 17 /* SWAMP_WATER */], \"frozen/ice-to-water\", { layer: -505, flag: \"submerged\" }, [4, 3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO], swapTerrains([WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO,
+                    WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.SWAMP_WATER, WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.ABYSS]), \"mountains/dry\", { layer: -166 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.HILLS_SNOW,
+                    WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW], [WesnothTiles.ETerrain.MOUNTAIN_BASIC], \"mountains/blend-from-dry\", { layer: 0, flag: \"inside\" }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.GRASS_DRY,
+                    WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH], [WesnothTiles.ETerrain.MOUNTAIN_SNOW], \"mountains/blend-from-dry\", { layer: 0, flag: \"inside\" }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.MOUNTAIN_BASIC], [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.HILLS_SNOW,
+                    WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW], \"hills/dry\", { layer: -166 }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.MOUNTAIN_SNOW], [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.GRASS_DRY,
+                    WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH], \"hills/dry\", { layer: -166 }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_SNOW, WesnothTiles.ETerrain.MOUNTAIN_SNOW], [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_REGULAR], \"hills/snow-to-hills\", { layer: -170 }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_SNOW, WesnothTiles.ETerrain.MOUNTAIN_SNOW], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.SWAMP_WATER, WesnothTiles.ETerrain.SWAMP_MUD], \"hills/snow-to-water\", { layer: -171 }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_SNOW, WesnothTiles.ETerrain.MOUNTAIN_SNOW], [WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_LEAF_LITTER,
+                    WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW], \"hills/snow\", { layer: -172 }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.MOUNTAIN_BASIC], swapTerrains([WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL,
+                    WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SWAMP_WATER, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.MOUNTAIN_BASIC,
+                    WesnothTiles.ETerrain.MOUNTAIN_VOLCANO, WesnothTiles.ETerrain.MOUNTAIN_DRY]), \"hills/regular\", { layer: -180 }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_DRY], swapTerrains([WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL,
+                    WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SWAMP_WATER, WesnothTiles.ETerrain.MOUNTAIN_SNOW,
+                    WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.HILLS_SNOW]), \"hills/dry\", { layer: -183 }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_DESERT], swapTerrains([WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.ABYSS,
+                    WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.HILLS_SNOW, WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.HILLS_DRY]), \"hills/desert\", { layer: -184 }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.SWAMP_WATER], swapTerrains([WesnothTiles.ETerrain.SWAMP_WATER,
+                    WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.HILLS_SNOW,
+                    WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.MOUNTAIN_DRY,
+                    WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.ABYSS]), \"swamp/water\", { layer: -230 }, [3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_SEMI_DRY], [WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.GRASS_LEAF_LITTER], \"grass/semi-dry-long\", { flag: \"inside\", layer: -250 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_GREEN], [WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.GRASS_LEAF_LITTER], \"grass/green-long\", { flag: \"inside\", layer: -251 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_DRY], [WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.GRASS_LEAF_LITTER], \"grass/dry-long\", { flag: \"inside\", layer: -252 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_LEAF_LITTER], [WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.GRASS_DRY], \"grass/leaf-litter-long\", { flag: \"inside\", layer: -253 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_LEAF_LITTER], [WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.GRASS_DRY], \"grass/leaf-litter-long\", { layer: -254 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_DRY], [WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_SEMI_DRY], \"grass/dry-long\", { layer: -255 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_GREEN], [WesnothTiles.ETerrain.GRASS_SEMI_DRY], \"grass/green-long\", { layer: -256 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_SEMI_DRY], [WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.FROZEN_SNOW], \"grass/semi-dry-medium\", { layer: -260 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_GREEN], [WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.FROZEN_SNOW], \"grass/green-medium\", { layer: -261 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_DRY], [WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.FROZEN_SNOW], \"grass/dry-medium\", { layer: -262 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_LEAF_LITTER], [WesnothTiles.ETerrain.SWAMP_MUD,
+                    WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.FROZEN_SNOW], \"grass/leaf-litter\", { layer: -270 }, [3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_GREEN], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.SWAMP_MUD], \"grass/green-abrupt\", { layer: -271 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_SEMI_DRY], [WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.SWAMP_MUD], \"grass/semi-dry-abrupt\", { layer: -272 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_DRY], [WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.SWAMP_MUD], \"grass/dry-abrupt\", { layer: -273 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.FROZEN_SNOW], [WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.SWAMP_WATER], \"frozen/snow-to-water\", { layer: -280 }, [4, 3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.FROZEN_SNOW], swapTerrains([WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.ABYSS,
+                    WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_REGULAR,
+                    WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_LEAF_LITTER, WesnothTiles.ETerrain.GRASS_SEMI_DRY,
+                    WesnothTiles.ETerrain.SWAMP_WATER, WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.HILLS_SNOW, WesnothTiles.ETerrain.MOUNTAIN_SNOW,
+                    WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO]), \"frozen/snow\", { layer: -281 }, [4, 3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE], [WesnothTiles.ETerrain.GRASS_LEAF_LITTER], \"flat/bank\", { layer: -300 }, [1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.SWAMP_MUD], [WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.SAND_DESERT], \"swamp/mud-to-land\", { layer: -310 }, [1]);
+                Worker.NEW_WAVES(this, [WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL], -499, \"water/waves\");
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.SAND_BEACH], swapTerrains([WesnothTiles.ETerrain.SAND_BEACH, WesnothTiles.ETerrain.HILLS_DRY,
+                    WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE,
+                    WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SWAMP_WATER, WesnothTiles.ETerrain.ABYSS, WesnothTiles.ETerrain.HILLS_DESERT,
+                    WesnothTiles.ETerrain.GRASS_LEAF_LITTER, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.GRASS_GREEN,
+                    WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.HILLS_SNOW, WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.MOUNTAIN_BASIC,
+                    WesnothTiles.ETerrain.FROZEN_SNOW, WesnothTiles.ETerrain.SWAMP_MUD]), \"sand/beach\", { layer: -510 }, [6, 4, 3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.SAND_DESERT], swapTerrains([WesnothTiles.ETerrain.SAND_DESERT,
+                    WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW,
+                    WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SWAMP_WATER, WesnothTiles.ETerrain.ABYSS,
+                    WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.HILLS_SNOW,
+                    WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_DESERT,
+                    WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_LEAF_LITTER,
+                    WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SAND_BEACH]), \"sand/desert\", { layer: -510 }, [6, 4, 3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.MOUNTAIN_BASIC], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE,
+                    WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SWAMP_WATER], \"hills/regular-to-water\", { layer: -482, flag: \"non_submerged\" }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE,
+                    WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SWAMP_WATER], \"hills/dry-to-water\", { layer: -482, flag: \"non_submerged\" }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_LEAF_LITTER, WesnothTiles.ETerrain.GRASS_SEMI_DRY], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.FROZEN_ICE], \"flat/bank-to-ice\", { layer: -483, flag: \"non_submerged\" }, [2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW], [WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH], \"frozen/ice\", { layer: -485, flag: \"non_submerged\" }, [4, 3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_SNOW, WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SWAMP_WATER], \"frozen/ice\", { layer: -485, flag: \"non_submerged\" }, [4, 3, 2, 1]);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.HILLS_SNOW, WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.FROZEN_ICE, WesnothTiles.ETerrain.FROZEN_SNOW], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.SWAMP_MUD, WesnothTiles.ETerrain.SWAMP_WATER], \"frozen/ice-to-water\", { layer: -505, flag: \"submerged\" }, [4, 3, 2, 1]);
                 // invisible transition
-                Worker.TRANSITION_COMPLETE_LFB(this, [13 /* FROZEN_ICE */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 17 /* SWAMP_WATER */], \"frozen/ice-to-water\", { layer: -1001 }, [4, 3, 2, 1]);
-                Worker.NEW_BEACH(this, [6 /* HILLS_DESERT */, 15 /* SAND_DESERT */, 14 /* SAND_BEACH */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */], \"sand/shore\");
-                Worker.NEW_BEACH(this, [0 /* GRASS_GREEN */, 1 /* GRASS_SEMI_DRY */, 2 /* GRASS_DRY */, 3 /* GRASS_LEAF_LITTER */, 6 /* HILLS_DESERT */, 5 /* HILLS_DRY */, 4 /* HILLS_REGULAR */, 7 /* HILLS_SNOW */, 10 /* MOUNTAIN_SNOW */, 8 /* MOUNTAIN_BASIC */, 9 /* MOUNTAIN_DRY */, 11 /* MOUNTAIN_VOLCANO */, 21 /* VOID */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */], \"flat/shore\");
-                Worker.TRANSITION_COMPLETE_LFB(this, [16 /* SWAMP_MUD */], [18 /* WATER_OCEAN */, 19 /* WATER_COAST_TROPICAL */, 17 /* SWAMP_WATER */], \"swamp/mud-long\", { layer: -556, flag: \"transition3\" }, [1]);
-                Worker.ANIMATED_WATER_15_TRANSITION(this, [18 /* WATER_OCEAN */], [19 /* WATER_COAST_TROPICAL */, 16 /* SWAMP_MUD */], \"water/ocean-blend\", -550);
-                Worker.ANIMATED_WATER_15_TRANSITION(this, [19 /* WATER_COAST_TROPICAL */], [18 /* WATER_OCEAN */, 16 /* SWAMP_MUD */], \"water/coast-tropical-long\", -555);
-                Worker.TRANSITION_COMPLETE_LFB(this, [21 /* VOID */], swapTerrains([]), \"void/void\", { layer: 1000 }, [3, 2, 1]);
-            };
-            return TgGroup;
-        })();
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.FROZEN_ICE], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.SWAMP_WATER], \"frozen/ice-to-water\", { layer: -1001 }, [4, 3, 2, 1]);
+                Worker.NEW_BEACH(this, [WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.SAND_DESERT, WesnothTiles.ETerrain.SAND_BEACH], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL], \"sand/shore\");
+                Worker.NEW_BEACH(this, [WesnothTiles.ETerrain.GRASS_GREEN, WesnothTiles.ETerrain.GRASS_SEMI_DRY, WesnothTiles.ETerrain.GRASS_DRY, WesnothTiles.ETerrain.GRASS_LEAF_LITTER,
+                    WesnothTiles.ETerrain.HILLS_DESERT, WesnothTiles.ETerrain.HILLS_DRY, WesnothTiles.ETerrain.HILLS_REGULAR, WesnothTiles.ETerrain.HILLS_SNOW,
+                    WesnothTiles.ETerrain.MOUNTAIN_SNOW, WesnothTiles.ETerrain.MOUNTAIN_BASIC, WesnothTiles.ETerrain.MOUNTAIN_DRY, WesnothTiles.ETerrain.MOUNTAIN_VOLCANO, WesnothTiles.ETerrain.VOID], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL], \"flat/shore\");
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.SWAMP_MUD], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.SWAMP_WATER], \"swamp/mud-long\", { layer: -556, flag: \"transition3\" }, [1]);
+                Worker.ANIMATED_WATER_15_TRANSITION(this, [WesnothTiles.ETerrain.WATER_OCEAN], [WesnothTiles.ETerrain.WATER_COAST_TROPICAL, WesnothTiles.ETerrain.SWAMP_MUD], \"water/ocean-blend\", -550);
+                Worker.ANIMATED_WATER_15_TRANSITION(this, [WesnothTiles.ETerrain.WATER_COAST_TROPICAL], [WesnothTiles.ETerrain.WATER_OCEAN, WesnothTiles.ETerrain.SWAMP_MUD], \"water/coast-tropical-long\", -555);
+                Worker.TRANSITION_COMPLETE_LFB(this, [WesnothTiles.ETerrain.VOID], swapTerrains([]), \"void/void\", { layer: 1000 }, [3, 2, 1]);
+            }
+        }
         Worker.TgGroup = TgGroup;
     })(Worker = WesnothTiles.Worker || (WesnothTiles.Worker = {}));
 })(WesnothTiles || (WesnothTiles = {}));
@@ -3018,7 +3063,11 @@ var WesnothTiles;
             c2 = 0x1b873593;
             i = 0;
             while (i < bytes) {
-                k1 = ((key.charCodeAt(i) & 0xff)) | ((key.charCodeAt(++i) & 0xff) << 8) | ((key.charCodeAt(++i) & 0xff) << 16) | ((key.charCodeAt(++i) & 0xff) << 24);
+                k1 =
+                    ((key.charCodeAt(i) & 0xff)) |
+                        ((key.charCodeAt(++i) & 0xff) << 8) |
+                        ((key.charCodeAt(++i) & 0xff) << 16) |
+                        ((key.charCodeAt(++i) & 0xff) << 24);
                 ++i;
                 k1 = ((((k1 & 0xffff) * c1) + ((((k1 >>> 16) * c1) & 0xffff) << 16))) & 0xffffffff;
                 k1 = (k1 << 15) | (k1 >>> 17);
@@ -3048,9 +3097,10 @@ var WesnothTiles;
             return h1 >>> 0;
         }
         Worker.murmurhash3 = murmurhash3;
-        Worker.swapTerrainTypes = function (types) {
+        Worker.swapTerrainTypes = (types) => {
             const swapped = new Map();
-            for (let i = 0; i < 21 /* VOID */; i++) {
+            // We skip the void
+            for (let i = 0; i < WesnothTiles.ETerrain.VOID; i++) {
                 if (!types.has(i))
                     swapped.set(i, true);
             }
@@ -3062,19 +3112,19 @@ var WesnothTiles;
 var WesnothTiles;
 (function (WesnothTiles) {
     var Worker;
-    (function (_Worker) {
+    (function (Worker_1) {
         'use strict';
-        _Worker.spriteNames = new Set();
+        Worker_1.spriteNames = new Set();
         const hexMaps = new Map();
-        const ensureMap = function (mapId) {
+        const ensureMap = (mapId) => {
             let map = hexMaps.get(mapId);
             if (map === undefined) {
-                map = new _Worker.HexMap();
+                map = new Worker_1.HexMap();
                 hexMaps.set(mapId, map);
             }
             return map;
         };
-        const sortFunc = function (a, b) {
+        const sortFunc = (a, b) => {
             if (a.layer === b.layer) {
                 if (a.base !== undefined && b.base !== undefined) {
                     return a.base.y - b.base.y;
@@ -3089,7 +3139,7 @@ var WesnothTiles;
             }
             return a.layer - b.layer;
         };
-        const sortFuncForChecksum = function (a, b) {
+        const sortFuncForChecksum = (a, b) => {
             if (a.layer === b.layer) {
                 if (a.base !== undefined && b.base !== undefined) {
                     if (a.base.y === b.base.y) {
@@ -3107,14 +3157,13 @@ var WesnothTiles;
             }
             return a.layer - b.layer;
         };
-        var Worker = (function () {
-            function Worker() {
-                var _this = this;
-                this.setTiles = function (bundle) {
+        class Worker {
+            constructor() {
+                this.setTiles = (bundle) => {
                     const map = ensureMap(bundle.mapId);
                     if (bundle.loadingMode)
                         map.setLoadingMode();
-                    bundle.tileChanges.forEach(function (change) {
+                    bundle.tileChanges.forEach(change => {
                         if (change.terrain === undefined || change.terrain === null) {
                             map.removeTerrain(change.q, change.r);
                         }
@@ -3122,32 +3171,32 @@ var WesnothTiles;
                     });
                     map.unsetLoadingMode();
                 };
-                this.init = function (definitions) {
-                    definitions.forEach(function (spriteName) { return _Worker.spriteNames.add(spriteName); });
+                this.init = (definitions) => {
+                    definitions.forEach(spriteName => Worker_1.spriteNames.add(spriteName));
                 };
-                this.rebuild = function (mapId) {
+                this.rebuild = (mapId) => {
                     const map = ensureMap(mapId);
                     map.unsetLoadingMode();
-                    const drawables = _Worker.rebuild(map);
+                    const drawables = Worker_1.rebuild(map);
                     drawables.sort(sortFunc);
                     return drawables;
                 };
-                this.getChecksum = function (mapId) {
+                this.getChecksum = (mapId) => {
                     const map = ensureMap(mapId);
-                    const drawables = _this.rebuild(mapId);
+                    const drawables = this.rebuild(mapId);
                     let checksum = 0;
                     drawables.sort(sortFuncForChecksum);
-                    drawables.forEach(function (drawable) {
-                        checksum = _Worker.murmurhash3(drawable.toString(), checksum);
+                    drawables.forEach(drawable => {
+                        checksum = Worker_1.murmurhash3(drawable.toString(), checksum);
                     });
                     return checksum.toString();
                 };
-                this.clear = function (mapId) {
+                this.clear = (mapId) => {
                     ensureMap(mapId).clear();
                 };
-                onmessage = function (oEvent) {
+                onmessage = (oEvent) => {
                     const order = oEvent.data;
-                    const func = _this[order.func];
+                    const func = this[order.func];
                     const result = func(order.data);
                     const response = {
                         id: order.id,
@@ -3156,9 +3205,8 @@ var WesnothTiles;
                     postMessage(response);
                 };
             }
-            return Worker;
-        })();
-        _Worker.Worker = Worker;
+        }
+        Worker_1.Worker = Worker;
     })(Worker = WesnothTiles.Worker || (WesnothTiles.Worker = {}));
 })(WesnothTiles || (WesnothTiles = {}));
 const worker = new WesnothTiles.Worker.Worker();
@@ -3239,9 +3287,8 @@ var WesnothTiles;
     var Internal;
     (function (Internal) {
         'use strict';
-        Internal.workerString;
-        var DrawableData = (function () {
-            function DrawableData(x, y, name, layer, base, frames, duration) {
+        class DrawableData {
+            constructor(x, y, name, layer, base, frames, duration) {
                 this.x = x;
                 this.y = y;
                 this.name = name;
@@ -3250,18 +3297,18 @@ var WesnothTiles;
                 this.frames = frames;
                 this.duration = duration;
             }
-            DrawableData.prototype.toString = function () {
+            toString() {
                 if (this.duration === undefined)
                     return this.name + this.layer + ',' + this.x + ',' + this.y;
                 else
                     return this.name + this.duration + this.layer + ',' + this.x + ',' + this.y;
-            };
-            return DrawableData;
-        })();
+            }
+        }
         Internal.DrawableData = DrawableData;
     })(Internal = WesnothTiles.Internal || (WesnothTiles.Internal = {}));
 })(WesnothTiles || (WesnothTiles = {}));
 /// <reference path=\"../common/interfaces.ts\"/>
+/// <reference path=\"../../node_modules/typescript/lib/lib.core.es6.d.ts\"/>
 /// <reference path=\"definitions/lib.webworker.d.ts\"/>
 /// <reference path=\"Hex.ts\"/>
 /// <reference path=\"HexMap.ts\"/>
