@@ -5,10 +5,10 @@ var gulp = require('gulp'),
   notify = require('gulp-notify'),
   copy = require('gulp-copy'),
   merge = require('merge2');
-  uglify = require('gulp-uglify');
-  wrap = require('gulp-wrap');
-  replace = require('gulp-replace');
-  util = require('gulp-util');
+uglify = require('gulp-uglify');
+wrap = require('gulp-wrap');
+replace = require('gulp-replace');
+util = require('gulp-util');
 
 function getWorkerStream(minify) {
   var tsStreams = gulp.src(['src/worker/**/*.ts'])
@@ -22,11 +22,15 @@ function getWorkerStream(minify) {
 
   var jsStream = tsStreams.js
 
-    if (minify)
-      jsStream = jsStream.pipe(uglify({mangle: false}))
+  if (minify)
+    jsStream = jsStream.pipe(uglify({
+      mangle: false
+    }))
 
-    jsStream = jsStream.pipe(replace(/"/g, '\\"'))
-    .pipe(wrap({ src: 'template.js'}))
+  jsStream = jsStream.pipe(replace(/"/g, '\\"'))
+    .pipe(wrap({
+      src: 'template.js'
+    }))
 
   return jsStream;
 }
@@ -45,7 +49,7 @@ gulp.task('scripts', function() {
     .pipe(concat('wesnoth-tiles.js'))
     // ufligy.js needs to wait for es6 support.
     // .pipe(uglify({mangle: false}).on('error', util.log))
-    .pipe(gulp.dest("bin"))    
+    .pipe(gulp.dest("bin"))
     .pipe(notify({
       "message": "Typescript built succesfully.",
       "onLast": true,
@@ -85,7 +89,7 @@ gulp.task('watch', ['app'], function() {
 });
 
 gulp.task('serve', serve({
-  root: ['test', 'bin', 'tiles'],
+  root: ['test', 'bin', '.'],
   port: 8001,
 }));
 

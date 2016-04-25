@@ -13,6 +13,13 @@ module WesnothTiles {
     y: number;
   }
 
+  export interface IConfig {
+    path: string;
+  }
+
+  const radius = 72;
+  const halfRadius = radius / 2;
+
   export class MapBuilder {
     private $tileChanges: Internal.ITileChange[] = [];
 
@@ -64,12 +71,9 @@ module WesnothTiles {
     };
   }
 
-  var radius = 72;
-  var halfRadius = radius / 2;
+  let loadingPromise: Promise<void> = undefined;
 
-  var loadingPromise: Promise<void> = undefined;
-
-  var createLoadingPromise = (): void => {
+  const createLoadingPromise = (): void => {
     if (loadingPromise !== undefined)
       return
     loadingPromise = Internal.loadResources().then(() => {
@@ -83,19 +87,22 @@ module WesnothTiles {
   }
 
   // Singleton creating map objects. It ensures that loading is already done before you can use a map.
-  export var createMap = (): Promise<TilesMap> => {
+  export const createMap = (): Promise<TilesMap> => {
     if (loadingPromise === undefined) {
       createLoadingPromise();
     }
     return loadingPromise.then(() => {
-      var map = new TilesMap()
+      const map = new TilesMap()
       return map;
     });
   };
 
-  export var load = (): Promise<void> => {
-    createLoadingPromise();
-    return loadingPromise;
+  export const config: IConfig = {
+    path: ""
+  }
+
+  export const init = (newConfig: IConfig) => {
+    Object.assign(config, newConfig);
   }
 
   export class TilesMap {

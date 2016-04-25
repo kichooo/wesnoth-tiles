@@ -1,7 +1,7 @@
 module WesnothTiles.Worker {
   'use strict';
 
-  export const swapTerrains = (terrains: ETerrain[]) => {
+  export function swapTerrains (terrains: ETerrain[]) {
     const terrainList: ETerrain[] = [];
     for (let i = 0; i < ETerrain.VOID; i++) {
       if (terrains.indexOf(i) === -1)
@@ -262,11 +262,11 @@ module WesnothTiles.Worker {
 
       TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_SNOW], "frozen/snow", {}); // Aa
 
-      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice2", { prob: 10 }); // Ai
-      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice3", { prob: 11 }); // Ai
-      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice5", { prob: 13 }); // Ai
-      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice6", { prob: 14 }); // Ai
-      TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.FROZEN_ICE], "frozen/ice4", { prob: 42 }); // Ai
+      TERRAIN_BASE_PLFB(this, [ETerrain.FROZEN_ICE], "frozen/ice2", { prob: 10 }); // Ai
+      TERRAIN_BASE_PLFB(this, [ETerrain.FROZEN_ICE], "frozen/ice3", { prob: 11 }); // Ai
+      TERRAIN_BASE_PLFB(this, [ETerrain.FROZEN_ICE], "frozen/ice5", { prob: 13 }); // Ai
+      TERRAIN_BASE_PLFB(this, [ETerrain.FROZEN_ICE], "frozen/ice6", { prob: 14 }); // Ai
+      TERRAIN_BASE_PLFB(this, [ETerrain.FROZEN_ICE], "frozen/ice4", { prob: 42 }); // Ai
       TERRAIN_BASE_PLFB(this, [ETerrain.FROZEN_ICE], "frozen/ice", {}); // Hhd
 
       TERRAIN_BASE_RANDOM_LFB(this, [ETerrain.SWAMP_MUD], "swamp/mud", {}); // Sm

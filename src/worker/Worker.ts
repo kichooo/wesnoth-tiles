@@ -3,7 +3,7 @@
 module WesnothTiles.Worker {
   'use strict';
 
-  export const spriteNames = new Set<string>();
+  export var spriteNames = new Set<string>();
 
   const hexMaps = new Map<number, HexMap>();
 
@@ -15,6 +15,39 @@ module WesnothTiles.Worker {
     }
     return map;
   }
+
+  const sortFunc = (a: Internal.DrawableData, b: Internal.DrawableData) => {
+    if (a.layer === b.layer) {
+      if (a.base !== undefined && b.base !== undefined) {
+        return a.base.y - b.base.y;
+      }
+      if (b.base !== undefined) {
+        return a.layer < 0 ? -1 : 1;
+      } else if (a.base !== undefined) {
+        return b.layer < 0 ? 1 : -1;
+      }
+      return 0;
+    }
+    return a.layer - b.layer;
+  };
+
+  const sortFuncForChecksum = (a: Internal.DrawableData, b: Internal.DrawableData) => {
+    if (a.layer === b.layer) {
+      if (a.base !== undefined && b.base !== undefined) {
+        if (a.base.y === b.base.y) {
+          return a.toString() < b.toString() ? -1 : 1;
+        }
+        return a.base.y - b.base.y;
+      }
+      if (b.base !== undefined) {
+        return a.layer < 0 ? -1 : 1;
+      } else if (a.base !== undefined) {
+        return b.layer < 0 ? 1 : -1;
+      }
+      return a.toString() < b.toString() ? -1 : 1;
+    }
+    return a.layer - b.layer;
+  };
 
   export class Worker {
     constructor() {
@@ -76,39 +109,6 @@ module WesnothTiles.Worker {
       ensureMap(mapId).clear();
     }
   }
-
-  const sortFunc = (a: Internal.DrawableData, b: Internal.DrawableData) => {
-    if (a.layer === b.layer) {
-      if (a.base !== undefined && b.base !== undefined) {
-        return a.base.y - b.base.y;
-      }
-      if (b.base !== undefined) {
-        return a.layer < 0 ? -1 : 1;
-      } else if (a.base !== undefined) {
-        return b.layer < 0 ? 1 : -1;
-      }
-      return 0;
-    }
-    return a.layer - b.layer;
-  };
-
-  const sortFuncForChecksum = (a: Internal.DrawableData, b: Internal.DrawableData) => {
-    if (a.layer === b.layer) {
-      if (a.base !== undefined && b.base !== undefined) {
-        if (a.base.y === b.base.y) {
-          return a.toString() < b.toString() ? -1 : 1;
-        }
-        return a.base.y - b.base.y;
-      }
-      if (b.base !== undefined) {
-        return a.layer < 0 ? -1 : 1;
-      } else if (a.base !== undefined) {
-        return b.layer < 0 ? 1 : -1;
-      }
-      return a.toString() < b.toString() ? -1 : 1;
-    }
-    return a.layer - b.layer;
-  };
 
 }
 

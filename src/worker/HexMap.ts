@@ -117,7 +117,7 @@ module WesnothTiles.Worker {
 
         if (fog) {
           currentFogStreak = (currentFogStreak + 1) % 7;
-          if (bestFogStreak = Math.max(bestFogStreak, currentFogStreak));
+          bestFogStreak = Math.max(bestFogStreak, currentFogStreak);
         } else {
           currentFogStreak = 0;
         }

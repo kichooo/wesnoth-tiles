@@ -9,6 +9,25 @@ module WesnothTiles.Worker {
     drawableDatas: Internal.DrawableData[];
   }
 
+  const replaceRotation = (input: string, rot: number, rotations: string[]) => {
+    if (rotations === undefined)
+      return input;
+    return rotations === undefined ? input : input.replace("@R0", rotations[rot])
+      .replace("@R1", rotations[(rot + 1) % 6])
+      .replace("@R2", rotations[(rot + 2) % 6])
+      .replace("@R3", rotations[(rot + 3) % 6])
+      .replace("@R4", rotations[(rot + 4) % 6])
+      .replace("@R5", rotations[(rot + 5) % 6])
+  }
+
+  const rotationsMap = new Map<number, Map<number, Map<number, IHexPos>>>();
+
+  const getRotatedPos = (pos: IHexPos, rot: number): IHexPos => {
+    if (rot === 0)
+      return pos;
+    return rotationsMap.get(rot).get(pos.q).get(pos.r);
+  }
+
   const setFlags = (rot: number, rotations: string[],
     set_no_flags: string[], flags: Map<string, boolean>) => {
     if (set_no_flags !== undefined)
@@ -25,13 +44,8 @@ module WesnothTiles.Worker {
     return true;
   }
 
-  const getRotatedPos = (pos: IHexPos, rot: number): IHexPos => {
-    if (rot === 0)
-      return pos;
-    return rotationsMap.get(rot).get(pos.q).get(pos.r);
-  }
 
-  const rotationsMap = new Map<number, Map<number, Map<number, IHexPos>>>();
+
 
   export const prepareRotations = () => {
     for (let rot = 0; rot < 6; rot++) {
@@ -50,18 +64,6 @@ module WesnothTiles.Worker {
       }
     }
   }
-
-  const replaceRotation = (input: string, rot: number, rotations: string[]) => {
-    if (rotations === undefined)
-      return input;
-    return rotations === undefined ? input : input.replace("@R0", rotations[rot])
-      .replace("@R1", rotations[(rot + 1) % 6])
-      .replace("@R2", rotations[(rot + 2) % 6])
-      .replace("@R3", rotations[(rot + 3) % 6])
-      .replace("@R4", rotations[(rot + 4) % 6])
-      .replace("@R5", rotations[(rot + 5) % 6])
-  }
-
 
   const getImgName = (hex: Hex, img: WMLImage, tg: WMLTerrainGraphics, rot: number, translatedPostfix: string) => {
     let num = img.variations.length;
