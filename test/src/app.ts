@@ -69,7 +69,7 @@ function loadTestMap(): void {
     document.getElementById("checksum").textContent = "";
     rightMap.getCheckSum()
       .then(checksum => document.getElementById("checksum").textContent = checksum);
-    document.getElementById("expected").textContent = "expected: 2940578422";
+    document.getElementById("expected").textContent = "expected: 3822145729";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
 
     document.getElementById("checksumBlock").style.display = 'block';
@@ -329,7 +329,7 @@ function loadDisk(): void {
     document.getElementById("checksum").textContent = "";
     leftMap.getCheckSum()
       .then(checksum => document.getElementById("checksum").textContent = checksum);
-    document.getElementById("expected").textContent = "expected: 1644312895";
+    document.getElementById("expected").textContent = "expected: 2940578422";
     document.getElementById("duration").textContent = (new Date().getTime() - start.getTime()).toString();
     document.getElementById("checksumBlock").style.display = 'block';
   });;
